@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -19,7 +18,7 @@ return new class extends Migration
             $table->enum('type', ['video', 'text', 'quiz'])->default('video');
             $table->longText('content')->nullable();
             $table->unsignedInteger('duration_seconds')->nullable();
-            $table->boolean('is_free_preview')->default(false);
+            // $table->boolean('is_free_preview')->default(false);
             $table->unsignedInteger('order')->default(0);
             $table->timestamps();
             $table->index('tenant_id');
