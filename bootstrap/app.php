@@ -4,7 +4,7 @@ use App\Providers\TenancyServiceProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withProviders([
@@ -18,7 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'tenant' => InitializeTenancyByDomain::class,
+            'tenant' => InitializeTenancyBySubdomain::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
