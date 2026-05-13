@@ -1,29 +1,31 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Tenant;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Enrollment extends Model
+class QuizAttempt extends Model
 {
     use HasFactory;
 
+    protected $table = 'quiz_attempts';
+
     protected $fillable = [
         'user_id',
-        'course_id',
-        'enrolled_at',
-        'completed_at',
-        'progress_percent',
+        'quiz_id',
+        'score',
+        'passed',
+        'submitted_at',
     ];
 
     protected function casts(): array
     {
         return [
-            'enrolled_at' => 'datetime',
-            'completed_at' => 'datetime',
-            'progress_percent' => 'integer',
+            'score' => 'integer',
+            'passed' => 'boolean',
+            'submitted_at' => 'datetime',
         ];
     }
 
@@ -32,8 +34,8 @@ class Enrollment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function course(): BelongsTo
+    public function quiz(): BelongsTo
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsTo(Quiz::class);
     }
 }
