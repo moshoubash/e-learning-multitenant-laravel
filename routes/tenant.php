@@ -35,5 +35,5 @@ Route::middleware([
     })->name('tenant.home');
 
     // Auth routes for tenant - using tenant-aware auth
-    require __DIR__ . '/tenant-auth.php';
+    require __DIR__ . '/auth.php';
 });

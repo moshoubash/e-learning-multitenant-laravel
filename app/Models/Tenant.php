@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
@@ -14,31 +13,15 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     use HasDatabase, HasDomains, HasFactory;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
+     * The custom columns that are actual DB columns
+     * (not stored in the 'data' JSON column).
      */
-    protected $fillable = [
-        'id',
-        'name',
-        'data',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'data' => 'array',
-    ];
-
-    /**
-     * Get the domains associated with the tenant.
-     */
-    public function domains(): HasMany
+    public static function getCustomColumns(): array
     {
-        return $this->hasMany(\Stancl\Tenancy\Database\Models\Domain::class);
+        return [
+            'id',
+            'name',
+        ];
     }
 
     /**
@@ -77,3 +60,4 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         $this->update(['data' => $data]);
     }
 }
+

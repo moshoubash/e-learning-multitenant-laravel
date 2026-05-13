@@ -24,8 +24,4 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-Route::middleware(['auth'])->prefix('tenants')->group(function () {
-
-});
-
 require __DIR__ . '/auth.php';

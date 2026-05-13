@@ -18,7 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'tenant初始化' => InitializeTenancyByDomain::class,
+            'tenant' => InitializeTenancyByDomain::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

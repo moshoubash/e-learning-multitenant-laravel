@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Tenant Management API (Central)
-Route::prefix('tenants')->group(function () {
+// Tenant Management API (Central) — requires authentication
+Route::middleware('auth')->prefix('tenants')->group(function () {
     Route::get('/', [TenantController::class, 'index'])->name('tenants.index');
     Route::post('/', [TenantController::class, 'store'])->name('tenants.store');
     Route::get('/{id}', [TenantController::class, 'show'])->name('tenants.show');

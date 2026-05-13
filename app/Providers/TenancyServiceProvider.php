@@ -117,8 +117,7 @@ class TenancyServiceProvider extends ServiceProvider
 
     protected function registerRoutes(): void
     {
-        Route::middleware('api')
-            ->prefix('api')
+        Route::middleware('web')
             ->group(base_path('routes/tenant.php'));
     }
 }
