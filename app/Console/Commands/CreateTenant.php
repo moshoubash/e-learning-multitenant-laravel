@@ -50,7 +50,7 @@ class CreateTenant extends Command
             // 1. CreateDatabase job (creates tenant_<uuid> database)
             // 2. MigrateDatabase job (runs migrations from database/migrations/tenant/)
             $tenant = Tenant::create([
-                'id' => UUIDGenerator::generate(),
+                'id' => \Str::uuid()->toString(),
                 'name' => $name,
             ]);
 
