@@ -99,7 +99,6 @@ class TenancyServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->bootEvents();
-        $this->registerRoutes();
     }
 
     protected function bootEvents(): void
@@ -115,9 +114,4 @@ class TenancyServiceProvider extends ServiceProvider
         }
     }
 
-    protected function registerRoutes(): void
-    {
-        Route::middleware('web')
-            ->group(base_path('routes/tenant.php'));
-    }
 }

@@ -12,27 +12,19 @@ use Stancl\Tenancy\Middleware\ScopeSessions;
 | Tenant Routes
 |--------------------------------------------------------------------------
 |
-| These routes are loaded by the TenancyServiceProvider when a tenant
-| is identified via the domain/subdomain. The middleware stack ensures
-| proper tenant isolation.
+| These routes are loaded via bootstrap/app.php when a tenant
+| is identified via the domain/subdomain.
 |
 */
 
-Route::middleware([
-    InitializeTenancyByDomain::class,
-    'web',
-        // PreventAccessFromCentralDomains::class,
-    ScopeSessions::class
-])->group(function () {
-    // Tenant Home / Dashboard
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->middleware(['auth:tenant', 'verified'])->name('dashboard');
+// Tenant Home / Dashboard
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth:tenant'])->name('tenant.dashboard');
 
-    Route::get('/', function () {
-        return redirect()->route('dashboard');
-    });
-
-    // Auth routes for tenant
-    require __DIR__ . '/auth.php';
+Route::get('/', function () {
+    return redirect()->route('tenant.dashboard');
 });
+
+// Auth routes for tenant
+require __DIR__ . '/auth.php';
