@@ -11,10 +11,9 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 | Tenant Routes
 |--------------------------------------------------------------------------
 |
-| Here you can register the tenant routes for your application.
-| These routes are loaded by the TenantRouteServiceProvider.
-|
-| Feel free to customize them however you want. Good luck!
+| These routes are loaded by the TenancyServiceProvider when a tenant
+| is identified via the domain/subdomain. The middleware stack ensures
+| proper tenant isolation.
 |
 */
 
@@ -23,7 +22,18 @@ Route::middleware([
     InitializeTenancyByDomain::class,
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
+    // Tenant Dashboard
     Route::get('/', function () {
-        return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
-    });
+        $tenant = tenant();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'This is your multi-tenant application.',
+            'tenant_id' => $tenant->id ?? null,
+            'data' => $tenant->data ?? null,
+        ]);
+    })->name('tenant.home');
+
+    // Auth routes for tenant - using tenant-aware auth
+    require __DIR__ . '/tenant-auth.php';
 });

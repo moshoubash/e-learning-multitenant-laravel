@@ -1,8 +1,20 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
-Route::view('/', 'welcome');
+/*
+|--------------------------------------------------------------------------
+| Web Routes (Central Application)
+|--------------------------------------------------------------------------
+|
+| These routes are loaded by the web middleware and handle the central
+| application. They should NOT be tenant-aware.
+|
+*/
+
+Route::view('/', 'welcome')->name('home');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
@@ -12,10 +24,8 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-foreach (config('tenancy.central_domains') as $domain) {
-    Route::domain($domain)->group(function () {
+Route::middleware(['auth'])->prefix('tenants')->group(function () {
 
-    });
-}
+});
 
 require __DIR__ . '/auth.php';
