@@ -3,61 +3,97 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
+use Illuminate\Database\Eloquent\Model;
+use Stancl\Tenancy\Contracts\Tenant as TenantContract;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
+use Stancl\Tenancy\Database\Concerns\CentralConnection;
+use Stancl\Tenancy\Database\Concerns\HasDataColumn;
 
-class Tenant extends BaseTenant implements TenantWithDatabase
+class Tenant extends Model implements TenantContract, TenantWithDatabase
 {
-    use HasDatabase, HasDomains, HasFactory;
+    use HasFactory, HasDatabase, HasDomains, CentralConnection, HasDataColumn;
+
+    protected $guarded = [];
+
+    protected $dispatchesEvents = [
+        'created' => \Stancl\Tenancy\Events\TenantCreated::class,
+        'updated' => \Stancl\Tenancy\Events\TenantUpdated::class,
+        'deleted' => \Stancl\Tenancy\Events\TenantDeleted::class,
+        'saved' => \Stancl\Tenancy\Events\TenantSaved::class,
+    ];
 
     /**
-     * The custom columns that are actual DB columns
-     * (not stored in the 'data' JSON column).
+     * Use 'settings' column instead of the default 'data' column.
+     */
+    public static function getDataColumn(): string
+    {
+        return 'settings';
+    }
+
+    /**
+     * The custom columns that are actual DB columns.
      */
     public static function getCustomColumns(): array
     {
         return [
             'id',
             'name',
+            'slug',
+            'domain',
+            'plan',
+            'is_active',
+            'settings',
         ];
     }
 
     /**
-     * Get the primary domain for the tenant.
+     * Get the name of the key used for identifying the tenant.
      */
-    public function getPrimaryDomain(): ?\Stancl\Tenancy\Database\Models\Domain
+    public function getTenantKeyName(): string
     {
-        return $this->domains()->first();
+        return 'id';
     }
 
     /**
-     * Check if the tenant is active.
+     * Get the value of the key used for identifying the tenant.
      */
-    public function isActive(): bool
+    public function getTenantKey()
     {
-        return $this->data['status'] ?? true;
+        return $this->getAttribute('id');
     }
 
     /**
-     * Activate the tenant.
+     * Run a callback in this tenant's context.
      */
-    public function activate(): void
+    public function run(callable $callable)
     {
-        $data = $this->data ?? [];
-        $data['status'] = true;
-        $this->update(['data' => $data]);
+        return tenancy()->run($this, $callable);
     }
 
     /**
-     * Deactivate the tenant.
+     * Get an internal key.
      */
-    public function deactivate(): void
+    public function getInternal(string $key)
     {
-        $data = $this->data ?? [];
-        $data['status'] = false;
-        $this->update(['data' => $data]);
+        return $this->getAttribute($key);
+    }
+
+    /**
+     * Set an internal key.
+     */
+    public function setInternal(string $key, $value)
+    {
+        $this->setAttribute($key, $value);
+        return $this;
+    }
+
+    /**
+     * Get the prefix for internal keys.
+     */
+    public static function internalPrefix(): string
+    {
+        return 'tenancy_';
     }
 }
-

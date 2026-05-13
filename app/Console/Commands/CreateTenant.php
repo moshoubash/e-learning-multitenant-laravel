@@ -15,12 +15,14 @@ class CreateTenant extends Command
      */
     protected $signature = 'tenant:create
                             {name : The name of the tenant (e.g. "School A")}
-                            {subdomain : The subdomain for the tenant (e.g. "schoola")}';
+                            {slug : The slug for the tenant (e.g. "school-a")}
+                            {--plan=school : The plan for the tenant (school, university, organization)}
+                            {--domain= : The custom domain (e.g. schoola.com)}';
 
     /**
      * The console command description.
      */
-    protected $description = 'Create a new tenant with a subdomain. This will create the tenant record, its database, and run migrations.';
+    protected $description = 'Create a new tenant with its own database and domain.';
 
     /**
      * Execute the console command.
@@ -28,35 +30,42 @@ class CreateTenant extends Command
     public function handle(): int
     {
         $name = $this->argument('name');
-        $subdomain = strtolower($this->argument('subdomain'));
+        $slug = strtolower($this->argument('slug'));
+        $plan = $this->option('plan');
+        $customDomain = $this->option('domain');
 
-        // Validate subdomain format
-        if (!preg_match('/^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/', $subdomain)) {
-            $this->error("Invalid subdomain: '{$subdomain}'. Use only lowercase letters, numbers, and hyphens.");
+        // Validate slug format
+        if (!preg_match('/^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/', $slug)) {
+            $this->error("Invalid slug: '{$slug}'. Use only lowercase letters, numbers, and hyphens.");
             return self::FAILURE;
         }
 
-        // Check if subdomain already exists
-        $existing = \Stancl\Tenancy\Database\Models\Domain::where('domain', $subdomain)->first();
-        if ($existing) {
-            $this->error("Subdomain '{$subdomain}' is already taken.");
+        // Validate plan
+        if (!in_array($plan, ['school', 'university', 'organization'])) {
+            $this->error("Invalid plan: '{$plan}'. Use: school, university, or organization.");
             return self::FAILURE;
         }
 
-        $this->info("Creating tenant '{$name}' with subdomain '{$subdomain}'...");
+        // Check if slug already exists
+        if (Tenant::where('slug', $slug)->exists()) {
+            $this->error("Slug '{$slug}' is already taken.");
+            return self::FAILURE;
+        }
+
+        $this->info("Creating tenant '{$name}' with slug '{$slug}'...");
 
         try {
-            // Create the tenant — this triggers:
-            // 1. CreateDatabase job (creates tenant_<uuid> database)
-            // 2. MigrateDatabase job (runs migrations from database/migrations/tenant/)
             $tenant = Tenant::create([
-                'id' => \Str::uuid()->toString(),
                 'name' => $name,
+                'slug' => $slug,
+                'plan' => $plan,
+                'domain' => $customDomain,
             ]);
 
-            // Create the subdomain record
+            // Create the primary domain record (for subdomain identification)
+            $domain = $slug . '.' . config('tenancy.central_domains')[2];
             $tenant->domains()->create([
-                'domain' => $subdomain,
+                'domain' => $domain,
             ]);
 
             $this->newLine();
@@ -68,14 +77,16 @@ class CreateTenant extends Command
                 [
                     ['Tenant ID', $tenant->id],
                     ['Name', $tenant->name],
-                    ['Subdomain', $subdomain],
-                    ['Full URL', "http://{$subdomain}.elearning.test"],
-                    ['Database', "tenant_{$tenant->id}"],
+                    ['Slug', $slug],
+                    ['Plan', $plan],
+                    ['Domain', $domain],
+                    ['Custom Domain', $customDomain ?? 'N/A'],
+                    ['URL', "http://{$domain}"],
                 ]
             );
 
             $this->newLine();
-            $this->info("Visit http://{$subdomain}.elearning.test to access the tenant.");
+            $this->info("Visit http://{$domain} to access the tenant.");
 
         } catch (\Exception $e) {
             $this->error('Failed to create tenant: ' . $e->getMessage());

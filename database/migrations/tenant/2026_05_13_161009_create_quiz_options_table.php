@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('quiz_options', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tenant_id')->constrained()->cascadeOnDelete();
             $table->foreignId('question_id')->constrained('quiz_questions')->cascadeOnDelete();
             $table->string('option_text');
             $table->boolean('is_correct')->default(false);

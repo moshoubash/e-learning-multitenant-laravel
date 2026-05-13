@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('quiz_attempts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tenant_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('quiz_id')->constrained()->cascadeOnDelete();
             $table->tinyInteger('score')->default(0);
             $table->boolean('passed')->default(false);
             $table->timestamp('submitted_at')->useCurrent();
-            $table->index(['tenant_id', 'user_id']);
+            $table->index('user_id');
         });
     }
 

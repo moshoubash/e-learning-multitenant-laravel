@@ -12,7 +12,6 @@ return new class extends Migration {
     {
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tenant_id')->constrained()->cascadeOnDelete();
             $table->foreignId('section_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->enum('type', ['video', 'text', 'quiz'])->default('video');
@@ -21,7 +20,6 @@ return new class extends Migration {
             // $table->boolean('is_free_preview')->default(false);
             $table->unsignedInteger('order')->default(0);
             $table->timestamps();
-            $table->index('tenant_id');
         });
     }
 
