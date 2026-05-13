@@ -18,22 +18,19 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 */
 
 Route::middleware([
-    'web',
     InitializeTenancyBySubdomain::class,
+    'web',
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
-    // Tenant Dashboard
+    // Tenant Home / Dashboard
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware(['auth:tenant', 'verified'])->name('dashboard');
+
     Route::get('/', function () {
-        $tenant = tenant();
+        return redirect()->route('dashboard');
+    });
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'This is your multi-tenant application.',
-            'tenant_id' => $tenant->id ?? null,
-            'data' => $tenant->data ?? null,
-        ]);
-    })->name('tenant.home');
-
-    // Auth routes for tenant - using tenant-aware auth
+    // Auth routes for tenant
     require __DIR__ . '/auth.php';
 });

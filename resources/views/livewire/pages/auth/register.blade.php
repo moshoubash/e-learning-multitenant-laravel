@@ -30,7 +30,9 @@ new #[Layout('layouts.guest')] class extends Component
 
         event(new Registered($user = User::create($validated)));
 
-        Auth::login($user);
+        $guard = tenant() ? 'tenant' : 'web';
+
+        Auth::guard($guard)->login($user);
 
         $this->redirect(route('dashboard', absolute: false), navigate: true);
     }
