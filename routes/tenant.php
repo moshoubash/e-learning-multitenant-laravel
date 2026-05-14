@@ -26,5 +26,9 @@ Route::get('/', function () {
     return redirect()->route('tenant.dashboard');
 });
 
+Route::get('/profile', function () {
+    return view('profile');
+})->middleware(['auth:tenant'])->name('tenant.profile');
+
 // Auth routes for tenant
 require __DIR__ . '/auth.php';
