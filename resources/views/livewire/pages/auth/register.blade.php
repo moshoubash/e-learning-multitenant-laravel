@@ -19,15 +19,19 @@ new #[Layout('layouts.guest')] class extends Component {
      */
     public function register(): void
     {
+        $userModel = tenant() ? \App\Models\Tenant\User::class : \App\Models\User::class;
+
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . $userModel],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
 
-        event(new Registered($user = User::create($validated)));
+        event(new Registered($user = $userModel::create($validated)));
+
+        $user->assignRole('student');
 
         $guard = tenant() ? 'tenant' : 'web';
 

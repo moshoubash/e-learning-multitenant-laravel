@@ -63,18 +63,20 @@ class RolesAndPermissionsSeeder extends Seeder
             'view all progress',
         ];
 
+        $guard = tenant() ? 'tenant' : 'web';
+
         foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission, 'guard_name' => 'web']);
+            Permission::firstOrCreate(['name' => $permission, 'guard_name' => $guard]);
         }
 
         // Create roles and assign permissions
 
         // Admin role — full tenant management
-        $adminRole = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
+        $adminRole = Role::firstOrCreate(['name' => 'admin', 'guard_name' => $guard]);
         $adminRole->syncPermissions(Permission::all());
 
         // Instructor role — can manage their own courses, sections, lessons, quizzes
-        $instructorRole = Role::firstOrCreate(['name' => 'instructor', 'guard_name' => 'web']);
+        $instructorRole = Role::firstOrCreate(['name' => 'instructor', 'guard_name' => $guard]);
         $instructorRole->syncPermissions([
             'view courses',
             'create courses',
@@ -97,7 +99,7 @@ class RolesAndPermissionsSeeder extends Seeder
         ]);
 
         // Student role — can view courses, take quizzes, and view own progress
-        $studentRole = Role::firstOrCreate(['name' => 'student', 'guard_name' => 'web']);
+        $studentRole = Role::firstOrCreate(['name' => 'student', 'guard_name' => $guard]);
         $studentRole->syncPermissions([
             'view courses',
             'view sections',
