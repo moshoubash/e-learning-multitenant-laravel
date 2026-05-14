@@ -18,7 +18,7 @@ Route::view('/', 'welcome')->name('home');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+    ->name('web.dashboard');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
