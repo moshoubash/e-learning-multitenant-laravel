@@ -3,10 +3,6 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
-use Livewire\Livewire;
-use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
-use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
-use Stancl\Tenancy\Middleware\ScopeSessions;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,9 +29,10 @@ Route::middleware(['auth:tenant'])->group(function () {
         return view('profile');
     })->name('tenant.profile');
 
-    Route::livewire('/admin/users', 'admin.users')->name('tenant.admin.users');
-    Route::livewire('/admin/tenantSettings', 'admin.tenant-settings')->name('tenant.admin.tenant-settings');
-    Route::livewire('/admin/courses', 'admin.courses')->name('tenant.admin.courses');
+    Route::middleware('role:admin')->group(function () {
+        Route::livewire('/admin/users', 'admin.users')->name('tenant.admin.users');
+        Route::livewire('/admin/tenantSettings', 'admin.tenant-settings')->name('tenant.admin.tenant-settings');
+    });
 });
 
 // Auth routes for tenant

@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^4.3",
         "livewire/volt": "^1.7.0",
+        "masmerise/livewire-toaster": "^2.10",
         "spatie/laravel-permission": "^7.4",
         "stancl/tenancy": "^3.10"
     },
