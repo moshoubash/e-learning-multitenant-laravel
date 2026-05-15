@@ -9,14 +9,14 @@
 <div class="max-w-7xl py-6 mx-auto sm:px-6 lg:px-6">
     <!-- Tables -->
 
-    <!-- Courses Table -->
+    <!-- Courses Table with Curriculum -->
     @include('livewire.admin.courses-components.tables.courses-table')
 
     <!-- Deleted Courses Section -->
     @include('livewire.admin.courses-components.tables.deleted-courses')
 
 
-    <!-- Modals -->
+    <!-- COURSE MODALS -->
 
     <!-- Create Modal -->
     @include('livewire.admin.courses-components.modals.show-create-modal')
@@ -29,4 +29,34 @@
 
     <!-- Restore Confirmation Modal -->
     @include('livewire.admin.courses-components.modals.show-restore-modal')
+
+
+    <!-- SECTION MODALS -->
+
+    <!-- Section Create Modal -->
+    @include('livewire.admin.courses-components.modals.sections.show-create-modal')
+
+    <!-- Section Edit Modal -->
+    @include('livewire.admin.courses-components.modals.sections.show-edit-modal')
+
+    <!-- Section Delete Confirmation Modal -->
+    @include('livewire.admin.courses-components.modals.sections.show-delete-modal')
+
+    <!-- Section Restore Confirmation Modal -->
+    @include('livewire.admin.courses-components.modals.sections.show-restore-modal')
+
+
+    <!-- LESSON MODALS -->
+
+    <!-- Lesson Create Modal -->
+    @include('livewire.admin.courses-components.modals.lessons.show-create-modal')
+
+    <!-- Lesson Edit Modal -->
+    @include('livewire.admin.courses-components.modals.lessons.show-edit-modal')
+
+    <!-- Lesson Delete Confirmation Modal -->
+    @include('livewire.admin.courses-components.modals.lessons.show-delete-modal')
+
+    <!-- Lesson Restore Confirmation Modal -->
+    @include('livewire.admin.courses-components.modals.lessons.show-restore-modal')
 </div>

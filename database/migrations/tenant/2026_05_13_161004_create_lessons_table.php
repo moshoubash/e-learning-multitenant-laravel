@@ -20,6 +20,7 @@ return new class extends Migration {
             // $table->boolean('is_free_preview')->default(false);
             $table->unsignedInteger('order')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
