@@ -40,10 +40,6 @@ new class extends Component {
                         {{ __('Users Management') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('tenant.admin.tenant-settings')" wire:navigate>
-                        {{ __('Tenant Settings') }}
-                    </x-nav-link>
-
                     @endrole
 
                 </div>
@@ -80,9 +76,6 @@ new class extends Component {
                             {{ __('Users Management') }}
                         </x-dropdown-link>
 
-                        <x-dropdown-link :href="route('tenant.admin.tenant-settings')" wire:navigate>
-                            {{ __('Tenant Settings') }}
-                        </x-dropdown-link>
                         @endrole
 
                         <!-- Authentication -->

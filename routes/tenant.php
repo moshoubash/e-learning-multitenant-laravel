@@ -31,7 +31,6 @@ Route::middleware(['auth:tenant'])->group(function () {
 
     Route::middleware('role:admin')->group(function () {
         Route::livewire('/admin/users', 'admin.users')->name('tenant.admin.users');
-        Route::livewire('/admin/tenantSettings', 'admin.tenant-settings')->name('tenant.admin.tenant-settings');
     });
 });
 
