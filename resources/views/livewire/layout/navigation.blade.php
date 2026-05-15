@@ -33,6 +33,15 @@ new class extends Component {
                         :active="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    <!-- Admin Routes  -->
+                    @role('admin')
+                    <x-nav-link :href="route('tenant.admin.users')" wire:navigate>
+                        {{ __('Users Management') }}
+                    </x-nav-link>
+
+                    @endrole
+
                 </div>
             </div>
 
@@ -60,6 +69,14 @@ new class extends Component {
                         <x-dropdown-link :href="tenant() ? route('tenant.profile') : route('profile')" wire:navigate>
                             {{ __('Profile') }}
                         </x-dropdown-link>
+
+                        <!-- admin routes  -->
+                        @role('admin')
+                        <x-dropdown-link :href="route('tenant.admin.users')" wire:navigate>
+                            {{ __('Users Management') }}
+                        </x-dropdown-link>
+
+                        @endrole
 
                         <!-- Authentication -->
                         <button wire:click="logout" class="w-full text-start">

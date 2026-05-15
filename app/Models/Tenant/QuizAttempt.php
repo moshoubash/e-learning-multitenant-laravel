@@ -12,6 +12,11 @@ class QuizAttempt extends Model
 
     protected $table = 'quiz_attempts';
 
+    /**
+     * The quiz_attempts table has no created_at / updated_at columns.
+     */
+    public $timestamps = false;
+
     protected $fillable = [
         'user_id',
         'quiz_id',

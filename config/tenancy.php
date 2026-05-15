@@ -7,7 +7,7 @@ use Stancl\Tenancy\Database\Models\Tenant;
 
 return [
     'tenant_model' => App\Models\Tenant::class,
-    'id_generator' => Stancl\Tenancy\UUIDGenerator::class,
+    // 'id_generator' => Stancl\Tenancy\UUIDGenerator::class, // Disabled: tenants table uses auto-increment bigint IDs, not UUIDs
 
     'domain_model' => Domain::class,
 
