@@ -31,6 +31,7 @@ Route::middleware(['auth:tenant'])->group(function () {
 
     Route::livewire('/admin/users', 'admin.users')->middleware('role:admin')->name('tenant.admin.users');
     Route::livewire('/admin/courses', 'admin.courses')->middleware('role:instructor')->name('tenant.instructor.courses');
+    Route::livewire('/admin/quizzes', 'admin.quizzes')->middleware('role:instructor')->name('tenant.instructor.quizzes');
 });
 
 // Auth routes for tenant
