@@ -25,22 +25,42 @@
         <div class="lg:col-span-2">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 @if($selectedLesson)
-                    <!-- Video Placeholder -->
-                    <div class="bg-gray-900 aspect-video flex items-center justify-center">
-                        <div class="text-center text-white">
-                            <i class="fas fa-play-circle text-6xl mb-4 opacity-50"></i>
-                            <p class="text-lg">{{ $selectedLesson->title }}</p>
-                            <p class="text-sm text-gray-400 mt-2">
-                                @if($selectedLesson->type === 'video')
-                                    Video Lesson
-                                @elseif($selectedLesson->type === 'text')
-                                    Text Lesson
-                                @elseif($selectedLesson->type === 'quiz')
-                                    Quiz
-                                @endif
-                            </p>
+                    @if($selectedLesson->type === 'video' && $selectedLesson->vimeo_id)
+                        <!-- Vimeo Video Player -->
+                        <div class="aspect-video">
+                            <iframe 
+                                src="https://player.vimeo.com/video/{{ $selectedLesson->vimeo_id }}" 
+                                style="width: 100%; height: 100%;"
+                                frameborder="0" 
+                                allow="autoplay; fullscreen; picture-in-picture" 
+                                allowfullscreen
+                            ></iframe>
                         </div>
-                    </div>
+                    @elseif($selectedLesson->type === 'video')
+                        <!-- Video Placeholder when no Vimeo ID -->
+                        <div class="bg-gray-900 aspect-video flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <i class="fas fa-play-circle text-6xl mb-4 opacity-50"></i>
+                                <p class="text-lg">{{ $selectedLesson->title }}</p>
+                                <p class="text-sm text-gray-400 mt-2">Video content - no video assigned yet</p>
+                            </div>
+                        </div>
+                    @else
+                        <!-- Text/Quiz Placeholder -->
+                        <div class="bg-gray-900 aspect-video flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <i class="fas fa-book-open text-6xl mb-4 opacity-50"></i>
+                                <p class="text-lg">{{ $selectedLesson->title }}</p>
+                                <p class="text-sm text-gray-400 mt-2">
+                                    @if($selectedLesson->type === 'text')
+                                        Text Lesson
+                                    @elseif($selectedLesson->type === 'quiz')
+                                        Quiz
+                                    @endif
+                                </p>
+                            </div>
+                        </div>
+                    @endif
 
                     <!-- Lesson Info -->
                     <div class="p-6">

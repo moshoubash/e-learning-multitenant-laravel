@@ -131,24 +131,26 @@ class CourseContent extends Component
 
     private function calculateProgress()
     {
-        $course = $this->getCourse();
-        if (!$course) {
-            return;
-        }
+        $totalLessons = Lesson::whereHas('section', function ($query) {
+            $query->where('course_id', $this->courseId);
+        })->count();
 
-        $totalLessons = 0;
-        $completedLessons = 0;
-
-        foreach ($course->sections as $section) {
-            foreach ($section->lessons as $lesson) {
-                $totalLessons++;
-                if ($this->isLessonCompleted($lesson->id)) {
-                    $completedLessons++;
-                }
-            }
-        }
+        $completedLessons = LessonProgress::where('user_id', auth()->id())
+            ->whereHas('lesson.section', function ($query) {
+                $query->where('course_id', $this->courseId);
+            })
+            ->where('is_completed', true)
+            ->count();
 
         $this->progressPercent = $totalLessons > 0 ? round(($completedLessons / $totalLessons) * 100) : 0;
+
+        // Persist to enrollment table
+        Enrollment::where('course_id', $this->courseId)
+            ->where('user_id', auth()->id())
+            ->update([
+                'progress_percent' => $this->progressPercent,
+                'completed_at' => $this->progressPercent == 100 ? now() : null,
+            ]);
     }
 
     public function render()

@@ -20,6 +20,7 @@ class Lesson extends Model
         'content',
         'duration_seconds',
         'order',
+        'vimeo_id',
     ];
 
     public function section(): BelongsTo
@@ -27,13 +28,16 @@ class Lesson extends Model
         return $this->belongsTo(Section::class);
     }
 
-    // public function quiz(): HasOne
-    // {
-    //     return $this->hasOne(Quiz::class);
-    // }
-
     public function lessonProgress(): HasMany
     {
         return $this->hasMany(LessonProgress::class);
+    }
+
+    public function getVimeoEmbedUrlAttribute(): ?string
+    {
+        if ($this->vimeo_id) {
+            return "https://player.vimeo.com/video/{$this->vimeo_id}";
+        }
+        return null;
     }
 }

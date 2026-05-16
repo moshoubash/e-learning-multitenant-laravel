@@ -44,6 +44,13 @@
                                 class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                             @error('lessonCreateOrder') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
+                        <div class="mb-4" x-show="$wire.lessonCreateType === 'video'">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Vimeo Video ID') }}</label>
+                            <input type="text" wire:model.lazy="lessonCreateVimeoId" placeholder="e.g., 750554125"
+                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <p class="text-xs text-gray-500 mt-1">Enter the Vimeo video ID (numbers only)</p>
+                            @error('lessonCreateVimeoId') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                        </div>
                     </form>
                 </div>
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">

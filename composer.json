@@ -14,7 +14,8 @@
         "livewire/volt": "^1.7.0",
         "masmerise/livewire-toaster": "^2.10",
         "spatie/laravel-permission": "^7.4",
-        "stancl/tenancy": "^3.10"
+        "stancl/tenancy": "^3.10",
+        "vimeo/laravel": "^5.11"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
