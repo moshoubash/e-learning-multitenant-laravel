@@ -5,6 +5,7 @@ namespace App\Livewire\Student;
 use App\Models\Tenant\Course;
 use App\Models\Tenant\Enrollment;
 use Livewire\Component;
+use Masmerise\Toaster\Toaster;
 
 class Courses extends Component
 {
@@ -35,6 +36,24 @@ class Courses extends Component
             ->where('status', 'published')
             ->orderBy('title')
             ->get();
+    }
+
+    public function isEnrolled($courseId)
+    {
+        return Enrollment::where('course_id', $courseId)
+            ->where('user_id', auth()->id())
+            ->exists();
+    }
+
+    public function enrollInCourse($courseId)
+    {
+        Enrollment::create([
+            'course_id' => $courseId,
+            'user_id' => auth()->id(),
+            'status' => 'active',
+        ]);
+
+        Toaster::success('Successfully enrolled in the course!');
     }
 
     public function selectCourse($courseId)
