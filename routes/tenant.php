@@ -33,6 +33,7 @@ Route::middleware(['auth:tenant'])->group(function () {
     Route::livewire('/instructor/courses', 'instructor.courses')->middleware('role:instructor')->name('tenant.instructor.courses');
     Route::livewire('/instructor/quizzes', 'instructor.quizzes')->middleware('role:instructor')->name('tenant.instructor.quizzes');
     Route::livewire('/student/courses', 'student.courses')->middleware('role:student')->name('tenant.student.courses');
+    Route::livewire('/student/course/{course:slug}', 'student.course-content')->middleware('role:student')->name('tenant.student.course');
 });
 
 // Auth routes for tenant

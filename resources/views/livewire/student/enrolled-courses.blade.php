@@ -60,7 +60,7 @@
 
                 <!-- Actions -->
                 <div class="ml-4">
-                    <a href="{{ route('tenant.student.courses') }}"
+                    <a href="{{ route('tenant.student.course', $enrollment->course->slug) }}"
                         class="inline-flex items-center px-3 py-2 bg-green-600 hover:bg-green-700 text-white text-sm rounded-lg transition-colors">
                         <i class="fas fa-play mr-2"></i>
                         {{ __('Continue') }}
