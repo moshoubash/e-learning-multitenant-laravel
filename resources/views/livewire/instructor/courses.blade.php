@@ -59,4 +59,16 @@
 
     <!-- Lesson Restore Confirmation Modal -->
     @include('livewire.instructor.courses-components.modals.lessons.show-restore-modal')
+
+
+    <!-- QUIZ MODALS -->
+
+    <!-- Quiz Create Modal -->
+    @include('livewire.instructor.courses-components.modals.quizzes.show-create-modal')
+
+    <!-- Quiz Edit Modal -->
+    @include('livewire.instructor.courses-components.modals.quizzes.show-edit-modal')
+
+    <!-- Quiz Delete Confirmation Modal -->
+    @include('livewire.instructor.courses-components.modals.quizzes.show-delete-modal')
 </div>

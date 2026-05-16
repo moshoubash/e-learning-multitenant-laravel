@@ -5,7 +5,8 @@ namespace App\Livewire\Instructor;
 use App\Models\Tenant\Quiz;
 use App\Models\Tenant\QuizQuestion;
 use App\Models\Tenant\QuizOption;
-use App\Models\Tenant\Lesson;
+use App\Models\Tenant\Section;
+use App\Models\Tenant\Course;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
@@ -36,8 +37,7 @@ class Quizzes extends Component
 
     // Selected items
     public $selectedQuizId = null;
-    public $selectedQuestionId = null;
-    public $selectedLessonId = null;
+    public $selectedSectionId = null;
 
     // Editing items
     public $deletingQuiz = null;
@@ -49,11 +49,11 @@ class Quizzes extends Component
 
     // Quiz form fields
     public $quizCreateTitle = '';
-    public $quizCreateLessonId = '';
+    public $quizCreateSectionId = '';
     public $quizCreatePassPercentage = 70;
 
     public $quizEditTitle = '';
-    public $quizEditLessonId = '';
+    public $quizEditSectionId = '';
     public $quizEditPassPercentage = 70;
 
     // Question form fields
@@ -88,10 +88,10 @@ class Quizzes extends Component
         return in_array($quizId, $this->expandedQuizzes);
     }
 
-    public function openQuizCreateModal($lessonId = null)
+    public function openQuizCreateModal($sectionId = null)
     {
         $this->resetQuizCreateForm();
-        $this->selectedLessonId = $lessonId;
+        $this->selectedSectionId = $sectionId;
         $this->showQuizCreateModal = true;
     }
 
@@ -99,7 +99,7 @@ class Quizzes extends Component
     {
         $this->editingQuiz = Quiz::with('questions.options')->find($id);
         $this->quizEditTitle = $this->editingQuiz->title;
-        $this->quizEditLessonId = $this->editingQuiz->lesson_id;
+        $this->quizEditSectionId = $this->editingQuiz->section_id;
         $this->quizEditPassPercentage = $this->editingQuiz->pass_percentage;
         $this->showQuizEditModal = true;
     }
@@ -121,7 +121,7 @@ class Quizzes extends Component
     public function resetQuizCreateForm()
     {
         $this->quizCreateTitle = '';
-        $this->quizCreateLessonId = '';
+        $this->quizCreateSectionId = '';
         $this->quizCreatePassPercentage = 70;
     }
 
@@ -130,7 +130,7 @@ class Quizzes extends Component
         $this->editingQuiz = null;
         $this->deletingQuiz = null;
         $this->quizEditTitle = '';
-        $this->quizEditLessonId = '';
+        $this->quizEditSectionId = '';
         $this->quizEditPassPercentage = 70;
     }
 
@@ -138,13 +138,21 @@ class Quizzes extends Component
     {
         $this->validate([
             'quizCreateTitle' => 'required|string|max:255',
-            'quizCreateLessonId' => 'required|exists:lessons,id',
+            'quizCreateSectionId' => 'required|exists:sections,id',
             'quizCreatePassPercentage' => 'required|integer|min:1|max:100',
         ]);
 
+        // Check if section already has a quiz
+        $section = Section::find($this->quizCreateSectionId);
+        if ($section && $section->quiz) {
+            Toaster::error('This section already has a quiz. Please edit the existing quiz instead.');
+            $this->closeQuizModal();
+            return;
+        }
+
         Quiz::create([
             'title' => $this->quizCreateTitle,
-            'lesson_id' => $this->quizCreateLessonId,
+            'section_id' => $this->quizCreateSectionId,
             'pass_percentage' => $this->quizCreatePassPercentage,
         ]);
 
@@ -156,12 +164,12 @@ class Quizzes extends Component
     {
         $this->validate([
             'quizEditTitle' => 'required|string|max:255',
-            'quizEditLessonId' => 'required|exists:lessons,id',
+            'quizEditSectionId' => 'required|exists:sections,id',
             'quizEditPassPercentage' => 'required|integer|min:1|max:100',
         ]);
 
         $this->editingQuiz->title = $this->quizEditTitle;
-        $this->editingQuiz->lesson_id = $this->quizEditLessonId;
+        $this->editingQuiz->section_id = $this->quizEditSectionId;
         $this->editingQuiz->pass_percentage = $this->quizEditPassPercentage;
         $this->editingQuiz->save();
 
@@ -280,7 +288,7 @@ class Quizzes extends Component
 
     public function openOptionCreateModal($questionId)
     {
-        $this->selectedQuestionId = $questionId;
+        $this->selectedSectionId = $questionId;
         $this->resetOptionCreateForm();
         $this->showOptionCreateModal = true;
     }
@@ -329,7 +337,7 @@ class Quizzes extends Component
         ]);
 
         QuizOption::create([
-            'question_id' => $this->selectedQuestionId,
+            'question_id' => $this->selectedSectionId,
             'option_text' => $this->optionCreateText,
             'is_correct' => $this->optionCreateIsCorrect,
         ]);
@@ -365,18 +373,18 @@ class Quizzes extends Component
     public function render()
     {
         $quizzes = Quiz::with([
-            'lesson',
+            'section.course',
             'questions' => function ($query) {
                 $query->with('options');
             }
         ])
             ->paginate(10);
 
-        $lessons = Lesson::with('section.course')->get();
+        $sections = Section::with('course')->get();
 
         return view('livewire.instructor.quizzes', [
             'quizzes' => $quizzes,
-            'lessons' => $lessons,
+            'sections' => $sections,
         ]);
     }
 }

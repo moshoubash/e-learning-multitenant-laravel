@@ -5,6 +5,7 @@ namespace App\Livewire\Instructor;
 use App\Models\Tenant\Course;
 use App\Models\Tenant\Section;
 use App\Models\Tenant\Lesson;
+use App\Models\Tenant\Quiz;
 use App\Models\Tenant\User;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -35,6 +36,11 @@ class Courses extends Component
     public $showLessonDeleteModal = false;
     public $showLessonRestoreModal = false;
 
+    // Quiz modals
+    public $showQuizCreateModal = false;
+    public $showQuizEditModal = false;
+    public $showQuizDeleteModal = false;
+
     // Selected items
     public $editingCourse = null;
     public $deletingCourse = null;
@@ -47,6 +53,9 @@ class Courses extends Component
     public $editingLesson = null;
     public $deletingLesson = null;
     public $restoringLesson = null;
+
+    public $editingQuiz = null;
+    public $deletingQuiz = null;
 
     // Course selection for sections/lessons
     public $selectedCourseId = null;
@@ -92,6 +101,14 @@ class Courses extends Component
     public $lessonEditContent = '';
     public $lessonEditDuration = 0;
     public $lessonEditOrder = 0;
+
+    // Quiz create form fields
+    public $quizCreateTitle = '';
+    public $quizCreatePassPercentage = 70;
+
+    // Quiz edit form fields
+    public $quizEditTitle = '';
+    public $quizEditPassPercentage = 70;
 
     // Auto-generate slug from title
     public function updatedCreateTitle($value)
@@ -338,6 +355,15 @@ class Courses extends Component
     public function softDeleteSection()
     {
         if ($this->deletingSection) {
+            // Also delete the quiz if exists
+            if ($this->deletingSection->quiz) {
+                $this->deletingSection->quiz->questions()->each(function ($question) {
+                    $question->options()->delete();
+                });
+                $this->deletingSection->quiz->questions()->delete();
+                $this->deletingSection->quiz->delete();
+            }
+            $this->deletingSection->lessons()->delete();
             $this->deletingSection->delete();
             $this->closeSectionModal();
             Toaster::success('Section soft deleted successfully!');
@@ -478,6 +504,104 @@ class Courses extends Component
         }
     }
 
+    //  QUIZ METHODS 
+
+    public function openQuizCreateModal($sectionId)
+    {
+        $this->selectedSectionId = $sectionId;
+        $this->resetQuizCreateForm();
+        $this->showQuizCreateModal = true;
+    }
+
+    public function openQuizEditModal($id)
+    {
+        $this->editingQuiz = Quiz::with('questions.options')->find($id);
+        $this->quizEditTitle = $this->editingQuiz->title;
+        $this->quizEditPassPercentage = $this->editingQuiz->pass_percentage;
+        $this->showQuizEditModal = true;
+    }
+
+    public function openQuizDeleteModal($id)
+    {
+        $this->deletingQuiz = Quiz::find($id);
+        $this->showQuizDeleteModal = true;
+    }
+
+    public function closeQuizModal()
+    {
+        $this->showQuizCreateModal = false;
+        $this->showQuizEditModal = false;
+        $this->showQuizDeleteModal = false;
+        $this->resetQuizFormFields();
+    }
+
+    public function resetQuizCreateForm()
+    {
+        $this->quizCreateTitle = '';
+        $this->quizCreatePassPercentage = 70;
+    }
+
+    public function resetQuizFormFields()
+    {
+        $this->editingQuiz = null;
+        $this->deletingQuiz = null;
+        $this->quizEditTitle = '';
+        $this->quizEditPassPercentage = 70;
+    }
+
+    public function storeQuiz()
+    {
+        $this->validate([
+            'quizCreateTitle' => 'required|string|max:255',
+            'quizCreatePassPercentage' => 'required|integer|min:1|max:100',
+        ]);
+
+        // Check if section already has a quiz
+        $section = Section::find($this->selectedSectionId);
+        if ($section && $section->quiz) {
+            Toaster::error('This section already has a quiz. Please edit the existing quiz instead.');
+            $this->closeQuizModal();
+            return;
+        }
+
+        Quiz::create([
+            'section_id' => $this->selectedSectionId,
+            'title' => $this->quizCreateTitle,
+            'pass_percentage' => $this->quizCreatePassPercentage,
+        ]);
+
+        $this->closeQuizModal();
+        Toaster::success('Quiz created successfully!');
+    }
+
+    public function updateQuiz()
+    {
+        $this->validate([
+            'quizEditTitle' => 'required|string|max:255',
+            'quizEditPassPercentage' => 'required|integer|min:1|max:100',
+        ]);
+
+        $this->editingQuiz->title = $this->quizEditTitle;
+        $this->editingQuiz->pass_percentage = $this->quizEditPassPercentage;
+        $this->editingQuiz->save();
+
+        $this->closeQuizModal();
+        Toaster::success('Quiz updated successfully!');
+    }
+
+    public function deleteQuiz()
+    {
+        if ($this->deletingQuiz) {
+            $this->deletingQuiz->questions()->each(function ($question) {
+                $question->options()->delete();
+            });
+            $this->deletingQuiz->questions()->delete();
+            $this->deletingQuiz->delete();
+            $this->closeQuizModal();
+            Toaster::success('Quiz deleted successfully!');
+        }
+    }
+
     public function render()
     {
         $courses = Course::select('id', 'title', 'slug', 'price', 'status', 'instructor_id', 'created_at')
@@ -487,7 +611,8 @@ class Courses extends Component
                     $query->with([
                         'lessons' => function ($q) {
                             $q->withTrashed();
-                        }
+                        },
+                        'quiz'
                     ])->withTrashed();
                 }
             ])

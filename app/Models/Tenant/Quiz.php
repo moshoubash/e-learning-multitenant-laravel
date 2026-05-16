@@ -12,7 +12,7 @@ class Quiz extends Model
     use HasFactory;
 
     protected $fillable = [
-        'lesson_id',
+        'section_id',
         'title',
         'pass_percentage',
     ];
@@ -24,9 +24,19 @@ class Quiz extends Model
         ];
     }
 
-    public function lesson(): BelongsTo
+    // public function lesson(): BelongsTo
+    // {
+    //     return $this->belongsTo(Lesson::class);
+    // }
+
+    // public function course(): BelongsTo
+    // {
+    //     return $this->belongsTo(Course::class);
+    // }
+
+    public function section(): BelongsTo
     {
-        return $this->belongsTo(Lesson::class);
+        return $this->belongsTo(Section::class);
     }
 
     public function questions(): HasMany

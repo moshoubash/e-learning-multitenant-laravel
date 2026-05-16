@@ -15,7 +15,7 @@
             <tr>
                 <th class="p-4 text-sm font-semibold text-gray-600 w-8"></th>
                 <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Title") }}</th>
-                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Lesson") }}</th>
+                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Section") }}</th>
                 <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Pass %") }}</th>
                 <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Questions") }}</th>
                 <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Actions") }}</th>
@@ -40,8 +40,9 @@
                         </div>
                     </td>
                     <td class="p-4">
-                        @if($quiz->lesson)
-                            <span class="text-sm">{{ $quiz->lesson->title }}</span>
+                        @if($quiz->section)
+                            <span class="text-sm">{{ $quiz->section->title }} -
+                                {{ $quiz->section->course->title ?? 'No Course' }}</span>
                         @else
                             <span class="text-gray-400">N/A</span>
                         @endif

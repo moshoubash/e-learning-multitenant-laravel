@@ -27,10 +27,10 @@ class Lesson extends Model
         return $this->belongsTo(Section::class);
     }
 
-    public function quiz(): HasOne
-    {
-        return $this->hasOne(Quiz::class);
-    }
+    // public function quiz(): HasOne
+    // {
+    //     return $this->hasOne(Quiz::class);
+    // }
 
     public function lessonProgress(): HasMany
     {

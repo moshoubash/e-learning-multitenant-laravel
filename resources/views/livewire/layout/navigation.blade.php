@@ -48,6 +48,11 @@ new class extends Component {
                         {{ __('My Quizzes') }}
                     </x-nav-link>
                     @endrole
+                    @role('student')
+                    <x-nav-link :href="route('tenant.student.courses')" wire:navigate>
+                        {{ __('Browse Courses') }}
+                    </x-nav-link>
+                    @endrole
 
                 </div>
             </div>
@@ -89,6 +94,11 @@ new class extends Component {
                         </x-dropdown-link>
                         <x-dropdown-link :href="route('tenant.instructor.quizzes')" wire:navigate>
                             {{ __('My Quizzes') }}
+                        </x-dropdown-link>
+                        @endrole
+                        @role('student')
+                        <x-dropdown-link :href="route('tenant.student.courses')" wire:navigate>
+                            {{ __('Browse Courses') }}
                         </x-dropdown-link>
                         @endrole
 

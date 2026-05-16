@@ -6,30 +6,18 @@
             <div
                 class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('Create New Quiz') }}</h3>
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('Create Quiz for Section') }}</h3>
                     <form>
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Title') }}</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Quiz Title') }}</label>
                             <input type="text" wire:model.lazy="quizCreateTitle"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
                             @error('quizCreateTitle') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Section') }}</label>
-                            <select wire:model.lazy="quizCreateSectionId"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                <option value="">-- Select Section --</option>
-                                @foreach($sections as $section)
-                                    <option value="{{ $section->id }}">{{ $section->title }} -
-                                        {{ $section->course->title ?? 'No Course' }}</option>
-                                @endforeach
-                            </select>
-                            @error('quizCreateSectionId') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Pass Percentage') }}</label>
                             <input type="number" wire:model.lazy="quizCreatePassPercentage" min="1" max="100"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
                             @error('quizCreatePassPercentage') <span class="text-red-500 text-xs">{{ $message }}</span>
                             @enderror
                         </div>
@@ -37,7 +25,7 @@
                 </div>
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button wire:click="storeQuiz" type="button"
-                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
                         {{ __('Create') }}
                     </button>
                     <button wire:click="closeQuizModal" type="button"
