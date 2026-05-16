@@ -74,7 +74,7 @@
                                 </div>
                                 <div class="space-y-3">
                                     @foreach($quiz->questions->sortBy('order') as $question)
-                                        @include('livewire.admin.quizzes-components.tables.partials.question-row', ['question' => $question, 'quizId' => $quiz->id])
+                                        @include('livewire.instructor.quizzes-components.tables.partials.question-row', ['question' => $question, 'quizId' => $quiz->id])
                                     @endforeach
                                 </div>
                             </div>

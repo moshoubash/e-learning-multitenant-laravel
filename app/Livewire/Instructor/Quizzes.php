@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Instructor;
 
 use App\Models\Tenant\Quiz;
 use App\Models\Tenant\QuizQuestion;
@@ -374,7 +374,7 @@ class Quizzes extends Component
 
         $lessons = Lesson::with('section.course')->get();
 
-        return view('livewire.admin.quizzes', [
+        return view('livewire.instructor.quizzes', [
             'quizzes' => $quizzes,
             'lessons' => $lessons,
         ]);

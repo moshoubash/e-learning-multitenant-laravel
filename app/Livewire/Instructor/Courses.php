@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Instructor;
 
 use App\Models\Tenant\Course;
 use App\Models\Tenant\Section;
@@ -119,7 +119,7 @@ class Courses extends Component
         return in_array($courseId, $this->expandedCourses);
     }
 
-    // ============ COURSE METHODS ============
+    //  COURSE METHODS 
 
     public function openCreateModal()
     {
@@ -249,7 +249,7 @@ class Courses extends Component
         }
     }
 
-    // ============ SECTION METHODS ============
+    //  SECTION METHODS 
 
     public function openSectionCreateModal($courseId)
     {
@@ -353,7 +353,7 @@ class Courses extends Component
         }
     }
 
-    // ============ LESSON METHODS ============
+    //  LESSON METHODS 
 
     public function openLessonCreateModal($sectionId)
     {
@@ -496,7 +496,7 @@ class Courses extends Component
         $deletedCourses = Course::onlyTrashed()->with('instructor')->get();
         $instructors = User::role('instructor')->get();
 
-        return view('livewire.admin.courses', [
+        return view('livewire.instructor.courses', [
             'courses' => $courses,
             'deletedCourses' => $deletedCourses,
             'instructors' => $instructors,

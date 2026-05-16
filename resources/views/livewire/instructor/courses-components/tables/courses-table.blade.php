@@ -43,9 +43,9 @@
                     <td class="p-4">${{ number_format($course->price, 2) }}</td>
                     <td class="p-4">
                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                @if($course->status === 'published') bg-green-100 text-green-800
-                                @elseif($course->status === 'archived') bg-gray-100 text-gray-800
-                                @else bg-yellow-100 text-yellow-800 @endif">
+                                    @if($course->status === 'published') bg-green-100 text-green-800
+                                    @elseif($course->status === 'archived') bg-gray-100 text-gray-800
+                                    @else bg-yellow-100 text-yellow-800 @endif">
                             {{ ucfirst($course->status) }}
                         </span>
                     </td>
@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="space-y-3">
                                     @foreach($course->sections->sortBy('order') as $section)
-                                        @include('livewire.admin.courses-components.tables.partials.section-row', ['section' => $section, 'courseId' => $course->id])
+                                        @include('livewire.instructor.courses-components.tables.partials.section-row', ['section' => $section, 'courseId' => $course->id])
                                     @endforeach
                                 </div>
                             </div>
