@@ -90,6 +90,11 @@ class CourseContent extends Component
         return in_array($sectionId, $this->expandedSections);
     }
 
+    public function goBack()
+    {
+        // This method is used by child components to navigate back
+    }
+
     public function markLessonComplete()
     {
         if ($this->selectedLesson) {

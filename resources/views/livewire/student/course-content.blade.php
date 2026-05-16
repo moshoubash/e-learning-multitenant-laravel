@@ -173,14 +173,15 @@
                                     @if($section->quiz)
                                         <div class="p-3 bg-purple-50 border-t border-purple-100">
                                             <div class="flex items-center justify-between">
-                                                <div class="flex items-center">
+                                                <a href="{{ route('tenant.student.quiz', $section->quiz->id) }}" 
+                                                   class="flex items-center flex-1 hover:bg-purple-100 rounded p-2 -m-2 transition-colors">
                                                     <i class="fas fa-clipboard-list text-purple-500 mr-3"></i>
-                                                    <span class="text-sm text-purple-700 font-medium">
+                                                    <span class="text-sm text-purple-700 font-medium flex-1">
                                                         {{ $section->quiz->title }}
                                                     </span>
-                                                </div>
-                                                <span class="text-xs text-purple-500">
-                                                    Quiz
+                                                </a>
+                                                <span class="text-xs text-purple-500 ml-2">
+                                                    <i class="fas fa-external-link-alt"></i>
                                                 </span>
                                             </div>
                                         </div>
