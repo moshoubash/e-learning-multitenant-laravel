@@ -27,9 +27,19 @@
                         </div>
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Content') }}</label>
-                            <textarea wire:model.lazy="lessonEditContent" rows="4"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                            @error('lessonEditContent') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            <div class="mt-2 bg-white" wire:ignore>
+                                <div x-data x-ref="quillEditor" x-init="
+                                                        quill = new Quill($refs.quillEditor, {theme: 'snow'});
+                                                        quill.on('text-change', function () {
+                                                        $dispatch('input', quill.root.innerHTML);
+                                                        });
+                                                    " wire:model.debounce.2000ms="lessonEditContent">
+
+                                    {!! $lessonEditContent !!}
+                                </div>
+                                @error('lessonEditContent') <span class="text-red-500 text-xs">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
                         <div class="mb-4">
                             <label
@@ -45,11 +55,12 @@
                             @error('lessonEditOrder') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-4" x-show="$wire.lessonEditType === 'video'">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Vimeo Video ID') }}</label>
-                            <input type="text" wire:model.lazy="lessonEditVimeoId" placeholder="e.g., 750554125"
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Video URL') }}</label>
+                            <input type="url" wire:model.lazy="lessonEditVideoUrl"
+                                placeholder="e.g., https://example.com/video.mp4"
                                 class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <p class="text-xs text-gray-500 mt-1">Enter the Vimeo video ID (numbers only)</p>
-                            @error('lessonEditVimeoId') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            <p class="text-xs text-gray-500 mt-1">Enter the direct video URL (MP4, WebM, etc.)</p>
+                            @error('lessonEditVideoUrl') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
                     </form>
                 </div>

@@ -6,6 +6,14 @@
     </div>
 </x-slot>
 
+@push('styles')
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+@endpush
+
+@push('scripts')
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+@endpush
+
 <div class="max-w-7xl py-6 mx-auto sm:px-6 lg:px-6">
     <!-- Tables -->
 

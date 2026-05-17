@@ -25,19 +25,29 @@
         <div class="lg:col-span-2">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 @if($selectedLesson)
-                    @if($selectedLesson->type === 'video' && $selectedLesson->vimeo_id)
-                        <!-- Vimeo Video Player -->
-                        <div class="aspect-video">
-                            <iframe 
-                                src="https://player.vimeo.com/video/{{ $selectedLesson->vimeo_id }}" 
-                                style="width: 100%; height: 100%;"
-                                frameborder="0" 
-                                allow="autoplay; fullscreen; picture-in-picture" 
-                                allowfullscreen
-                            ></iframe>
+                    @if($selectedLesson->type === 'video' && $selectedLesson->video_url)
+                        <!-- Plyr Video Player -->
+                        <div class="aspect-video" >
+                            <video 
+                                x-data="{}" 
+                                x-init="new Plyr($refs.player)" 
+                                x-ref="player" 
+                                playsinline 
+                                controls 
+                                class="w-full"
+                            >
+                                <source src="{{ $selectedLesson->video_url }}" type="video/mp4" />
+                            </video>
+                        </div>
+
+                        <div wire:loading.delay>
+                            <div class="text-center text-white">
+                                <i class="fas fa-spinner fa-spin text-6xl mb-4 opacity-50"></i>
+                                <p class="text-lg">Loading...</p>
+                            </div>
                         </div>
                     @elseif($selectedLesson->type === 'video')
-                        <!-- Video Placeholder when no Vimeo ID -->
+                        <!-- Video Placeholder when no Video URL -->
                         <div class="bg-gray-900 aspect-video flex items-center justify-center">
                             <div class="text-center text-white">
                                 <i class="fas fa-play-circle text-6xl mb-4 opacity-50"></i>
@@ -88,13 +98,13 @@
                         <!-- Lesson Content -->
                         @if($selectedLesson->type === 'text' && $selectedLesson->content)
                             <div class="prose max-w-none text-gray-700">
-                                {!! nl2br(e($selectedLesson->content)) !!}
+                                {!! nl2br($selectedLesson->content) !!}
                             </div>
                         @elseif($selectedLesson->type === 'video')
                             <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
                                 <p class="text-blue-700 text-sm">
                                     <i class="fas fa-info-circle mr-2"></i>
-                                    Video playback placeholder. In production, integrate your video player here.
+                                    Video playback placeholder. 
                                 </p>
                             </div>
                         @elseif($selectedLesson->type === 'quiz')

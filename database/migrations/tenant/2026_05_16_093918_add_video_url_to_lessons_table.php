@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('lessons', function (Blueprint $table) {
-            $table->string('vimeo_id')->nullable()->after('duration_seconds');
+            $table->string('video_url')->nullable()->after('duration_seconds');
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('lessons', function (Blueprint $table) {
-            $table->dropColumn('vimeo_id');
+            $table->dropColumn('video_url');
         });
     }
 };

@@ -7,7 +7,7 @@
                 class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('Create New Lesson') }}</h3>
-                    <form>
+                    <form enctype="multipart/form-data">
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Title') }}</label>
                             <input type="text" wire:model.lazy="lessonCreateTitle"
@@ -20,16 +20,27 @@
                                 class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <option value="video">Video</option>
                                 <option value="text">Text</option>
-                                <option value="quiz">Quiz</option>
                             </select>
                             @error('lessonCreateType') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
+
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Content') }}</label>
-                            <textarea wire:model.lazy="lessonCreateContent" rows="4"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                            @error('lessonCreateContent') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            <div class="mt-2 bg-white" wire:ignore>
+                                <div x-data x-ref="quillEditor" x-init="
+                                                                        quill = new Quill($refs.quillEditor, {theme: 'snow'});
+                                                                        quill.on('text-change', function () {
+                                                                        $dispatch('input', quill.root.innerHTML);
+                                                                        });
+                                                                    " wire:model.debounce.2000ms="lessonCreateContent">
+
+                                    {!! $lessonCreateContent !!}
+                                </div>
+                                @error('lessonCreateContent') <span class="text-red-500 text-xs">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
+
                         <div class="mb-4">
                             <label
                                 class="block text-sm font-medium text-gray-700 mb-1">{{ __('Duration (seconds)') }}</label>
@@ -42,15 +53,18 @@
                             <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Order') }}</label>
                             <input type="number" wire:model.lazy="lessonCreateOrder" min="0"
                                 class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            @error('lessonCreateOrder') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            @error('lessonCreateOrder') <span class="text-red-500 text-xs">{{ $message }}</span>
+                            @enderror
                         </div>
-                        <div class="mb-4" x-show="$wire.lessonCreateType === 'video'">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Vimeo Video ID') }}</label>
-                            <input type="text" wire:model.lazy="lessonCreateVimeoId" placeholder="e.g., 750554125"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <p class="text-xs text-gray-500 mt-1">Enter the Vimeo video ID (numbers only)</p>
-                            @error('lessonCreateVimeoId') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
-                        </div>
+                        @if ($lessonCreateType === 'video')
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Video') }}</label>
+                                <input type="file" wire:model.lazy="courseVideo" accept="video/*"
+                                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                @error('lessonCreateVideo') <span class="text-red-500 text-xs">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        @endif
                     </form>
                 </div>
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
