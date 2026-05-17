@@ -20,7 +20,7 @@ class Lesson extends Model
         'content',
         'duration_seconds',
         'order',
-        'vimeo_id',
+        'video_url',
     ];
 
     public function section(): BelongsTo
@@ -31,13 +31,5 @@ class Lesson extends Model
     public function lessonProgress(): HasMany
     {
         return $this->hasMany(LessonProgress::class);
-    }
-
-    public function getVimeoEmbedUrlAttribute(): ?string
-    {
-        if ($this->vimeo_id) {
-            return "https://player.vimeo.com/video/{$this->vimeo_id}";
-        }
-        return null;
     }
 }

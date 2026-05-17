@@ -94,7 +94,7 @@ class Courses extends Component
     public $lessonCreateContent = '';
     public $lessonCreateDuration = 0;
     public $lessonCreateOrder = 0;
-    public $lessonCreateVimeoId = '';
+    public $lessonCreateVideoUrl = '';
 
     // Lesson edit form fields
     public $lessonEditTitle = '';
@@ -102,7 +102,7 @@ class Courses extends Component
     public $lessonEditContent = '';
     public $lessonEditDuration = 0;
     public $lessonEditOrder = 0;
-    public $lessonEditVimeoId = '';
+    public $lessonEditVideoUrl = '';
 
     // Quiz create form fields
     public $quizCreateTitle = '';
@@ -398,7 +398,7 @@ class Courses extends Component
         $this->lessonEditContent = $this->editingLesson->content;
         $this->lessonEditDuration = $this->editingLesson->duration_seconds;
         $this->lessonEditOrder = $this->editingLesson->order;
-        $this->lessonEditVimeoId = $this->editingLesson->vimeo_id ?? '';
+        $this->lessonEditVideoUrl = $this->editingLesson->video_url ?? '';
         $this->showLessonEditModal = true;
     }
 
@@ -430,7 +430,7 @@ class Courses extends Component
         $this->lessonCreateContent = '';
         $this->lessonCreateDuration = 0;
         $this->lessonCreateOrder = 0;
-        $this->lessonCreateVimeoId = '';
+        $this->lessonCreateVideoUrl = '';
     }
 
     public function resetLessonFormFields()
@@ -443,7 +443,7 @@ class Courses extends Component
         $this->lessonEditContent = '';
         $this->lessonEditDuration = 0;
         $this->lessonEditOrder = 0;
-        $this->lessonEditVimeoId = '';
+        $this->lessonEditVideoUrl = '';
     }
 
     public function storeLesson()
@@ -463,7 +463,7 @@ class Courses extends Component
             'content' => $this->lessonCreateContent,
             'duration_seconds' => $this->lessonCreateDuration,
             'order' => $this->lessonCreateOrder,
-            'vimeo_id' => $this->lessonCreateVimeoId ?: null,
+            'video_url' => $this->lessonCreateVideoUrl ?: null,
         ]);
 
         $this->closeLessonModal();
@@ -485,7 +485,7 @@ class Courses extends Component
         $this->editingLesson->content = $this->lessonEditContent;
         $this->editingLesson->duration_seconds = $this->lessonEditDuration;
         $this->editingLesson->order = $this->lessonEditOrder;
-        $this->editingLesson->vimeo_id = $this->lessonEditVimeoId ?: null;
+        $this->editingLesson->video_url = $this->lessonEditVideoUrl ?: null;
 
         $this->editingLesson->save();
 

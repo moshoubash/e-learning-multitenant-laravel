@@ -45,11 +45,13 @@
                             @error('lessonCreateOrder') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-4" x-show="$wire.lessonCreateType === 'video'">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Vimeo Video ID') }}</label>
-                            <input type="text" wire:model.lazy="lessonCreateVimeoId" placeholder="e.g., 750554125"
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Video URL') }}</label>
+                            <input type="url" wire:model.lazy="lessonCreateVideoUrl"
+                                placeholder="e.g., https://example.com/video.mp4"
                                 class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <p class="text-xs text-gray-500 mt-1">Enter the Vimeo video ID (numbers only)</p>
-                            @error('lessonCreateVimeoId') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            <p class="text-xs text-gray-500 mt-1">Enter the direct video URL (MP4, WebM, etc.)</p>
+                            @error('lessonCreateVideoUrl') <span class="text-red-500 text-xs">{{ $message }}</span>
+                            @enderror
                         </div>
                     </form>
                 </div>

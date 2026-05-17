@@ -25,19 +25,22 @@
         <div class="lg:col-span-2">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 @if($selectedLesson)
-                    @if($selectedLesson->type === 'video' && $selectedLesson->vimeo_id)
-                        <!-- Vimeo Video Player -->
-                        <div class="aspect-video">
-                            <iframe 
-                                src="https://player.vimeo.com/video/{{ $selectedLesson->vimeo_id }}" 
-                                style="width: 100%; height: 100%;"
-                                frameborder="0" 
-                                allow="autoplay; fullscreen; picture-in-picture" 
-                                allowfullscreen
-                            ></iframe>
+                    @if($selectedLesson->type === 'video' && $selectedLesson->video_url)
+                        <!-- Plyr Video Player -->
+                        <div class="aspect-video" wire:ignore>
+                            <video 
+                                x-data="{}" 
+                                x-init="new Plyr($refs.player)" 
+                                x-ref="player" 
+                                playsinline 
+                                controls 
+                                class="w-full"
+                            >
+                                <source src="{{ $selectedLesson->video_url }}" type="video/mp4" />
+                            </video>
                         </div>
                     @elseif($selectedLesson->type === 'video')
-                        <!-- Video Placeholder when no Vimeo ID -->
+                        <!-- Video Placeholder when no Video URL -->
                         <div class="bg-gray-900 aspect-video flex items-center justify-center">
                             <div class="text-center text-white">
                                 <i class="fas fa-play-circle text-6xl mb-4 opacity-50"></i>
