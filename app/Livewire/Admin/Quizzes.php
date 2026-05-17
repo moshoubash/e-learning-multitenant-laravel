@@ -57,6 +57,10 @@ class Quizzes extends Component
     public $optionEditText = '';
     public $optionEditIsCorrect = false;
 
+    public $editingOption = null;
+    public $editingQuestion = null;
+
+
     public function openEditQuizModal($id)
     {
         $this->editingQuiz = Quiz::with(['questions.options', 'section.course'])->find($id);
