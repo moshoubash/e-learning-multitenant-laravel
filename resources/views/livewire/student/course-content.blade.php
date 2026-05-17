@@ -27,7 +27,7 @@
                 @if($selectedLesson)
                     @if($selectedLesson->type === 'video' && $selectedLesson->video_url)
                         <!-- Plyr Video Player -->
-                        <div class="aspect-video" wire:ignore>
+                        <div class="aspect-video" >
                             <video 
                                 x-data="{}" 
                                 x-init="new Plyr($refs.player)" 
@@ -38,6 +38,13 @@
                             >
                                 <source src="{{ $selectedLesson->video_url }}" type="video/mp4" />
                             </video>
+                        </div>
+
+                        <div wire:loading.delay>
+                            <div class="text-center text-white">
+                                <i class="fas fa-spinner fa-spin text-6xl mb-4 opacity-50"></i>
+                                <p class="text-lg">Loading...</p>
+                            </div>
                         </div>
                     @elseif($selectedLesson->type === 'video')
                         <!-- Video Placeholder when no Video URL -->
@@ -91,7 +98,7 @@
                         <!-- Lesson Content -->
                         @if($selectedLesson->type === 'text' && $selectedLesson->content)
                             <div class="prose max-w-none text-gray-700">
-                                {!! nl2br(e($selectedLesson->content)) !!}
+                                {!! nl2br($selectedLesson->content) !!}
                             </div>
                         @elseif($selectedLesson->type === 'video')
                             <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">

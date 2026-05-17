@@ -450,7 +450,7 @@ class Courses extends Component
     {
         $this->validate([
             'lessonCreateTitle' => 'required|string|max:255',
-            'lessonCreateType' => 'required|in:video,text,quiz',
+            'lessonCreateType' => 'required|in:video,text',
             'lessonCreateContent' => 'nullable|string',
             'lessonCreateDuration' => 'nullable|integer|min:0',
             'lessonCreateOrder' => 'required|integer|min:0',

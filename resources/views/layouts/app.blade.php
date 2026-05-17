@@ -15,6 +15,8 @@
     <link rel="stylesheet"
         href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
 
+    @stack('styles')
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
@@ -46,6 +48,8 @@
     </div>
     <x-toaster-hub />
     @livewireScripts
+
+    @stack('scripts')
 </body>
 
 </html>
