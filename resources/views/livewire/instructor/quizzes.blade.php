@@ -14,6 +14,7 @@
     @include('livewire.instructor.quizzes-components.modals.quizzes.show-create-modal')
     @include('livewire.instructor.quizzes-components.modals.quizzes.show-edit-modal')
     @include('livewire.instructor.quizzes-components.modals.quizzes.show-delete-modal')
+    @include('livewire.instructor.quizzes-components.modals.quizzes.show-attempts-modal')
 
     <!--  QUESTION MODALS  -->
     @include('livewire.instructor.quizzes-components.modals.questions.show-create-modal')

@@ -51,17 +51,21 @@
                     <td class="p-4">{{ $quiz->questions ? count($quiz->questions) : 0 }}</td>
                     <td class="p-4">
                         <div class="flex items-center">
+                            <button wire:click="openAttemptsModal({{ $quiz->id }})"
+                                class="text-purple-600 hover:text-purple-800 mr-2" title="View Attempts">
+                                <i class="fas fa-users"></i>
+                            </button>
+                            <button wire:click="openQuestionCreateModal({{ $quiz->id }})"
+                                class="text-green-600 hover:text-green-800 mr-2" title="Add Question">
+                                <i class="fas fa-plus-circle"></i>
+                            </button>
                             <button wire:click="openQuizEditModal({{ $quiz->id }})"
-                                class="text-blue-600 hover:text-blue-800 mr-3" title="Edit">
+                                class="text-blue-600 hover:text-blue-800 mr-2" title="Edit">
                                 <i class="fas fa-edit"></i>
                             </button>
                             <button wire:click="openQuizDeleteModal({{ $quiz->id }})"
                                 class="text-red-600 hover:text-red-800" title="Delete">
                                 <i class="fas fa-trash"></i>
-                            </button>
-                            <button wire:click="openQuestionCreateModal({{ $quiz->id }})"
-                                class="text-green-600 hover:text-green-800 ml-3" title="Add Question">
-                                <i class="fas fa-plus-circle"></i>
                             </button>
                         </div>
                     </td>

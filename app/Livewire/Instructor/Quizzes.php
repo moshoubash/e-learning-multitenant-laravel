@@ -32,6 +32,10 @@ class Quizzes extends Component
     public $showOptionEditModal = false;
     public $showOptionDeleteModal = false;
 
+    // Attempts modal
+    public $showAttemptsModal = false;
+    public $attemptsQuizId = null;
+
     // Expanded states
     public $expandedQuizzes = [];
 
@@ -368,6 +372,32 @@ class Quizzes extends Component
             $this->closeOptionModal();
             Toaster::success('Option deleted successfully!');
         }
+    }
+
+    //  ATTEMPTS METHODS 
+
+    public function openAttemptsModal($quizId)
+    {
+        $this->attemptsQuizId = $quizId;
+        $this->showAttemptsModal = true;
+    }
+
+    public function closeAttemptsModal()
+    {
+        $this->showAttemptsModal = false;
+        $this->attemptsQuizId = null;
+    }
+
+    public function getAttemptsProperty()
+    {
+        if (!$this->attemptsQuizId) {
+            return collect();
+        }
+
+        return \App\Models\Tenant\QuizAttempt::where('quiz_id', $this->attemptsQuizId)
+            ->with('user')
+            ->orderBy('submitted_at', 'desc')
+            ->get();
     }
 
     public function render()
