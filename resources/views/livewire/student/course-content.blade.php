@@ -94,7 +94,7 @@
                             <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
                                 <p class="text-blue-700 text-sm">
                                     <i class="fas fa-info-circle mr-2"></i>
-                                    Video playback placeholder. In production, integrate your video player here.
+                                    Video playback placeholder. 
                                 </p>
                             </div>
                         @elseif($selectedLesson->type === 'quiz')
