@@ -7,14 +7,17 @@ use App\Models\Tenant\Section;
 use App\Models\Tenant\Lesson;
 use App\Models\Tenant\Quiz;
 use App\Models\Tenant\User;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 use Masmerise\Toaster\Toaster;
+use League\Flysystem\AwsS3V3\PortableVisibilityConverter;
 
 class Courses extends Component
 {
-    use WithPagination;
+    use WithPagination, WithFileUploads;
 
     protected $paginationTheme = 'tailwind';
 
@@ -95,6 +98,7 @@ class Courses extends Component
     public $lessonCreateDuration = 0;
     public $lessonCreateOrder = 0;
     public $lessonCreateVideoUrl = '';
+    public $courseVideo = null;
 
     // Lesson edit form fields
     public $lessonEditTitle = '';
@@ -454,7 +458,18 @@ class Courses extends Component
             'lessonCreateContent' => 'nullable|string',
             'lessonCreateDuration' => 'nullable|integer|min:0',
             'lessonCreateOrder' => 'required|integer|min:0',
+            'courseVideo' => 'nullable|file|mimes:mp4,mov,avi,wmv|max:102400',
         ]);
+
+        // Get tenant ID from current tenant context
+        $tenantId = tenant('id') ?? 'default';
+
+        $videoUrl = null;
+
+        if ($this->courseVideo) {
+            $this->lessonCreateVideoUrl = $this->courseVideo->storeAs("courses/$tenantId", $this->courseVideo->getClientOriginalName() . rand() . time(), 's3');
+            $videoUrl = Storage::disk('s3')->url("courses/$tenantId" . $this->courseVideo->getClientOriginalName());
+        }
 
         Lesson::create([
             'section_id' => $this->selectedSectionId,
@@ -463,9 +478,10 @@ class Courses extends Component
             'content' => $this->lessonCreateContent,
             'duration_seconds' => $this->lessonCreateDuration,
             'order' => $this->lessonCreateOrder,
-            'video_url' => $this->lessonCreateVideoUrl ?: null,
+            'video_url' => $videoUrl,
         ]);
 
+        $this->courseVideo = null;
         $this->closeLessonModal();
         Toaster::success('Lesson created successfully!');
     }
