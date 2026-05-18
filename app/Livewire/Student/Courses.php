@@ -47,6 +47,21 @@ class Courses extends Component
 
     public function enrollInCourse($courseId)
     {
+        $course = Course::find($courseId);
+
+        // If course is free, enroll directly and redirect to course page
+        if ($course && $course->price == 0) {
+            Enrollment::create([
+                'course_id' => $courseId,
+                'user_id' => auth()->id(),
+                'status' => 'active',
+            ]);
+
+            Toaster::success('Successfully enrolled in the course!');
+            return redirect()->route('tenant.student.course', ['course' => $course->slug]);
+        }
+
+        // For paid courses, create enrollment and redirect to Stripe ( or whatever payment gateway we will use) checkout
         Enrollment::create([
             'course_id' => $courseId,
             'user_id' => auth()->id(),

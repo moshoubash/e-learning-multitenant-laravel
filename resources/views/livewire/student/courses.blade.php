@@ -104,7 +104,11 @@
                                 <button wire:click="enrollInCourse({{ $selectedCourseData->id }})"
                                     class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
                                     <i class="fas fa-graduation-cap mr-2"></i>
-                                    {{ __('Enroll in Course') }}
+                                    @if($selectedCourseData->price == 0)
+                                        {{ __('Enroll for Free') }}
+                                    @else
+                                        {{ __('Enroll Now') }} - ${{ number_format($selectedCourseData->price, 2) }}
+                                    @endif
                                 </button>
                             </div>
                         @else
