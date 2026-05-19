@@ -10,6 +10,21 @@
                     </h3>
                     <form>
                         <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Avatar') }}</label>
+                            <input type="file" wire:model="editThumbnail" accept="image/*"
+                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            @error('editThumbnail') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            @if($editThumbnail)
+                                <div class="mt-2">
+                                    <img src="{{ $editThumbnail->temporaryUrl() }}" class="w-20 h-20 object-cover rounded-md">
+                                </div>
+                            @elseif($editingCourse && $editingCourse->thumbnail)
+                                <div class="mt-2">
+                                    <img src="{{ $editingCourse->thumbnail }}" class="w-20 h-20 object-cover rounded-md">
+                                </div>
+                            @endif
+                        </div>
+                        <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Title') }}</label>
                             <input type="text" wire:model.lazy="editTitle"
                                 class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">

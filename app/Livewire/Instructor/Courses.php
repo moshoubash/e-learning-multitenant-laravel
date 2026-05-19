@@ -83,6 +83,7 @@ class Courses extends Component
     public $editPrice = '';
     public $editStatus = '';
     public $editInstructorId = '';
+    public $editThumbnail = null;
 
     // Section create form fields
     public $sectionCreateTitle = '';
@@ -160,6 +161,7 @@ class Courses extends Component
         $this->editPrice = $this->editingCourse->price;
         $this->editStatus = $this->editingCourse->status;
         $this->editInstructorId = $this->editingCourse->instructor_id;
+        $this->editThumbnail = null;
         $this->showEditModal = true;
     }
 
@@ -217,7 +219,7 @@ class Courses extends Component
             'createPrice' => 'required|numeric|min:0',
             'createStatus' => 'required|in:draft,published,archived',
             'createInstructorId' => 'required|exists:users,id',
-            'createAvatar' => 'nullable|image|max:2048',
+            'createThumbnail' => 'nullable|image|max:2048',
         ]);
 
         // Get tenant ID from current tenant context
@@ -244,7 +246,7 @@ class Courses extends Component
             'instructor_id' => $this->createInstructorId,
         ]);
 
-        $this->createThumbnail = null;
+        $this->createAvatar = null;
         $this->closeModal();
         Toaster::success('Course created successfully!');
     }
@@ -258,7 +260,29 @@ class Courses extends Component
             'editPrice' => 'required|numeric|min:0',
             'editStatus' => 'required|in:draft,published,archived',
             'editInstructorId' => 'required|exists:users,id',
+            'editThumbnail' => 'nullable|image|max:2048',
         ]);
+
+        // Get tenant ID from current tenant context
+        $tenantId = tenant('id') ?? 'default';
+
+        if ($this->editThumbnail) {
+            // Delete old avatar if exists
+            if ($this->editingCourse->thumbnail) {
+                $oldPath = str_replace(Storage::disk('s3')->url(''), '', $this->editingCourse->thumbnail);
+                if ($oldPath) {
+                    Storage::disk('s3')->delete($oldPath);
+                }
+            }
+
+            // Upload new thumbnail
+            $thumbnailPath = $this->editThumbnail->storeAs(
+                "courses/$tenantId/thumbnails",
+                $this->editingCourse->slug . '-' . time() . '.' . $this->editThumbnail->getClientOriginalExtension(),
+                's3'
+            );
+            $this->editingCourse->thumbnail = Storage::disk('s3')->url($thumbnailPath);
+        }
 
         $this->editingCourse->title = $this->editTitle;
         $this->editingCourse->slug = $this->editSlug;
@@ -269,6 +293,7 @@ class Courses extends Component
 
         $this->editingCourse->save();
 
+        $this->editThumbnail = null;
         $this->closeModal();
         Toaster::success('Course updated successfully!');
     }
