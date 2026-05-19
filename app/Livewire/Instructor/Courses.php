@@ -116,6 +116,12 @@ class Courses extends Component
     public $quizEditTitle = '';
     public $quizEditPassPercentage = 70;
 
+    public function mount()
+    {
+        $this->createInstructorId = auth()->user()->id;
+        $this->editInstructorId = auth()->user()->id;
+    }
+
     // Auto-generate slug from title
     public function updatedCreateTitle($value)
     {
@@ -146,7 +152,7 @@ class Courses extends Component
 
     public function openCreateModal()
     {
-        $this->resetCreateForm();
+        // $this->resetCreateForm();
         $this->showCreateModal = true;
     }
 
@@ -214,7 +220,6 @@ class Courses extends Component
             'createDescription' => 'nullable|string',
             'createPrice' => 'required|numeric|min:0',
             'createStatus' => 'required|in:draft,published,archived',
-            'createInstructorId' => 'required|exists:users,id',
         ]);
 
         Course::create([
@@ -238,7 +243,6 @@ class Courses extends Component
             'editDescription' => 'nullable|string',
             'editPrice' => 'required|numeric|min:0',
             'editStatus' => 'required|in:draft,published,archived',
-            'editInstructorId' => 'required|exists:users,id',
         ]);
 
         $this->editingCourse->title = $this->editTitle;
@@ -639,6 +643,7 @@ class Courses extends Component
                     ])->withTrashed();
                 }
             ])
+            ->where('instructor_id', auth()->user()->id)
             ->paginate(10);
 
         $deletedCourses = Course::onlyTrashed()->with('instructor')->get();

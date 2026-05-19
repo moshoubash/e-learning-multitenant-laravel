@@ -43,9 +43,9 @@
                     <td class="p-4">${{ number_format($course->price, 2) }}</td>
                     <td class="p-4">
                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                    @if($course->status === 'published') bg-green-100 text-green-800
-                                    @elseif($course->status === 'archived') bg-gray-100 text-gray-800
-                                    @else bg-yellow-100 text-yellow-800 @endif">
+                                                    @if($course->status === 'published') bg-green-100 text-green-800
+                                                    @elseif($course->status === 'archived') bg-gray-100 text-gray-800
+                                                    @else bg-yellow-100 text-yellow-800 @endif">
                             {{ ucfirst($course->status) }}
                         </span>
                     </td>
@@ -90,7 +90,11 @@
                         </td>
                     </tr>
                 @endif
+
             @endforeach
+            @if(count($courses) == 0)
+                <td colspan="6" class="p-4 text-center text-gray-500">{{ __('No courses found.') }}</td>
+            @endif
         </tbody>
     </table>
     <div class="p-4">

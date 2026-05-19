@@ -42,17 +42,6 @@
                             </select>
                             @error('createStatus') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Instructor') }}</label>
-                            <select wire:model.lazy="createInstructorId"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                <option value="">-- Select Instructor --</option>
-                                @foreach($instructors as $instructor)
-                                    <option value="{{ $instructor->id }}">{{ $instructor->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('createInstructorId') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
-                        </div>
                     </form>
                 </div>
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">

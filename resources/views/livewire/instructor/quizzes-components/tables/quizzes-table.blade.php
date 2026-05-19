@@ -87,6 +87,9 @@
                     </tr>
                 @endif
             @endforeach
+            @if(count($quizzes) == 0)
+                <td colspan="6" class="p-4 text-center text-gray-500">{{ __('No quizzes found.') }}</td>
+            @endif
         </tbody>
     </table>
     <div class="p-4">

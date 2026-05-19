@@ -163,8 +163,12 @@
                                                     <!-- Completion Status Icon -->
                                                     @if($this->isLessonCompleted($lesson->id))
                                                         <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                                    @elseif($lesson->type === 'video')
+                                                        <i class="fas fa-play-circle text-blue-400 mr-3"></i>
+                                                    @elseif($lesson->type === 'text')
+                                                        <i class="fas fa-file mr-3"></i>
                                                     @else
-                                                        <i class="fas @if($lesson->type === 'video') fa-play-circle text-blue-400 @elseif($lesson->type === 'quiz') fa-question-circle text-purple-400 @else fa-file-text text-gray-400 @endif mr-3"></i>
+                                                        <i class="fas fa-file-text text-gray-400 mr-3"></i>
                                                     @endif
                                                     <span class="text-sm text-gray-700 {{ $selectedLesson && $selectedLesson->id === $lesson->id ? 'font-medium' : '' }}">
                                                         {{ $lesson->title }}

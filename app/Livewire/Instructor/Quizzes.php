@@ -408,6 +408,9 @@ class Quizzes extends Component
                 $query->with('options');
             }
         ])
+            ->whereHas('section.course', function ($query) {
+                $query->where('instructor_id', auth()->user()->id);
+            })
             ->paginate(10);
 
         $sections = Section::with('course')->get();

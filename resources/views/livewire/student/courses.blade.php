@@ -149,7 +149,9 @@
                                                 <div class="flex items-center justify-between">
                                                     <div class="flex items-center">
                                                         <i
-                                                            class="fas @if($lesson->type === 'video') fa-play-circle text-blue-500 @elseif($lesson->type === 'quiz') fa-list-check text-purple-500 @else fa-file-text text-gray-400 @endif mr-3"></i>
+                                                            class="fas @if($lesson->type === 'video') fa-play-circle text-blue-500 
+                                                            @elseif($lesson->type === 'text') fa-file
+                                                                                        @elseif($lesson->type === 'quiz') fa-list-check text-purple-500 @else fa-file-text text-gray-400 @endif mr-3"></i>
                                                         <span class="text-gray-700">{{ $lesson->title }}</span>
                                                         @if($lesson->type === 'quiz' && $lesson->quiz)
                                                             <span class="ml-2 px-2 py-0.5 bg-purple-100 text-purple-700 text-xs rounded">
