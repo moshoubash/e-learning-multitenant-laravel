@@ -79,7 +79,7 @@
                 <div class="flex items-center justify-between px-4 py-2 hover:bg-gray-50">
                     <div class="flex items-center">
                         <i
-                            class="fas @if($lesson->type === 'video') fa-play-circle text-blue-500 @elseif($lesson->type === 'quiz') fa-list-check text-purple-500 @else fa-file-text text-gray-500 @endif mr-3"></i>
+                            class="fas @if($lesson->type === 'video') fa-play-circle text-blue-500 @elseif($lesson->type === 'text') fa-file @elseif($lesson->type === 'quiz') fa-list-check text-purple-500 @else fa-file-text text-gray-500 @endif mr-3"></i>
                         <span class="text-sm text-gray-700">{{ $lesson->title }}</span>
                         <span class="ml-2 text-xs text-gray-400">
                             @if($lesson->duration_seconds)

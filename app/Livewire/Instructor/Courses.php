@@ -116,10 +116,17 @@ class Courses extends Component
     public $quizEditTitle = '';
     public $quizEditPassPercentage = 70;
 
+    // max order in sections
+    public $maxOrderInSections = 0;
+    public $maxOrderInLessons = 0;
+
     public function mount()
     {
         $this->createInstructorId = auth()->user()->id;
         $this->editInstructorId = auth()->user()->id;
+
+        $this->maxOrderInSections = Section::max('order');
+        $this->maxOrderInLessons = Lesson::max('order');
     }
 
     // Auto-generate slug from title

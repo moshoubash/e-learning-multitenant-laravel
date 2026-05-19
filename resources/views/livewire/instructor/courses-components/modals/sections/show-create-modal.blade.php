@@ -15,7 +15,10 @@
                             @error('sectionCreateTitle') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Order') }}</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Order') }} <span> (min order:
+                                    {{ $maxOrderInSections ?? 0 }}) </span></label>
+                            <!-- max order in sections -->
+
                             <input type="number" wire:model.lazy="sectionCreateOrder" min="0"
                                 class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                             @error('sectionCreateOrder') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
