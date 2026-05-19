@@ -74,6 +74,7 @@ class Courses extends Component
     public $createPrice = '';
     public $createStatus = 'draft';
     public $createInstructorId = '';
+    public $createThumbnail = null;
 
     // Course edit form fields
     public $editTitle = '';
@@ -191,6 +192,7 @@ class Courses extends Component
         $this->createPrice = '';
         $this->createStatus = 'draft';
         $this->createInstructorId = '';
+        $this->createThumbnail = null;
     }
 
     public function resetFormFields()
@@ -215,17 +217,34 @@ class Courses extends Component
             'createPrice' => 'required|numeric|min:0',
             'createStatus' => 'required|in:draft,published,archived',
             'createInstructorId' => 'required|exists:users,id',
+            'createAvatar' => 'nullable|image|max:2048',
         ]);
+
+        // Get tenant ID from current tenant context
+        $tenantId = tenant('id') ?? 'default';
+
+        $thumbnailUrl = null;
+
+        if ($this->createThumbnail) {
+            $thumbnailPath = $this->createThumbnail->storeAs(
+                "courses/$tenantId/thumbnails",
+                $this->createSlug . '-' . time() . '.' . $this->createThumbnail->getClientOriginalExtension(),
+                's3'
+            );
+            $thumbnailUrl = Storage::disk('s3')->url($thumbnailPath);
+        }
 
         Course::create([
             'title' => $this->createTitle,
             'slug' => $this->createSlug,
             'description' => $this->createDescription,
+            'thumbnail' => $thumbnailUrl,
             'price' => $this->createPrice,
             'status' => $this->createStatus,
             'instructor_id' => $this->createInstructorId,
         ]);
 
+        $this->createThumbnail = null;
         $this->closeModal();
         Toaster::success('Course created successfully!');
     }
