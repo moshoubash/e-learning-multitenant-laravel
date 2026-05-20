@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Tenant;
+use App\Models\Tenant\Course;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -23,5 +25,10 @@ Route::view('dashboard', 'dashboard')
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
+
+Route::get('test', function () {
+    $courses = Course::onlyTrashed()->get();
+    return [$courses];
+});
 
 require __DIR__ . '/auth.php';

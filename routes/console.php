@@ -9,9 +9,8 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 // Schedule the purge command to run daily at midnight
-Schedule::command('app:purge-soft-deleted --days=30')
+Schedule::command('app:delete-soft-data')
     ->daily()
     ->withoutOverlapping()
     ->onOneServer()
-    ->runInBackground()
-    ->appendOutputTo(storage_path('logs/purge-soft-deleted.log'));
+    ->runInBackground();
