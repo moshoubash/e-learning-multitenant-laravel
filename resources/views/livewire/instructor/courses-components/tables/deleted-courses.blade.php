@@ -7,7 +7,6 @@
             <thead class="bg-gray-50">
                 <tr>
                     <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Title") }}</th>
-                    <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Instructor") }}</th>
                     <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Deleted At") }}</th>
                     <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Actions") }}</th>
                 </tr>
@@ -16,7 +15,6 @@
                 @foreach ($deletedCourses as $course)
                     <tr class="border-t border-gray-200 hover:bg-gray-50 bg-gray-50 text-gray-500">
                         <td class="p-4">{{ $course->title }}</td>
-                        <td class="p-4">{{ $course->instructor->name ?? 'N/A' }}</td>
                         <td class="p-4">{{ $course->deleted_at->format('Y-m-d H:i') }}</td>
                         <td class="p-4">
                             <button wire:click="openRestoreModal({{ $course->id }})" class="text-green-600 hover:text-green-800"

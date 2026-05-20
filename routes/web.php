@@ -26,9 +26,5 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-Route::get('test', function () {
-    $courses = Course::onlyTrashed()->get();
-    return [$courses];
-});
 
 require __DIR__ . '/auth.php';

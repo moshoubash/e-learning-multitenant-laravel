@@ -653,7 +653,10 @@ class Courses extends Component
             ->where('instructor_id', auth()->user()->id)
             ->paginate(10);
 
-        $deletedCourses = Course::onlyTrashed()->with('instructor')->get();
+        $deletedCourses = Course::onlyTrashed()
+            ->where('instructor_id', auth()->user()->id)
+            ->get();
+
         $instructors = User::role('instructor')->get();
 
         return view('livewire.instructor.courses', [

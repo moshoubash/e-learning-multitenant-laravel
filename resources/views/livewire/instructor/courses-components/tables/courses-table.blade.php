@@ -15,7 +15,6 @@
             <tr>
                 <th class="p-4 text-sm font-semibold text-gray-600 w-8"></th>
                 <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Title") }}</th>
-                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Instructor") }}</th>
                 <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Price") }}</th>
                 <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Status") }}</th>
                 <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Actions") }}</th>
@@ -39,13 +38,12 @@
                             @endif
                         </div>
                     </td>
-                    <td class="p-4">{{ $course->instructor->name ?? 'N/A' }}</td>
                     <td class="p-4">${{ number_format($course->price, 2) }}</td>
                     <td class="p-4">
                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                                    @if($course->status === 'published') bg-green-100 text-green-800
-                                                    @elseif($course->status === 'archived') bg-gray-100 text-gray-800
-                                                    @else bg-yellow-100 text-yellow-800 @endif">
+                                                        @if($course->status === 'published') bg-green-100 text-green-800
+                                                        @elseif($course->status === 'archived') bg-gray-100 text-gray-800
+                                                        @else bg-yellow-100 text-yellow-800 @endif">
                             {{ ucfirst($course->status) }}
                         </span>
                     </td>
