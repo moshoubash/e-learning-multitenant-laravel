@@ -1,12 +1,12 @@
 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
     <div class="flex items-center justify-between">
         <div class="p-4 border-b border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-700">{{ __('Active Users') }}</h3>
+            <h3 class="text-lg font-semibold text-gray-700">{{ __('messages.Active Users') }}</h3>
         </div>
         <button wire:click="openCreateModal"
             class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
             <i class="fas fa-plus mr-2"></i>
-            {{ __('Add User') }}
+            {{ __('messages.Add User') }}
         </button>
     </div>
 

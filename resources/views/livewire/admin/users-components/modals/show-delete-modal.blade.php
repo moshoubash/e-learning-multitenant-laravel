@@ -12,11 +12,11 @@
                             <i class="fas fa-exclamation-triangle text-red-600"></i>
                         </div>
                         <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                            <h3 class="text-lg font-medium leading-6 text-gray-900">{{ __('Delete User') }}</h3>
+                            <h3 class="text-lg font-medium leading-6 text-gray-900">{{ __('messages.Delete User') }}</h3>
                             <p class="mt-2 text-sm text-gray-500">
-                                {{ __('Are you sure you want to delete user') }}
+                                {{ __('messages.Are you sure you want to delete user') }}
                                 <strong>{{ $deletingUser->name }}</strong>?
-                                {{ __('This user can be restored later.') }}
+                                {{ __('messages.This user can be restored later.') }}
                             </p>
                         </div>
                     </div>
@@ -24,11 +24,11 @@
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button wire:click="softDelete" type="button"
                         class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
-                        {{ __('Delete') }}
+                        {{ __('messages.Delete') }}
                     </button>
                     <button wire:click="closeModal" type="button"
                         class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                        {{ __('Cancel') }}
+                        {{ __('messages.Cancel') }}
                     </button>
                 </div>
             </div>

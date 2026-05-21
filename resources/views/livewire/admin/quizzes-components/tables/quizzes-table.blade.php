@@ -1,6 +1,6 @@
 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
     <div class="p-4 border-b border-gray-200">
-        <h3 class="text-lg font-semibold text-gray-700">{{ __('All Quizzes') }}</h3>
+        <h3 class="text-lg font-semibold text-gray-700">{{ __('messages.All Quizzes') }}</h3>
     </div>
 
     <table class="w-full text-left">

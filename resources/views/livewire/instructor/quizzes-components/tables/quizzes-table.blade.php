@@ -1,12 +1,12 @@
 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
     <div class="flex items-center justify-between">
         <div class="p-4 border-b border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-700">{{ __('Active Quizzes') }}</h3>
+            <h3 class="text-lg font-semibold text-gray-700">{{ __('messages.Active Quizzes') }}</h3>
         </div>
         <button wire:click="openQuizCreateModal()"
             class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
             <i class="fas fa-plus mr-2"></i>
-            {{ __('Add Quiz') }}
+            {{ __('messages.Add Quiz') }}
         </button>
     </div>
 
@@ -75,7 +75,7 @@
                         <td colspan="6" class="p-0 bg-gray-50">
                             <div class="p-4">
                                 <div class="flex justify-between items-center mb-3">
-                                    <h4 class="text-sm font-semibold text-gray-600">{{ __('Questions & Options') }}</h4>
+                                    <h4 class="text-sm font-semibold text-gray-600">{{ __('messages.Questions & Options') }}</h4>
                                 </div>
                                 <div class="space-y-3">
                                     @foreach($quiz->questions->sortBy('order') as $question)
@@ -88,7 +88,7 @@
                 @endif
             @endforeach
             @if(count($quizzes) == 0)
-                <td colspan="6" class="p-4 text-center text-gray-500">{{ __('No quizzes found.') }}</td>
+                <td colspan="6" class="p-4 text-center text-gray-500">{{ __('messages.No quizzes found.') }}</td>
             @endif
         </tbody>
     </table>

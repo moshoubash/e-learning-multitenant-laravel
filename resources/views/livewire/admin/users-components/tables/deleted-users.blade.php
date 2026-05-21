@@ -1,7 +1,7 @@
 @if($deletedUsers->count() > 0)
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-4 border-b border-gray-200 bg-gray-100">
-            <h3 class="text-lg font-semibold text-gray-700">{{ __('Deleted Users') }}</h3>
+            <h3 class="text-lg font-semibold text-gray-700">{{ __('messages.Deleted Users') }}</h3>
         </div>
         <table class="w-full text-left">
             <thead class="bg-gray-50">

@@ -1,7 +1,7 @@
 <x-slot name="header">
     <div class="flex justify-between items-center">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Browse Courses') }}
+            {{ __('messages.Browse Courses') }}
         </h2>
     </div>
 </x-slot>
@@ -23,7 +23,7 @@
                 <div class="bg-green-50 overflow-hidden shadow-sm sm:rounded-lg mb-4">
                     <div class="p-4 border-b border-green-200">
                         <h3 class="text-lg font-semibold text-green-700">
-                            <i class="fas fa-graduation-cap mr-2"></i>{{ __('My Enrolled Courses') }}
+                            <i class="fas fa-graduation-cap mr-2"></i>{{ __('messages.My Enrolled Courses') }}
                         </h3>
                     </div>
                     <div class="divide-y divide-green-100">
@@ -50,7 +50,7 @@
             <!-- Available Courses Section -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-4 border-b border-gray-200">
-                    <h3 class="text-lg font-semibold text-gray-700">{{ __('Available Courses') }}</h3>
+                    <h3 class="text-lg font-semibold text-gray-700">{{ __('messages.Available Courses') }}</h3>
                 </div>
                 <div class="divide-y divide-gray-100">
                     @forelse($courses as $course)
@@ -105,9 +105,9 @@
                                     class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
                                     <i class="fas fa-graduation-cap mr-2"></i>
                                     @if($selectedCourseData->price == 0)
-                                        {{ __('Enroll for Free') }}
+                                        {{ __('messages.Enroll for Free') }}
                                     @else
-                                        {{ __('Enroll Now') }} - ${{ number_format($selectedCourseData->price, 2) }}
+                                        {{ __('messages.Enroll Now') }} - ${{ number_format($selectedCourseData->price, 2) }}
                                     @endif
                                 </button>
                             </div>
@@ -116,7 +116,7 @@
                                 <span
                                     class="inline-flex items-center px-4 py-2 bg-green-100 text-green-700 rounded-lg font-medium">
                                     <i class="fas fa-check-circle mr-2"></i>
-                                    {{ __('Enrolled') }}
+                                    {{ __('messages.Enrolled') }}
                                 </span>
                             </div>
                         @endif
@@ -124,7 +124,7 @@
 
                     <!-- Curriculum -->
                     <div class="p-6">
-                        <h4 class="text-lg font-semibold text-gray-700 mb-4">{{ __('Course Curriculum') }}</h4>
+                        <h4 class="text-lg font-semibold text-gray-700 mb-4">{{ __('messages.Course Curriculum') }}</h4>
 
                         @forelse($selectedCourseData->sections->sortBy('order') as $section)
                             <div class="mb-4 border border-gray-200 rounded-lg overflow-hidden">
@@ -149,7 +149,7 @@
                                                 <div class="flex items-center justify-between">
                                                     <div class="flex items-center">
                                                         <i
-                                                            class="fas @if($lesson->type === 'video') fa-play-circle text-blue-500 
+                                                            class="fas @if($lesson->type === 'video') fa-play-circle text-blue-500
                                                             @elseif($lesson->type === 'text') fa-file
                                                                                         @elseif($lesson->type === 'quiz') fa-list-check text-purple-500 @else fa-file-text text-gray-400 @endif mr-3"></i>
                                                         <span class="text-gray-700">{{ $lesson->title }}</span>
@@ -209,7 +209,7 @@
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-12 text-center">
                         <i class="fas fa-book-open text-6xl text-gray-300 mb-4"></i>
-                        <h3 class="text-lg font-medium text-gray-700">{{ __('Select a Course') }}</h3>
+                        <h3 class="text-lg font-medium text-gray-700">{{ __('messages.Select a Course') }}</h3>
                         <p class="text-gray-500 mt-2">Choose a course from the list to view its curriculum.</p>
                     </div>
                 </div>

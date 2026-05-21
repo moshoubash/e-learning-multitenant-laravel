@@ -28,3 +28,13 @@ Route::view('profile', 'profile')
 
 
 require __DIR__ . '/auth.php';
+
+Route::get('lang/{lang}', function ($lang) {
+    $available = ['en', 'ar'];
+    if (! in_array($lang, $available)) {
+        abort(404);
+    }
+
+    session(['locale' => $lang]);
+    return redirect()->back();
+})->name('lang.switch');

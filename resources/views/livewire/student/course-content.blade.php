@@ -28,12 +28,12 @@
                     @if($selectedLesson->type === 'video' && $selectedLesson->video_url)
                         <!-- Plyr Video Player -->
                         <div class="aspect-video" >
-                            <video 
-                                x-data="{}" 
-                                x-init="new Plyr($refs.player)" 
-                                x-ref="player" 
-                                playsinline 
-                                controls 
+                            <video
+                                x-data="{}"
+                                x-init="new Plyr($refs.player)"
+                                x-ref="player"
+                                playsinline
+                                controls
                                 class="w-full"
                             >
                                 <source src="{{ $selectedLesson->video_url }}" type="video/mp4" />
@@ -104,7 +104,7 @@
                             <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
                                 <p class="text-blue-700 text-sm">
                                     <i class="fas fa-info-circle mr-2"></i>
-                                    Video playback placeholder. 
+                                    Video playback placeholder.
                                 </p>
                             </div>
                         @elseif($selectedLesson->type === 'quiz')
@@ -133,7 +133,7 @@
                 <div class="p-4 border-b border-gray-200 bg-gray-50">
                     <h3 class="text-lg font-semibold text-gray-800">
                         <i class="fas fa-list mr-2"></i>
-                        {{ __('Course Content') }}
+                        {{ __('messages.Course Content') }}
                     </h3>
                 </div>
 
@@ -187,7 +187,7 @@
                                     @if($section->quiz)
                                         <div class="p-3 bg-purple-50 border-t border-purple-100">
                                             <div class="flex items-center justify-between">
-                                                <a href="{{ route('tenant.student.quiz', $section->quiz->id) }}" 
+                                                <a href="{{ route('tenant.student.quiz', $section->quiz->id) }}"
                                                    class="flex items-center flex-1 hover:bg-purple-100 rounded p-2 -m-2 transition-colors">
                                                     <i class="fas fa-clipboard-list text-purple-500 mr-3"></i>
                                                     <span class="text-sm text-purple-700 font-medium flex-1">

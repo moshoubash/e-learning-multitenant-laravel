@@ -1,7 +1,7 @@
 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
     <div class="flex items-center justify-between">
         <div class="p-4 border-b border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-700">{{ __('All Courses') }}</h3>
+            <h3 class="text-lg font-semibold text-gray-700">{{ __('messages.All Courses') }}</h3>
             <p class="text-sm text-gray-500">
                 Note: Only instructors can add sections, lessons, and quizzes to courses.
             </p>
@@ -9,7 +9,7 @@
         <button wire:click="openCreateModal"
             class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
             <i class="fas fa-plus mr-2"></i>
-            {{ __('Add Course') }}
+            {{ __('messages.Add Course') }}
         </button>
     </div>
 

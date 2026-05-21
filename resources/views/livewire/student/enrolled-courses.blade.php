@@ -3,10 +3,10 @@
         <div class="flex items-center justify-between">
             <h3 class="text-lg font-semibold text-gray-800">
                 <i class="fas fa-graduation-cap mr-2 text-green-500"></i>
-                {{ __('My Enrolled Courses') }}
+                {{ __('messages.My Enrolled Courses') }}
             </h3>
             <a href="{{ route('tenant.student.courses') }}" class="text-blue-600 hover:text-blue-800 text-sm">
-                {{ __('Browse More') }} <i class="fas fa-arrow-right ml-1"></i>
+                {{ __('messages.Browse More') }} <i class="fas fa-arrow-right ml-1"></i>
             </a>
         </div>
     </div>
@@ -63,7 +63,7 @@
                     <a href="{{ route('tenant.student.course', $enrollment->course->slug) }}"
                         class="inline-flex items-center px-3 py-2 bg-green-600 hover:bg-green-700 text-white text-sm rounded-lg transition-colors">
                         <i class="fas fa-play mr-2"></i>
-                        {{ __('Continue') }}
+                        {{ __('messages.Continue') }}
                     </a>
                 </div>
             </div>
@@ -71,12 +71,12 @@
     @empty
         <div class="p-12 text-center">
             <i class="fas fa-graduation-cap text-6xl text-gray-300 mb-4"></i>
-            <h3 class="text-lg font-medium text-gray-700">{{ __('No Enrolled Courses') }}</h3>
-            <p class="text-gray-500 mt-2">{{ __('Start learning by enrolling in a course.') }}</p>
+            <h3 class="text-lg font-medium text-gray-700">{{ __('messages.No Enrolled Courses') }}</h3>
+            <p class="text-gray-500 mt-2">{{ __('messages.Start learning by enrolling in a course.') }}</p>
             <a href="{{ route('tenant.student.courses') }}"
                 class="inline-flex items-center mt-4 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors">
                 <i class="fas fa-search mr-2"></i>
-                {{ __('Browse Courses') }}
+                {{ __('messages.Browse Courses') }}
             </a>
         </div>
     @endforelse

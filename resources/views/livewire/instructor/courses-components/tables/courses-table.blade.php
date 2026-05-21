@@ -1,23 +1,23 @@
-<div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
+<div class="mb-6 overflow-hidden bg-white shadow-sm sm:rounded-lg">
     <div class="flex items-center justify-between">
         <div class="p-4 border-b border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-700">{{ __('Active Courses') }}</h3>
+            <h3 class="text-lg font-semibold text-gray-700">{{ __('messages.Active Courses') }}</h3>
         </div>
         <button wire:click="openCreateModal"
-            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-            <i class="fas fa-plus mr-2"></i>
-            {{ __('Add Course') }}
+            class="px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
+            <i class="mr-2 fas fa-plus"></i>
+            {{ __('messages.Add Course') }}
         </button>
     </div>
 
     <table class="w-full text-left">
         <thead class="bg-gray-50">
             <tr>
-                <th class="p-4 text-sm font-semibold text-gray-600 w-8"></th>
-                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Title") }}</th>
-                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Price") }}</th>
-                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Status") }}</th>
-                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Actions") }}</th>
+                <th class="w-8 p-4 text-sm font-semibold text-gray-600"></th>
+                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("messages.Title") }}</th>
+                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("messages.Price") }}</th>
+                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("messages.Status") }}</th>
+                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("messages.Actions") }}</th>
             </tr>
         </thead>
         <tbody>
@@ -50,7 +50,7 @@
                     <td class="p-4">
                         <div class="flex items-center">
                             <button wire:click="openEditModal({{ $course->id }})"
-                                class="text-blue-600 hover:text-blue-800 mr-3" title="Edit">
+                                class="mr-3 text-blue-600 hover:text-blue-800" title="Edit">
                                 <i class="fas fa-edit"></i>
                             </button>
                             <button wire:click="openDeleteModal({{ $course->id }})" class="text-red-600 hover:text-red-800"
@@ -59,7 +59,7 @@
                             </button>
                             @if($course->sections && count($course->sections) === 0)
                                 <button wire:click="openSectionCreateModal({{ $course->id }})"
-                                    class="text-green-600 hover:text-green-800 ml-3" title="Add Section">
+                                    class="ml-3 text-green-600 hover:text-green-800" title="Add Section">
                                     <i class="fas fa-plus-circle"></i>
                                 </button>
                             @endif
@@ -71,12 +71,12 @@
                     <tr>
                         <td colspan="6" class="p-0 bg-gray-50">
                             <div class="p-4">
-                                <div class="flex justify-between items-center mb-3">
-                                    <h4 class="text-sm font-semibold text-gray-600">{{ __('Sections & Lessons') }}</h4>
+                                <div class="flex items-center justify-between mb-3">
+                                    <h4 class="text-sm font-semibold text-gray-600">{{ __('messages.Sections & Lessons') }}</h4>
                                     <button wire:click="openSectionCreateModal({{ $course->id }})"
-                                        class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs font-medium">
-                                        <i class="fas fa-plus mr-1"></i>
-                                        {{ __('Add Section') }}
+                                        class="px-3 py-1 text-xs font-medium text-white bg-green-600 rounded hover:bg-green-700">
+                                        <i class="mr-1 fas fa-plus"></i>
+                                        {{ __('messages.Add Section') }}
                                     </button>
                                 </div>
                                 <div class="space-y-3">
@@ -91,7 +91,7 @@
 
             @endforeach
             @if(count($courses) == 0)
-                <td colspan="6" class="p-4 text-center text-gray-500">{{ __('No courses found.') }}</td>
+                <td colspan="6" class="p-4 text-center text-gray-500">{{ __('messages.No courses found.') }}</td>
             @endif
         </tbody>
     </table>

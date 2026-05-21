@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Checkout') }}
+                {{ __('messages.Checkout') }}
             </h2>
         </div>
     </x-slot>
@@ -11,7 +11,7 @@
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <!-- Course Summary -->
             <div class="p-6 border-b border-gray-200">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">{{ __('Course Summary') }}</h3>
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">{{ __('messages.Course Summary') }}</h3>
 
                 <div class="flex items-start space-x-4">
                     @if($course->thumbnail)
@@ -26,7 +26,7 @@
                     <div class="flex-1">
                         <h4 class="font-semibold text-gray-800">{{ $course->title }}</h4>
                         <p class="text-sm text-gray-500 mt-1">
-                            {{ __('By') }} {{ $course->instructor->name ?? 'N/A' }}
+                            {{ __('messages.By') }} {{ $course->instructor->name ?? 'N/A' }}
                         </p>
                         <div class="mt-2 flex items-center text-sm text-gray-500">
                             <span class="mr-4">
@@ -49,7 +49,7 @@
 
             <!-- Payment Section -->
             <div class="p-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">{{ __('Payment Details') }}</h3>
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">{{ __('messages.Payment Details') }}</h3>
 
                 <!-- Error Message -->
                 @if($errorMessage)
@@ -66,15 +66,15 @@
                     <div class="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                         <div class="flex items-center mb-3">
                             <i class="fas fa-exclamation-triangle text-yellow-500 mr-3"></i>
-                            <p class="text-yellow-700">{{ __('Additional authentication required') }}</p>
+                            <p class="text-yellow-700">{{ __('messages.Additional authentication required') }}</p>
                         </div>
                         <p class="text-sm text-gray-600 mb-3">
-                            {{ __('Please complete the verification with your bank to complete the purchase.') }}
+                            {{ __('messages.Please complete the verification with your bank to complete the purchase.') }}
                         </p>
                         <div id="stripe-3ds-container" class="mb-4"></div>
                         <button wire:click="retryPayment"
                             class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm">
-                            {{ __('Use Different Payment Method') }}
+                            {{ __('messages.Use Different Payment Method') }}
                         </button>
                     </div>
                 @endif
@@ -82,7 +82,7 @@
                 <!-- Stripe Card Element -->
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-2">
-                        {{ __('Card Information') }}
+                        {{ __('messages.Card Information') }}
                     </label>
                     <div id="card-element" class="p-4 border border-gray-300 rounded-lg bg-white"
                         style="min-height: 50px;">
@@ -91,7 +91,7 @@
                     <div id="card-errors" class="mt-2 text-sm text-red-500" role="alert"></div>
                     <p class="mt-2 text-xs text-gray-500">
                         <i class="fas fa-lock mr-1"></i>
-                        {{ __('Your payment information is secured with Stripe') }}
+                        {{ __('messages.Your payment information is secured with Stripe') }}
                     </p>
                 </div>
 
@@ -99,7 +99,7 @@
                 @if($isProcessing)
                     <div class="flex items-center justify-center py-4">
                         <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mr-3"></div>
-                        <span class="text-gray-600">{{ __('Processing payment...') }}</span>
+                        <span class="text-gray-600">{{ __('messages.Processing payment...') }}</span>
                     </div>
                 @endif
 
@@ -110,11 +110,11 @@
                     class="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white px-6 py-3 rounded-lg font-medium transition-colors mt-4">
                     <span x-show="!{{ $isProcessing }}">
                         <i class="fas fa-lock mr-2"></i>
-                        {{ __('Pay') }} ${{ number_format($course->price, 2) }}
+                        {{ __('messages.Pay') }} ${{ number_format($course->price, 2) }}
                     </span>
                     <span x-show="{{ $isProcessing }}">
                         <i class="fas fa-spinner fa-spin mr-2"></i>
-                        {{ __('Processing...') }}
+                        {{ __('messages.Processing...') }}
                     </span>
                 </button>
             </div>
@@ -123,7 +123,7 @@
             <div class="p-6 bg-gray-50 border-t border-gray-200">
                 <div class="flex items-center justify-center text-sm text-gray-500">
                     <i class="fas fa-shield-alt mr-2"></i>
-                    {{ __('Your payment is secured by Stripe. We never store your card details.') }}
+                    {{ __('messages.Your payment is secured by Stripe. We never store your card details.') }}
                 </div>
             </div>
         </div>
@@ -132,7 +132,7 @@
         <div class="mt-4 text-center">
             <a href="{{ route('tenant.student.courses') }}" class="text-gray-600 hover:text-gray-800 text-sm">
                 <i class="fas fa-arrow-left mr-1"></i>
-                {{ __('Back to Courses') }}
+                {{ __('messages.Back to Courses') }}
             </a>
         </div>
     </div>

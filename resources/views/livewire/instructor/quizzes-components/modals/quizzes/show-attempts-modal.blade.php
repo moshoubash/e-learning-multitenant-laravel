@@ -11,10 +11,10 @@
                 class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 max-h-[90vh] overflow-y-auto">
                     <h3 class="text-lg font-medium text-gray-900 mb-4">
-                        {{ __('Student Attempts') }}: {{ $quiz?->title ?? 'Quiz' }}
+                        {{ __('messages.Student Attempts') }}: {{ $quiz?->title ?? 'Quiz' }}
                         <span class="ml-2 text-sm font-normal text-gray-500">({{ $attempts->count() }} attempts)</span>
                     </h3>
-                    
+
                     @if($attempts->count() > 0)
                         <table class="w-full text-left">
                             <thead class="bg-gray-50">
@@ -61,7 +61,7 @@
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button wire:click="closeAttemptsModal" type="button"
                         class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-600 text-base font-medium text-white hover:bg-gray-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
-                        {{ __('Close') }}
+                        {{ __('messages.Close') }}
                     </button>
                 </div>
             </div>
