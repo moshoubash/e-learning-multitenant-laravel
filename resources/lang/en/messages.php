@@ -74,6 +74,55 @@ return [
     'Created At' => 'Created At',
 
 
+    'Admin' => 'Admin',
+    'Instructor' => 'Instructor',
+    'Student' => 'Student',
+
+    'Published' => 'Published',
+    'Draft' => 'Draft',
+    'Archived' => 'Archived',
+
+    'All Courses' => 'All Courses',
+    'Note: Only instructors can add sections, lessons, and quizzes to courses.' => 'Note: Only instructors can add sections, lessons, and quizzes to courses.',
+    'Are you sure you want to delete this course? This action cannot be undone.' => 'Are you sure you want to delete this course? This action cannot be undone.',
+    'Edit Course' => 'Edit Course',
+
+    'Quiz Management' => 'Quiz Management',
+    'All Quizzes' => 'All Quizzes',
+    'Course / Section' => 'Course / Section',
+    'Questions' => 'Questions',
+    'Pass %' => 'Pass %',
+
+    'Score' => 'Score',
+    'Submitted At' => 'Submitted At',
+    'Passed' => 'Passed',
+    'Failed' => 'Failed',
+
+    'pass' => 'pass',
+    'Quiz Attempts' => 'Quiz Attempts',
+    'Quiz' => 'Quiz',
+
+    'Edit Quiz' => 'Edit Quiz',
+    'Quiz Details' => 'Quiz Details',
+    'Update Quiz' => 'Update Quiz',
+    'Add Question' => 'Add Question',
+    'Question Text' => 'Question Text',
+    'Type' => 'Type',
+    'Order' => 'Order',
+    'Single Choice' => 'Single Choice',
+    'Multiple Choice' => 'Multiple Choice',
+    'True/False' => 'True/False',
+    'Edit Question' => 'Edit Question',
+    'Add Option' => 'Add Option',
+    'Edit Option' => 'Edit Option',
+    'Delete Option' => 'Delete Option',
+    'Option Text' => 'Option Text',
+    'Correct Answer' => 'Correct Answer',
+    'Delete Question' => 'Delete Question',
+    'Are you sure you want to delete this question? All options will also be deleted.' => 'Are you sure you want to delete this question? All options will also be deleted.',
+    'Are you sure you want to delete this option?' => 'Are you sure you want to delete this option?',
+
+
     'Delete Course' => 'Delete Course',
     'Ensure your account is using a long, random password to stay secure.' => 'Ensure your account is using a long, random password to stay secure.',
     'Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.' => 'Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.',

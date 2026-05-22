@@ -30,10 +30,16 @@
                                                                         @if($user->hasRole('admin')) bg-purple-100 text-purple-800
                                                                         @elseif($user->hasRole('instructor')) bg-blue-100 text-blue-800
                                                                         @else bg-green-100 text-green-800 @endif">
-                            {{ ucfirst($user->getRoleNames()->first() ?? 'student') }}
+                            {{ __('messages.'.ucfirst($user->getRoleNames()->first() ?? 'student')) }}
                         </span>
                     </td>
-                    <td class="p-4 text-gray-500">{{ $user->created_at->format('Y-m-d') }}</td>
+
+                    <td class="p-4 text-gray-500">
+                        {{ app()->getLocale() === 'ar' ? $user->created_at->isoFormat('dddd, D MMMM YYYY') : $user->created_at->translatedFormat('Y-m-d') }}
+                    </td>
+
+
+
                     <td class="p-4">
                         <button wire:click="openEditModal({{ $user->id }})" class="mr-3 text-blue-600 hover:text-blue-800"
                             title="Edit">

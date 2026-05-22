@@ -17,6 +17,12 @@
 
     @stack('styles')
 
+    <style>
+        * {
+            text-align: {{ app()->getLocale() === 'ar' ? 'right' : 'left' }};
+        }
+    </style>
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles

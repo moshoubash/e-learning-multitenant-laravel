@@ -90,6 +90,55 @@ return [
     'Edit User' => 'تعديل المستخدم',
     'Created At' => 'تاريخ الإنشاء',
 
+    'Admin' => 'ادمن',
+    'Instructor' => 'مدرس',
+    'Student' => 'طالب',
+
+    'Published' => 'منشور',
+    'Draft' => 'مسودة',
+    'Archived' => 'مؤرشف',
+
+    'All Courses' => 'كل الدورات',
+    'Note: Only instructors can add sections, lessons, and quizzes to courses.' => 'ملاحظة: فقط المدرسين يمكنهم إضافة الأقسام والدروس والاختبارات إلى الدورات.',
+    'Are you sure you want to delete this course? This action cannot be undone.' => 'هل أنت متأكد أنك تريد حذف هذه الدورة؟ هذا الإجراء لا يمكن التراجع عنه.',
+    'Edit Course' => 'تعديل الدورة',
+
+    'Quiz Management' => 'إدارة الاختبارات',
+    'All Quizzes' => 'كل الاختبارات',
+    'Course / Section' => 'الدورة / القسم',
+    'Questions' => 'الأسئلة',
+    'Pass %' => 'نسبة النجاح',
+
+    'Score' => 'الدرجة',
+    'Submitted At' => 'تاريخ التقديم',
+    'Passed' => 'ناجح',
+    'Failed' => 'راسب',
+
+    'pass' => 'نجاح',
+    'Quiz Attempts' => 'محاولات الاختبار',
+    'Quiz' => 'الاختبار',
+
+    // quizzes
+    'Edit Quiz' => 'تعديل الاختبار',
+    'Quiz Details' => 'تفاصيل الاختبار',
+    'Update Quiz' => 'تحديث الاختبار',
+    'Add Question' => 'إضافة سؤال',
+    'Question Text' => 'نص السؤال',
+    'Type' => 'النوع',
+    'Order' => 'الترتيب',
+    'Single Choice' => 'اختيار واحد',
+    'Multiple Choice' => 'اختيار متعدد',
+    'True/False' => 'صح/خطأ',
+    'Edit Question' => 'تعديل السؤال',
+    'Add Option' => 'إضافة خيار',
+    'Edit Option' => 'تعديل الخيار',
+    'Delete Option' => 'حذف الخيار',
+    'Option Text' => 'نص الخيار',
+    'Correct Answer' => 'الإجابة الصحيحة',
+    'Delete Question' => 'حذف السؤال',
+    'Are you sure you want to delete this question? All options will also be deleted.' => 'هل أنت متأكد أنك تريد حذف هذا السؤال؟ سيتم أيضًا حذف جميع الخيارات.',
+    'Are you sure you want to delete this option?' => 'هل أنت متأكد أنك تريد حذف هذا الخيار؟',
+
     'Are you sure you want to delete course :title?' => 'هل أنت متأكد أنك تريد حذف الدورة :title؟',
 
     'Delete Course' => 'حذف الدورة',

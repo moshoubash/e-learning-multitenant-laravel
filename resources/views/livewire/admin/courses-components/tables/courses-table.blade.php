@@ -1,14 +1,14 @@
-<div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
+<div class="mb-6 overflow-hidden bg-white shadow-sm sm:rounded-lg">
     <div class="flex items-center justify-between">
         <div class="p-4 border-b border-gray-200">
             <h3 class="text-lg font-semibold text-gray-700">{{ __('messages.All Courses') }}</h3>
             <p class="text-sm text-gray-500">
-                Note: Only instructors can add sections, lessons, and quizzes to courses.
+                {{ __('messages.Note: Only instructors can add sections, lessons, and quizzes to courses.') }}
             </p>
         </div>
         <button wire:click="openCreateModal"
-            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-            <i class="fas fa-plus mr-2"></i>
+            class="px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
+            <i class="mr-2 fas fa-plus"></i>
             {{ __('messages.Add Course') }}
         </button>
     </div>
@@ -16,12 +16,12 @@
     <table class="w-full text-left">
         <thead class="bg-gray-50">
             <tr>
-                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Title") }}</th>
-                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Instructor") }}</th>
-                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Price") }}</th>
-                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Status") }}</th>
-                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Created At") }}</th>
-                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("Actions") }}</th>
+                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("messages.Title") }}</th>
+                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("messages.Instructor") }}</th>
+                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("messages.Price") }}</th>
+                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("messages.Status") }}</th>
+                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("messages.Created At") }}</th>
+                <th class="p-4 text-sm font-semibold text-gray-600">{{ __("messages.Actions") }}</th>
             </tr>
         </thead>
         <tbody>
@@ -40,12 +40,15 @@
                                             @if($course->status === 'published') bg-green-100 text-green-800
                                             @elseif($course->status === 'draft') bg-yellow-100 text-yellow-800
                                             @else bg-gray-100 text-gray-800 @endif">
-                            {{ ucfirst($course->status) }}
+                            {{ __('messages.' . ucfirst($course->status)) }}
                         </span>
                     </td>
-                    <td class="p-4 text-gray-500">{{ $course->created_at->format('Y-m-d') }}</td>
+                    <td class="p-4 text-gray-500">
+                        {{ app()->getLocale() === 'ar' ? $course->created_at->isoFormat('dddd, D MMMM YYYY') : $course->created_at->translatedFormat('Y-m-d') }}
+                    </td>
+
                     <td class="p-4">
-                        <button wire:click="openEditModal({{ $course->id }})" class="text-blue-600 hover:text-blue-800 mr-3"
+                        <button wire:click="openEditModal({{ $course->id }})" class="mr-3 text-blue-600 hover:text-blue-800"
                             title="Edit">
                             <i class="fas fa-edit"></i>
                         </button>
