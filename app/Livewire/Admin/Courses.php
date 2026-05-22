@@ -36,6 +36,15 @@ class Courses extends Component
     public $editStatus = '';
     public $editInstructorId = '';
 
+    public $showRestoreModal = false;
+    public $restoringCourse = null;
+
+    public function openRestoreModal($id)
+    {
+        $this->restoringCourse = Course::withTrashed()->find($id);
+        $this->showRestoreModal = true;
+    }
+
     public function openCreateModal()
     {
         $this->resetCreateForm();
@@ -64,7 +73,17 @@ class Courses extends Component
         $this->showCreateModal = false;
         $this->showEditModal = false;
         $this->showDeleteModal = false;
+        $this->showRestoreModal = false;
         $this->resetFormFields();
+    }
+
+    public function restore()
+    {
+        if ($this->restoringCourse) {
+            $this->restoringCourse->restore();
+            $this->closeModal();
+            Toaster::success('messages.Course restored successfully!');
+        }
     }
 
     public function resetCreateForm()
@@ -176,6 +195,7 @@ class Courses extends Component
         return view('livewire.admin.courses', [
             'courses' => $courses,
             'instructors' => $instructors,
+            'deletedCourses' => Course::onlyTrashed()->with('instructor')->get(),
         ]);
     }
 }

@@ -140,4 +140,14 @@ return [
     'Delete Course' => 'Delete Course',
     'Ensure your account is using a long, random password to stay secure.' => 'Ensure your account is using a long, random password to stay secure.',
     'Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.' => 'Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.',
+
+    'Deleted Courses' => 'Deleted Courses',
+    'Restore' => 'Restore',
+    'Deleted At' => 'Deleted At',
+    'Restore Course' => 'Restore Course',
+    'Are you sure you want to restore course :title?' => 'Are you sure you want to restore course :title?',
+    'Course restored successfully!' => 'Course restored successfully!',
+    'Deleted Users' => 'Deleted Users',
+    'Restore User' => 'Restore User',
+    'Are you sure you want to restore user :name?' => 'Are you sure you want to restore user :name?'
 ];

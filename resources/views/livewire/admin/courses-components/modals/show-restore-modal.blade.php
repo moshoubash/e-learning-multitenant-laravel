@@ -1,4 +1,4 @@
-@if($showRestoreModal && $restoringUser)
+@if($showRestoreModal && $restoringCourse)
     <div class="fixed inset-0 z-50 overflow-y-auto" x-data="{ show: true }" x-show="show">
         <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
             <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" wire:click="closeModal"></div>
@@ -12,9 +12,9 @@
                             <i class="text-green-600 fas fa-undo"></i>
                         </div>
                         <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                            <h3 class="text-lg font-medium leading-6 text-gray-900">{{ __('messages.Restore User') }}</h3>
+                            <h3 class="text-lg font-medium leading-6 text-gray-900">{{ __('messages.Restore Course') }}</h3>
                             <p class="mt-2 text-sm text-gray-500">
-                                {{ __('messages.Are you sure you want to restore user :name?', ['name' => $restoringUser->name]) }}
+                                {{ __('messages.Are you sure you want to restore course :title?', ['title' => $restoringCourse->title]) }}
                             </p>
                         </div>
                     </div>

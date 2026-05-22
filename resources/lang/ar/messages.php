@@ -159,8 +159,18 @@ return [
     'User updated successfully!' => 'تم تحديث المستخدم بنجاح!',
     'User soft deleted successfully!' => 'تم حذف المستخدم بنجاح!',
     'User restored successfully!' => 'تم استعادة المستخدم بنجاح!',
-    
+
     'Delete Course' => 'حذف الدورة',
     'Ensure your account is using a long, random password to stay secure.' => 'تأكد من أن حسابك يستخدم كلمة مرور طويلة وعشوائية للبقاء آمناً.',
     'Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.' => 'بمجرد حذف حسابك، سيتم حذف جميع موارده وبياناته بشكل دائم. قبل حذف حسابك، يرجى تنزيل أي بيانات أو معلومات ترغب في الاحتفاظ بها.',
+
+    'Deleted Courses' => 'الدورات المحذوفة',
+    'Restore' => 'استعادة',
+    'Deleted At' => 'تاريخ الحذف',
+    'Restore Course' => 'استعادة الدورة',
+    'Are you sure you want to restore course :title?' => 'هل أنت متأكد أنك تريد استعادة الدورة :title؟',
+    'Course restored successfully!' => 'تم استعادة الدورة بنجاح!',
+    'Deleted Users' => 'المستخدمون المحذوفون',
+    'Restore User' => 'استعادة المستخدم',
+    'Are you sure you want to restore user :name?' => 'هل أنت متأكد أنك تريد استعادة المستخدم :name؟'
 ];
