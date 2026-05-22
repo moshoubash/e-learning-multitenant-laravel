@@ -40,7 +40,18 @@ return [
     'Delete' => 'Delete',
     'This course can be restored later.' => 'This course can be restored later.',
     'Delete Quiz' => 'Delete Quiz',
+    'Password' => 'Password',
+    'Remember me' => 'Remember me',
+    'Log in' => 'Log in',
+    'Forgot your password?' => 'Forgot your password?',
+    'Already registered?' => 'Already registered?',
+    'Register' => 'Register',
+    'Email Password Reset Link' => 'Email Password Reset Link',
+    'Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.' => 'Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.',
 
+    'Confirm' => 'Confirm',
+    'Arabic' => 'Arabic',
+    'English' => 'English',
     'Are you sure you want to delete course :title?' => 'Are you sure you want to delete course :title?',
 
     'Delete Course' => 'Delete Course',

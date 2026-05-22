@@ -61,6 +61,19 @@ return [
     'Actions' => 'الإجراءات',
     'Delete' => 'حذف',
     'This course can be restored later.' => 'يمكن استعادة هذه الدورة لاحقاً.',
+    'Delete Quiz' => 'حذف الاختبار',
+    'Password' => 'كلمة المرور',
+    'Remember me' => 'تذكرني',
+    'Log in' => 'تسجيل الدخول',
+    'Forgot your password?' => 'هل نسيت كلمة المرور؟',
+    'Already registered?' => 'هل لديك حساب بالفعل؟',
+    'Register' => 'تسجيل',
+    'Email Password Reset Link' => 'إرسال رابط إعادة تعيين كلمة المرور',
+    'Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.' => 'هل نسيت كلمة المرور؟ لا مشكلة. فقط أخبرنا بعنوان بريدك الإلكتروني وسنرسل لك رابط إعادة تعيين كلمة المرور الذي سيسمح لك باختيار كلمة مرور جديدة.',
+
+    'Confirm' => 'التأكيد',
+    'Arabic' => 'العربية',
+    'English' => 'الإنجليزية',
 
     'Are you sure you want to delete course :title?' => 'هل أنت متأكد أنك تريد حذف الدورة :title؟',
 

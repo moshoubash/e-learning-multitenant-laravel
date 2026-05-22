@@ -13,6 +13,11 @@ new class extends Component {
 
         $this->redirect('/', navigate: true);
     }
+
+    public function changeLanguage($locale)
+    {
+        return redirect()->to('lang/' . $locale);
+    }
 }; ?>
 
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
@@ -54,6 +59,17 @@ new class extends Component {
                         {{ __('messages.My Quizzes') }}
                     </x-nav-link>
                     @endrole
+
+                    <select wire:change="changeLanguage($event.target.value)"
+                        class="text-sm text-gray-900 border-none focus:ring-0">
+                        <option value="en" {{ app()->getLocale() === 'en' ? 'selected' : '' }}>
+                            {{ __('messages.English') }}
+                        </option>
+                        <option value="ar" {{ app()->getLocale() === 'ar' ? 'selected' : '' }}>
+                            {{ __('messages.Arabic') }}
+                        </option>
+                    </select>
+
                     @role('student')
                     <x-nav-link :href="route('tenant.student.courses')" wire:navigate>
                         {{ __('messages.Browse Courses') }}
