@@ -125,7 +125,7 @@ class Quizzes extends Component
         $this->editingQuiz->save();
 
         $this->closeModals();
-        Toaster::success('Quiz updated successfully!');
+        Toaster::success('messages.Quiz updated successfully!');
     }
 
     // Question methods
@@ -171,7 +171,7 @@ class Quizzes extends Component
         // Refresh the quiz data
         $this->editingQuiz = Quiz::with(['questions.options', 'section.course'])->find($this->editingQuiz->id);
         $this->showQuestionCreateModal = false;
-        Toaster::success('Question created successfully!');
+        Toaster::success('messages.Question created successfully!');
     }
 
     public function updateQuestion()
@@ -190,7 +190,7 @@ class Quizzes extends Component
         // Refresh the quiz data
         $this->editingQuiz = Quiz::with(['questions.options', 'section.course'])->find($this->editingQuiz->id);
         $this->showQuestionEditModal = false;
-        Toaster::success('Question updated successfully!');
+        Toaster::success('messages.Question updated successfully!');
     }
 
     public function deleteQuestion()
@@ -201,7 +201,7 @@ class Quizzes extends Component
             // Refresh the quiz data
             $this->editingQuiz = Quiz::with(['questions.options', 'section.course'])->find($this->editingQuiz->id);
             $this->showQuestionDeleteModal = false;
-            Toaster::success('Question deleted successfully!');
+            Toaster::success('messages.Question deleted successfully!');
         }
     }
 
@@ -244,7 +244,7 @@ class Quizzes extends Component
         // Refresh the quiz data
         $this->editingQuiz = Quiz::with(['questions.options', 'section.course'])->find($this->editingQuiz->id);
         $this->showOptionCreateModal = false;
-        Toaster::success('Option created successfully!');
+        Toaster::success('messages.Option created successfully!');
     }
 
     public function updateOption()
@@ -261,7 +261,7 @@ class Quizzes extends Component
         // Refresh the quiz data
         $this->editingQuiz = Quiz::with(['questions.options', 'section.course'])->find($this->editingQuiz->id);
         $this->showOptionEditModal = false;
-        Toaster::success('Option updated successfully!');
+        Toaster::success('messages.Option updated successfully!');
     }
 
     public function deleteOption()
@@ -271,7 +271,7 @@ class Quizzes extends Component
             // Refresh the quiz data
             $this->editingQuiz = Quiz::with(['questions.options', 'section.course'])->find($this->editingQuiz->id);
             $this->showOptionDeleteModal = false;
-            Toaster::success('Option deleted successfully!');
+            Toaster::success('messages.Option deleted successfully!');
         }
     }
 

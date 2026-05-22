@@ -57,10 +57,6 @@ return [
     'Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.' => 'Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.',
     'Saved.' => 'Saved.',
     'Update your account\'s profile information and email address.' => 'Update your account\'s profile information and email address.',
-
-    'Are you sure you want to delete your account?' => 'Are you sure you want to delete your account?',
-    'Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.' => 'Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.',
-    'Saved.' => 'Saved.',
     'Active Users' => 'Active Users',
     'Add User' => 'Add User',
     'Create New User' => 'Create New User',
@@ -122,6 +118,24 @@ return [
     'Are you sure you want to delete this question? All options will also be deleted.' => 'Are you sure you want to delete this question? All options will also be deleted.',
     'Are you sure you want to delete this option?' => 'Are you sure you want to delete this option?',
 
+    'Course deleted successfully!' => 'Course deleted successfully!',
+    'Course created successfully!' => 'Course created successfully!',
+    'Course updated successfully!' => 'Course updated successfully!',
+
+    'Quiz updated successfully!' => 'Quiz updated successfully!',
+
+    'Question created successfully!' => 'Question created successfully!',
+    'Question updated successfully!' => 'Question updated successfully!',
+    'Question deleted successfully!' => 'Question deleted successfully!',
+
+    'Option created successfully!' => 'Option created successfully!',
+    'Option updated successfully!' => 'Option updated successfully!',
+    'Option deleted successfully!' => 'Option deleted successfully!',
+
+    'User created successfully!' => 'User created successfully!',
+    'User updated successfully!' => 'User updated successfully!',
+    'User soft deleted successfully!' => 'User soft deleted successfully!',
+    'User restored successfully!' => 'User restored successfully!',
 
     'Delete Course' => 'Delete Course',
     'Ensure your account is using a long, random password to stay secure.' => 'Ensure your account is using a long, random password to stay secure.',

@@ -109,7 +109,7 @@ class Users extends Component
         $user->assignRole($this->createRole);
 
         $this->closeModal();
-        Toaster::success('User created successfully!');
+        Toaster::success('messages.User created successfully!');
     }
 
     public function update()
@@ -132,7 +132,7 @@ class Users extends Component
         $this->editingUser->syncRoles([$this->editRole]);
 
         $this->closeModal();
-        Toaster::success('User updated successfully!');
+        Toaster::success('messages.User updated successfully!');
     }
 
     public function softDelete()
@@ -140,7 +140,7 @@ class Users extends Component
         if ($this->deletingUser) {
             $this->deletingUser->delete();
             $this->closeModal();
-            Toaster::success('User soft deleted successfully!');
+            Toaster::success('messages.User soft deleted successfully!');
         }
     }
 
@@ -149,7 +149,7 @@ class Users extends Component
         if ($this->restoringUser) {
             $this->restoringUser->restore();
             $this->closeModal();
-            Toaster::success('User restored successfully!');
+            Toaster::success('messages.User restored successfully!');
         }
     }
 

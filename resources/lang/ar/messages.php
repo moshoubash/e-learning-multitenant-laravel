@@ -141,6 +141,25 @@ return [
 
     'Are you sure you want to delete course :title?' => 'هل أنت متأكد أنك تريد حذف الدورة :title؟',
 
+    'Course deleted successfully!' => 'تم حذف الدورة بنجاح!',
+    'Course created successfully!' => 'تم إنشاء الدورة بنجاح!',
+    'Course updated successfully!' => 'تم تحديث الدورة بنجاح!',
+
+    'Quiz updated successfully!' => 'تم تحديث الاختبار بنجاح!',
+
+    'Question created successfully!' => 'تم إنشاء السؤال بنجاح!',
+    'Question updated successfully!' => 'تم تحديث السؤال بنجاح!',
+    'Question deleted successfully!' => 'تم حذف السؤال بنجاح!',
+
+    'Option created successfully!' => 'تم إنشاء الخيار بنجاح!',
+    'Option updated successfully!' => 'تم تحديث الخيار بنجاح!',
+    'Option deleted successfully!' => 'تم حذف الخيار بنجاح!',
+
+    'User created successfully!' => 'تم إنشاء المستخدم بنجاح!',
+    'User updated successfully!' => 'تم تحديث المستخدم بنجاح!',
+    'User soft deleted successfully!' => 'تم حذف المستخدم بنجاح!',
+    'User restored successfully!' => 'تم استعادة المستخدم بنجاح!',
+    
     'Delete Course' => 'حذف الدورة',
     'Ensure your account is using a long, random password to stay secure.' => 'تأكد من أن حسابك يستخدم كلمة مرور طويلة وعشوائية للبقاء آمناً.',
     'Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.' => 'بمجرد حذف حسابك، سيتم حذف جميع موارده وبياناته بشكل دائم. قبل حذف حسابك، يرجى تنزيل أي بيانات أو معلومات ترغب في الاحتفاظ بها.',

@@ -117,7 +117,7 @@ class Courses extends Component
         ]);
 
         $this->closeModal();
-        Toaster::success('Course created successfully!');
+        Toaster::success('messages.Course created successfully!');
     }
 
     public function update()
@@ -149,7 +149,7 @@ class Courses extends Component
         $this->editingCourse->save();
 
         $this->closeModal();
-        Toaster::success('Course updated successfully!');
+        Toaster::success('messages.Course updated successfully!');
     }
 
     public function softDelete()
@@ -157,7 +157,7 @@ class Courses extends Component
         if ($this->deletingCourse) {
             $this->deletingCourse->delete();
             $this->closeModal();
-            Toaster::success('Course deleted successfully!');
+            Toaster::success('messages.Course deleted successfully!');
         }
     }
 
