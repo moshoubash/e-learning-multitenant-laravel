@@ -60,8 +60,14 @@ new class extends Component {
                     </x-nav-link>
                     @endrole
 
+                    @role('student')
+                        <x-nav-link :href="route('tenant.student.courses')" wire:navigate>
+                            {{ __('messages.Browse Courses') }}
+                        </x-nav-link>
+                    @endrole
+
                     <select wire:change="changeLanguage($event.target.value)"
-                        class="text-sm text-gray-900 border-none focus:ring-0">
+                        class="text-sm text-gray-500 border-none focus:ring-0">
                         <option value="en" {{ app()->getLocale() === 'en' ? 'selected' : '' }}>
                             {{ __('messages.English') }}
                         </option>
@@ -69,13 +75,6 @@ new class extends Component {
                             {{ __('messages.Arabic') }}
                         </option>
                     </select>
-
-                    @role('student')
-                    <x-nav-link :href="route('tenant.student.courses')" wire:navigate>
-                        {{ __('messages.Browse Courses') }}
-                    </x-nav-link>
-                    @endrole
-
                 </div>
             </div>
 
