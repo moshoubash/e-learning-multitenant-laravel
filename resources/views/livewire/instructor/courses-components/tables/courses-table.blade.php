@@ -26,15 +26,18 @@
                     <td class="p-2 text-center">
                         <button wire:click="toggleCourseExpand({{ $course->id }})"
                             class="text-gray-500 hover:text-gray-700">
-                            <i
-                                class="fas {{ $course->sections && count($course->sections) > 0 ? ($expandedCourses && in_array($course->id, $expandedCourses) ? 'fa-chevron-down' : 'fa-chevron-right') : 'fa-minus' }}"></i>
+                            @if(app()->getLocale() === 'ar')
+                                <i class="fas {{ $course->sections && count($course->sections) > 0 ? ($expandedCourses && in_array($course->id, $expandedCourses) ? 'fa-chevron-up' : 'fa-chevron-left') : 'fa-minus' }}"></i>
+                            @else
+                                <i class="fas {{ $course->sections && count($course->sections) > 0 ? ($expandedCourses && in_array($course->id, $expandedCourses) ? 'fa-chevron-down' : 'fa-chevron-right') : 'fa-minus' }}"></i>
+                            @endif
                         </button>
                     </td>
                     <td class="p-4">
                         <div class="flex items-center">
                             <span class="font-medium">{{ $course->title }}</span>
                             @if($course->sections && count($course->sections) > 0)
-                                <span class="ml-2 text-xs text-gray-500">({{ count($course->sections) }} sections)</span>
+                                <span class="@if(app()->getLocale() === 'ar') mr-2 @else ml-2 @endif text-xs text-gray-500">({{ __('messages.sections') }} : {{ count($course->sections) }} )</span>
                             @endif
                         </div>
                     </td>
@@ -44,7 +47,7 @@
                                                         @if($course->status === 'published') bg-green-100 text-green-800
                                                         @elseif($course->status === 'archived') bg-gray-100 text-gray-800
                                                         @else bg-yellow-100 text-yellow-800 @endif">
-                            {{ ucfirst($course->status) }}
+                            {{ __('messages.' .ucfirst($course->status)) }}
                         </span>
                     </td>
                     <td class="p-4">

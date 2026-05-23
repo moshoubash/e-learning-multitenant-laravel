@@ -108,6 +108,11 @@ return [
     'Single Choice' => 'Single Choice',
     'Multiple Choice' => 'Multiple Choice',
     'True/False' => 'True/False',
+
+    'single' => 'Single',
+    'multiple' => 'Multiple',
+    'true_false' => 'True/False',
+
     'Edit Question' => 'Edit Question',
     'Add Option' => 'Add Option',
     'Edit Option' => 'Edit Option',
@@ -149,5 +154,39 @@ return [
     'Course restored successfully!' => 'Course restored successfully!',
     'Deleted Users' => 'Deleted Users',
     'Restore User' => 'Restore User',
-    'Are you sure you want to restore user :name?' => 'Are you sure you want to restore user :name?'
+    'Are you sure you want to restore user :name?' => 'Are you sure you want to restore user :name?',
+
+    'Create New Section' => 'Create New Section',
+    'min order:' => 'min order:',
+
+    'Sections & Lessons' => 'Sections & Lessons',
+    'Add Section' => 'Add Section',
+    'Create New Lesson' => 'Create New Lesson',
+    'Content' => 'Content',
+    'Duration (seconds)' => 'Duration (seconds)',
+    'Video' => 'Video',
+    'Text' => 'Text',
+    'Edit Section' => 'Edit Section',
+    'Delete Section' => 'Delete Section',
+    'Are you sure you want to delete section :title?' => 'Are you sure you want to delete section :title?',
+    'This section and its lessons can be restored later.' => 'This section and its lessons can be restored later.',
+    'Are you sure you want to delete lesson :title?' => 'Are you sure you want to delete lesson :title?',
+    'This lesson can be restored later.' => 'This lesson can be restored later.',
+    'Delete Lesson' => 'Delete Lesson',
+    'Edit Lesson' => 'Edit Lesson',
+    'Video URL' => 'Video URL',
+    'Are you sure you want to delete quiz :title?' => 'Are you sure you want to delete quiz :title?',
+    'This action cannot be undone.' => 'This action cannot be undone.',
+    'Quiz Title' => 'Quiz Title',
+    'sections' => 'sections',
+    'questions' => 'questions',
+    'Pass' => 'Pass',
+
+    'Create New Question' => 'Create New Question',
+    'Question' => 'Question',
+
+    'Questions & Options' => 'Questions & Options',
+    'Are you sure you want to delete this question?' => 'Are you sure you want to delete this question?',
+    'Create New Option' => 'Create New Option',
+    'Mark as correct answer' => 'Mark as correct answer',
 ];

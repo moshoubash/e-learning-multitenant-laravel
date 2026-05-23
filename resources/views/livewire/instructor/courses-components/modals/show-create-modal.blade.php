@@ -4,53 +4,53 @@
             <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" wire:click="closeModal"></div>
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
             <div
-                class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('messages.Create New Course') }}</h3>
+                class="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
+                    <h3 class="mb-4 text-lg font-medium text-gray-900">{{ __('messages.Create New Course') }}</h3>
                     <form>
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('messages.Title') }}</label>
+                            <label class="block mb-1 text-sm font-medium text-gray-700">{{ __('messages.Title') }}</label>
                             <input type="text" wire:model.lazy="createTitle"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            @error('createTitle') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            @error('createTitle') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('messages.Slug') }}</label>
+                            <label class="block mb-1 text-sm font-medium text-gray-700">{{ __('messages.Slug') }}</label>
                             <input type="text" wire:model.lazy="createSlug"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            @error('createSlug') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            @error('createSlug') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('messages.Description') }}</label>
+                            <label class="block mb-1 text-sm font-medium text-gray-700">{{ __('messages.Description') }}</label>
                             <textarea wire:model.lazy="createDescription" rows="3"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                            @error('createDescription') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                            @error('createDescription') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('messages.Price') }}</label>
+                            <label class="block mb-1 text-sm font-medium text-gray-700">{{ __('messages.Price') }}</label>
                             <input type="number" step="0.01" min="0" wire:model.lazy="createPrice"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            @error('createPrice') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            @error('createPrice') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('messages.Status') }}</label>
+                            <label class="block mb-1 text-sm font-medium text-gray-700">{{ __('messages.Status') }}</label>
                             <select wire:model.lazy="createStatus"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                <option value="draft">Draft</option>
-                                <option value="published">Published</option>
-                                <option value="archived">Archived</option>
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="draft">{{ __('messages.Draft') }}</option>
+                                <option value="published">{{ __('messages.Published') }}</option>
+                                <option value="archived">{{ __('messages.Archived') }}</option>
                             </select>
-                            @error('createStatus') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            @error('createStatus') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
                         </div>
                     </form>
                 </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <div class="px-4 py-3 bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button wire:click="store" type="button"
-                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                        class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
                         {{ __('messages.Create') }}
                     </button>
                     <button wire:click="closeModal" type="button"
-                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                         {{ __('messages.Cancel') }}
                     </button>
                 </div>

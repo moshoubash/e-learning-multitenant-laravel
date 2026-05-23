@@ -4,28 +4,28 @@
             <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" wire:click="closeLessonModal"></div>
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
             <div
-                class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('messages.Create New Lesson') }}</h3>
+                class="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
+                    <h3 class="mb-4 text-lg font-medium text-gray-900">{{ __('messages.Create New Lesson') }}</h3>
                     <form enctype="multipart/form-data">
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('messages.Title') }}</label>
+                            <label class="block mb-1 text-sm font-medium text-gray-700">{{ __('messages.Title') }}</label>
                             <input type="text" wire:model.lazy="lessonCreateTitle"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            @error('lessonCreateTitle') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            @error('lessonCreateTitle') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('messages.Type') }}</label>
+                            <label class="block mb-1 text-sm font-medium text-gray-700">{{ __('messages.Type') }}</label>
                             <select wire:model.lazy="lessonCreateType"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                <option value="video">Video</option>
-                                <option value="text">Text</option>
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="video">{{ __('messages.Video') }}</option>
+                                <option value="text">{{ __('messages.Text') }}</option>
                             </select>
-                            @error('lessonCreateType') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            @error('lessonCreateType') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
                         </div>
 
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('messages.Content') }}</label>
+                            <label class="block mb-1 text-sm font-medium text-gray-700">{{ __('messages.Content') }}</label>
                             <div class="mt-2 bg-white" wire:ignore>
                                 <div x-data x-ref="quillEditor" x-init="
                                                                             quill = new Quill($refs.quillEditor, {theme: 'snow'});
@@ -36,45 +36,45 @@
 
                                     {!! $lessonCreateContent !!}
                                 </div>
-                                @error('lessonCreateContent') <span class="text-red-500 text-xs">{{ $message }}</span>
+                                @error('lessonCreateContent') <span class="text-xs text-red-500">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
 
                         <div class="mb-4">
                             <label
-                                class="block text-sm font-medium text-gray-700 mb-1">{{ __('messages.Duration (seconds)') }}</label>
+                                class="block mb-1 text-sm font-medium text-gray-700">{{ __('messages.Duration (seconds)') }}</label>
                             <input type="number" wire:model.lazy="lessonCreateDuration" min="0"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            @error('lessonCreateDuration') <span class="text-red-500 text-xs">{{ $message }}</span>
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            @error('lessonCreateDuration') <span class="text-xs text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('messages.Order') }} <span> (min
-                                    order: {{ $maxOrderInLessons ?? 0 }}) </span></label>
+                            <label class="block mb-1 text-sm font-medium text-gray-700">{{ __('messages.Order') }} <span>
+                                ({{ __('messages.min order:') }} {{ $maxOrderInLessons ?? 0 }}) </span></label>
                             <input type="number" wire:model.lazy="lessonCreateOrder" min="0"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            @error('lessonCreateOrder') <span class="text-red-500 text-xs">{{ $message }}</span>
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            @error('lessonCreateOrder') <span class="text-xs text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
                         @if ($lessonCreateType === 'video')
                             <div class="mb-4">
-                                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('messages.Video') }}</label>
+                                <label class="block mb-1 text-sm font-medium text-gray-700">{{ __('messages.Video') }}</label>
                                 <input type="file" wire:model.lazy="courseVideo" accept="video/*"
-                                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                @error('lessonCreateVideo') <span class="text-red-500 text-xs">{{ $message }}</span>
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                @error('lessonCreateVideo') <span class="text-xs text-red-500">{{ $message }}</span>
                                 @enderror
                             </div>
                         @endif
                     </form>
                 </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <div class="px-4 py-3 bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button wire:click="storeLesson" type="button"
-                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                        class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
                         {{ __('messages.Create') }}
                     </button>
                     <button wire:click="closeLessonModal" type="button"
-                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                         {{ __('messages.Cancel') }}
                     </button>
                 </div>

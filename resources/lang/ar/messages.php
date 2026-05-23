@@ -126,9 +126,15 @@ return [
     'Question Text' => 'نص السؤال',
     'Type' => 'النوع',
     'Order' => 'الترتيب',
+
     'Single Choice' => 'اختيار واحد',
     'Multiple Choice' => 'اختيار متعدد',
     'True/False' => 'صح/خطأ',
+
+    'single' => 'اختيار واحد',
+    'multiple' => 'اختيار متعدد',
+    'true_false' => 'صح/خطأ',
+
     'Edit Question' => 'تعديل السؤال',
     'Add Option' => 'إضافة خيار',
     'Edit Option' => 'تعديل الخيار',
@@ -172,5 +178,39 @@ return [
     'Course restored successfully!' => 'تم استعادة الدورة بنجاح!',
     'Deleted Users' => 'المستخدمون المحذوفون',
     'Restore User' => 'استعادة المستخدم',
-    'Are you sure you want to restore user :name?' => 'هل أنت متأكد أنك تريد استعادة المستخدم :name؟'
+    'Are you sure you want to restore user :name?' => 'هل أنت متأكد أنك تريد استعادة المستخدم :name؟',
+
+    'Create New Section' => 'إنشاء قسم جديد',
+    'min order:' => 'الحد الأدنى للترتيب:',
+
+    'Sections & Lessons' => 'الأقسام والدروس',
+    'Add Section' => 'إضافة قسم',
+    'Create New Lesson' => 'إنشاء درس جديد',
+    'Content' => 'المحتوى',
+    'Duration (seconds)' => 'المدة (بالثواني)',
+    'Video' => 'الفيديو',
+    'Text' => 'النص',
+    'Edit Section' => 'تعديل القسم',
+    'Delete Section' => 'حذف القسم',
+    'Are you sure you want to delete section :title?' => 'هل أنت متأكد أنك تريد حذف القسم :title؟',
+    'This section and its lessons can be restored later.' => 'يمكن استعادة هذا القسم ودروسه لاحقاً.',
+    'Are you sure you want to delete lesson :title?' => 'هل أنت متأكد أنك تريد حذف الدرس :title؟',
+    'This lesson can be restored later.' => 'يمكن استعادة هذا الدرس لاحق',
+    'Delete Lesson' => 'حذف الدرس',
+    'Edit Lesson' => 'تعديل الدرس',
+    'Video URL' => 'رابط الفيديو',
+    'Are you sure you want to delete quiz :title?' => 'هل أنت متأكد أنك تريد حذف الاختبار :title؟',
+    'This action cannot be undone.' => 'هذا الإجراء لا يمكن التراجع عنه.',
+    'Quiz Title' => 'عنوان الاختبار',
+    'sections' => 'الأقسام',
+    'questions' => 'الأسئلة',
+    'Pass' => 'النجاح',
+
+    'Create New Question' => 'إنشاء سؤال جديد',
+    'Question' => 'السؤال',
+
+    'Questions & Options' => 'الأسئلة والخيارات',
+    'Create New Option' => 'إنشاء خيار جديد',
+    'Mark as correct answer' => 'تعيين كإجابة صحيحة',
+    'Are you sure you want to delete this question?' => 'هل أنت متأكد أنك تريد حذف هذا السؤال؟',
 ];
