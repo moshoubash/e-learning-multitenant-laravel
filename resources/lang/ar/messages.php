@@ -256,4 +256,13 @@ return [
     'Enrollment Not Found' => 'التسجيل غير موجود',
     'We could not find the enrollment you are looking for.' => 'لم نتمكن من العثور على التسجيل الذي تبحث عنه.',
     'Enrollment Confirmed' => 'تم تأكيد التسجيل',
+
+    'Course Content' => 'محتوى الدورة',
+    'Progress' => 'التقدم',
+    'Course' => 'الدورة',
+    'Mark Complete' => 'تعيين كمكتمل',
+    'Completed' => 'مكتمل',
+    'Select a lesson from the sidebar' => 'اختر درسًا من الشريط الجانبي',
+    'Take the quiz to test your knowledge.' => 'قم بأداء الاختبار لاختبار معرفتك.',
+    'Text Lesson' => 'درس نصي',
 ];

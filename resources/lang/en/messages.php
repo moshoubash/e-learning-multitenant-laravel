@@ -232,4 +232,13 @@ return [
     'Enrollment Not Found' => 'Enrollment Not Found',
     'We could not find the enrollment you are looking for.' => 'We could not find the enrollment you are looking for.',
     'Enrollment Confirmed' => 'Enrollment Confirmed',
+
+    'Course Content' => 'Course Content',
+    'Progress' => 'Progress',
+    'Course' => 'Course',
+    'Mark Complete' => 'Mark Complete',
+    'Completed' => 'Completed',
+    'Select a lesson from the sidebar' => 'Select a lesson from the sidebar',
+    'Take the quiz to test your knowledge.' => 'Take the quiz to test your knowledge.',
+    'Text Lesson' => 'Text Lesson',
 ];

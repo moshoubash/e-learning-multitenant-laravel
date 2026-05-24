@@ -18,7 +18,7 @@
     @stack('styles')
 
     <style>
-        * {
+        *:not(.exclude-this) {
             text-align: {{ app()->getLocale() === 'ar' ? 'right' : 'left' }};
         }
     </style>

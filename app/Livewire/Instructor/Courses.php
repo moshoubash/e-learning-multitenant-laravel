@@ -155,7 +155,7 @@ class Courses extends Component
         return in_array($courseId, $this->expandedCourses);
     }
 
-    //  COURSE METHODS 
+    //  COURSE METHODS
 
     public function openCreateModal()
     {
@@ -283,7 +283,7 @@ class Courses extends Component
         }
     }
 
-    //  SECTION METHODS 
+    //  SECTION METHODS
 
     public function openSectionCreateModal($courseId)
     {
@@ -396,7 +396,7 @@ class Courses extends Component
         }
     }
 
-    //  LESSON METHODS 
+    //  LESSON METHODS
 
     public function openLessonCreateModal($sectionId)
     {
@@ -467,7 +467,6 @@ class Courses extends Component
             'lessonCreateTitle' => 'required|string|max:255',
             'lessonCreateType' => 'required|in:video,text',
             'lessonCreateContent' => 'nullable|string',
-            'lessonCreateDuration' => 'nullable|integer|min:0',
             'lessonCreateOrder' => 'required|integer|min:0',
             'courseVideo' => 'nullable|file|mimes:mp4,mov,avi,wmv|max:102400',
         ]);
@@ -477,9 +476,17 @@ class Courses extends Component
 
         $videoUrl = null;
 
+        $baseUrl = 'd1w6oovjx4x1vx.cloudfront.net';
+
         if ($this->courseVideo) {
-            $this->lessonCreateVideoUrl = $this->courseVideo->storeAs("courses/$tenantId", $this->courseVideo->getClientOriginalName() . rand() . time(), 's3');
-            $videoUrl = Storage::disk('s3')->url("courses/$tenantId" . $this->courseVideo->getClientOriginalName());
+            $this->lessonCreateVideoUrl = $this->courseVideo->storeAs("courses/$tenantId", rand() . time() . $this->courseVideo->getClientOriginalName(), 's3');
+            $videoUrl = $baseUrl . '/' . $this->lessonCreateVideoUrl;
+
+            $tempFilePath = $this->courseVideo->getRealPath();
+            $getID3 = new \getID3;
+            $fileInfo = $getID3->analyze($tempFilePath);
+            $duration = $fileInfo['playtime_seconds'] ?? 0;
+            $this->lessonCreateDuration = (int) round($duration);
         }
 
         Lesson::create([
@@ -503,7 +510,6 @@ class Courses extends Component
             'lessonEditTitle' => 'required|string|max:255',
             'lessonEditType' => 'required|in:video,text,quiz',
             'lessonEditContent' => 'nullable|string',
-            'lessonEditDuration' => 'nullable|integer|min:0',
             'lessonEditOrder' => 'required|integer|min:0',
         ]);
 
@@ -538,7 +544,7 @@ class Courses extends Component
         }
     }
 
-    //  QUIZ METHODS 
+    //  QUIZ METHODS
 
     public function openQuizCreateModal($sectionId)
     {
