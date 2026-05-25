@@ -265,4 +265,16 @@ return [
     'Select a lesson from the sidebar' => 'اختر درسًا من الشريط الجانبي',
     'Take the quiz to test your knowledge.' => 'قم بأداء الاختبار لاختبار معرفتك.',
     'Text Lesson' => 'درس نصي',
+
+    'The quiz you\'re looking for doesn\'t exist.' => 'الاختبار الذي تبحث عنه غير موجود.',
+    'Quiz not found' => 'الاختبار غير موجود',
+    'Submit Quiz' => 'تقديم الاختبار',
+    'Back to Course' => 'العودة إلى الدورة',
+    'Try Again' => 'حاول مرة أخرى',
+    'You need :percent% to pass' => 'تحتاج إلى :percent% للنجاح',
+    'Almost There!' => 'على وشك الانتهاء!',
+    'Not Passed' => 'لم تنجح',
+    'Your last score was :score%' => 'كانت نتيجتك الأخيرة :score%',
+    'Previous Attempt' => 'المحاولة السابقة',
+    'You passed the quiz!' => 'لقد نجحت في الاختبار!',
 ];

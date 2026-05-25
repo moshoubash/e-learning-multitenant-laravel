@@ -241,4 +241,16 @@ return [
     'Select a lesson from the sidebar' => 'Select a lesson from the sidebar',
     'Take the quiz to test your knowledge.' => 'Take the quiz to test your knowledge.',
     'Text Lesson' => 'Text Lesson',
+
+    'The quiz you\'re looking for doesn\'t exist.' => 'The quiz you\'re looking for doesn\'t exist.',
+    'Quiz not found' => 'Quiz not found',
+    'Submit Quiz' => 'Submit Quiz',
+    'Back to Course' => 'Back to Course',
+    'Try Again' => 'Try Again',
+    'You need :percent% to pass' => 'You need :percent% to pass',
+    'Almost There!' => 'Almost There!',
+    'Not Passed' => 'Not Passed',
+    'Your last score was :score%' => 'Your last score was :score%',
+    'Previous Attempt' => 'Previous Attempt',
+    'You passed the quiz!' => 'You passed the quiz!',
 ];
