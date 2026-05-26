@@ -34,15 +34,15 @@
                         <div class="aspect-video">
                             <video
                                 x-data="{}"
-                                x-init="() => { setTimeout(() => new Plyr($refs.player), 0) }"
+                                x-init="$nextTick(() => { new Plyr($refs.player) })"
                                 x-ref="player"
                                 playsinline
                                 controls
                                 preload="metadata"
-                                crossorigin="anonymous"
                                 class="w-full"
                             >
-                                <source src="{{ $selectedLesson->video_url }}" type="video/mp4" crossorigin="anonymous" />
+                                <!-- Removed crossorigin from here -->
+                                <source src="https://{{ $selectedLesson->video_url }}" type="video/mp4" />
                                 Your browser does not support the video tag.
                             </video>
                         </div>

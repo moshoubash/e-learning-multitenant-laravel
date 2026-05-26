@@ -476,7 +476,7 @@ class Courses extends Component
 
         $videoUrl = null;
 
-        $baseUrl = 'd1w6oovjx4x1vx.cloudfront.net';
+        $baseUrl = 'https://d1w6oovjx4x1vx.cloudfront.net';
 
         if ($this->courseVideo) {
             $this->lessonCreateVideoUrl = $this->courseVideo->storeAs("courses/$tenantId", rand() . time() . $this->courseVideo->getClientOriginalName(), 's3');
