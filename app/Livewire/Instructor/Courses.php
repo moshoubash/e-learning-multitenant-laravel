@@ -5,15 +5,16 @@ namespace App\Livewire\Instructor;
 use App\Models\Tenant\Course;
 use App\Models\Tenant\Section;
 use App\Models\Tenant\Lesson;
-use App\Models\Tenant\Quiz;
 use App\Models\Tenant\User;
-use Illuminate\Support\Facades\Storage;
+use App\Services\CourseService;
+use App\Services\LessonService;
+use App\Services\QuizService;
+use App\Services\SectionService;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Masmerise\Toaster\Toaster;
-use League\Flysystem\AwsS3V3\PortableVisibilityConverter;
 
 class Courses extends Component
 {
@@ -165,7 +166,13 @@ class Courses extends Component
 
     public function openEditModal($id)
     {
-        $this->editingCourse = Course::find($id);
+        $this->editingCourse = $this->courseService()->findById($id);
+
+        if (! $this->editingCourse) {
+            Toaster::error('Course not found.');
+            return;
+        }
+
         $this->editTitle = $this->editingCourse->title;
         $this->editSlug = $this->editingCourse->slug;
         $this->editDescription = $this->editingCourse->description;
@@ -177,13 +184,13 @@ class Courses extends Component
 
     public function openDeleteModal($id)
     {
-        $this->deletingCourse = Course::find($id);
+        $this->deletingCourse = $this->courseService()->findById($id);
         $this->showDeleteModal = true;
     }
 
     public function openRestoreModal($id)
     {
-        $this->restoringCourse = Course::withTrashed()->find($id);
+        $this->restoringCourse = $this->courseService()->findWithTrashed($id);
         $this->showRestoreModal = true;
     }
 
@@ -229,7 +236,7 @@ class Courses extends Component
             'createStatus' => 'required|in:draft,published,archived',
         ]);
 
-        Course::create([
+        $this->courseService()->createCourse([
             'title' => $this->createTitle,
             'slug' => $this->createSlug,
             'description' => $this->createDescription,
@@ -252,14 +259,19 @@ class Courses extends Component
             'editStatus' => 'required|in:draft,published,archived',
         ]);
 
-        $this->editingCourse->title = $this->editTitle;
-        $this->editingCourse->slug = $this->editSlug;
-        $this->editingCourse->description = $this->editDescription;
-        $this->editingCourse->price = $this->editPrice;
-        $this->editingCourse->status = $this->editStatus;
-        $this->editingCourse->instructor_id = $this->editInstructorId;
+        if (! $this->editingCourse) {
+            Toaster::error('Course not found.');
+            return;
+        }
 
-        $this->editingCourse->save();
+        $this->courseService()->updateCourse($this->editingCourse, [
+            'title' => $this->editTitle,
+            'slug' => $this->editSlug,
+            'description' => $this->editDescription,
+            'price' => $this->editPrice,
+            'status' => $this->editStatus,
+            'instructor_id' => $this->editInstructorId,
+        ]);
 
         $this->closeModal();
         Toaster::success('Course updated successfully!');
@@ -268,7 +280,7 @@ class Courses extends Component
     public function softDelete()
     {
         if ($this->deletingCourse) {
-            $this->deletingCourse->delete();
+            $this->courseService()->softDeleteCourse($this->deletingCourse);
             $this->closeModal();
             Toaster::success('Course soft deleted successfully!');
         }
@@ -277,10 +289,15 @@ class Courses extends Component
     public function restore()
     {
         if ($this->restoringCourse) {
-            $this->restoringCourse->restore();
+            $this->courseService()->restoreCourse($this->restoringCourse);
             $this->closeModal();
             Toaster::success('Course restored successfully!');
         }
+    }
+
+    protected function courseService(): CourseService
+    {
+        return new CourseService();
     }
 
     //  SECTION METHODS
@@ -294,7 +311,13 @@ class Courses extends Component
 
     public function openSectionEditModal($id)
     {
-        $this->editingSection = Section::find($id);
+        $this->editingSection = $this->sectionService()->findById($id);
+
+        if (! $this->editingSection) {
+            Toaster::error('Section not found.');
+            return;
+        }
+
         $this->sectionEditTitle = $this->editingSection->title;
         $this->sectionEditOrder = $this->editingSection->order;
         $this->showSectionEditModal = true;
@@ -302,13 +325,13 @@ class Courses extends Component
 
     public function openSectionDeleteModal($id)
     {
-        $this->deletingSection = Section::find($id);
+        $this->deletingSection = $this->sectionService()->findById($id);
         $this->showSectionDeleteModal = true;
     }
 
     public function openSectionRestoreModal($id)
     {
-        $this->restoringSection = Section::withTrashed()->find($id);
+        $this->restoringSection = $this->sectionService()->findWithTrashed($id);
         $this->showSectionRestoreModal = true;
     }
 
@@ -343,8 +366,7 @@ class Courses extends Component
             'sectionCreateOrder' => 'required|integer|min:0',
         ]);
 
-        Section::create([
-            'course_id' => $this->selectedCourseId,
+        $this->sectionService()->createSection($this->selectedCourseId, [
             'title' => $this->sectionCreateTitle,
             'order' => $this->sectionCreateOrder,
         ]);
@@ -360,10 +382,15 @@ class Courses extends Component
             'sectionEditOrder' => 'required|integer|min:0',
         ]);
 
-        $this->editingSection->title = $this->sectionEditTitle;
-        $this->editingSection->order = $this->sectionEditOrder;
+        if (! $this->editingSection) {
+            Toaster::error('Section not found.');
+            return;
+        }
 
-        $this->editingSection->save();
+        $this->sectionService()->updateSection($this->editingSection, [
+            'title' => $this->sectionEditTitle,
+            'order' => $this->sectionEditOrder,
+        ]);
 
         $this->closeSectionModal();
         Toaster::success('Section updated successfully!');
@@ -372,16 +399,7 @@ class Courses extends Component
     public function softDeleteSection()
     {
         if ($this->deletingSection) {
-            // Also delete the quiz if exists
-            if ($this->deletingSection->quiz) {
-                $this->deletingSection->quiz->questions()->each(function ($question) {
-                    $question->options()->delete();
-                });
-                $this->deletingSection->quiz->questions()->delete();
-                $this->deletingSection->quiz->delete();
-            }
-            $this->deletingSection->lessons()->delete();
-            $this->deletingSection->delete();
+            $this->sectionService()->softDeleteSection($this->deletingSection);
             $this->closeSectionModal();
             Toaster::success('Section soft deleted successfully!');
         }
@@ -390,10 +408,15 @@ class Courses extends Component
     public function restoreSection()
     {
         if ($this->restoringSection) {
-            $this->restoringSection->restore();
+            $this->sectionService()->restoreSection($this->restoringSection);
             $this->closeSectionModal();
             Toaster::success('Section restored successfully!');
         }
+    }
+
+    protected function sectionService(): SectionService
+    {
+        return new SectionService();
     }
 
     //  LESSON METHODS
@@ -407,7 +430,13 @@ class Courses extends Component
 
     public function openLessonEditModal($id)
     {
-        $this->editingLesson = Lesson::find($id);
+        $this->editingLesson = $this->lessonService()->findById($id);
+
+        if (! $this->editingLesson) {
+            Toaster::error('Lesson not found.');
+            return;
+        }
+
         $this->lessonEditTitle = $this->editingLesson->title;
         $this->lessonEditType = $this->editingLesson->type;
         $this->lessonEditContent = $this->editingLesson->content;
@@ -419,13 +448,13 @@ class Courses extends Component
 
     public function openLessonDeleteModal($id)
     {
-        $this->deletingLesson = Lesson::find($id);
+        $this->deletingLesson = $this->lessonService()->findById($id);
         $this->showLessonDeleteModal = true;
     }
 
     public function openLessonRestoreModal($id)
     {
-        $this->restoringLesson = Lesson::withTrashed()->find($id);
+        $this->restoringLesson = $this->lessonService()->findWithTrashed($id);
         $this->showLessonRestoreModal = true;
     }
 
@@ -471,33 +500,20 @@ class Courses extends Component
             'courseVideo' => 'nullable|file|mimes:mp4,mov,avi,wmv|max:102400',
         ]);
 
-        // Get tenant ID from current tenant context
-        $tenantId = tenant('id') ?? 'default';
-
-        $videoUrl = null;
-
-        $baseUrl = 'https://d1w6oovjx4x1vx.cloudfront.net';
-
-        if ($this->courseVideo) {
-            $this->lessonCreateVideoUrl = $this->courseVideo->storeAs("courses/$tenantId", rand() . time() . $this->courseVideo->getClientOriginalName(), 's3');
-            $videoUrl = $baseUrl . '/' . $this->lessonCreateVideoUrl;
-
-            $tempFilePath = $this->courseVideo->getRealPath();
-            $getID3 = new \getID3;
-            $fileInfo = $getID3->analyze($tempFilePath);
-            $duration = $fileInfo['playtime_seconds'] ?? 0;
-            $this->lessonCreateDuration = (int) round($duration);
+        try {
+            $this->lessonService()->createLesson($this->selectedSectionId, [
+                'title' => $this->lessonCreateTitle,
+                'type' => $this->lessonCreateType,
+                'content' => $this->lessonCreateContent,
+                'duration_seconds' => $this->lessonCreateDuration,
+                'order' => $this->lessonCreateOrder,
+                'video_url' => $this->lessonCreateVideoUrl ?: null,
+            ], $this->courseVideo);
+        } catch (\Throwable $exception) {
+            Toaster::error($exception->getMessage());
+            $this->closeLessonModal();
+            return;
         }
-
-        Lesson::create([
-            'section_id' => $this->selectedSectionId,
-            'title' => $this->lessonCreateTitle,
-            'type' => $this->lessonCreateType,
-            'content' => $this->lessonCreateContent,
-            'duration_seconds' => $this->lessonCreateDuration,
-            'order' => $this->lessonCreateOrder,
-            'video_url' => $videoUrl,
-        ]);
 
         $this->courseVideo = null;
         $this->closeLessonModal();
@@ -513,14 +529,19 @@ class Courses extends Component
             'lessonEditOrder' => 'required|integer|min:0',
         ]);
 
-        $this->editingLesson->title = $this->lessonEditTitle;
-        $this->editingLesson->type = $this->lessonEditType;
-        $this->editingLesson->content = $this->lessonEditContent;
-        $this->editingLesson->duration_seconds = $this->lessonEditDuration;
-        $this->editingLesson->order = $this->lessonEditOrder;
-        $this->editingLesson->video_url = $this->lessonEditVideoUrl ?: null;
+        if (! $this->editingLesson) {
+            Toaster::error('Lesson not found.');
+            return;
+        }
 
-        $this->editingLesson->save();
+        $this->lessonService()->updateLesson($this->editingLesson, [
+            'title' => $this->lessonEditTitle,
+            'type' => $this->lessonEditType,
+            'content' => $this->lessonEditContent,
+            'duration_seconds' => $this->lessonEditDuration,
+            'order' => $this->lessonEditOrder,
+            'video_url' => $this->lessonEditVideoUrl ?: null,
+        ]);
 
         $this->closeLessonModal();
         Toaster::success('Lesson updated successfully!');
@@ -529,7 +550,7 @@ class Courses extends Component
     public function softDeleteLesson()
     {
         if ($this->deletingLesson) {
-            $this->deletingLesson->delete();
+            $this->lessonService()->softDeleteLesson($this->deletingLesson);
             $this->closeLessonModal();
             Toaster::success('Lesson soft deleted successfully!');
         }
@@ -538,10 +559,15 @@ class Courses extends Component
     public function restoreLesson()
     {
         if ($this->restoringLesson) {
-            $this->restoringLesson->restore();
+            $this->lessonService()->restoreLesson($this->restoringLesson);
             $this->closeLessonModal();
             Toaster::success('Lesson restored successfully!');
         }
+    }
+
+    protected function lessonService(): LessonService
+    {
+        return new LessonService();
     }
 
     //  QUIZ METHODS
@@ -555,7 +581,13 @@ class Courses extends Component
 
     public function openQuizEditModal($id)
     {
-        $this->editingQuiz = Quiz::with('questions.options')->find($id);
+        $this->editingQuiz = $this->quizService()->findQuizWithRelations($id);
+
+        if (! $this->editingQuiz) {
+            Toaster::error('Quiz not found.');
+            return;
+        }
+
         $this->quizEditTitle = $this->editingQuiz->title;
         $this->quizEditPassPercentage = $this->editingQuiz->pass_percentage;
         $this->showQuizEditModal = true;
@@ -563,7 +595,7 @@ class Courses extends Component
 
     public function openQuizDeleteModal($id)
     {
-        $this->deletingQuiz = Quiz::find($id);
+        $this->deletingQuiz = $this->quizService()->findById($id);
         $this->showQuizDeleteModal = true;
     }
 
@@ -589,6 +621,11 @@ class Courses extends Component
         $this->quizEditPassPercentage = 70;
     }
 
+    protected function quizService(): QuizService
+    {
+        return new QuizService();
+    }
+
     public function storeQuiz()
     {
         $this->validate([
@@ -596,19 +633,16 @@ class Courses extends Component
             'quizCreatePassPercentage' => 'required|integer|min:1|max:100',
         ]);
 
-        // Check if section already has a quiz
-        $section = Section::find($this->selectedSectionId);
-        if ($section && $section->quiz) {
-            Toaster::error('This section already has a quiz. Please edit the existing quiz instead.');
+        try {
+            $this->quizService()->createQuizForSection($this->selectedSectionId, [
+                'title' => $this->quizCreateTitle,
+                'pass_percentage' => $this->quizCreatePassPercentage,
+            ]);
+        } catch (\Throwable $exception) {
+            Toaster::error($exception->getMessage());
             $this->closeQuizModal();
             return;
         }
-
-        Quiz::create([
-            'section_id' => $this->selectedSectionId,
-            'title' => $this->quizCreateTitle,
-            'pass_percentage' => $this->quizCreatePassPercentage,
-        ]);
 
         $this->closeQuizModal();
         Toaster::success('Quiz created successfully!');
@@ -621,9 +655,15 @@ class Courses extends Component
             'quizEditPassPercentage' => 'required|integer|min:1|max:100',
         ]);
 
-        $this->editingQuiz->title = $this->quizEditTitle;
-        $this->editingQuiz->pass_percentage = $this->quizEditPassPercentage;
-        $this->editingQuiz->save();
+        if (! $this->editingQuiz) {
+            Toaster::error('Quiz not found.');
+            return;
+        }
+
+        $this->quizService()->updateQuiz($this->editingQuiz, [
+            'title' => $this->quizEditTitle,
+            'pass_percentage' => $this->quizEditPassPercentage,
+        ]);
 
         $this->closeQuizModal();
         Toaster::success('Quiz updated successfully!');
@@ -632,11 +672,7 @@ class Courses extends Component
     public function deleteQuiz()
     {
         if ($this->deletingQuiz) {
-            $this->deletingQuiz->questions()->each(function ($question) {
-                $question->options()->delete();
-            });
-            $this->deletingQuiz->questions()->delete();
-            $this->deletingQuiz->delete();
+            $this->quizService()->deleteQuiz($this->deletingQuiz);
             $this->closeQuizModal();
             Toaster::success('Quiz deleted successfully!');
         }
