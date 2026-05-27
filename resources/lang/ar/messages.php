@@ -277,4 +277,5 @@ return [
     'Your last score was :score%' => 'كانت نتيجتك الأخيرة :score%',
     'Previous Attempt' => 'المحاولة السابقة',
     'You passed the quiz!' => 'لقد نجحت في الاختبار!',
+    'Uploading video...' => 'جاري رفع الفيديو...',
 ];

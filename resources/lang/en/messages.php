@@ -253,4 +253,5 @@ return [
     'Your last score was :score%' => 'Your last score was :score%',
     'Previous Attempt' => 'Previous Attempt',
     'You passed the quiz!' => 'You passed the quiz!',
+    'Uploading video...' => 'Uploading video...',
 ];
