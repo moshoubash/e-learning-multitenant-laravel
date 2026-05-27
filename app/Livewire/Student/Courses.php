@@ -4,6 +4,7 @@ namespace App\Livewire\Student;
 
 use App\Models\Tenant\Course;
 use App\Models\Tenant\Enrollment;
+use App\Services\Student\CoursesService;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
@@ -22,27 +23,12 @@ class Courses extends Component
 
     public function getCourses()
     {
-        return Course::with([
-            'instructor',
-            'sections' => function ($query) {
-                $query->with([
-                    'lessons',
-                    'quiz' => function ($q) {
-                        $q->with('questions.options');
-                    }
-                ])->orderBy('order');
-            }
-        ])
-            ->where('status', 'published')
-            ->orderBy('title')
-            ->get();
+        return $this->coursesService()->getCourses();
     }
 
     public function isEnrolled($courseId)
     {
-        return Enrollment::where('course_id', $courseId)
-            ->where('user_id', auth()->id())
-            ->exists();
+        return $this->coursesService()->isEnrolled($courseId, auth()->id());
     }
 
     public function enrollInCourse($courseId)
@@ -50,11 +36,7 @@ class Courses extends Component
         $course = Course::find($courseId);
         // If course is free, enroll directly and redirect to course page
         if ($course && $course->price == 0) {
-            Enrollment::create([
-                'course_id' => $courseId,
-                'user_id' => auth()->id(),
-                'status' => 'active',
-            ]);
+            $this->coursesService()->enrollInCourse($courseId, auth()->id());
 
             Toaster::success('Successfully enrolled in the course!');
             return redirect()->route('tenant.student.course', ['course' => $course->slug]);
@@ -90,22 +72,17 @@ class Courses extends Component
         $selectedCourseData = null;
 
         if ($this->selectedCourse) {
-            $selectedCourseData = Course::with([
-                'instructor',
-                'sections' => function ($query) {
-                    $query->with([
-                        'lessons',
-                        'quiz' => function ($quizQuery) {
-                            $quizQuery->with('questions.options');
-                        }
-                    ])->orderBy('order');
-                }
-            ])->find($this->selectedCourse);
+            $selectedCourseData = $this->coursesService()->getCourseById($this->selectedCourse);
         }
 
         return view('livewire.student.courses', [
             'courses' => $courses,
             'selectedCourseData' => $selectedCourseData,
         ]);
+    }
+
+    protected function coursesService(): CoursesService
+    {
+        return new CoursesService();
     }
 }

@@ -4,7 +4,7 @@ namespace App\Livewire\Student;
 
 use App\Models\Tenant\Course;
 use App\Models\Tenant\Enrollment;
-use App\Services\PaymentService;
+use App\Services\Student\PaymentService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\Attributes\On;

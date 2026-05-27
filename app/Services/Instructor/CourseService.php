@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Instructor;
 
 use App\Models\Tenant\Course;
 

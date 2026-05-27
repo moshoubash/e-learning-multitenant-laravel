@@ -6,6 +6,7 @@ use App\Models\Tenant\Course;
 use App\Models\Tenant\Enrollment;
 use App\Models\Tenant\Lesson;
 use App\Models\Tenant\LessonProgress;
+use App\Services\Student\CourseContentService;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
@@ -22,42 +23,23 @@ class CourseContent extends Component
         $this->courseId = $course->id;
         $this->course = $course;
 
-        // Check if user is enrolled
-        $enrollment = Enrollment::where('course_id', $this->courseId)
-            ->where('user_id', auth()->id())
-            ->first();
-
-        if (!$enrollment) {
+        if (! $this->courseContentService()->ensureEnrolled($this->courseId, auth()->id())) {
             return redirect()->route('tenant.student.courses');
         }
 
-        // Load course with all data
-        $course = $this->getCourse();
+        $course = $this->courseContentService()->getCourse($this->courseId);
 
-        // Set initial lesson if not selected
         if (!$this->selectedLesson && $course) {
-            $this->selectedLesson = $this->getFirstIncompleteLesson($course) ?? $course->sections->first()?->lessons->first();
+            $this->selectedLesson = $this->courseContentService()->getFirstIncompleteLesson($course, auth()->id())
+                ?? $course->sections->first()?->lessons->first();
         }
 
-        // Calculate progress
-        $this->calculateProgress();
+        $this->progressPercent = $this->courseContentService()->calculateProgress($this->courseId, auth()->id());
     }
 
     public function getCourse()
     {
-        return Course::with([
-            'instructor',
-            'sections' => function ($query) {
-                $query->with([
-                    'lessons' => function ($q) {
-                        $q->orderBy('order');
-                    },
-                    'quiz' => function ($q) {
-                        $q->with('questions.options');
-                    }
-                ])->orderBy('order');
-            }
-        ])->find($this->courseId);
+        return $this->courseContentService()->getCourse($this->courseId);
     }
 
     public function selectLesson($lessonId)
@@ -98,64 +80,20 @@ class CourseContent extends Component
     public function markLessonComplete()
     {
         if ($this->selectedLesson) {
-            LessonProgress::updateOrCreate(
-                [
-                    'user_id' => auth()->id(),
-                    'lesson_id' => $this->selectedLesson->id,
-                ],
-                [
-                    'is_completed' => true,
-                    'last_watched_at' => now(),
-                ]
-            );
-
-            $this->calculateProgress();
+            $this->courseContentService()->markLessonComplete($this->selectedLesson->id, auth()->id());
+            $this->progressPercent = $this->courseContentService()->calculateProgress($this->courseId, auth()->id());
             Toaster::success('Lesson marked as complete!');
         }
     }
 
     public function isLessonCompleted($lessonId)
     {
-        return LessonProgress::where('user_id', auth()->id())
-            ->where('lesson_id', $lessonId)
-            ->where('is_completed', true)
-            ->exists();
+        return $this->courseContentService()->isLessonCompleted($lessonId, auth()->id());
     }
 
-    private function getFirstIncompleteLesson($course)
+    protected function courseContentService(): CourseContentService
     {
-        foreach ($course->sections as $section) {
-            foreach ($section->lessons as $lesson) {
-                if (!$this->isLessonCompleted($lesson->id)) {
-                    return $lesson;
-                }
-            }
-        }
-        return null;
-    }
-
-    private function calculateProgress()
-    {
-        $totalLessons = Lesson::whereHas('section', function ($query) {
-            $query->where('course_id', $this->courseId);
-        })->count();
-
-        $completedLessons = LessonProgress::where('user_id', auth()->id())
-            ->whereHas('lesson.section', function ($query) {
-                $query->where('course_id', $this->courseId);
-            })
-            ->where('is_completed', true)
-            ->count();
-
-        $this->progressPercent = $totalLessons > 0 ? round(($completedLessons / $totalLessons) * 100) : 0;
-
-        // Persist to enrollment table
-        Enrollment::where('course_id', $this->courseId)
-            ->where('user_id', auth()->id())
-            ->update([
-                'progress_percent' => $this->progressPercent,
-                'completed_at' => $this->progressPercent == 100 ? now() : null,
-            ]);
+        return new CourseContentService();
     }
 
     public function render()

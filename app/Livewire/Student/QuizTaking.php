@@ -4,6 +4,7 @@ namespace App\Livewire\Student;
 
 use App\Models\Tenant\Quiz;
 use App\Models\Tenant\QuizAttempt;
+use App\Services\Student\QuizTakingService;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
@@ -25,17 +26,13 @@ class QuizTaking extends Component
 
     public function loadQuiz()
     {
-        $this->quiz = Quiz::with(['questions.options', 'section'])->find($this->quizId);
+        $this->quiz = $this->quizTakingService()->loadQuiz($this->quizId);
 
         if (!$this->quiz) {
             return redirect()->route('tenant.student.courses');
         }
 
-        // Check for previous attempts
-        $this->previousAttempt = QuizAttempt::where('quiz_id', $this->quizId)
-            ->where('user_id', auth()->id())
-            ->latest('submitted_at')
-            ->first();
+        $this->previousAttempt = $this->quizTakingService()->getPreviousAttempt($this->quizId, auth()->id());
     }
 
     public function selectOption($questionId, $optionId)
@@ -63,31 +60,11 @@ class QuizTaking extends Component
         }
 
         // Calculate score
-        $correctAnswers = 0;
-        foreach ($this->quiz->questions as $question) {
-            $correctOption = $question->options->where('is_correct', true)->first();
-            if ($correctOption && isset($this->selectedAnswers[$question->id])) {
-                if ($this->selectedAnswers[$question->id] === $correctOption->id) {
-                    $correctAnswers++;
-                }
-            }
-        }
+        $result = $this->quizTakingService()->calculateScore($this->quiz, $this->selectedAnswers);
+        $attempt = $this->quizTakingService()->submitQuiz($this->quizId, $this->selectedAnswers, auth()->id());
 
-        $totalQuestions = $this->quiz->questions->count();
-        $score = $totalQuestions > 0 ? round(($correctAnswers / $totalQuestions) * 100) : 0;
-        $passed = $score >= $this->quiz->pass_percentage;
-
-        // Save attempt
-        QuizAttempt::create([
-            'user_id' => auth()->id(),
-            'quiz_id' => $this->quizId,
-            'score' => $score,
-            'passed' => $passed,
-            'submitted_at' => now(),
-        ]);
-
-        $this->score = $score;
-        $this->passed = $passed;
+        $this->score = $result['score'];
+        $this->passed = $result['passed'];
         $this->submitted = true;
 
         if ($passed) {
@@ -108,5 +85,10 @@ class QuizTaking extends Component
     public function render()
     {
         return view('livewire.student.quiz-taking');
+    }
+
+    protected function quizTakingService(): QuizTakingService
+    {
+        return new QuizTakingService();
     }
 }

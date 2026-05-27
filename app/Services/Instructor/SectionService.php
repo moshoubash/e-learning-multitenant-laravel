@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Instructor;
 
 use App\Models\Tenant\Section;
 use Illuminate\Support\Facades\DB;
