@@ -151,11 +151,7 @@ class Quizzes extends Component
 
     public function storeQuiz(): void
     {
-        $this->validate([
-            'quizCreateTitle' => 'required|string|max:255',
-            'quizCreateSectionId' => 'required|exists:sections,id',
-            'quizCreatePassPercentage' => 'required|integer|min:1|max:100',
-        ]);
+        $this->validate($this->quizCreateRules());
 
         $section = Section::find($this->quizCreateSectionId);
 
@@ -178,11 +174,7 @@ class Quizzes extends Component
 
     public function updateQuiz(): void
     {
-        $this->validate([
-            'quizEditTitle' => 'required|string|max:255',
-            'quizEditSectionId' => 'required|exists:sections,id',
-            'quizEditPassPercentage' => 'required|integer|min:1|max:100',
-        ]);
+        $this->validate($this->quizUpdateRules());
 
         if (! $this->editingQuiz) {
             Toaster::error(__('messages.Quiz not found.'));
@@ -265,11 +257,7 @@ class Quizzes extends Component
 
     public function storeQuestion(): void
     {
-        $this->validate([
-            'questionCreateText' => 'required|string',
-            'questionCreateType' => 'required|in:single,multiple,true_false',
-            'questionCreateOrder' => 'required|integer|min:0',
-        ]);
+        $this->validate($this->questionCreateRules());
 
         $this->questionManager()->createQuestion($this->selectedQuizId, [
             'question' => $this->questionCreateText,
@@ -283,11 +271,7 @@ class Quizzes extends Component
 
     public function updateQuestion(): void
     {
-        $this->validate([
-            'questionEditText' => 'required|string',
-            'questionEditType' => 'required|in:single,multiple,true_false',
-            'questionEditOrder' => 'required|integer|min:0',
-        ]);
+        $this->validate($this->questionUpdateRules());
 
         if (! $this->editingQuestion) {
             Toaster::error(__('messages.Question not found.'));
@@ -367,10 +351,7 @@ class Quizzes extends Component
 
     public function storeOption(): void
     {
-        $this->validate([
-            'optionCreateText' => 'required|string',
-            'optionCreateIsCorrect' => 'boolean',
-        ]);
+        $this->validate($this->optionCreateRules());
 
         $this->optionManager()->createOption($this->selectedQuestionId, [
             'option_text' => $this->optionCreateText,
@@ -383,10 +364,7 @@ class Quizzes extends Component
 
     public function updateOption(): void
     {
-        $this->validate([
-            'optionEditText' => 'required|string',
-            'optionEditIsCorrect' => 'boolean',
-        ]);
+        $this->validate($this->optionUpdateRules());
 
         if (! $this->editingOption) {
             Toaster::error(__('messages.Option not found.'));
@@ -443,6 +421,58 @@ class Quizzes extends Component
             'quizzes' => $quizzes,
             'sections' => $sections,
         ]);
+    }
+
+    protected function quizCreateRules(): array
+    {
+        return [
+            'quizCreateTitle' => 'required|string|max:255',
+            'quizCreateSectionId' => 'required|exists:sections,id',
+            'quizCreatePassPercentage' => 'required|integer|min:1|max:100',
+        ];
+    }
+
+    protected function quizUpdateRules(): array
+    {
+        return [
+            'quizEditTitle' => 'required|string|max:255',
+            'quizEditSectionId' => 'required|exists:sections,id',
+            'quizEditPassPercentage' => 'required|integer|min:1|max:100',
+        ];
+    }
+
+    protected function questionCreateRules(): array
+    {
+        return [
+            'questionCreateText' => 'required|string',
+            'questionCreateType' => 'required|in:single,multiple,true_false',
+            'questionCreateOrder' => 'required|integer|min:0',
+        ];
+    }
+
+    protected function questionUpdateRules(): array
+    {
+        return [
+            'questionEditText' => 'required|string',
+            'questionEditType' => 'required|in:single,multiple,true_false',
+            'questionEditOrder' => 'required|integer|min:0',
+        ];
+    }
+
+    protected function optionCreateRules(): array
+    {
+        return [
+            'optionCreateText' => 'required|string',
+            'optionCreateIsCorrect' => 'boolean',
+        ];
+    }
+
+    protected function optionUpdateRules(): array
+    {
+        return [
+            'optionEditText' => 'required|string',
+            'optionEditIsCorrect' => 'boolean',
+        ];
     }
 
     protected function quizManager(): QuizManager

@@ -228,13 +228,7 @@ class Courses extends Component
 
     public function store()
     {
-        $this->validate([
-            'createTitle' => 'required|string|max:255',
-            'createSlug' => 'required|string|max:255|unique:courses,slug',
-            'createDescription' => 'nullable|string',
-            'createPrice' => 'required|numeric|min:0',
-            'createStatus' => 'required|in:draft,published,archived',
-        ]);
+        $this->validate($this->courseCreateRules());
 
         $this->courseService()->createCourse([
             'title' => $this->createTitle,
@@ -251,13 +245,7 @@ class Courses extends Component
 
     public function update()
     {
-        $this->validate([
-            'editTitle' => 'required|string|max:255',
-            'editSlug' => 'required|string|max:255|unique:courses,slug,' . $this->editingCourse->id,
-            'editDescription' => 'nullable|string',
-            'editPrice' => 'required|numeric|min:0',
-            'editStatus' => 'required|in:draft,published,archived',
-        ]);
+        $this->validate($this->courseUpdateRules());
 
         if (! $this->editingCourse) {
             Toaster::error('Course not found.');
@@ -361,10 +349,7 @@ class Courses extends Component
 
     public function storeSection()
     {
-        $this->validate([
-            'sectionCreateTitle' => 'required|string|max:255',
-            'sectionCreateOrder' => 'required|integer|min:0',
-        ]);
+        $this->validate($this->sectionCreateRules());
 
         $this->sectionService()->createSection($this->selectedCourseId, [
             'title' => $this->sectionCreateTitle,
@@ -377,10 +362,7 @@ class Courses extends Component
 
     public function updateSection()
     {
-        $this->validate([
-            'sectionEditTitle' => 'required|string|max:255',
-            'sectionEditOrder' => 'required|integer|min:0',
-        ]);
+        $this->validate($this->sectionUpdateRules());
 
         if (! $this->editingSection) {
             Toaster::error('Section not found.');
@@ -492,13 +474,7 @@ class Courses extends Component
 
     public function storeLesson()
     {
-        $this->validate([
-            'lessonCreateTitle' => 'required|string|max:255',
-            'lessonCreateType' => 'required|in:video,text',
-            'lessonCreateContent' => 'nullable|string',
-            'lessonCreateOrder' => 'required|integer|min:0',
-            'courseVideo' => 'nullable|file|mimes:mp4,mov,avi,wmv|max:102400',
-        ]);
+        $this->validate($this->lessonCreateRules());
 
         try {
             $this->lessonService()->createLesson($this->selectedSectionId, [
@@ -522,12 +498,7 @@ class Courses extends Component
 
     public function updateLesson()
     {
-        $this->validate([
-            'lessonEditTitle' => 'required|string|max:255',
-            'lessonEditType' => 'required|in:video,text,quiz',
-            'lessonEditContent' => 'nullable|string',
-            'lessonEditOrder' => 'required|integer|min:0',
-        ]);
+        $this->validate($this->lessonUpdateRules());
 
         if (! $this->editingLesson) {
             Toaster::error('Lesson not found.');
@@ -621,6 +592,83 @@ class Courses extends Component
         $this->quizEditPassPercentage = 70;
     }
 
+    protected function courseCreateRules(): array
+    {
+        return [
+            'createTitle' => 'required|string|max:255',
+            'createSlug' => 'required|string|max:255|unique:courses,slug',
+            'createDescription' => 'nullable|string',
+            'createPrice' => 'required|numeric|min:0',
+            'createStatus' => 'required|in:draft,published,archived',
+            'createInstructorId' => 'required|exists:users,id',
+        ];
+    }
+
+    protected function courseUpdateRules(): array
+    {
+        return [
+            'editTitle' => 'required|string|max:255',
+            'editSlug' => 'required|string|max:255|unique:courses,slug,' . optional($this->editingCourse)->id,
+            'editDescription' => 'nullable|string',
+            'editPrice' => 'required|numeric|min:0',
+            'editStatus' => 'required|in:draft,published,archived',
+            'editInstructorId' => 'required|exists:users,id',
+        ];
+    }
+
+    protected function sectionCreateRules(): array
+    {
+        return [
+            'sectionCreateTitle' => 'required|string|max:255',
+            'sectionCreateOrder' => 'required|integer|min:0',
+        ];
+    }
+
+    protected function sectionUpdateRules(): array
+    {
+        return [
+            'sectionEditTitle' => 'required|string|max:255',
+            'sectionEditOrder' => 'required|integer|min:0',
+        ];
+    }
+
+    protected function lessonCreateRules(): array
+    {
+        return [
+            'lessonCreateTitle' => 'required|string|max:255',
+            'lessonCreateType' => 'required|in:video,text',
+            'lessonCreateContent' => 'nullable|string',
+            'lessonCreateOrder' => 'required|integer|min:0',
+            'courseVideo' => 'nullable|file|mimes:mp4,mov,avi,wmv|max:102400',
+        ];
+    }
+
+    protected function lessonUpdateRules(): array
+    {
+        return [
+            'lessonEditTitle' => 'required|string|max:255',
+            'lessonEditType' => 'required|in:video,text,quiz',
+            'lessonEditContent' => 'nullable|string',
+            'lessonEditOrder' => 'required|integer|min:0',
+        ];
+    }
+
+    protected function quizCreateRules(): array
+    {
+        return [
+            'quizCreateTitle' => 'required|string|max:255',
+            'quizCreatePassPercentage' => 'required|integer|min:1|max:100',
+        ];
+    }
+
+    protected function quizUpdateRules(): array
+    {
+        return [
+            'quizEditTitle' => 'required|string|max:255',
+            'quizEditPassPercentage' => 'required|integer|min:1|max:100',
+        ];
+    }
+
     protected function quizService(): QuizService
     {
         return new QuizService();
@@ -628,10 +676,7 @@ class Courses extends Component
 
     public function storeQuiz()
     {
-        $this->validate([
-            'quizCreateTitle' => 'required|string|max:255',
-            'quizCreatePassPercentage' => 'required|integer|min:1|max:100',
-        ]);
+        $this->validate($this->quizCreateRules());
 
         try {
             $this->quizService()->createQuizForSection($this->selectedSectionId, [
@@ -650,10 +695,7 @@ class Courses extends Component
 
     public function updateQuiz()
     {
-        $this->validate([
-            'quizEditTitle' => 'required|string|max:255',
-            'quizEditPassPercentage' => 'required|integer|min:1|max:100',
-        ]);
+        $this->validate($this->quizUpdateRules());
 
         if (! $this->editingQuiz) {
             Toaster::error('Quiz not found.');

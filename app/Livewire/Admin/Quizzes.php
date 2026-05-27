@@ -120,11 +120,7 @@ class Quizzes extends Component
 
     public function updateQuiz()
     {
-        $this->validate([
-            'editTitle' => 'required|string|max:255',
-            'editSectionId' => 'required|exists:sections,id',
-            'editPassPercentage' => 'required|integer|min:1|max:100',
-        ]);
+        $this->validate($this->quizUpdateRules());
 
         $this->quizzesService()->updateQuiz($this->editingQuiz, [
             'title' => $this->editTitle,
@@ -169,11 +165,7 @@ class Quizzes extends Component
 
     public function storeQuestion()
     {
-        $this->validate([
-            'questionCreateText' => 'required|string',
-            'questionCreateType' => 'required|in:single,multiple,true_false',
-            'questionCreateOrder' => 'required|integer|min:0',
-        ]);
+        $this->validate($this->questionCreateRules());
 
         $this->quizzesService()->createQuestion($this->selectedQuizId, [
             'question' => $this->questionCreateText,
@@ -188,11 +180,7 @@ class Quizzes extends Component
 
     public function updateQuestion()
     {
-        $this->validate([
-            'questionEditText' => 'required|string',
-            'questionEditType' => 'required|in:single,multiple,true_false',
-            'questionEditOrder' => 'required|integer|min:0',
-        ]);
+        $this->validate($this->questionUpdateRules());
 
         $this->quizzesService()->updateQuestion($this->editingQuestion, [
             'question' => $this->questionEditText,
@@ -246,10 +234,7 @@ class Quizzes extends Component
 
     public function storeOption()
     {
-        $this->validate([
-            'optionCreateText' => 'required|string',
-            'optionCreateIsCorrect' => 'boolean',
-        ]);
+        $this->validate($this->optionCreateRules());
 
         $this->quizzesService()->createOption($this->selectedQuestionId, [
             'option_text' => $this->optionCreateText,
@@ -263,10 +248,7 @@ class Quizzes extends Component
 
     public function updateOption()
     {
-        $this->validate([
-            'optionEditText' => 'required|string',
-            'optionEditIsCorrect' => 'boolean',
-        ]);
+        $this->validate($this->optionUpdateRules());
 
         $this->quizzesService()->updateOption($this->editingOption, [
             'option_text' => $this->optionEditText,
@@ -308,6 +290,49 @@ class Quizzes extends Component
             'quizzes' => $quizzes,
             'sections' => $sections,
         ]);
+    }
+
+    protected function quizUpdateRules(): array
+    {
+        return [
+            'editTitle' => 'required|string|max:255',
+            'editSectionId' => 'required|exists:sections,id',
+            'editPassPercentage' => 'required|integer|min:1|max:100',
+        ];
+    }
+
+    protected function questionCreateRules(): array
+    {
+        return [
+            'questionCreateText' => 'required|string',
+            'questionCreateType' => 'required|in:single,multiple,true_false',
+            'questionCreateOrder' => 'required|integer|min:0',
+        ];
+    }
+
+    protected function questionUpdateRules(): array
+    {
+        return [
+            'questionEditText' => 'required|string',
+            'questionEditType' => 'required|in:single,multiple,true_false',
+            'questionEditOrder' => 'required|integer|min:0',
+        ];
+    }
+
+    protected function optionCreateRules(): array
+    {
+        return [
+            'optionCreateText' => 'required|string',
+            'optionCreateIsCorrect' => 'boolean',
+        ];
+    }
+
+    protected function optionUpdateRules(): array
+    {
+        return [
+            'optionEditText' => 'required|string',
+            'optionEditIsCorrect' => 'boolean',
+        ];
     }
 
     protected function quizzesService(): QuizzesService

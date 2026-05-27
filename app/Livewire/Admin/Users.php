@@ -98,12 +98,7 @@ class Users extends Component
 
     public function store()
     {
-        $this->validate([
-            'createName' => 'required|string|max:255',
-            'createEmail' => 'required|email|unique:users,email',
-            'createPassword' => 'required|min:8',
-            'createRole' => 'required|in:admin,instructor,student',
-        ]);
+        $this->validate($this->userCreateRules());
 
         $this->usersService()->createUser([
             'name' => $this->createName,
@@ -118,12 +113,7 @@ class Users extends Component
 
     public function update()
     {
-        $this->validate([
-            'editName' => 'required|string|max:255',
-            'editEmail' => 'required|email|unique:users,email,' . $this->editingUser->id,
-            'editPassword' => 'nullable|min:8',
-            'editRole' => 'required|in:admin,instructor,student',
-        ]);
+        $this->validate($this->userUpdateRules());
 
         $this->usersService()->updateUser($this->editingUser, [
             'name' => $this->editName,
@@ -164,6 +154,26 @@ class Users extends Component
             'users' => $users,
             'deletedUsers' => $deletedUsers,
         ]);
+    }
+
+    protected function userCreateRules(): array
+    {
+        return [
+            'createName' => 'required|string|max:255',
+            'createEmail' => 'required|email|unique:users,email',
+            'createPassword' => 'required|min:8',
+            'createRole' => 'required|in:admin,instructor,student',
+        ];
+    }
+
+    protected function userUpdateRules(): array
+    {
+        return [
+            'editName' => 'required|string|max:255',
+            'editEmail' => 'required|email|unique:users,email,' . optional($this->editingUser)->id,
+            'editPassword' => 'nullable|min:8',
+            'editRole' => 'required|in:admin,instructor,student',
+        ];
     }
 
     protected function usersService(): UsersService

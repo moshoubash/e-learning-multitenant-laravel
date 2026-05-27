@@ -113,13 +113,7 @@ class Courses extends Component
 
     public function store()
     {
-        $this->validate([
-            'createTitle' => 'required|string|max:255',
-            'createDescription' => 'nullable|string',
-            'createPrice' => 'required|numeric|min:0',
-            'createStatus' => 'required|in:draft,published,archived',
-            'createInstructorId' => 'required|exists:users,id',
-        ]);
+        $this->validate($this->courseCreateRules());
 
         $this->courseService()->createCourse([
             'instructor_id' => $this->createInstructorId,
@@ -135,13 +129,7 @@ class Courses extends Component
 
     public function update()
     {
-        $this->validate([
-            'editTitle' => 'required|string|max:255',
-            'editDescription' => 'nullable|string',
-            'editPrice' => 'required|numeric|min:0',
-            'editStatus' => 'required|in:draft,published,archived',
-            'editInstructorId' => 'required|exists:users,id',
-        ]);
+        $this->validate($this->courseUpdateRules());
 
         if (! $this->editingCourse) {
             Toaster::error('Course not found.');
@@ -185,6 +173,28 @@ class Courses extends Component
             'instructors' => $instructors,
             'deletedCourses' => $this->courseService()->getDeletedCourses(),
         ]);
+    }
+
+    protected function courseCreateRules(): array
+    {
+        return [
+            'createTitle' => 'required|string|max:255',
+            'createDescription' => 'nullable|string',
+            'createPrice' => 'required|numeric|min:0',
+            'createStatus' => 'required|in:draft,published,archived',
+            'createInstructorId' => 'required|exists:users,id',
+        ];
+    }
+
+    protected function courseUpdateRules(): array
+    {
+        return [
+            'editTitle' => 'required|string|max:255',
+            'editDescription' => 'nullable|string',
+            'editPrice' => 'required|numeric|min:0',
+            'editStatus' => 'required|in:draft,published,archived',
+            'editInstructorId' => 'required|exists:users,id',
+        ];
     }
 
     protected function courseService(): CoursesService
