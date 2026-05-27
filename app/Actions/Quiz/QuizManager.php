@@ -39,9 +39,6 @@ final class QuizManager
     public function deleteQuiz(Quiz $quiz): void
     {
         DB::transaction(function () use ($quiz) {
-            $quiz->attempts()->delete();
-            $quiz->questions()->each(fn ($question) => $question->options()->delete());
-            $quiz->questions()->delete();
             $quiz->delete();
         });
     }

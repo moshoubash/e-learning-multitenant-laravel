@@ -32,13 +32,6 @@ class SectionService
     public function softDeleteSection(Section $section): void
     {
         DB::transaction(function () use ($section) {
-            if ($section->quiz) {
-                $section->quiz->questions()->each(fn ($question) => $question->options()->delete());
-                $section->quiz->questions()->delete();
-                $section->quiz->delete();
-            }
-
-            $section->lessons()->delete();
             $section->delete();
         });
     }

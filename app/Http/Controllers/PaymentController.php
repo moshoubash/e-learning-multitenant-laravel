@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProcessPaymentRequest;
 use App\Models\Tenant\Course;
 use App\Models\Tenant\Enrollment;
-use App\Services\PaymentService;
+use App\Services\Student\PaymentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Livewire;
