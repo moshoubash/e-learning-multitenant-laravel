@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Tenant\User;
+use App\Services\Admin\UsersService;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
@@ -43,7 +44,11 @@ class Users extends Component
 
     public function openEditModal($id)
     {
-        $this->editingUser = User::find($id);
+        $this->editingUser = $this->usersService()->findById($id);
+        if (! $this->editingUser) {
+            Toaster::error('User not found.');
+            return;
+        }
         $this->editName = $this->editingUser->name;
         $this->editEmail = $this->editingUser->email;
         $this->editRole = $this->editingUser->getRoleNames()->first() ?? 'student';
@@ -53,13 +58,13 @@ class Users extends Component
 
     public function openDeleteModal($id)
     {
-        $this->deletingUser = User::find($id);
+        $this->deletingUser = $this->usersService()->findById($id);
         $this->showDeleteModal = true;
     }
 
     public function openRestoreModal($id)
     {
-        $this->restoringUser = User::withTrashed()->find($id);
+        $this->restoringUser = $this->usersService()->findWithTrashed($id);
         $this->showRestoreModal = true;
     }
 
@@ -100,13 +105,12 @@ class Users extends Component
             'createRole' => 'required|in:admin,instructor,student',
         ]);
 
-        $user = User::create([
+        $this->usersService()->createUser([
             'name' => $this->createName,
             'email' => $this->createEmail,
-            'password' => Hash::make($this->createPassword),
+            'password' => $this->createPassword,
+            'role' => $this->createRole,
         ]);
-
-        $user->assignRole($this->createRole);
 
         $this->closeModal();
         Toaster::success('messages.User created successfully!');
@@ -121,15 +125,12 @@ class Users extends Component
             'editRole' => 'required|in:admin,instructor,student',
         ]);
 
-        $this->editingUser->name = $this->editName;
-        $this->editingUser->email = $this->editEmail;
-
-        if ($this->editPassword) {
-            $this->editingUser->password = Hash::make($this->editPassword);
-        }
-
-        $this->editingUser->save();
-        $this->editingUser->syncRoles([$this->editRole]);
+        $this->usersService()->updateUser($this->editingUser, [
+            'name' => $this->editName,
+            'email' => $this->editEmail,
+            'password' => $this->editPassword,
+            'role' => $this->editRole,
+        ]);
 
         $this->closeModal();
         Toaster::success('messages.User updated successfully!');
@@ -138,7 +139,7 @@ class Users extends Component
     public function softDelete()
     {
         if ($this->deletingUser) {
-            $this->deletingUser->delete();
+            $this->usersService()->softDeleteUser($this->deletingUser);
             $this->closeModal();
             Toaster::success('messages.User soft deleted successfully!');
         }
@@ -147,7 +148,7 @@ class Users extends Component
     public function restore()
     {
         if ($this->restoringUser) {
-            $this->restoringUser->restore();
+            $this->usersService()->restoreUser($this->restoringUser);
             $this->closeModal();
             Toaster::success('messages.User restored successfully!');
         }
@@ -155,15 +156,18 @@ class Users extends Component
 
     public function render()
     {
-        $users = User::select('id', 'name', 'email', 'created_at')
-            ->with('roles')
-            ->paginate(10);
+        $users = $this->usersService()->getPaginatedUsers(10);
 
-        $deletedUsers = User::onlyTrashed()->get();
+        $deletedUsers = $this->usersService()->getDeletedUsers();
 
         return view('livewire.admin.users', [
             'users' => $users,
             'deletedUsers' => $deletedUsers,
         ]);
+    }
+
+    protected function usersService(): UsersService
+    {
+        return new UsersService();
     }
 }

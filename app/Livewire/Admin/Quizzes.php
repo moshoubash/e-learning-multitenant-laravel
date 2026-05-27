@@ -7,6 +7,7 @@ use App\Models\Tenant\QuizQuestion;
 use App\Models\Tenant\QuizOption;
 use App\Models\Tenant\QuizAttempt;
 use App\Models\Tenant\Section;
+use App\Services\Admin\QuizzesService;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
@@ -63,7 +64,13 @@ class Quizzes extends Component
 
     public function openEditQuizModal($id)
     {
-        $this->editingQuiz = Quiz::with(['questions.options', 'section.course'])->find($id);
+        $this->editingQuiz = $this->quizzesService()->findQuizWithRelations($id);
+
+        if (! $this->editingQuiz) {
+            Toaster::error('Quiz not found.');
+            return;
+        }
+
         $this->editTitle = $this->editingQuiz->title;
         $this->editSectionId = $this->editingQuiz->section_id;
         $this->editPassPercentage = $this->editingQuiz->pass_percentage;
@@ -119,10 +126,11 @@ class Quizzes extends Component
             'editPassPercentage' => 'required|integer|min:1|max:100',
         ]);
 
-        $this->editingQuiz->title = $this->editTitle;
-        $this->editingQuiz->section_id = $this->editSectionId;
-        $this->editingQuiz->pass_percentage = $this->editPassPercentage;
-        $this->editingQuiz->save();
+        $this->quizzesService()->updateQuiz($this->editingQuiz, [
+            'title' => $this->editTitle,
+            'section_id' => $this->editSectionId,
+            'pass_percentage' => $this->editPassPercentage,
+        ]);
 
         $this->closeModals();
         Toaster::success('messages.Quiz updated successfully!');
@@ -140,7 +148,13 @@ class Quizzes extends Component
 
     public function openQuestionEditModal($id)
     {
-        $this->editingQuestion = QuizQuestion::with('options')->find($id);
+        $this->editingQuestion = $this->quizzesService()->findQuestionWithOptions($id);
+
+        if (! $this->editingQuestion) {
+            Toaster::error('Question not found.');
+            return;
+        }
+
         $this->questionEditText = $this->editingQuestion->question;
         $this->questionEditType = $this->editingQuestion->type;
         $this->questionEditOrder = $this->editingQuestion->order;
@@ -149,7 +163,7 @@ class Quizzes extends Component
 
     public function openQuestionDeleteModal($id)
     {
-        $this->deletingQuestion = QuizQuestion::find($id);
+        $this->deletingQuestion = $this->quizzesService()->findQuestionWithOptions($id);
         $this->showQuestionDeleteModal = true;
     }
 
@@ -161,15 +175,13 @@ class Quizzes extends Component
             'questionCreateOrder' => 'required|integer|min:0',
         ]);
 
-        QuizQuestion::create([
-            'quiz_id' => $this->selectedQuizId,
+        $this->quizzesService()->createQuestion($this->selectedQuizId, [
             'question' => $this->questionCreateText,
             'type' => $this->questionCreateType,
             'order' => $this->questionCreateOrder,
         ]);
 
-        // Refresh the quiz data
-        $this->editingQuiz = Quiz::with(['questions.options', 'section.course'])->find($this->editingQuiz->id);
+        $this->editingQuiz = $this->quizzesService()->findQuizWithRelations($this->editingQuiz->id);
         $this->showQuestionCreateModal = false;
         Toaster::success('messages.Question created successfully!');
     }
@@ -182,13 +194,13 @@ class Quizzes extends Component
             'questionEditOrder' => 'required|integer|min:0',
         ]);
 
-        $this->editingQuestion->question = $this->questionEditText;
-        $this->editingQuestion->type = $this->questionEditType;
-        $this->editingQuestion->order = $this->questionEditOrder;
-        $this->editingQuestion->save();
+        $this->quizzesService()->updateQuestion($this->editingQuestion, [
+            'question' => $this->questionEditText,
+            'type' => $this->questionEditType,
+            'order' => $this->questionEditOrder,
+        ]);
 
-        // Refresh the quiz data
-        $this->editingQuiz = Quiz::with(['questions.options', 'section.course'])->find($this->editingQuiz->id);
+        $this->editingQuiz = $this->quizzesService()->findQuizWithRelations($this->editingQuiz->id);
         $this->showQuestionEditModal = false;
         Toaster::success('messages.Question updated successfully!');
     }
@@ -196,10 +208,8 @@ class Quizzes extends Component
     public function deleteQuestion()
     {
         if ($this->deletingQuestion) {
-            $this->deletingQuestion->options()->delete();
-            $this->deletingQuestion->delete();
-            // Refresh the quiz data
-            $this->editingQuiz = Quiz::with(['questions.options', 'section.course'])->find($this->editingQuiz->id);
+            $this->quizzesService()->deleteQuestion($this->deletingQuestion);
+            $this->editingQuiz = $this->quizzesService()->findQuizWithRelations($this->editingQuiz->id);
             $this->showQuestionDeleteModal = false;
             Toaster::success('messages.Question deleted successfully!');
         }
@@ -216,7 +226,13 @@ class Quizzes extends Component
 
     public function openOptionEditModal($id)
     {
-        $this->editingOption = QuizOption::find($id);
+        $this->editingOption = $this->quizzesService()->findOptionById($id);
+
+        if (! $this->editingOption) {
+            Toaster::error('Option not found.');
+            return;
+        }
+
         $this->optionEditText = $this->editingOption->option_text;
         $this->optionEditIsCorrect = $this->editingOption->is_correct;
         $this->showOptionEditModal = true;
@@ -224,7 +240,7 @@ class Quizzes extends Component
 
     public function openOptionDeleteModal($id)
     {
-        $this->deletingOption = QuizOption::find($id);
+        $this->deletingOption = $this->quizzesService()->findOptionById($id);
         $this->showOptionDeleteModal = true;
     }
 
@@ -235,14 +251,12 @@ class Quizzes extends Component
             'optionCreateIsCorrect' => 'boolean',
         ]);
 
-        QuizOption::create([
-            'question_id' => $this->selectedQuestionId,
+        $this->quizzesService()->createOption($this->selectedQuestionId, [
             'option_text' => $this->optionCreateText,
             'is_correct' => $this->optionCreateIsCorrect,
         ]);
 
-        // Refresh the quiz data
-        $this->editingQuiz = Quiz::with(['questions.options', 'section.course'])->find($this->editingQuiz->id);
+        $this->editingQuiz = $this->quizzesService()->findQuizWithRelations($this->editingQuiz->id);
         $this->showOptionCreateModal = false;
         Toaster::success('messages.Option created successfully!');
     }
@@ -254,12 +268,12 @@ class Quizzes extends Component
             'optionEditIsCorrect' => 'boolean',
         ]);
 
-        $this->editingOption->option_text = $this->optionEditText;
-        $this->editingOption->is_correct = $this->optionEditIsCorrect;
-        $this->editingOption->save();
+        $this->quizzesService()->updateOption($this->editingOption, [
+            'option_text' => $this->optionEditText,
+            'is_correct' => $this->optionEditIsCorrect,
+        ]);
 
-        // Refresh the quiz data
-        $this->editingQuiz = Quiz::with(['questions.options', 'section.course'])->find($this->editingQuiz->id);
+        $this->editingQuiz = $this->quizzesService()->findQuizWithRelations($this->editingQuiz->id);
         $this->showOptionEditModal = false;
         Toaster::success('messages.Option updated successfully!');
     }
@@ -267,9 +281,8 @@ class Quizzes extends Component
     public function deleteOption()
     {
         if ($this->deletingOption) {
-            $this->deletingOption->delete();
-            // Refresh the quiz data
-            $this->editingQuiz = Quiz::with(['questions.options', 'section.course'])->find($this->editingQuiz->id);
+            $this->quizzesService()->deleteOption($this->deletingOption);
+            $this->editingQuiz = $this->quizzesService()->findQuizWithRelations($this->editingQuiz->id);
             $this->showOptionDeleteModal = false;
             Toaster::success('messages.Option deleted successfully!');
         }
@@ -277,21 +290,17 @@ class Quizzes extends Component
 
     public function getAttemptsProperty()
     {
-        return QuizAttempt::where('quiz_id', $this->selectedQuizId)
-            ->with('user')
-            ->orderBy('submitted_at', 'desc')
-            ->get();
+        return $this->quizzesService()->getAttemptsForQuiz($this->selectedQuizId);
     }
 
     public function getSections()
     {
-        return Section::with('course')->get();
+        return $this->quizzesService()->getSections();
     }
 
     public function render()
     {
-        $quizzes = Quiz::with(['section.course', 'questions'])
-            ->paginate(10);
+        $quizzes = $this->quizzesService()->getPaginatedQuizzes(10);
 
         $sections = $this->getSections();
 
@@ -299,5 +308,10 @@ class Quizzes extends Component
             'quizzes' => $quizzes,
             'sections' => $sections,
         ]);
+    }
+
+    protected function quizzesService(): QuizzesService
+    {
+        return new QuizzesService();
     }
 }

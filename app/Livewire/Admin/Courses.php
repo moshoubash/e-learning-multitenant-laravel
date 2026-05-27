@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Models\Tenant\Course;
 use App\Models\Tenant\User;
+use App\Services\Admin\CoursesService;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
@@ -41,7 +42,7 @@ class Courses extends Component
 
     public function openRestoreModal($id)
     {
-        $this->restoringCourse = Course::withTrashed()->find($id);
+        $this->restoringCourse = $this->courseService()->findWithTrashed($id);
         $this->showRestoreModal = true;
     }
 
@@ -53,7 +54,11 @@ class Courses extends Component
 
     public function openEditModal($id)
     {
-        $this->editingCourse = Course::find($id);
+        $this->editingCourse = $this->courseService()->findById($id);
+        if (! $this->editingCourse) {
+            Toaster::error('Course not found.');
+            return;
+        }
         $this->editTitle = $this->editingCourse->title;
         $this->editDescription = $this->editingCourse->description;
         $this->editPrice = $this->editingCourse->price;
@@ -64,7 +69,7 @@ class Courses extends Component
 
     public function openDeleteModal($id)
     {
-        $this->deletingCourse = Course::find($id);
+        $this->deletingCourse = $this->courseService()->findById($id);
         $this->showDeleteModal = true;
     }
 
@@ -80,7 +85,7 @@ class Courses extends Component
     public function restore()
     {
         if ($this->restoringCourse) {
-            $this->restoringCourse->restore();
+            $this->courseService()->restoreCourse($this->restoringCourse);
             $this->closeModal();
             Toaster::success('messages.Course restored successfully!');
         }
@@ -116,20 +121,9 @@ class Courses extends Component
             'createInstructorId' => 'required|exists:users,id',
         ]);
 
-        $slug = Str::slug($this->createTitle);
-
-        // Ensure unique slug
-        $originalSlug = $slug;
-        $count = 1;
-        while (Course::where('slug', $slug)->exists()) {
-            $slug = $originalSlug . '-' . $count;
-            $count++;
-        }
-
-        Course::create([
+        $this->courseService()->createCourse([
             'instructor_id' => $this->createInstructorId,
             'title' => $this->createTitle,
-            'slug' => $slug,
             'description' => $this->createDescription,
             'price' => $this->createPrice,
             'status' => $this->createStatus,
@@ -149,23 +143,18 @@ class Courses extends Component
             'editInstructorId' => 'required|exists:users,id',
         ]);
 
-        $slug = Str::slug($this->editTitle);
-
-        // Ensure unique slug (excluding current course)
-        $originalSlug = $slug;
-        $count = 1;
-        while (Course::where('slug', $slug)->where('id', '!=', $this->editingCourse->id)->exists()) {
-            $slug = $originalSlug . '-' . $count;
-            $count++;
+        if (! $this->editingCourse) {
+            Toaster::error('Course not found.');
+            return;
         }
 
-        $this->editingCourse->instructor_id = $this->editInstructorId;
-        $this->editingCourse->title = $this->editTitle;
-        $this->editingCourse->slug = $slug;
-        $this->editingCourse->description = $this->editDescription;
-        $this->editingCourse->price = $this->editPrice;
-        $this->editingCourse->status = $this->editStatus;
-        $this->editingCourse->save();
+        $this->courseService()->updateCourse($this->editingCourse, [
+            'instructor_id' => $this->editInstructorId,
+            'title' => $this->editTitle,
+            'description' => $this->editDescription,
+            'price' => $this->editPrice,
+            'status' => $this->editStatus,
+        ]);
 
         $this->closeModal();
         Toaster::success('messages.Course updated successfully!');
@@ -174,7 +163,7 @@ class Courses extends Component
     public function softDelete()
     {
         if ($this->deletingCourse) {
-            $this->deletingCourse->delete();
+            $this->courseService()->softDeleteCourse($this->deletingCourse);
             $this->closeModal();
             Toaster::success('messages.Course deleted successfully!');
         }
@@ -187,15 +176,19 @@ class Courses extends Component
 
     public function render()
     {
-        $courses = Course::with('instructor')
-            ->paginate(10);
+        $courses = $this->courseService()->getPaginatedCourses(10);
 
         $instructors = $this->getInstructors();
 
         return view('livewire.admin.courses', [
             'courses' => $courses,
             'instructors' => $instructors,
-            'deletedCourses' => Course::onlyTrashed()->with('instructor')->get(),
+            'deletedCourses' => $this->courseService()->getDeletedCourses(),
         ]);
+    }
+
+    protected function courseService(): CoursesService
+    {
+        return new CoursesService();
     }
 }
