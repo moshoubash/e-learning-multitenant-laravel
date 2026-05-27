@@ -2,11 +2,15 @@
 
 namespace App\Livewire\Instructor;
 
+use App\Actions\Quiz\OptionManager;
+use App\Actions\Quiz\QuestionManager;
+use App\Actions\Quiz\QuizAttempts;
+use App\Actions\Quiz\QuizManager;
+use App\Models\Tenant\Section;
 use App\Models\Tenant\Quiz;
 use App\Models\Tenant\QuizQuestion;
 use App\Models\Tenant\QuizOption;
-use App\Models\Tenant\Section;
-use App\Models\Tenant\Course;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
@@ -42,6 +46,7 @@ class Quizzes extends Component
     // Selected items
     public $selectedQuizId = null;
     public $selectedSectionId = null;
+    public $selectedQuestionId = null;
 
     // Editing items
     public $deletingQuiz = null;
@@ -76,7 +81,7 @@ class Quizzes extends Component
     public $optionEditText = '';
     public $optionEditIsCorrect = false;
 
-    //  QUIZ METHODS 
+    //  QUIZ METHODS
 
     public function toggleQuizExpand($quizId)
     {
@@ -99,16 +104,22 @@ class Quizzes extends Component
         $this->showQuizCreateModal = true;
     }
 
-    public function openQuizEditModal($id)
+    public function openQuizEditModal($id): void
     {
-        $this->editingQuiz = Quiz::with('questions.options')->find($id);
+        $this->editingQuiz = $this->quizManager()->findQuizWithRelations($id);
+
+        if (! $this->editingQuiz) {
+            Toaster::error(__('messages.Quiz not found.'));
+            return;
+        }
+
         $this->quizEditTitle = $this->editingQuiz->title;
         $this->quizEditSectionId = $this->editingQuiz->section_id;
         $this->quizEditPassPercentage = $this->editingQuiz->pass_percentage;
         $this->showQuizEditModal = true;
     }
 
-    public function openQuizDeleteModal($id)
+    public function openQuizDeleteModal($id): void
     {
         $this->deletingQuiz = Quiz::find($id);
         $this->showQuizDeleteModal = true;
@@ -138,7 +149,7 @@ class Quizzes extends Component
         $this->quizEditPassPercentage = 70;
     }
 
-    public function storeQuiz()
+    public function storeQuiz(): void
     {
         $this->validate([
             'quizCreateTitle' => 'required|string|max:255',
@@ -146,15 +157,16 @@ class Quizzes extends Component
             'quizCreatePassPercentage' => 'required|integer|min:1|max:100',
         ]);
 
-        // Check if section already has a quiz
         $section = Section::find($this->quizCreateSectionId);
+
         if ($section && $section->quiz) {
             Toaster::error('This section already has a quiz. Please edit the existing quiz instead.');
             $this->closeQuizModal();
+
             return;
         }
 
-        Quiz::create([
+        $this->quizManager()->createQuiz([
             'title' => $this->quizCreateTitle,
             'section_id' => $this->quizCreateSectionId,
             'pass_percentage' => $this->quizCreatePassPercentage,
@@ -164,7 +176,7 @@ class Quizzes extends Component
         Toaster::success('Quiz created successfully!');
     }
 
-    public function updateQuiz()
+    public function updateQuiz(): void
     {
         $this->validate([
             'quizEditTitle' => 'required|string|max:255',
@@ -172,29 +184,31 @@ class Quizzes extends Component
             'quizEditPassPercentage' => 'required|integer|min:1|max:100',
         ]);
 
-        $this->editingQuiz->title = $this->quizEditTitle;
-        $this->editingQuiz->section_id = $this->quizEditSectionId;
-        $this->editingQuiz->pass_percentage = $this->quizEditPassPercentage;
-        $this->editingQuiz->save();
+        if (! $this->editingQuiz) {
+            Toaster::error(__('messages.Quiz not found.'));
+            return;
+        }
+
+        $this->quizManager()->updateQuiz($this->editingQuiz, [
+            'title' => $this->quizEditTitle,
+            'section_id' => $this->quizEditSectionId,
+            'pass_percentage' => $this->quizEditPassPercentage,
+        ]);
 
         $this->closeQuizModal();
         Toaster::success('Quiz updated successfully!');
     }
 
-    public function deleteQuiz()
+    public function deleteQuiz(): void
     {
         if ($this->deletingQuiz) {
-            $this->deletingQuiz->questions()->each(function ($question) {
-                $question->options()->delete();
-            });
-            $this->deletingQuiz->questions()->delete();
-            $this->deletingQuiz->delete();
+            $this->quizManager()->deleteQuiz($this->deletingQuiz);
             $this->closeQuizModal();
             Toaster::success('Quiz deleted successfully!');
         }
     }
 
-    //  QUESTION METHODS 
+    //  QUESTION METHODS
 
     public function openQuestionCreateModal($quizId)
     {
@@ -203,30 +217,37 @@ class Quizzes extends Component
         $this->showQuestionCreateModal = true;
     }
 
-    public function openQuestionEditModal($id)
+    public function openQuestionEditModal($id): void
     {
-        $this->editingQuestion = QuizQuestion::with('options')->find($id);
+        $this->editingQuestion = $this->questionManager()->findQuestionWithOptions($id);
+
+        if (! $this->editingQuestion) {
+            Toaster::error(__('messages.Question not found.'));
+            return;
+        }
+
         $this->questionEditText = $this->editingQuestion->question;
         $this->questionEditType = $this->editingQuestion->type;
         $this->questionEditOrder = $this->editingQuestion->order;
         $this->showQuestionEditModal = true;
     }
 
-    public function openQuestionDeleteModal($id)
+    public function openQuestionDeleteModal($id): void
     {
         $this->deletingQuestion = QuizQuestion::find($id);
         $this->showQuestionDeleteModal = true;
     }
 
-    public function closeQuestionModal()
+    public function closeQuestionModal(): void
     {
         $this->showQuestionCreateModal = false;
         $this->showQuestionEditModal = false;
         $this->showQuestionDeleteModal = false;
         $this->resetQuestionFormFields();
+        $this->selectedQuizId = null;
     }
 
-    public function resetQuestionCreateForm()
+    public function resetQuestionCreateForm(): void
     {
         $this->questionCreateText = '';
         $this->questionCreateType = 'single';
@@ -242,7 +263,7 @@ class Quizzes extends Component
         $this->questionEditOrder = 0;
     }
 
-    public function storeQuestion()
+    public function storeQuestion(): void
     {
         $this->validate([
             'questionCreateText' => 'required|string',
@@ -250,8 +271,7 @@ class Quizzes extends Component
             'questionCreateOrder' => 'required|integer|min:0',
         ]);
 
-        QuizQuestion::create([
-            'quiz_id' => $this->selectedQuizId,
+        $this->questionManager()->createQuestion($this->selectedQuizId, [
             'question' => $this->questionCreateText,
             'type' => $this->questionCreateType,
             'order' => $this->questionCreateOrder,
@@ -261,7 +281,7 @@ class Quizzes extends Component
         Toaster::success('Question created successfully!');
     }
 
-    public function updateQuestion()
+    public function updateQuestion(): void
     {
         $this->validate([
             'questionEditText' => 'required|string',
@@ -269,57 +289,69 @@ class Quizzes extends Component
             'questionEditOrder' => 'required|integer|min:0',
         ]);
 
-        $this->editingQuestion->question = $this->questionEditText;
-        $this->editingQuestion->type = $this->questionEditType;
-        $this->editingQuestion->order = $this->questionEditOrder;
-        $this->editingQuestion->save();
+        if (! $this->editingQuestion) {
+            Toaster::error(__('messages.Question not found.'));
+            return;
+        }
+
+        $this->questionManager()->updateQuestion($this->editingQuestion, [
+            'question' => $this->questionEditText,
+            'type' => $this->questionEditType,
+            'order' => $this->questionEditOrder,
+        ]);
 
         $this->closeQuestionModal();
         Toaster::success('Question updated successfully!');
     }
 
-    public function deleteQuestion()
+    public function deleteQuestion(): void
     {
         if ($this->deletingQuestion) {
-            $this->deletingQuestion->options()->delete();
-            $this->deletingQuestion->delete();
+            $this->questionManager()->deleteQuestion($this->deletingQuestion);
             $this->closeQuestionModal();
             Toaster::success('Question deleted successfully!');
         }
     }
 
-    //  OPTION METHODS 
+    //  OPTION METHODS
 
-    public function openOptionCreateModal($questionId)
+    public function openOptionCreateModal($questionId): void
     {
-        $this->selectedSectionId = $questionId;
+        $this->selectedQuestionId = $questionId;
         $this->resetOptionCreateForm();
         $this->showOptionCreateModal = true;
     }
 
-    public function openOptionEditModal($id)
+    public function openOptionEditModal($id): void
     {
-        $this->editingOption = QuizOption::find($id);
+        $this->editingOption = $this->optionManager()->findById($id);
+
+        if (! $this->editingOption) {
+            Toaster::error(__('messages.Option not found.'));
+            return;
+        }
+
         $this->optionEditText = $this->editingOption->option_text;
         $this->optionEditIsCorrect = $this->editingOption->is_correct;
         $this->showOptionEditModal = true;
     }
 
-    public function openOptionDeleteModal($id)
+    public function openOptionDeleteModal($id): void
     {
         $this->deletingOption = QuizOption::find($id);
         $this->showOptionDeleteModal = true;
     }
 
-    public function closeOptionModal()
+    public function closeOptionModal(): void
     {
         $this->showOptionCreateModal = false;
         $this->showOptionEditModal = false;
         $this->showOptionDeleteModal = false;
         $this->resetOptionFormFields();
+        $this->selectedQuestionId = null;
     }
 
-    public function resetOptionCreateForm()
+    public function resetOptionCreateForm(): void
     {
         $this->optionCreateText = '';
         $this->optionCreateIsCorrect = false;
@@ -333,15 +365,14 @@ class Quizzes extends Component
         $this->optionEditIsCorrect = false;
     }
 
-    public function storeOption()
+    public function storeOption(): void
     {
         $this->validate([
             'optionCreateText' => 'required|string',
             'optionCreateIsCorrect' => 'boolean',
         ]);
 
-        QuizOption::create([
-            'question_id' => $this->selectedSectionId,
+        $this->optionManager()->createOption($this->selectedQuestionId, [
             'option_text' => $this->optionCreateText,
             'is_correct' => $this->optionCreateIsCorrect,
         ]);
@@ -350,31 +381,37 @@ class Quizzes extends Component
         Toaster::success('Option created successfully!');
     }
 
-    public function updateOption()
+    public function updateOption(): void
     {
         $this->validate([
             'optionEditText' => 'required|string',
             'optionEditIsCorrect' => 'boolean',
         ]);
 
-        $this->editingOption->option_text = $this->optionEditText;
-        $this->editingOption->is_correct = $this->optionEditIsCorrect;
-        $this->editingOption->save();
+        if (! $this->editingOption) {
+            Toaster::error(__('messages.Option not found.'));
+            return;
+        }
+
+        $this->optionManager()->updateOption($this->editingOption, [
+            'option_text' => $this->optionEditText,
+            'is_correct' => $this->optionEditIsCorrect,
+        ]);
 
         $this->closeOptionModal();
         Toaster::success('Option updated successfully!');
     }
 
-    public function deleteOption()
+    public function deleteOption(): void
     {
         if ($this->deletingOption) {
-            $this->deletingOption->delete();
+            $this->optionManager()->deleteOption($this->deletingOption);
             $this->closeOptionModal();
             Toaster::success('Option deleted successfully!');
         }
     }
 
-    //  ATTEMPTS METHODS 
+    //  ATTEMPTS METHODS
 
     public function openAttemptsModal($quizId)
     {
@@ -390,34 +427,41 @@ class Quizzes extends Component
 
     public function getAttemptsProperty()
     {
-        if (!$this->attemptsQuizId) {
+        if (! $this->attemptsQuizId) {
             return collect();
         }
 
-        return \App\Models\Tenant\QuizAttempt::where('quiz_id', $this->attemptsQuizId)
-            ->with('user')
-            ->orderBy('submitted_at', 'desc')
-            ->get();
+        return $this->attemptsManager()->getAttemptsForQuiz($this->attemptsQuizId);
     }
 
     public function render()
     {
-        $quizzes = Quiz::with([
-            'section.course',
-            'questions' => function ($query) {
-                $query->with('options');
-            }
-        ])
-            ->whereHas('section.course', function ($query) {
-                $query->where('instructor_id', auth()->user()->id);
-            })
-            ->paginate(10);
-
-        $sections = Section::with('course')->get();
+        $quizzes = $this->quizManager()->getQuizzesForInstructor(Auth::id(), 10);
+        $sections = $this->quizManager()->getAllSectionsWithCourse();
 
         return view('livewire.instructor.quizzes', [
             'quizzes' => $quizzes,
             'sections' => $sections,
         ]);
+    }
+
+    protected function quizManager(): QuizManager
+    {
+        return new QuizManager();
+    }
+
+    protected function questionManager(): QuestionManager
+    {
+        return new QuestionManager();
+    }
+
+    protected function optionManager(): OptionManager
+    {
+        return new OptionManager();
+    }
+
+    protected function attemptsManager(): QuizAttempts
+    {
+        return new QuizAttempts();
     }
 }

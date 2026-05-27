@@ -56,7 +56,7 @@
                     @else
                         <div class="py-12 text-center">
                             <i class="mb-3 text-4xl text-gray-300 fas fa-inbox"></i>
-                            <p class="text-gray-500">No student attempts yet for this quiz.</p>
+                            <p class="text-center text-gray-500">No student attempts yet for this quiz.</p>
                         </div>
                     @endif
                 </div>
