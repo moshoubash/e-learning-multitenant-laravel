@@ -113,6 +113,14 @@ class Quizzes extends Component
             return;
         }
 
+        // Ensure the quiz belongs to the currently authenticated instructor
+        $course = optional($this->editingQuiz->section)->course;
+        if (! $course || $course->instructor_id !== Auth::id()) {
+            Toaster::error('Unauthorized.');
+            $this->editingQuiz = null;
+            return;
+        }
+
         $this->quizEditTitle = $this->editingQuiz->title;
         $this->quizEditSectionId = $this->editingQuiz->section_id;
         $this->quizEditPassPercentage = $this->editingQuiz->pass_percentage;
@@ -259,6 +267,14 @@ class Quizzes extends Component
     {
         $this->validate($this->questionCreateRules());
 
+        // Ensure the selected quiz belongs to the current instructor
+        $quiz = $this->quizManager()->findById($this->selectedQuizId);
+        if (! $quiz || optional(optional($quiz->section)->course)->instructor_id !== Auth::id()) {
+            Toaster::error('Unauthorized.');
+            $this->closeQuestionModal();
+            return;
+        }
+
         $this->questionManager()->createQuestion($this->selectedQuizId, [
             'question' => $this->questionCreateText,
             'type' => $this->questionCreateType,
@@ -383,6 +399,15 @@ class Quizzes extends Component
     public function deleteOption(): void
     {
         if ($this->deletingOption) {
+            // Ensure the option belongs to a question/quiz owned by the current instructor
+            $this->deletingOption->loadMissing('question.quiz.section.course');
+            $course = optional(optional(optional($this->deletingOption->question)->quiz)->section)->course;
+            if (! $course || $course->instructor_id !== Auth::id()) {
+                Toaster::error('Unauthorized.');
+                $this->closeOptionModal();
+                return;
+            }
+
             $this->optionManager()->deleteOption($this->deletingOption);
             $this->closeOptionModal();
             Toaster::success('Option deleted successfully!');

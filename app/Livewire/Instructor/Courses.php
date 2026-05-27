@@ -559,6 +559,14 @@ class Courses extends Component
             return;
         }
 
+        // Ensure the quiz belongs to the currently authenticated instructor
+        $course = optional($this->editingQuiz->section)->course;
+        if (! $course || $course->instructor_id !== auth()->id()) {
+            Toaster::error('Unauthorized.');
+            $this->editingQuiz = null;
+            return;
+        }
+
         $this->quizEditTitle = $this->editingQuiz->title;
         $this->quizEditPassPercentage = $this->editingQuiz->pass_percentage;
         $this->showQuizEditModal = true;
