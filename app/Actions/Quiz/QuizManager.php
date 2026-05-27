@@ -19,7 +19,9 @@ final class QuizManager
 
     public function getAllSectionsWithCourse(): Collection
     {
-        return Section::with('course')->get();
+        return Section::with('course')
+        ->doesntHave('quiz')
+        ->get();
     }
 
     public function createQuiz(array $data): Quiz

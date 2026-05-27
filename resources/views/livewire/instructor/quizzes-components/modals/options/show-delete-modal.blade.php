@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <div class="px-4 py-3 bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button wire:click="softDeleteOption" type="button"
+                    <button wire:click="deleteOption" type="button"
                         class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
                         {{ __('messages.Delete') }}
                     </button>
