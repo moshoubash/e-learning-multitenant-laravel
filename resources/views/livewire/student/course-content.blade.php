@@ -166,7 +166,8 @@
                                 <div class="divide-y divide-gray-50">
                                     @foreach($section->lessons as $lesson)
                                         <div wire:click="selectLesson({{ $lesson->id }})"
-                                            class="p-3 hover:bg-gray-50 cursor-pointer {{ $selectedLesson && $selectedLesson->id === $lesson->id ? 'bg-blue-50 border-l-4 border-blue-500' : '' }}">
+                                            class="p-3 cursor-pointer hover:bg-gray-50 "
+                                            style="{{ $selectedLesson && $selectedLesson->id === $lesson->id ? 'background-color: #ebf8ff; border-left-width: 4px; border-top-width:0; border-color: #4299e1;' : '' }}">
                                             <div class="flex items-center justify-between">
                                                 <div class="flex items-center">
                                                     <!-- Completion Status Icon -->

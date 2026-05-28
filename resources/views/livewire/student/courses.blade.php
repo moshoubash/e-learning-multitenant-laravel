@@ -29,7 +29,9 @@
                     <div class="divide-y divide-green-100">
                         @foreach($enrolledCourses as $course)
                             <div wire:click="selectCourse({{ $course->id }})"
-                                class="p-4 hover:bg-green-100 cursor-pointer {{ $selectedCourse == $course->id ? 'bg-green-100 border-l-4 border-green-500' : '' }}">
+                                class="p-4 cursor-pointer hover:bg-green-100 "
+                                style="border-left: 4px solid {{ $selectedCourse == $course->id ? '#22c55e' : 'transparent' }}"
+                                >
                                 <h4 class="font-medium text-gray-800">{{ $course->title }}</h4>
                                 <p class="mt-1 text-sm text-gray-500">{{ $course->instructor->name ?? 'N/A' }}</p>
                                 <div class="flex items-center mt-2 text-xs text-gray-400">
@@ -58,7 +60,9 @@
                 <div class="divide-y divide-gray-100">
                     @forelse($courses as $course)
                         <div wire:click="selectCourse({{ $course->id }})"
-                            class="p-4 hover:bg-gray-50 cursor-pointer {{ $selectedCourse == $course->id ? 'bg-blue-50 border-l-4 border-blue-500' : '' }}">
+                            class="p-4 cursor-pointer hover:bg-gray-50 "
+                            style="border-left: 4px solid {{ $selectedCourse == $course->id ? '#3b82f6' : 'transparent' }}"
+                            >
                             <h4 class="font-medium text-gray-800">{{ $course->title }}</h4>
                             <p class="mt-1 text-sm text-gray-500">{{ $course->instructor->name ?? 'N/A' }}</p>
                             <div class="flex items-center mt-2 text-xs text-gray-400">
