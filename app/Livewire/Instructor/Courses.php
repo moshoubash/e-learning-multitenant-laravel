@@ -598,13 +598,16 @@ class Courses extends Component
             return;
         }
 
+        $tenantId = tenant('id') ?? 'default';
+
         foreach ($files as $file) {
-            $path = $file->store('assignments/' . $assignment->id, 'public');
+            $baseUrl = 'https://d1w6oovjx4x1vx.cloudfront.net';
+            $path = $file->storeAs("assignments/{$tenantId}",  $file->getClientOriginalName(), 's3');
 
             AssignmentAttachment::create([
                 'assignment_id' => $assignment->id,
                 'file_name' => $file->getClientOriginalName(),
-                'file_path' => $path,
+                'file_path' => $baseUrl . '/' . $path,
                 'file_type' => $file->getMimeType(),
                 'size' => $file->getSize(),
             ]);

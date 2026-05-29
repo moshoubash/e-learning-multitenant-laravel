@@ -1,7 +1,7 @@
 <div class="px-4 py-2 border-t border-gray-100 bg-gray-50">
     <div class="flex items-center justify-between text-sm text-gray-700">
         <div class="flex items-center gap-2">
-            <i class="fas fa-tasks text-indigo-500"></i>
+            <i class="text-indigo-500 fas fa-tasks"></i>
             <span>{{ $assignment->title }}</span>
             <span class="text-xs text-gray-400">({{ __('messages.Order') }}: {{ $assignment->order }})</span>
             @if($assignment->deleted_at)
@@ -26,7 +26,4 @@
             @endif
         </div>
     </div>
-    @if($assignment->description)
-        <p class="mt-2 text-sm text-gray-500">{!! nl2br(e($assignment->description)) !!}</p>
-    @endif
 </div>

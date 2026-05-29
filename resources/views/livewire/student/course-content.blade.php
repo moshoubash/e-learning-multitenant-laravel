@@ -65,7 +65,7 @@
                                     <div class="text-xs text-gray-500">{{ __('messages.Status') }}</div>
                                     <div class="text-lg font-semibold">
                                         <span class="px-2 py-1 text-xs rounded {{ $selectedAssignment->status === 'published' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700' }}">
-                                            {{ ucfirst($selectedAssignment->status) }}
+                                            {{ __('messages.'.$selectedAssignment->status) }}
                                         </span>
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@
                                                     <span class="ml-2 text-xs text-gray-400">({{ number_format($attachment->size / 1024, 1) }} KB)</span>
                                                 </div>
                                             </div>
-                                            <a href="{{ Storage::url($attachment->file_path) }}" target="_blank"
+                                            <a href="{{ $attachment->file_path }}" target="_blank"
                                                class="px-3 py-1 text-xs font-medium text-blue-600 bg-blue-100 rounded hover:bg-blue-200">
                                                 <i class="mr-1 fas fa-download"></i> {{ __('messages.Download') }}
                                             </a>
@@ -149,7 +149,7 @@
                                     @endif
                                     @if($userSubmission->file_path)
                                         <div class="mb-3">
-                                            <a href="{{ Storage::url($userSubmission->file_path) }}" target="_blank"
+                                            <a href="{{ $userSubmission->file_path }}" target="_blank"
                                                class="text-blue-600 hover:underline">
                                                 <i class="mr-1 fas fa-paperclip"></i> {{ __('messages.View Submission File') }}
                                             </a>

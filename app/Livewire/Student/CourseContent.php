@@ -165,10 +165,12 @@ class CourseContent extends Component
         ]);
 
         // Store files
+        $tenantId = tenant('id') ?? 'default';
         foreach ($this->submissionFiles as $file) {
-            $path = $file->store('submissions/' . $submission->id, 'public');
+            $baseUrl = 'https://d1w6oovjx4x1vx.cloudfront.net';
+            $path = $file->storeAs("submissions/{$tenantId}",  $file->getClientOriginalName(), 's3');
             $submission->update([
-                'file_path' => $path, // For single file, or handle multiple files
+                'file_path' => $baseUrl . '/' . $path,
             ]);
         }
 
