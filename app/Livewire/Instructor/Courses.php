@@ -4,8 +4,11 @@ namespace App\Livewire\Instructor;
 
 use App\Models\Tenant\Course;
 use App\Models\Tenant\Section;
+use App\Models\Tenant\Assignment;
+use App\Models\Tenant\AssignmentAttachment;
 use App\Models\Tenant\Lesson;
 use App\Models\Tenant\User;
+use App\Services\Instructor\AssignmentService;
 use App\Services\Instructor\CourseService;
 use App\Services\Instructor\LessonService;
 use App\Services\Instructor\QuizService;
@@ -15,6 +18,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Masmerise\Toaster\Toaster;
+use Illuminate\Support\Facades\Storage;
 
 class Courses extends Component
 {
@@ -45,6 +49,12 @@ class Courses extends Component
     public $showQuizEditModal = false;
     public $showQuizDeleteModal = false;
 
+    // Assignment modals
+    public $showAssignmentCreateModal = false;
+    public $showAssignmentEditModal = false;
+    public $showAssignmentDeleteModal = false;
+    public $showAssignmentRestoreModal = false;
+
     // Selected items
     public $editingCourse = null;
     public $deletingCourse = null;
@@ -60,6 +70,10 @@ class Courses extends Component
 
     public $editingQuiz = null;
     public $deletingQuiz = null;
+
+    public $editingAssignment = null;
+    public $deletingAssignment = null;
+    public $restoringAssignment = null;
 
     // Course selection for sections/lessons
     public $selectedCourseId = null;
@@ -101,6 +115,17 @@ class Courses extends Component
     public $lessonCreateVideoUrl = '';
     public $courseVideo = null;
 
+    // Assignment create form fields
+    public $assignmentCreateTitle = '';
+    public $assignmentCreateDescription = '';
+    public $assignmentCreateInstructions = '';
+    public $assignmentCreateDueDate = '';
+    public $assignmentCreateMaxScore = 100;
+    public $assignmentCreateAllowLate = 1;
+    public $assignmentCreateStatus = 'draft';
+    public $assignmentCreateOrder = 0;
+    public $assignmentCreateAttachments = [];
+
     // Lesson edit form fields
     public $lessonEditTitle = '';
     public $lessonEditType = '';
@@ -108,6 +133,17 @@ class Courses extends Component
     public $lessonEditDuration = 0;
     public $lessonEditOrder = 0;
     public $lessonEditVideoUrl = '';
+
+    // Assignment edit form fields
+    public $assignmentEditTitle = '';
+    public $assignmentEditDescription = '';
+    public $assignmentEditInstructions = '';
+    public $assignmentEditDueDate = '';
+    public $assignmentEditMaxScore = 100;
+    public $assignmentEditAllowLate = 1;
+    public $assignmentEditStatus = 'draft';
+    public $assignmentEditOrder = 0;
+    public $assignmentEditAttachments = [];
 
     // Quiz create form fields
     public $quizCreateTitle = '';
@@ -120,6 +156,7 @@ class Courses extends Component
     // max order in sections
     public $maxOrderInSections = 0;
     public $maxOrderInLessons = 0;
+    public $maxOrderInAssignments = 0;
 
     public function mount()
     {
@@ -128,6 +165,7 @@ class Courses extends Component
 
         $this->maxOrderInSections = Section::max('order');
         $this->maxOrderInLessons = Lesson::max('order');
+        $this->maxOrderInAssignments = Assignment::max('order');
     }
 
     // Auto-generate slug from title
@@ -401,6 +439,221 @@ class Courses extends Component
         return new SectionService();
     }
 
+    //  ASSIGNMENT METHODS
+
+    public function openAssignmentCreateModal($sectionId)
+    {
+        $this->selectedSectionId = $sectionId;
+        $this->resetAssignmentCreateForm();
+        $this->showAssignmentCreateModal = true;
+    }
+
+    public function openAssignmentEditModal($id)
+    {
+        $this->editingAssignment = $this->assignmentService()->findByIdWithRelations($id);
+
+        if (! $this->editingAssignment) {
+            Toaster::error('Assignment not found.');
+            return;
+        }
+
+        $this->assignmentEditTitle = $this->editingAssignment->title;
+        $this->assignmentEditDescription = $this->editingAssignment->description;
+        $this->assignmentEditInstructions = $this->editingAssignment->instructions ?? '';
+        $this->assignmentEditDueDate = $this->editingAssignment->due_date ? $this->editingAssignment->due_date->format('Y-m-d\TH:i') : '';
+        $this->assignmentEditMaxScore = $this->editingAssignment->max_score ?? 100;
+        $this->assignmentEditAllowLate = $this->editingAssignment->allow_late ? 1 : 0;
+        $this->assignmentEditStatus = $this->editingAssignment->status ?? 'draft';
+        $this->assignmentEditOrder = $this->editingAssignment->order;
+        $this->showAssignmentEditModal = true;
+    }
+
+    public function openAssignmentDeleteModal($id)
+    {
+        $this->deletingAssignment = $this->assignmentService()->findById($id);
+        $this->showAssignmentDeleteModal = true;
+    }
+
+    public function openAssignmentRestoreModal($id)
+    {
+        $this->restoringAssignment = $this->assignmentService()->findWithTrashed($id);
+        $this->showAssignmentRestoreModal = true;
+    }
+
+    public function closeAssignmentModal()
+    {
+        $this->showAssignmentCreateModal = false;
+        $this->showAssignmentEditModal = false;
+        $this->showAssignmentDeleteModal = false;
+        $this->showAssignmentRestoreModal = false;
+        $this->resetAssignmentFormFields();
+    }
+
+    public function resetAssignmentCreateForm()
+    {
+        $this->assignmentCreateTitle = '';
+        $this->assignmentCreateDescription = '';
+        $this->assignmentCreateInstructions = '';
+        $this->assignmentCreateDueDate = '';
+        $this->assignmentCreateMaxScore = 100;
+        $this->assignmentCreateAllowLate = 1;
+        $this->assignmentCreateStatus = 'draft';
+        $this->assignmentCreateOrder = 0;
+        $this->assignmentCreateAttachments = [];
+    }
+
+    public function resetAssignmentFormFields()
+    {
+        $this->editingAssignment = null;
+        $this->deletingAssignment = null;
+        $this->restoringAssignment = null;
+        $this->assignmentCreateTitle = '';
+        $this->assignmentCreateDescription = '';
+        $this->assignmentCreateInstructions = '';
+        $this->assignmentCreateDueDate = '';
+        $this->assignmentCreateMaxScore = 100;
+        $this->assignmentCreateAllowLate = 1;
+        $this->assignmentCreateStatus = 'draft';
+        $this->assignmentCreateOrder = 0;
+        $this->assignmentCreateAttachments = [];
+        $this->assignmentEditTitle = '';
+        $this->assignmentEditDescription = '';
+        $this->assignmentEditInstructions = '';
+        $this->assignmentEditDueDate = '';
+        $this->assignmentEditMaxScore = 100;
+        $this->assignmentEditAllowLate = 1;
+        $this->assignmentEditStatus = 'draft';
+        $this->assignmentEditOrder = 0;
+        $this->assignmentEditAttachments = [];
+    }
+
+    public function storeAssignment()
+    {
+        $this->validate($this->assignmentCreateRules());
+
+        try {
+            $assignment = $this->assignmentService()->createAssignment($this->selectedSectionId, [
+                'title' => $this->assignmentCreateTitle,
+                'description' => $this->assignmentCreateDescription,
+                'instructions' => $this->assignmentCreateInstructions,
+                'due_date' => $this->assignmentCreateDueDate ?: null,
+                'max_score' => $this->assignmentCreateMaxScore,
+                'allow_late' => $this->assignmentCreateAllowLate,
+                'status' => $this->assignmentCreateStatus,
+                'order' => $this->assignmentCreateOrder,
+            ]);
+
+            // Handle attachments
+            $this->storeAttachments($assignment, $this->assignmentCreateAttachments);
+        } catch (\Throwable $exception) {
+            Toaster::error($exception->getMessage());
+            $this->closeAssignmentModal();
+            return;
+        }
+
+        $this->assignmentCreateAttachments = [];
+        $this->closeAssignmentModal();
+        Toaster::success('Assignment created successfully!');
+    }
+
+    public function updateAssignment()
+    {
+        $this->validate($this->assignmentUpdateRules());
+
+        if (! $this->editingAssignment) {
+            Toaster::error('Assignment not found.');
+            return;
+        }
+
+        try {
+            $this->assignmentService()->updateAssignment($this->editingAssignment, [
+                'title' => $this->assignmentEditTitle,
+                'description' => $this->assignmentEditDescription,
+                'instructions' => $this->assignmentEditInstructions,
+                'due_date' => $this->assignmentEditDueDate ?: null,
+                'max_score' => $this->assignmentEditMaxScore,
+                'allow_late' => $this->assignmentEditAllowLate,
+                'status' => $this->assignmentEditStatus,
+                'order' => $this->assignmentEditOrder,
+            ]);
+
+            // Handle new attachments
+            if (! empty($this->assignmentEditAttachments)) {
+                $this->storeAttachments($this->editingAssignment, $this->assignmentEditAttachments);
+                $this->assignmentEditAttachments = [];
+            }
+        } catch (\Throwable $exception) {
+            Toaster::error($exception->getMessage());
+            $this->closeAssignmentModal();
+            return;
+        }
+
+        $this->closeAssignmentModal();
+        Toaster::success('Assignment updated successfully!');
+    }
+
+    protected function storeAttachments($assignment, $files)
+    {
+        if (empty($files)) {
+            return;
+        }
+
+        foreach ($files as $file) {
+            $path = $file->store('assignments/' . $assignment->id, 'public');
+
+            AssignmentAttachment::create([
+                'assignment_id' => $assignment->id,
+                'file_name' => $file->getClientOriginalName(),
+                'file_path' => $path,
+                'file_type' => $file->getMimeType(),
+                'size' => $file->getSize(),
+            ]);
+        }
+    }
+
+    public function removeAttachment($attachmentId)
+    {
+        $attachment = AssignmentAttachment::find($attachmentId);
+
+        if ($attachment) {
+            // Delete file from storage
+            if (Storage::disk('public')->exists($attachment->file_path)) {
+                Storage::disk('public')->delete($attachment->file_path);
+            }
+
+            $attachment->delete();
+            Toaster::success('Attachment removed successfully!');
+
+            // Refresh the editing assignment to show updated attachments
+            if ($this->editingAssignment) {
+                $this->editingAssignment = $this->editingAssignment->fresh(['attachments', 'submissions']);
+            }
+        }
+    }
+
+    public function softDeleteAssignment()
+    {
+        if ($this->deletingAssignment) {
+            $this->assignmentService()->softDeleteAssignment($this->deletingAssignment);
+            $this->closeAssignmentModal();
+            Toaster::success('Assignment soft deleted successfully!');
+        }
+    }
+
+    public function restoreAssignment()
+    {
+        if ($this->restoringAssignment) {
+            $this->assignmentService()->restoreAssignment($this->restoringAssignment);
+            $this->closeAssignmentModal();
+            Toaster::success('Assignment restored successfully!');
+        }
+    }
+
+    protected function assignmentService(): AssignmentService
+    {
+        return new AssignmentService();
+    }
+
     //  LESSON METHODS
 
     public function openLessonCreateModal($sectionId)
@@ -661,6 +914,36 @@ class Courses extends Component
         ];
     }
 
+    protected function assignmentCreateRules(): array
+    {
+        return [
+            'assignmentCreateTitle' => 'required|string|max:255',
+            'assignmentCreateDescription' => 'nullable|string',
+            'assignmentCreateInstructions' => 'nullable|string',
+            'assignmentCreateDueDate' => 'nullable|date',
+            'assignmentCreateMaxScore' => 'required|integer|min:0',
+            'assignmentCreateAllowLate' => 'required|in:0,1',
+            'assignmentCreateStatus' => 'required|in:draft,published,archived',
+            'assignmentCreateOrder' => 'required|integer|min:0',
+            'assignmentCreateAttachments.*' => 'nullable|file|max:10240', // 10MB max per file
+        ];
+    }
+
+    protected function assignmentUpdateRules(): array
+    {
+        return [
+            'assignmentEditTitle' => 'required|string|max:255',
+            'assignmentEditDescription' => 'nullable|string',
+            'assignmentEditInstructions' => 'nullable|string',
+            'assignmentEditDueDate' => 'nullable|date',
+            'assignmentEditMaxScore' => 'required|integer|min:0',
+            'assignmentEditAllowLate' => 'required|in:0,1',
+            'assignmentEditStatus' => 'required|in:draft,published,archived',
+            'assignmentEditOrder' => 'required|integer|min:0',
+            'assignmentEditAttachments.*' => 'nullable|file|max:10240', // 10MB max per file
+        ];
+    }
+
     protected function quizCreateRules(): array
     {
         return [
@@ -738,7 +1021,8 @@ class Courses extends Component
                         'lessons' => function ($q) {
                             $q->withTrashed();
                         },
-                        'quiz'
+                        'quiz',
+                        'assignments'
                     ])->withTrashed();
                 }
             ])

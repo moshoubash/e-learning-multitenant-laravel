@@ -68,6 +68,20 @@
     <!-- Lesson Restore Confirmation Modal -->
     @include('livewire.instructor.courses-components.modals.lessons.show-restore-modal')
 
+    <!-- ASSIGNMENT MODALS -->
+
+    <!-- Assignment Create Modal -->
+    @include('livewire.instructor.courses-components.modals.assignments.show-create-modal')
+
+    <!-- Assignment Edit Modal -->
+    @include('livewire.instructor.courses-components.modals.assignments.show-edit-modal')
+
+    <!-- Assignment Delete Confirmation Modal -->
+    @include('livewire.instructor.courses-components.modals.assignments.show-delete-modal')
+
+    <!-- Assignment Restore Confirmation Modal -->
+    @include('livewire.instructor.courses-components.modals.assignments.show-restore-modal')
+
 
     <!-- QUIZ MODALS -->
 

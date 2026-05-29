@@ -278,4 +278,19 @@ return [
     'Previous Attempt' => 'المحاولة السابقة',
     'You passed the quiz!' => 'لقد نجحت في الاختبار!',
     'Uploading video...' => 'جاري رفع الفيديو...',
+
+    'No courses found.' => 'لم يتم العثور على دورات.',
+    'Create Quiz for Section' => 'إنشاء اختبار للقسم',
+    'Attachments' => 'المرفقات',
+    'Upload files for students to reference' => 'رفع ملفات ليرجع إليها الطلاب',
+    'Allow Late' => 'السماح بالتأخير',
+    'Yes' => 'نعم',
+    'No' => 'لا',
+    'Due Date' => 'تاريخ الاستحقاق',
+    'Max Score' => 'الدرجة القصوى',
+    'Create New Assignment' => 'إنشاء واجب جديد',
+    'Instructions' => 'التعليمات',
+    'Enter assignment instructions' => 'أدخل تعليمات الواجب',
+    'No Enrolled Courses' => 'لا توجد دورات مسجل فيها',
+    'Start learning by enrolling in a course.' => 'ابدأ التعلم بالتسجيل في دورة.'
 ];

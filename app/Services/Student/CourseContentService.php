@@ -27,6 +27,9 @@ class CourseContentService
                     },
                     'quiz' => function ($q) {
                         $q->with('questions.options');
+                    },
+                    'assignments' => function ($q) {
+                        $q->orderBy('order');
                     }
                 ])->orderBy('order');
             }

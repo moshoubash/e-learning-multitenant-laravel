@@ -71,8 +71,10 @@
     @empty
         <div class="p-12 text-center">
             <i class="mb-4 text-6xl text-gray-300 fas fa-graduation-cap"></i>
-            <h3 class="text-lg font-medium text-gray-700">{{ __('messages.No Enrolled Courses') }}</h3>
-            <p class="mt-2 text-gray-500">{{ __('messages.Start learning by enrolling in a course.') }}</p>
+
+            <h3 class="text-lg font-medium text-center text-gray-700">{{ __('messages.No Enrolled Courses') }}</h3>
+            <p class="mt-2 text-center text-gray-500">{{ __('messages.Start learning by enrolling in a course.') }}</p>
+
             <a href="{{ route('tenant.student.courses') }}"
                 class="inline-flex items-center px-4 py-2 mt-4 text-white transition-colors bg-green-600 rounded-lg hover:bg-green-700">
                 <i class="mr-2 fas fa-search"></i>

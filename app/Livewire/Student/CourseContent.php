@@ -2,21 +2,33 @@
 
 namespace App\Livewire\Student;
 
+use App\Models\Tenant\Assignment;
+use App\Models\Tenant\AssignmentSubmission;
 use App\Models\Tenant\Course;
 use App\Models\Tenant\Enrollment;
 use App\Models\Tenant\Lesson;
 use App\Models\Tenant\LessonProgress;
 use App\Services\Student\CourseContentService;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Masmerise\Toaster\Toaster;
+use Illuminate\Support\Facades\Storage;
 
 class CourseContent extends Component
 {
+    use WithFileUploads;
+
     public $courseId;
     public $selectedLesson = null;
+    public $selectedAssignment = null;
     public $expandedSections = [];
     public $progressPercent = 0;
     public $course = null;
+
+    // Submission form fields
+    public $submissionContent = '';
+    public $submissionFiles = [];
+    public $showSubmissionForm = false;
 
     public function mount(Course $course)
     {
@@ -49,11 +61,32 @@ class CourseContent extends Component
                 $q->with('course');
             }
         ])->find($lessonId);
+        $this->selectedAssignment = null;
+        $this->showSubmissionForm = false;
 
         // Expand the section containing this lesson
         if ($this->selectedLesson && $this->selectedLesson->section) {
             if (!in_array($this->selectedLesson->section->id, $this->expandedSections)) {
                 $this->expandedSections[] = $this->selectedLesson->section->id;
+            }
+        }
+    }
+
+    public function selectAssignment($assignmentId)
+    {
+        $this->selectedAssignment = Assignment::with([
+            'section.course',
+            'attachments',
+            'submissions' => function ($query) {
+                $query->where('student_id', auth()->id())->with('grades');
+            }
+        ])->find($assignmentId);
+        $this->selectedLesson = null;
+        $this->showSubmissionForm = false;
+
+        if ($this->selectedAssignment && $this->selectedAssignment->section) {
+            if (!in_array($this->selectedAssignment->section->id, $this->expandedSections)) {
+                $this->expandedSections[] = $this->selectedAssignment->section->id;
             }
         }
     }
@@ -89,6 +122,90 @@ class CourseContent extends Component
     public function isLessonCompleted($lessonId)
     {
         return $this->courseContentService()->isLessonCompleted($lessonId, auth()->id());
+    }
+
+    // Submission methods
+    public function toggleSubmissionForm()
+    {
+        $this->showSubmissionForm = ! $this->showSubmissionForm;
+        $this->submissionContent = '';
+        $this->submissionFiles = [];
+    }
+
+    public function submitAssignment()
+    {
+        $this->validate([
+            'submissionContent' => 'nullable|string',
+            'submissionFiles.*' => 'nullable|file|max:10240', // 10MB max per file
+        ]);
+
+        if (empty($this->submissionContent) && empty($this->submissionFiles)) {
+            Toaster::error('Please provide content or upload files.');
+            return;
+        }
+
+        // Check if late submission and if allowed
+        $isLate = false;
+        if ($this->selectedAssignment->due_date && now()->gt($this->selectedAssignment->due_date)) {
+            $isLate = true;
+            if (!$this->selectedAssignment->allow_late) {
+                Toaster::error('Late submissions are not allowed for this assignment.');
+                return;
+            }
+        }
+
+        // Create submission
+        $submission = AssignmentSubmission::create([
+            'assignment_id' => $this->selectedAssignment->id,
+            'student_id' => auth()->id(),
+            'content' => $this->submissionContent,
+            'submitted_at' => now(),
+            'status' => 'submitted',
+            'attempt_number' => $this->selectedAssignment->submissions->count() + 1,
+        ]);
+
+        // Store files
+        foreach ($this->submissionFiles as $file) {
+            $path = $file->store('submissions/' . $submission->id, 'public');
+            $submission->update([
+                'file_path' => $path, // For single file, or handle multiple files
+            ]);
+        }
+
+        $this->submissionFiles = [];
+        $this->submissionContent = '';
+        $this->showSubmissionForm = false;
+
+        // Refresh the selected assignment
+        $this->selectAssignment($this->selectedAssignment->id);
+
+        Toaster::success('Assignment submitted successfully!');
+    }
+
+    public function getUserSubmission()
+    {
+        if (!$this->selectedAssignment) {
+            return null;
+        }
+
+        return $this->selectedAssignment->submissions
+            ->where('student_id', auth()->id())
+            ->sortByDesc('submitted_at')
+            ->first();
+    }
+
+    public function isAssignmentPastDue()
+    {
+        if (!$this->selectedAssignment || !$this->selectedAssignment->due_date) {
+            return false;
+        }
+
+        return now()->gt($this->selectedAssignment->due_date);
+    }
+
+    public function canSubmitLate()
+    {
+        return $this->selectedAssignment && $this->selectedAssignment->allow_late;
     }
 
     protected function courseContentService(): CourseContentService

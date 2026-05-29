@@ -67,10 +67,10 @@ class QuizTaking extends Component
         $this->passed = $result['passed'];
         $this->submitted = true;
 
-        if ($passed) {
-            Toaster::success("Congratulations! You passed with {$score}%!");
+        if ($this->passed) {
+            Toaster::success("Congratulations! You passed with {$this->score}%!");
         } else {
-            Toaster::warning("You scored {$score}%. You need {$this->quiz->pass_percentage}% to pass. Try again!");
+            Toaster::warning("You scored {$this->score}%. You need {$this->quiz->pass_percentage}% to pass. Try again!");
         }
     }
 

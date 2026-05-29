@@ -28,7 +28,220 @@
         <!-- Video/Content Area -->
         <div class="lg:col-span-2">
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                @if($selectedLesson)
+                @if($selectedAssignment)
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-800">{{ $selectedAssignment->title }}</h3>
+                                <p class="text-sm text-gray-500">
+                                    {{ $selectedAssignment->section->title ?? __('messages.Section') }}
+                                </p>
+                            </div>
+                            <button wire:click="$set('selectedAssignment', null)"
+                                class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200">
+                                <i class="@if(app()->getLocale() === 'ar') ml-2 @else mr-2 @endif fas fa-arrow-left"></i>
+                                {{ __('messages.Back') }}
+                            </button>
+                        </div>
+
+                        <!-- Assignment Status Info -->
+                        <div class="p-4 mb-4 rounded-lg bg-gray-50">
+                            <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+                                @if($selectedAssignment->max_score)
+                                    <div class="text-center">
+                                        <div class="text-xs text-gray-500">{{ __('messages.Max Score') }}</div>
+                                        <div class="text-lg font-semibold text-gray-800">{{ $selectedAssignment->max_score }}</div>
+                                    </div>
+                                @endif
+                                @if($selectedAssignment->due_date)
+                                    <div class="text-center">
+                                        <div class="text-xs text-gray-500">{{ __('messages.Due Date') }}</div>
+                                        <div class="text-lg font-semibold {{ $this->isAssignmentPastDue() ? 'text-red-600' : 'text-gray-800' }}">
+                                            {{ $selectedAssignment->due_date->format('Y-m-d H:i') }}
+                                        </div>
+                                    </div>
+                                @endif
+                                <div class="text-center">
+                                    <div class="text-xs text-gray-500">{{ __('messages.Status') }}</div>
+                                    <div class="text-lg font-semibold">
+                                        <span class="px-2 py-1 text-xs rounded {{ $selectedAssignment->status === 'published' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700' }}">
+                                            {{ ucfirst($selectedAssignment->status) }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-xs text-gray-500">{{ __('messages.Late Submissions') }}</div>
+                                    <div class="text-lg font-semibold text-gray-800">
+                                        {{ $selectedAssignment->allow_late ? __('messages.Allowed') : __('messages.Not Allowed') }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        @if($selectedAssignment->description)
+                            <div class="mb-4 prose text-left text-gray-700 max-w-none">
+                                <h4 class="text-sm font-semibold text-gray-800">{{ __('messages.Description') }}</h4>
+                                {!! nl2br(e($selectedAssignment->description)) !!}
+                            </div>
+                        @endif
+
+                        <!-- Instructions -->
+                        @if($selectedAssignment->instructions)
+                            <div class="mb-4 prose text-left text-gray-700 max-w-none">
+                                <h4 class="text-sm font-semibold text-gray-800">{{ __('messages.Instructions') }}</h4>
+                                {!! nl2br(e($selectedAssignment->instructions)) !!}
+                            </div>
+                        @endif
+
+                        <!-- Attachments Section -->
+                        @if($selectedAssignment->attachments && $selectedAssignment->attachments->count() > 0)
+                            <div class="p-4 mb-4 rounded-lg bg-blue-50">
+                                <h4 class="mb-3 text-sm font-semibold text-gray-800">
+                                    <i class="mr-2 fas fa-paperclip"></i>
+                                    {{ __('messages.Attachments') }} ({{ $selectedAssignment->attachments->count() }})
+                                </h4>
+                                <ul class="space-y-2">
+                                    @foreach($selectedAssignment->attachments as $attachment)
+                                        <li class="flex items-center justify-between p-3 bg-white border rounded">
+                                            <div class="flex items-center">
+                                                <i class="mr-3 text-gray-400 fas fa-file"></i>
+                                                <div>
+                                                    <span class="text-sm font-medium text-gray-700">{{ $attachment->file_name }}</span>
+                                                    <span class="ml-2 text-xs text-gray-400">({{ number_format($attachment->size / 1024, 1) }} KB)</span>
+                                                </div>
+                                            </div>
+                                            <a href="{{ Storage::url($attachment->file_path) }}" target="_blank"
+                                               class="px-3 py-1 text-xs font-medium text-blue-600 bg-blue-100 rounded hover:bg-blue-200">
+                                                <i class="mr-1 fas fa-download"></i> {{ __('messages.Download') }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        <!-- User's Submission & Grades -->
+                        @php
+                            $userSubmission = $this->getUserSubmission();
+                        @endphp
+
+                        @if($userSubmission)
+                            <div class="p-4 mb-4 rounded-lg bg-green-50">
+                                <h4 class="mb-3 text-sm font-semibold text-gray-800">
+                                    <i class="mr-2 fas fa-check-circle"></i>
+                                    {{ __('messages.Your Submission') }}
+                                </h4>
+                                <div class="p-3 bg-white border rounded">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="text-sm text-gray-500">
+                                            Submitted: {{ $userSubmission->submitted_at->format('Y-m-d H:i') }}
+                                        </div>
+                                        <span class="px-2 py-1 text-xs rounded {{ $userSubmission->status === 'graded' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' }}">
+                                            {{ ucfirst($userSubmission->status) }}
+                                        </span>
+                                    </div>
+                                    @if($userSubmission->content)
+                                        <div class="mb-3 text-sm text-gray-700">
+                                            <strong>{{ __('messages.Content') }}:</strong>
+                                            <p class="mt-1">{!! nl2br(e($userSubmission->content)) !!}</p>
+                                        </div>
+                                    @endif
+                                    @if($userSubmission->file_path)
+                                        <div class="mb-3">
+                                            <a href="{{ Storage::url($userSubmission->file_path) }}" target="_blank"
+                                               class="text-blue-600 hover:underline">
+                                                <i class="mr-1 fas fa-paperclip"></i> {{ __('messages.View Submission File') }}
+                                            </a>
+                                        </div>
+                                    @endif
+                                    @if($userSubmission->score !== null)
+                                        <div class="pt-3 mt-3 border-t">
+                                            <div class="flex items-center justify-between">
+                                                <div>
+                                                    <span class="text-lg font-bold text-gray-800">
+                                                        {{ __('messages.Score') }}: {{ $userSubmission->score }}/{{ $selectedAssignment->max_score ?? 100 }}
+                                                    </span>
+                                                    @if($selectedAssignment->max_score)
+                                                        <span class="ml-2 text-sm text-gray-500">
+                                                            ({{ round(($userSubmission->score / $selectedAssignment->max_score) * 100) }}%)
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            @if($userSubmission->feedback)
+                                                <div class="mt-3">
+                                                    <strong class="text-sm text-gray-700">{{ __('messages.Feedback') }}:</strong>
+                                                    <p class="mt-1 text-sm text-gray-600">{!! nl2br(e($userSubmission->feedback)) !!}</p>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    @elseif($userSubmission->status === 'submitted')
+                                        <div class="mt-2 text-sm text-yellow-600">
+                                            <i class="mr-1 fas fa-clock"></i> {{ __('messages.Pending grading') }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        @endif
+
+                        <!-- Submission Form -->
+                        @if($selectedAssignment->status === 'published' && (!$this->isAssignmentPastDue() || $this->canSubmitLate()))
+                            <div class="mt-4">
+                                @if(!$userSubmission)
+                                    @if($showSubmissionForm)
+                                        <div class="p-4 rounded-lg bg-gray-50">
+                                            <h4 class="mb-4 text-sm font-semibold text-gray-800">{{ __('messages.Submit Your Work') }}</h4>
+                                            <form wire:submit="submitAssignment">
+                                                <div class="mb-4">
+                                                    <label class="block mb-2 text-sm font-medium text-gray-700">{{ __('messages.Content') }}</label>
+                                                    <textarea wire:model.lazy="submissionContent" rows="5"
+                                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                        placeholder="{{ __('messages.Enter your submission content') }}"></textarea>
+                                                    @error('submissionContent') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label class="block mb-2 text-sm font-medium text-gray-700">{{ __('messages.Files') }}</label>
+                                                    <input type="file" wire:model="submissionFiles" multiple
+                                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                    @error('submissionFiles.*') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
+                                                    @if(count($submissionFiles) > 0)
+                                                        <div class="mt-2 text-sm text-gray-600">
+                                                            {{ count($submissionFiles) }} {{ __('messages.file(s) selected') }}
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                                <div class="flex gap-3">
+                                                    <button type="submit"
+                                                        class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                                                        {{ __('messages.Submit Assignment') }}
+                                                    </button>
+                                                    <button type="button" wire:click="toggleSubmissionForm"
+                                                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300">
+                                                        {{ __('messages.Cancel') }}
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    @else
+                                        <button wire:click="toggleSubmissionForm"
+                                            class="w-full px-4 py-3 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                                            <i class="mr-2 fas fa-upload"></i>
+                                            {{ __('messages.Submit Assignment') }}
+                                        </button>
+                                    @endif
+                                @endif
+                            </div>
+                        @elseif($this->isAssignmentPastDue() && !$this->canSubmitLate() && !$userSubmission)
+                            <div class="p-4 mt-4 rounded-lg bg-red-50">
+                                <p class="text-sm text-red-600">
+                                    <i class="mr-2 fas fa-exclamation-triangle"></i>
+                                    {{ __('messages.Submission deadline has passed. Late submissions are not allowed for this assignment.') }}
+                                </p>
+                            </div>
+                        @endif
+                    </div>
+                @elseif($selectedLesson)
                     @if($selectedLesson->type === 'video' && $selectedLesson->video_url)
                         <!-- Plyr Video Player -->
                         <div class="aspect-video">
@@ -192,6 +405,26 @@
                                             </div>
                                         </div>
                                     @endforeach
+
+                                    @if($section->assignments && $section->assignments->count() > 0)
+                                        <div class="pt-3 mt-3 border-t border-gray-100">
+                                            <div class="px-3 pb-2 text-xs font-semibold tracking-wide text-gray-500 uppercase">
+                                                {{ __('messages.Assignments') }}
+                                            </div>
+                                            @foreach($section->assignments as $assignment)
+                                                <div wire:click="selectAssignment({{ $assignment->id }})"
+                                                    class="px-3 py-3 cursor-pointer hover:bg-gray-50 {{ $selectedAssignment && $selectedAssignment->id === $assignment->id ? 'bg-blue-50 border-l-4 border-blue-500' : '' }}">
+                                                    <div class="flex items-center justify-between">
+                                                        <div class="flex items-center gap-2">
+                                                            <i class="text-indigo-500 fas fa-tasks"></i>
+                                                            <span class="text-sm text-gray-700">{{ $assignment->title }}</span>
+                                                        </div>
+                                                        <span class="text-xs text-gray-400">{{ $assignment->order }}</span>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
 
                                     <!-- Quiz -->
                                     @if($section->quiz)
