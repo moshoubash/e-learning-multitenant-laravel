@@ -35,14 +35,41 @@ class QuizTaking extends Component
         $this->previousAttempt = $this->quizTakingService()->getPreviousAttempt($this->quizId, auth()->id());
     }
 
-    public function selectOption($questionId, $optionId)
+    public function selectOption($questionId, $optionId, bool $isMultiple = false)
     {
-        $this->selectedAnswers[$questionId] = $optionId;
+        if ($isMultiple) {
+            // Multiple choice: toggle option in/out of array
+            if (!isset($this->selectedAnswers[$questionId])) {
+                $this->selectedAnswers[$questionId] = [];
+            }
+
+            $index = array_search($optionId, $this->selectedAnswers[$questionId]);
+            if ($index !== false) {
+                // Option already selected, remove it
+                unset($this->selectedAnswers[$questionId][$index]);
+                $this->selectedAnswers[$questionId] = array_values($this->selectedAnswers[$questionId]);
+            } else {
+                // Option not selected, add it
+                $this->selectedAnswers[$questionId][] = $optionId;
+            }
+        } else {
+            // Single choice: replace with new selection
+            $this->selectedAnswers[$questionId] = $optionId;
+        }
     }
 
     public function isOptionSelected($questionId, $optionId)
     {
-        return isset($this->selectedAnswers[$questionId]) && $this->selectedAnswers[$questionId] === $optionId;
+        if (!isset($this->selectedAnswers[$questionId])) {
+            return false;
+        }
+
+        // Handle both array (multiple) and single value (single choice)
+        if (is_array($this->selectedAnswers[$questionId])) {
+            return in_array($optionId, $this->selectedAnswers[$questionId]);
+        }
+
+        return $this->selectedAnswers[$questionId] === $optionId;
     }
 
     public function submitQuiz()
@@ -53,7 +80,16 @@ class QuizTaking extends Component
 
         // Validate all questions are answered
         foreach ($this->quiz->questions as $question) {
-            if (!isset($this->selectedAnswers[$question->id])) {
+            $answer = $this->selectedAnswers[$question->id] ?? null;
+
+            $isAnswered = false;
+            if ($question->type === 'multiple') {
+                $isAnswered = is_array($answer) && count($answer) > 0;
+            } else {
+                $isAnswered = $answer !== null;
+            }
+
+            if (!$isAnswered) {
                 Toaster::error('Please answer all questions before submitting.');
                 return;
             }

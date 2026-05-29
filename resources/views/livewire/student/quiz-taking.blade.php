@@ -101,16 +101,29 @@
                             </div>
 
                             <div class="space-y-2 ml-11">
-                                @foreach($question->options as $option)
-                                    <label
-                                        class="flex items-center p-3 rounded-lg cursor-pointer {{ $this->isOptionSelected($question->id, $option->id) ? 'bg-blue-100 border-blue-400' : 'bg-white border-gray-200' }} border hover:bg-blue-50 transition-colors"
-                                        wire:click="selectOption({{ $question->id }}, {{ $option->id }})">
-                                        <input type="radio" class="w-4 h-4 text-blue-600" name="question_{{ $question->id }}"
-                                            @if($this->isOptionSelected($question->id, $option->id)) checked @endif
+                                @if($question->type === 'multiple')
+                                    @foreach($question->options as $option)
+                                        <label
+                                            class="flex items-center p-3 transition-colors bg-white border border-gray-200 rounded-lg cursor-pointer hover:bg-blue-50 {{ $this->isOptionSelected($question->id, $option->id) ? 'bg-blue-50 border-blue-300' : '' }}">
+                                            <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                                value="{{ $option->id }}"
+                                                wire:click.stop="selectOption({{ $question->id }}, {{ $option->id }}, true)"
+                                                @if($this->isOptionSelected($question->id, $option->id)) checked @endif>
+                                            <span class="@if(app()->getLocale() === 'ar') mr-3 @else ml-3 @endif text-gray-700">{{ $option->option_text }}</span>
+                                        </label>
+                                    @endforeach
+                                @else
+                                    @foreach($question->options as $option)
+                                        <label
+                                            class="flex items-center p-3 rounded-lg cursor-pointer {{ $this->isOptionSelected($question->id, $option->id) ? 'bg-blue-100 border-blue-400' : 'bg-white border-gray-200' }} border hover:bg-blue-50 transition-colors"
                                             wire:click="selectOption({{ $question->id }}, {{ $option->id }})">
-                                        <span class="@if(app()->getLocale() === 'ar') mr-3 @else ml-3 @endif text-gray-700">{{ $option->option_text }}</span>
-                                    </label>
-                                @endforeach
+                                            <input type="radio" class="w-4 h-4 text-blue-600" name="question_{{ $question->id }}"
+                                                @if($this->isOptionSelected($question->id, $option->id)) checked @endif
+                                                wire:click="selectOption({{ $question->id }}, {{ $option->id }})">
+                                            <span class="@if(app()->getLocale() === 'ar') mr-3 @else ml-3 @endif text-gray-700">{{ $option->option_text }}</span>
+                                        </label>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                     @endforeach

@@ -25,10 +25,33 @@ class QuizTakingService
         $correctAnswers = 0;
 
         foreach ($quiz->questions as $question) {
-            $correctOption = $question->options->where('is_correct', true)->first();
+            $selected = $selectedAnswers[$question->id] ?? null;
 
-            if ($correctOption && isset($selectedAnswers[$question->id]) && $selectedAnswers[$question->id] === $correctOption->id) {
-                $correctAnswers++;
+            if ($selected === null) {
+                continue;
+            }
+
+            if ($question->type === 'multiple') {
+                // Multiple choice: selected is an array of option IDs
+                $selectedArray = is_array($selected) ? $selected : [];
+                $correctOptionIds = $question->options->where('is_correct', true)->pluck('id')->toArray();
+
+                // Check if selected options exactly match correct options
+                $isCorrect = !empty($selectedArray) &&
+                             !empty($correctOptionIds) &&
+                             count(array_diff($selectedArray, $correctOptionIds)) === 0 &&
+                             count(array_diff($correctOptionIds, $selectedArray)) === 0;
+
+                if ($isCorrect) {
+                    $correctAnswers++;
+                }
+            } else {
+                // Single choice: selected is a single option ID
+                $correctOption = $question->options->where('is_correct', true)->first();
+
+                if ($correctOption && $selected === $correctOption->id) {
+                    $correctAnswers++;
+                }
             }
         }
 
