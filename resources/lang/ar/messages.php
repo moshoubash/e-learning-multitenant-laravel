@@ -320,4 +320,11 @@ return [
     'Delete Assignment' => 'حذف الواجب',
     'Are you sure you want to delete this assignment? This action can be restored later.' => 'هل أنت متأكد أنك تريد حذف هذا الواجب؟ هذا الإجراء يمكن استعادته لاحقاً.',
     'Edit Assignment' => 'تعديل الواجب',
+    'Allow Re-attempt' => 'السماح باعادة المحاولة',
+    'Allow students to retake this quiz after passing' => 'السماح للطلاب بإعادة هذا الاختبار بعد النجاح',
+    'Quiz Already Passed!' => 'تم اجتياز الاختبار بالفعل!',
+    'You have already passed this quiz with a score of :score%' => 'لقد اجتازت هذا الاختبار بالفعل بدرجة :score%',
+    'Re-attempt is not allowed for this quiz.' => 'لا يُسمح بإعادة هذا الاختبار.',
+
+    'You have a previous attempt with a score of :score%. You can retake the quiz to try for a better score.' => 'لديك محاولة سابقة بدرجة :score%. يمكنك إعادة الاختبار لمحاولة الحصول على درجة أفضل.',
 ];

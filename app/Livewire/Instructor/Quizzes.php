@@ -60,10 +60,12 @@ class Quizzes extends Component
     public $quizCreateTitle = '';
     public $quizCreateSectionId = '';
     public $quizCreatePassPercentage = 70;
+    public $quizCreateCanReattempt = false;
 
     public $quizEditTitle = '';
     public $quizEditSectionId = '';
     public $quizEditPassPercentage = 70;
+    public $quizEditCanReattempt = false;
 
     // Question form fields
     public $questionCreateText = '';
@@ -124,6 +126,7 @@ class Quizzes extends Component
         $this->quizEditTitle = $this->editingQuiz->title;
         $this->quizEditSectionId = $this->editingQuiz->section_id;
         $this->quizEditPassPercentage = $this->editingQuiz->pass_percentage;
+        $this->quizEditCanReattempt = $this->editingQuiz->can_reattempt ?? false;
         $this->showQuizEditModal = true;
     }
 
@@ -146,6 +149,7 @@ class Quizzes extends Component
         $this->quizCreateTitle = '';
         $this->quizCreateSectionId = '';
         $this->quizCreatePassPercentage = 70;
+        $this->quizCreateCanReattempt = false;
     }
 
     public function resetQuizFormFields()
@@ -155,6 +159,7 @@ class Quizzes extends Component
         $this->quizEditTitle = '';
         $this->quizEditSectionId = '';
         $this->quizEditPassPercentage = 70;
+        $this->quizEditCanReattempt = false;
     }
 
     public function storeQuiz(): void
@@ -174,6 +179,7 @@ class Quizzes extends Component
             'title' => $this->quizCreateTitle,
             'section_id' => $this->quizCreateSectionId,
             'pass_percentage' => $this->quizCreatePassPercentage,
+            'can_reattempt' => $this->quizCreateCanReattempt,
         ]);
 
         $this->closeQuizModal();
@@ -193,6 +199,7 @@ class Quizzes extends Component
             'title' => $this->quizEditTitle,
             'section_id' => $this->quizEditSectionId,
             'pass_percentage' => $this->quizEditPassPercentage,
+            'can_reattempt' => $this->quizEditCanReattempt,
         ]);
 
         $this->closeQuizModal();

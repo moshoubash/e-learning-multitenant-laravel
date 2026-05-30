@@ -7,11 +7,6 @@
             <span class="@if(app()->getLocale() === 'ar') mr-2 @else ml-2 @endif text-xs text-gray-500">
                 ({{ __('messages.Order') }}: {{ $section->order }})
             </span>
-            @if($section->assignments && count($section->assignments) > 0)
-                <span class="@if(app()->getLocale() === 'ar') mr-2 @else ml-2 @endif text-xs text-gray-500">
-                    {{ __('messages.assignments') }}: {{ count($section->assignments) }}
-                </span>
-            @endif
             @if($section->deleted_at)
                 <span class="ml-2 px-2 py-0.5 bg-red-100 text-red-600 text-xs rounded">Deleted</span>
             @endif

@@ -295,4 +295,10 @@ return [
     'Delete Assignment' => 'Delete Assignment',
     'Are you sure you want to delete this assignment? This action can be restored later.' => 'Are you sure you want to delete this assignment? This action can be restored later.',
     'Edit Assignment' => 'Edit Assignment',
+    'Allow Re-attempt' => 'Allow Re-attempt',
+    'Allow students to retake this quiz after passing' => 'Allow students to retake this quiz after passing',
+    'Quiz Already Passed!' => 'Quiz Already Passed!',
+    'You have already passed this quiz with a score of :score%' => 'You have already passed this quiz with a score of :score%',
+    'Re-attempt is not allowed for this quiz.' => 'Re-attempt is not allowed for this quiz.',
+    'You have a previous attempt with a score of :score%. You can retake the quiz to try for a better score.' => 'You have a previous attempt with a score of :score%. You can retake the quiz to try for a better score.',
 ];

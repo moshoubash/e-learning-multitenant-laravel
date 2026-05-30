@@ -16,7 +16,7 @@
                         </div>
                         <div class="mb-4">
                             <label class="block mb-1 text-sm font-medium text-gray-700">{{ __('messages.Order') }} <span>
-                                ({{ __('messages.min order:') }} {{ $maxOrderInSections ?? 0 }}) </span></label>
+                                ({{ __('messages.min order:') }} {{ $maxOrderInSections + 1 ?? 0 }}) </span></label>
                             <!-- max order in sections -->
 
                             <input type="number" wire:model.lazy="sectionCreateOrder" min="0"

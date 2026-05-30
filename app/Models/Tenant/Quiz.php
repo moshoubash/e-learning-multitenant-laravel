@@ -15,12 +15,14 @@ class Quiz extends Model
         'section_id',
         'title',
         'pass_percentage',
+        'can_reattempt',
     ];
 
     protected function casts(): array
     {
         return [
             'pass_percentage' => 'integer',
+            'can_reattempt' => 'boolean',
         ];
     }
 

@@ -24,6 +24,38 @@ class QuizTaking extends Component
         $this->loadQuiz();
     }
 
+    public function canReattempt(): bool
+    {
+        if (!$this->quiz) {
+            return false;
+        }
+        return $this->quiz->can_reattempt ?? false;
+    }
+
+    public function canTakeQuiz(): bool
+    {
+        if (!$this->quiz) {
+            return false;
+        }
+
+        // If no previous attempt, student can take the quiz
+        if (!$this->previousAttempt) {
+            return true;
+        }
+
+        // If previous attempt exists, check if re-attempt is allowed
+        if ($this->canReattempt()) {
+            return true;
+        }
+
+        // If passed and re-attempt not allowed, cannot take quiz
+        if ($this->previousAttempt->passed) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function loadQuiz()
     {
         $this->quiz = $this->quizTakingService()->loadQuiz($this->quizId);

@@ -43,7 +43,7 @@
 
                         <div class="mb-4">
                             <label class="block mb-1 text-sm font-medium text-gray-700">{{ __('messages.Order') }} <span>
-                                ({{ __('messages.min order:') }} {{ $maxOrderInLessons ?? 0 }}) </span></label>
+                                ({{ __('messages.min order:') }} {{ $maxOrderInLessons + 1 ?? 0 }}) </span></label>
                             <input type="number" wire:model.lazy="lessonCreateOrder" min="0"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                             @error('lessonCreateOrder') <span class="text-xs text-red-500">{{ $message }}</span>

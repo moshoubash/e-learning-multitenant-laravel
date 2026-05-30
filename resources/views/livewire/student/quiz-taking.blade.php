@@ -22,7 +22,22 @@
 <div class="max-w-4xl px-4 py-6 mx-auto sm:px-6 lg:px-8">
     <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
         @if($quiz)
-            @if($previousAttempt && !$submitted)
+            @if(!$this->canTakeQuiz() && !$submitted)
+                <!-- Cannot Reattempt Message -->
+                <div class="p-8 text-center">
+                    <i class="mb-4 text-6xl text-green-500 fas fa-check-circle"></i>
+                    <h3 class="text-2xl font-bold text-green-600">{{ __('messages.Quiz Already Passed!') }}</h3>
+                    <p class="mt-2 text-gray-600">{{ __('messages.You have already passed this quiz with a score of :score%', ['score' => $previousAttempt->score]) }}</p>
+                    <p class="mt-1 text-sm text-gray-500">{{ __('messages.Re-attempt is not allowed for this quiz.') }}</p>
+                    <div class="mt-6">
+                        <a href="{{ route('tenant.student.course', $quiz->section->course->slug ?? 'courses') }}"
+                            class="inline-flex items-center px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                            <i class="@if(app()->getLocale() === 'ar') ml-2 @else mr-2 @endif fas fa-arrow-left"></i>
+                            {{ __('messages.Back to Course') }}
+                        </a>
+                    </div>
+                </div>
+            @elseif($previousAttempt && !$submitted)
                 <!-- Previous Attempt Info -->
                 <div class="p-6 border-b border-blue-200 bg-blue-50">
                     <div class="flex items-center justify-between">
@@ -69,10 +84,13 @@
                     </div>
 
                     <div class="flex justify-center @if(app()->getLocale() === 'ar') gap-4 @endif space-x-4">
-                        <button wire:click="resetQuiz" class="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
-                            <i class="@if(app()->getLocale() === 'ar') ml-2 @else mr-2 @endif fas fa-redo"></i>
-                            {{ __('messages.Try Again') }}
-                        </button>
+                        @if($this->canReattempt() && $previousAttempt)
+                            <button wire:click="resetQuiz" class="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                                <i class="@if(app()->getLocale() === 'ar') ml-2 @else mr-2 @endif fas fa-redo"></i>
+                                {{ __('messages.Try Again') }}
+                            </button>
+                        @endif
+
                         <a href="{{ route('tenant.student.course', $quiz->section->course->slug ?? 'courses') }}"
                             class="px-6 py-2 text-white bg-gray-600 rounded-lg hover:bg-gray-700">
                             <i class="@if(app()->getLocale() === 'ar') ml-2 @else mr-2 @endif fas fa-arrow-left"></i>
@@ -82,60 +100,67 @@
                 </div>
             @else
                 <!-- Quiz Questions -->
-                <div class="p-6">
-                    <div class="pb-4 mb-6 border-b">
-                        <h3 class="text-lg font-semibold text-gray-800">{{ $quiz->title }}</h3>
-                        <p class="text-sm text-gray-500">{{ __('messages.questions') }} {{ $quiz->questions->count() }} • {{ __('messages.Pass') }}:
-                            {{ $quiz->pass_percentage }}%
-                        </p>
+                @if(!$this->canReattempt() && $previousAttempt)
+                    <div class="p-4 my-6 text-sm text-yellow-700 bg-yellow-100 border border-yellow-300 rounded-lg">
+                        <i class="@if(app()->getLocale() === 'ar') ml-2 @else mr-2 @endif fas fa-exclamation-triangle"></i>
+                        {{ __('messages.You have a previous attempt with a score of :score%. You can retake the quiz to try for a better score.', ['score' => $previousAttempt->score]) }}
                     </div>
-
-                    @foreach($quiz->questions->sortBy('order') as $questionIndex => $question)
-                        <div class="p-4 mb-8 rounded-lg bg-gray-50">
-                            <div class="flex items-start mb-4">
-                                <span
-                                    class="inline-flex items-center justify-center w-8 h-8 @if(app()->getLocale() === 'ar') ml-3 @else mr-3 @endif text-sm font-medium text-white bg-blue-600 rounded-full">
-                                    {{ $questionIndex + 1 }}
-                                </span>
-                                <h4 class="flex-1 font-medium text-gray-800">{{ $question->question }}</h4>
-                            </div>
-
-                            <div class="space-y-2 ml-11">
-                                @if($question->type === 'multiple')
-                                    @foreach($question->options as $option)
-                                        <label
-                                            class="flex items-center p-3 transition-colors bg-white border border-gray-200 rounded-lg cursor-pointer hover:bg-blue-50 {{ $this->isOptionSelected($question->id, $option->id) ? 'bg-blue-50 border-blue-300' : '' }}">
-                                            <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                                                value="{{ $option->id }}"
-                                                wire:click.stop="selectOption({{ $question->id }}, {{ $option->id }}, true)"
-                                                @if($this->isOptionSelected($question->id, $option->id)) checked @endif>
-                                            <span class="@if(app()->getLocale() === 'ar') mr-3 @else ml-3 @endif text-gray-700">{{ $option->option_text }}</span>
-                                        </label>
-                                    @endforeach
-                                @else
-                                    @foreach($question->options as $option)
-                                        <label
-                                            class="flex items-center p-3 rounded-lg cursor-pointer {{ $this->isOptionSelected($question->id, $option->id) ? 'bg-blue-100 border-blue-400' : 'bg-white border-gray-200' }} border hover:bg-blue-50 transition-colors"
-                                            wire:click="selectOption({{ $question->id }}, {{ $option->id }})">
-                                            <input type="radio" class="w-4 h-4 text-blue-600" name="question_{{ $question->id }}"
-                                                @if($this->isOptionSelected($question->id, $option->id)) checked @endif
-                                                wire:click="selectOption({{ $question->id }}, {{ $option->id }})">
-                                            <span class="@if(app()->getLocale() === 'ar') mr-3 @else ml-3 @endif text-gray-700">{{ $option->option_text }}</span>
-                                        </label>
-                                    @endforeach
-                                @endif
-                            </div>
+                @else
+                    <div class="p-6">
+                        <div class="pb-4 mb-6 border-b">
+                            <h3 class="text-lg font-semibold text-gray-800">{{ $quiz->title }}</h3>
+                            <p class="text-sm text-gray-500">{{ __('messages.questions') }} {{ $quiz->questions->count() }} • {{ __('messages.Pass') }}:
+                                {{ $quiz->pass_percentage }}%
+                            </p>
                         </div>
-                    @endforeach
 
-                    <div class="pt-4 mt-6 border-t">
-                        <button wire:click="submitQuiz"
-                            class="w-full py-3 font-medium text-white transition-colors bg-green-600 rounded-lg hover:bg-green-700">
-                            <i class="@if(app()->getLocale() === 'ar') mr-3 @else ml-3 @endif fas fa-check"></i>
-                            {{ __('messages.Submit Quiz') }}
-                        </button>
+                        @foreach($quiz->questions->sortBy('order') as $questionIndex => $question)
+                            <div class="p-4 mb-8 rounded-lg bg-gray-50">
+                                <div class="flex items-start mb-4">
+                                    <span
+                                        class="inline-flex items-center justify-center w-8 h-8 @if(app()->getLocale() === 'ar') ml-3 @else mr-3 @endif text-sm font-medium text-white bg-blue-600 rounded-full">
+                                        {{ $questionIndex + 1 }}
+                                    </span>
+                                    <h4 class="flex-1 font-medium text-gray-800">{{ $question->question }}</h4>
+                                </div>
+
+                                <div class="space-y-2 ml-11">
+                                    @if($question->type === 'multiple')
+                                        @foreach($question->options as $option)
+                                            <label
+                                                class="flex items-center p-3 transition-colors bg-white border border-gray-200 rounded-lg cursor-pointer hover:bg-blue-50 {{ $this->isOptionSelected($question->id, $option->id) ? 'bg-blue-50 border-blue-300' : '' }}">
+                                                <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                                    value="{{ $option->id }}"
+                                                    wire:click.stop="selectOption({{ $question->id }}, {{ $option->id }}, true)"
+                                                    @if($this->isOptionSelected($question->id, $option->id)) checked @endif>
+                                                <span class="@if(app()->getLocale() === 'ar') mr-3 @else ml-3 @endif text-gray-700">{{ $option->option_text }}</span>
+                                            </label>
+                                        @endforeach
+                                    @else
+                                        @foreach($question->options as $option)
+                                            <label
+                                                class="flex items-center p-3 rounded-lg cursor-pointer {{ $this->isOptionSelected($question->id, $option->id) ? 'bg-blue-100 border-blue-400' : 'bg-white border-gray-200' }} border hover:bg-blue-50 transition-colors"
+                                                wire:click="selectOption({{ $question->id }}, {{ $option->id }})">
+                                                <input type="radio" class="w-4 h-4 text-blue-600" name="question_{{ $question->id }}"
+                                                    @if($this->isOptionSelected($question->id, $option->id)) checked @endif
+                                                    wire:click="selectOption({{ $question->id }}, {{ $option->id }})">
+                                                <span class="@if(app()->getLocale() === 'ar') mr-3 @else ml-3 @endif text-gray-700">{{ $option->option_text }}</span>
+                                            </label>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+
+                        <div class="pt-4 mt-6 border-t">
+                            <button wire:click="submitQuiz"
+                                class="w-full py-3 font-medium text-white transition-colors bg-green-600 rounded-lg hover:bg-green-700">
+                                <i class="@if(app()->getLocale() === 'ar') mr-3 @else ml-3 @endif fas fa-check"></i>
+                                {{ __('messages.Submit Quiz') }}
+                            </button>
+                        </div>
                     </div>
-                </div>
+                @endif
             @endif
         @else
             <div class="p-12 text-center">
