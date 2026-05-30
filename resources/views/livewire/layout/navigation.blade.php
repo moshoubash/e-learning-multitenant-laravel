@@ -53,10 +53,13 @@ new class extends Component {
                     @endrole
                     @role('instructor')
                     <x-nav-link :href="route('tenant.instructor.courses')" wire:navigate>
-                        {{ __('messages.My Courses') }}
+                        {{ __('messages.Courses') }}
                     </x-nav-link>
                     <x-nav-link :href="route('tenant.instructor.quizzes')" wire:navigate>
-                        {{ __('messages.My Quizzes') }}
+                        {{ __('messages.Quizzes') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('tenant.instructor.assignments')" wire:navigate>
+                        {{ __('messages.Assignments') }}
                     </x-nav-link>
                     @endrole
 
@@ -117,10 +120,13 @@ new class extends Component {
                         @endrole
                         @role('instructor')
                         <x-dropdown-link :href="route('tenant.instructor.courses')" wire:navigate>
-                            {{ __('messages.My Courses') }}
+                            {{ __('messages.Courses') }}
                         </x-dropdown-link>
                         <x-dropdown-link :href="route('tenant.instructor.quizzes')" wire:navigate>
-                            {{ __('messages.My Quizzes') }}
+                            {{ __('messages.Quizzes') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('tenant.instructor.assignments')" wire:navigate>
+                            {{ __('messages.Assignments') }}
                         </x-dropdown-link>
                         @endrole
                         @role('student')
