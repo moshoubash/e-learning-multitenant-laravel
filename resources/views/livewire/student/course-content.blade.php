@@ -1,18 +1,18 @@
-<x-slot name="header">
-    <div class="flex items-center justify-between">
+<div>
+    <div class="flex items-center justify-between mb-6">
         <div class="flex items-center">
-            <a href="{{ route('tenant.student.courses') }}" class="@if(app()->getLocale() === 'ar') ml-4 @else mr-4 @endif text-gray-500 hover:text-gray-700">
-                @if(app()->getLocale() === 'ar')
-                     <i class="fas fa-arrow-right"></i>
-                @else
-                    <i class="fas fa-arrow-left"></i>
-                @endif
+            <a href="{{ route('tenant.student.courses') }}" class="@if(app()->getLocale() === 'ar') ml-4 @else mr-4 @endif text-gray-400 hover:text-gray-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    @if(app()->getLocale() === 'ar')
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7"/>
+                    @else
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7"/>
+                    @endif
+                </svg>
             </a>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                {{ $course->title ?? __('messages.Course') }}
-            </h2>
+            <h1 class="text-2xl font-bold text-gray-900">{{ $course->title ?? __('messages.Course') }}</h1>
         </div>
-        <div class="flex items-center @if(app()->getLocale() === 'ar') gap-4 @else space-x-4 @endif">
+        <div class="flex items-center gap-4">
             <div class="text-sm text-gray-500">
                 {{ __('messages.Progress') }}: {{ $progressPercent }}%
             </div>
@@ -21,9 +21,7 @@
             </div>
         </div>
     </div>
-</x-slot>
 
-<div class="max-w-full px-4 py-6 mx-auto sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <!-- Video/Content Area -->
         <div class="lg:col-span-2">

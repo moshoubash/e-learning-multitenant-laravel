@@ -5,9 +5,11 @@ namespace App\Livewire\Student;
 use App\Models\Tenant\Course;
 use App\Models\Tenant\Enrollment;
 use App\Services\Student\CoursesService;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
+#[Layout('layouts.student')]
 class Courses extends Component
 {
     public $selectedCourse = null;

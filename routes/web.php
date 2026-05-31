@@ -18,11 +18,11 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 Route::view('/', 'welcome')->name('home');
 
-Route::view('dashboard', 'dashboard')
+Route::get('dashboard', \App\Livewire\Dashboard::class)
     ->middleware(['auth', 'verified'])
     ->name('web.dashboard');
 
-Route::view('profile', 'profile')
+Route::get('profile', \App\Livewire\Profile::class)
     ->middleware(['auth'])
     ->name('profile');
 

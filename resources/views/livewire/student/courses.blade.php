@@ -1,12 +1,11 @@
-<x-slot name="header">
-    <div class="flex items-center justify-between">
-        <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            {{ __('messages.Browse Courses') }}
-        </h2>
+<div>
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">{{ __('messages.Browse Courses') }}</h1>
+            <p class="mt-1 text-sm text-gray-500">{{ __('messages.Discover new courses and continue learning') }}</p>
+        </div>
     </div>
-</x-slot>
 
-<div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <!-- Course List Sidebar -->
         <div class="lg:col-span-1">

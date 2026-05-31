@@ -9,11 +9,13 @@ use App\Models\Tenant\Enrollment;
 use App\Models\Tenant\Lesson;
 use App\Models\Tenant\LessonProgress;
 use App\Services\Student\CourseContentService;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Support\Facades\Storage;
 
+#[Layout('layouts.student')]
 class CourseContent extends Component
 {
     use WithFileUploads;

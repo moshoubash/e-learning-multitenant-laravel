@@ -11,10 +11,12 @@ use App\Models\Tenant\Quiz;
 use App\Models\Tenant\QuizQuestion;
 use App\Models\Tenant\QuizOption;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
 
+#[Layout('layouts.instructor')]
 class Quizzes extends Component
 {
     use WithPagination;

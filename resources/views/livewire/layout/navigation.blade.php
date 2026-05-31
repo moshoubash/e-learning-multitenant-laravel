@@ -20,18 +20,11 @@ new class extends Component {
     }
 }; ?>
 
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-white ">
     <!-- Primary Navigation Menu -->
     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
-                <!-- Logo -->
-                <div class="flex items-center shrink-0">
-                    <a href="{{ tenant() ? route('tenant.dashboard') : route('dashboard') }}" wire:navigate>
-                        <x-application-logo class="block w-auto text-gray-800 fill-current h-9" />
-                    </a>
-                </div>
-
                 <!-- Navigation Links -->
                 <div class="hidden @if(app()->getLocale() === 'ar') gap-8 @else space-x-8 @endif sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="tenant() ? route('tenant.dashboard') : route('dashboard')"

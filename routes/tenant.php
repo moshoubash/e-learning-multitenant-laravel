@@ -22,13 +22,9 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:tenant'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('tenant.dashboard');
+    Route::get('/dashboard', \App\Livewire\Dashboard::class)->name('tenant.dashboard');
 
-    Route::get('/profile', function () {
-        return view('profile');
-    })->name('tenant.profile');
+    Route::get('/profile', \App\Livewire\Profile::class)->name('tenant.profile');
 
     Route::livewire('/admin/users', 'admin.users')->middleware('role:admin')->name('tenant.admin.users');
     Route::livewire('/admin/courses', 'admin.courses')->middleware('role:admin')->name('tenant.admin.courses');
@@ -39,12 +35,15 @@ Route::middleware(['auth:tenant'])->group(function () {
     Route::livewire('/instructor/assignments', 'instructor.assignment-submissions')->middleware('role:instructor')->name('tenant.instructor.assignments');
 
     Route::livewire('/student/courses', 'student.courses')->middleware('role:student')->name('tenant.student.courses');
+    Route::livewire('/student/enrolled-courses', 'student.enrolled-courses')->middleware('role:student')->name('tenant.student.enrolled-courses');
     Route::livewire('/student/course/{course:slug}', 'student.course-content')->middleware('role:student')->name('tenant.student.course');
     Route::livewire('/student/quiz/{quizId}', 'student.quiz-taking')->middleware('role:student')->name('tenant.student.quiz');
 
     Route::get('/student/checkout/{course}', [PaymentController::class, 'checkout'])->middleware('role:student')->name('tenant.student.checkout');
     Route::post('/student/payment/process', [PaymentController::class, 'process'])->middleware('role:student')->name('tenant.student.payment.process');
     Route::get('/student/payment/confirmation/{enrollmentId}', [PaymentController::class, 'confirmation'])->middleware('role:student')->name('tenant.student.payment.confirmation');
+
+    Route::livewire('/student/leaderboard', 'student.leaderboard')->middleware('role:student')->name('tenant.student.leaderboard');
 
     Route::livewire('/student/checkout-livewire/{course}', 'student.checkout')->middleware('role:student')->name('tenant.student.checkout.livewire');
     Route::livewire('/student/checkout-success/{enrollmentId?}', 'student.checkout-success')->middleware('role:student')->name('tenant.student.checkout.success');

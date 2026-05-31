@@ -5,9 +5,11 @@ namespace App\Livewire\Student;
 use App\Models\Tenant\Quiz;
 use App\Models\Tenant\QuizAttempt;
 use App\Services\Student\QuizTakingService;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
+#[Layout('layouts.student')]
 class QuizTaking extends Component
 {
     public $quizId;

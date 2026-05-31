@@ -1,11 +1,3 @@
-<x-slot name="header">
-    <div class="flex justify-between items-center">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('messages.Courses Management') }}
-        </h2>
-    </div>
-</x-slot>
-
 @push('styles')
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 @endpush
@@ -14,7 +6,14 @@
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 @endpush
 
-<div class="max-w-7xl py-6 mx-auto sm:px-6 lg:px-6">
+<div>
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">{{ __('messages.Courses Management') }}</h1>
+            <p class="mt-1 text-sm text-gray-500">{{ __('messages.Manage your courses, sections, and lessons') }}</p>
+        </div>
+    </div>
+
     <!-- Tables -->
 
     <!-- Courses Table with Curriculum -->
