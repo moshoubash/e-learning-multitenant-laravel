@@ -20,54 +20,17 @@ new class extends Component {
     }
 }; ?>
 
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-white ">
     <!-- Primary Navigation Menu -->
     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
-                <!-- Logo -->
-                <div class="flex items-center shrink-0">
-                    <a href="{{ tenant() ? route('tenant.dashboard') : route('dashboard') }}" wire:navigate>
-                        <x-application-logo class="block w-auto text-gray-800 fill-current h-9" />
-                    </a>
-                </div>
-
                 <!-- Navigation Links -->
                 <div class="hidden @if(app()->getLocale() === 'ar') gap-8 @else space-x-8 @endif sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="tenant() ? route('tenant.dashboard') : route('dashboard')"
                         :active="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('messages.Dashboard') }}
                     </x-nav-link>
-
-                    <!-- Admin Routes  -->
-                    @role('admin')
-                        <x-nav-link :href="route('tenant.admin.users')" wire:navigate>
-                            {{ __('messages.Users Management') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('tenant.admin.courses')" wire:navigate>
-                            {{ __('messages.Courses Management') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('tenant.admin.quizzes')" wire:navigate>
-                            {{ __('messages.Quizzes Management') }}
-                        </x-nav-link>
-                    @endrole
-                    @role('instructor')
-                        <x-nav-link :href="route('tenant.instructor.courses')" wire:navigate>
-                            {{ __('messages.Courses') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('tenant.instructor.quizzes')" wire:navigate>
-                            {{ __('messages.Quizzes') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('tenant.instructor.assignments')" wire:navigate>
-                            {{ __('messages.Assignments') }}
-                        </x-nav-link>
-                    @endrole
-
-                    @role('student')
-                        <x-nav-link :href="route('tenant.student.courses')" wire:navigate>
-                            {{ __('messages.Browse Courses') }}
-                        </x-nav-link>
-                    @endrole
 
                     <select wire:change="changeLanguage($event.target.value)" class="text-sm text-gray-500 border-0 border-b-2 cursor-pointer border-b-gray-100 sparent border-gray hover:border-b-2 hover:border-gray-200 hover:text-gray-500 focus:border-gray-500 focus:ring-0 focus:outline-none">
                         <option value="en" {{ app()->getLocale() === 'en' ? 'selected' : '' }}>

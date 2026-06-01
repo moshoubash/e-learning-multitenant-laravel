@@ -4,8 +4,10 @@ namespace App\Livewire\Student;
 
 use App\Models\Tenant\Enrollment;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
+#[Layout('layouts.student')]
 class CheckoutSuccess extends Component
 {
     public ?Enrollment $enrollment = null;

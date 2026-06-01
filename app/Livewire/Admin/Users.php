@@ -6,8 +6,11 @@ use App\Models\Tenant\User;
 use App\Services\Admin\UsersService;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\Layout;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Support\Facades\Hash;
+
+#[Layout('layouts.admin')]
 
 class Users extends Component
 {

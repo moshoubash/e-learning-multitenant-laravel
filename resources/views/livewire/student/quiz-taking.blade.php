@@ -1,13 +1,17 @@
-<x-slot name="header">
-    <div class="flex items-center justify-between">
+<div>
+    <div class="flex items-center justify-between mb-6">
         <div class="flex items-center">
             <a href="{{ route('tenant.student.course', $quiz->section->course->slug ?? 'courses') }}"
-                class="@if(app()->getLocale() === 'ar') @else mr-4 @endif text-gray-500 hover:text-gray-700">
-                <i class="fas fa-arrow-left"></i>
+                class="@if(app()->getLocale() === 'ar') ml-4 @else mr-4 @endif text-gray-400 hover:text-gray-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    @if(app()->getLocale() === 'ar')
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7"/>
+                    @else
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7"/>
+                    @endif
+                </svg>
             </a>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                {{ $quiz->title ?? 'Quiz' }}
-            </h2>
+            <h1 class="text-2xl font-bold text-gray-900">{{ $quiz->title ?? 'Quiz' }}</h1>
         </div>
         <div class="text-sm text-gray-500">
             {{ __('messages.questions') }}
@@ -17,9 +21,7 @@
             </span>
         </div>
     </div>
-</x-slot>
 
-<div class="max-w-4xl px-4 py-6 mx-auto sm:px-6 lg:px-8">
     <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
         @if($quiz)
             @if(!$this->canTakeQuiz() && !$submitted)

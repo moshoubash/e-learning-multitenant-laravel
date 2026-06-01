@@ -5,8 +5,10 @@ namespace App\Livewire\Student;
 use App\Models\Tenant\Enrollment;
 use App\Models\Tenant\LessonProgress;
 use App\Services\Student\EnrolledCoursesService;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
+#[Layout('layouts.student')]
 class EnrolledCourses extends Component
 {
     public function getEnrolledCourses()

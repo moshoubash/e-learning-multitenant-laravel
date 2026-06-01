@@ -1,13 +1,11 @@
 <div>
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                {{ __('messages.Checkout') }}
-            </h2>
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">{{ __('messages.Checkout') }}</h1>
+            <p class="mt-1 text-sm text-gray-500">Complete your enrollment</p>
         </div>
-    </x-slot>
+    </div>
 
-    <div class="max-w-4xl px-4 py-6 mx-auto sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
             <!-- Course Summary -->
             <div class="p-6 border-b border-gray-200">
@@ -138,7 +136,6 @@
                 {{ __('messages.Back to Courses') }}
             </a>
         </div>
-    </div>
 
     @push('scripts')
         <script src="https://js.stripe.com/v3/"></script>

@@ -10,7 +10,10 @@ use App\Models\Tenant\Section;
 use App\Services\Admin\QuizzesService;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\Layout;
 use Masmerise\Toaster\Toaster;
+
+#[Layout('layouts.admin')]
 
 class Quizzes extends Component
 {

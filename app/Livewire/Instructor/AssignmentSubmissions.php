@@ -6,10 +6,12 @@ use App\Models\Tenant\Assignment;
 use App\Models\Tenant\AssignmentSubmission;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
 
+#[Layout('layouts.instructor')]
 class AssignmentSubmissions extends Component
 {
     use WithPagination;

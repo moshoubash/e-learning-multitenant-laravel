@@ -19,7 +19,9 @@ use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\Layout;
 
+#[Layout('layouts.instructor')]
 class Courses extends Component
 {
     use WithPagination, WithFileUploads;

@@ -1,13 +1,10 @@
-<x-slot name="header">
-    <div class="flex justify-between items-center">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('messages.Users Management') }}
-        </h2>
+<div>
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">{{ __('messages.Users Management') }}</h1>
+            <p class="mt-1 text-sm text-gray-500">Manage all platform users and their roles</p>
+        </div>
     </div>
-</x-slot>
-
-<div class="max-w-7xl py-6 mx-auto sm:px-6 lg:px-6">
-    <!-- Tables -->
 
     <!-- Users Table -->
     @include('livewire.admin.users-components.tables.users-table')

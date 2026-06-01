@@ -7,8 +7,11 @@ use App\Models\Tenant\User;
 use App\Services\Admin\CoursesService;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\Layout;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Support\Str;
+
+#[Layout('layouts.admin')]
 
 class Courses extends Component
 {

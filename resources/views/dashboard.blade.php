@@ -1,18 +1,9 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('messages.Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <!-- Enrolled courses if student -->
-                @if (auth()->user()->hasRole('student'))
-                    <livewire:student.enrolled-courses />
-                @endif
-            </div>
+<div class="space-y-6">
+    {{-- Page header --}}
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">{{ __('messages.Dashboard') }}</h1>
+            <p class="mt-1 text-sm text-gray-500">Welcome back, {{ auth()->user()->name }}</p>
         </div>
     </div>
-</x-app-layout>
+</div>

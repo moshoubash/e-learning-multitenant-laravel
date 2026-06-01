@@ -1,15 +1,12 @@
-<div>
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center">
-                <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                    {{ __('messages.Assignment Submissions') }}
-                </h2>
-            </div>
+<div class="">
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">{{ __('messages.Assignment Submissions') }}</h1>
+            <p class="mt-1 text-sm text-gray-500">{{ __('messages.Review and grade student submissions') }}</p>
         </div>
-    </x-slot>
+    </div>
 
-    <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div>
         <!-- Filter Tabs -->
         <div class="mb-6">
             <div class="flex flex-wrap gap-2 border-b border-gray-200">

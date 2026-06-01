@@ -1,12 +1,11 @@
-<x-slot name="header">
-    <div class="flex items-center justify-between">
-        <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            {{ __('messages.Courses Management') }}
-        </h2>
+<div>
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">{{ __('messages.Courses Management') }}</h1>
+            <p class="mt-1 text-sm text-gray-500">Manage all courses across the platform</p>
+        </div>
     </div>
-</x-slot>
 
-<div class="py-6 mx-auto max-w-7xl sm:px-6 lg:px-6">
     <!-- Tables -->
     @include('livewire.admin.courses-components.tables.courses-table')
 
