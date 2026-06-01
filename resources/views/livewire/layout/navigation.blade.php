@@ -32,36 +32,6 @@ new class extends Component {
                         {{ __('messages.Dashboard') }}
                     </x-nav-link>
 
-                    <!-- Admin Routes  -->
-                    @role('admin')
-                        <x-nav-link :href="route('tenant.admin.users')" wire:navigate>
-                            {{ __('messages.Users Management') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('tenant.admin.courses')" wire:navigate>
-                            {{ __('messages.Courses Management') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('tenant.admin.quizzes')" wire:navigate>
-                            {{ __('messages.Quizzes Management') }}
-                        </x-nav-link>
-                    @endrole
-                    @role('instructor')
-                        <x-nav-link :href="route('tenant.instructor.courses')" wire:navigate>
-                            {{ __('messages.Courses') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('tenant.instructor.quizzes')" wire:navigate>
-                            {{ __('messages.Quizzes') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('tenant.instructor.assignments')" wire:navigate>
-                            {{ __('messages.Assignments') }}
-                        </x-nav-link>
-                    @endrole
-
-                    @role('student')
-                        <x-nav-link :href="route('tenant.student.courses')" wire:navigate>
-                            {{ __('messages.Browse Courses') }}
-                        </x-nav-link>
-                    @endrole
-
                     <select wire:change="changeLanguage($event.target.value)" class="text-sm text-gray-500 border-0 border-b-2 cursor-pointer border-b-gray-100 sparent border-gray hover:border-b-2 hover:border-gray-200 hover:text-gray-500 focus:border-gray-500 focus:ring-0 focus:outline-none">
                         <option value="en" {{ app()->getLocale() === 'en' ? 'selected' : '' }}>
                             {{ __('messages.English') }}

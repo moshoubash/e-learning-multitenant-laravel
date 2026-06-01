@@ -1,4 +1,4 @@
-{{-- Secondary Sidebar (collapsible panel) --}}
+{{-- Sidebar (collapsible panel) --}}
 @props([
     'title' => '',
     'collapsible' => true,

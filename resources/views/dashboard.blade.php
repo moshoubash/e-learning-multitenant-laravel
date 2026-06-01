@@ -6,9 +6,4 @@
             <p class="mt-1 text-sm text-gray-500">Welcome back, {{ auth()->user()->name }}</p>
         </div>
     </div>
-
-    {{-- Enrolled courses if student --}}
-    @if (auth()->user()->hasRole('student'))
-        <livewire:student.enrolled-courses />
-    @endif
 </div>

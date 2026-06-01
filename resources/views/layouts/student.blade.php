@@ -33,7 +33,7 @@
         <livewire:layout.navigation />
     </div>
 
-    {{-- Secondary Sidebar --}}
+    {{-- Sidebar --}}
     <x-student.sidebar />
 
     {{-- Main Content Area --}}

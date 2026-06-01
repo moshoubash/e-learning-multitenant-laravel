@@ -29,15 +29,15 @@
 
     {{-- Top Navigation Bar --}}
     <div class="fixed top-0 z-40 transition-all duration-300 ease-in-out"
-         :style="`${isRtl ? 'right' : 'left'}: ${sidebarCollapsed ? '4rem' : '13rem'}; width: calc(100% - ${sidebarCollapsed ? '4rem' : '13rem'})`">
+         :style="`${isRtl ? 'right' : 'left'}: ${sidebarCollapsed ? '4rem' : '14rem'}; width: calc(100% - ${sidebarCollapsed ? '4rem' : '14rem'})`">
         <livewire:layout.navigation />
     </div>
 
     {{-- Sidebar --}}
-    <x-instructor.sidebar />
+    <x-admin.sidebar />
 
     {{-- Main Content Area --}}
-    <div class="pt-16 transition-all duration-300 ease-in-out"
+    <div class="pt-16 pl-16 transition-all duration-300 ease-in-out"
          :style="`padding-${isRtl ? 'right' : 'left'}: ${sidebarCollapsed ? '4rem' : '13rem'}`">
         <div class="px-6 py-6 mx-auto max-w-7xl">
             <main>

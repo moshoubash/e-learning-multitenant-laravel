@@ -8,12 +8,12 @@
             <a href="{{ route('tenant.student.courses') }}" wire:navigate
                class="flex items-center px-2 py-1.5 text-sm rounded-lg {{ request()->routeIs('tenant.student.courses') ? 'bg-indigo-50 text-indigo-700 font-medium' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
                 <i class="w-5 h-4 text-xs text-center fas fa-graduation-cap"></i>
-                <span class="ml-3">{{ __('messages.My Courses') }}</span>
+                <span class="ml-3">{{ __('messages.Browse Courses') }}</span>
             </a>
             <a href="{{ route('tenant.student.enrolled-courses') }}" wire:navigate
                class="flex items-center px-2 py-1.5 text-sm rounded-lg {{ request()->routeIs('tenant.student.enrolled-courses*') ? 'bg-indigo-50 text-indigo-700 font-medium' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
                 <i class="w-5 h-4 text-xs text-center fas fa-play-circle"></i>
-                <span class="ml-3">{{ __('messages.In Progress') }}</span>
+                <span class="ml-3">{{ __('messages.My Enrolled Courses') }}</span>
             </a>
             <a href="{{ route('tenant.student.leaderboard') }}" wire:navigate
                class="flex items-center px-2 py-1.5 text-sm rounded-lg {{ request()->routeIs('tenant.student.leaderboard*') ? 'bg-indigo-50 text-indigo-700 font-medium' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">

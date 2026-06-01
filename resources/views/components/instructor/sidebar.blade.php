@@ -1,4 +1,4 @@
-{{-- Instructor Secondary Sidebar Navigation Items --}}
+{{-- Instructor Sidebar Navigation Items --}}
 <x-ui.sidebar title="E-Learning" class="hidden lg:flex">
     {{-- Menu group: Learning Content --}}
     <div class="px-3 py-2">
@@ -25,15 +25,13 @@
 
     {{-- Bottom CTA card --}}
     <x-slot name="footer">
-        <div class="p-3 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl">
+        <div class="p-3 rounded-xl">
             <div class="flex items-start space-x-3">
-                <div class="p-1.5 bg-indigo-100 rounded-lg">
-                    <i class="text-xs text-indigo-600 fas fa-gem"></i>
-                </div>
-                <div class="flex-1">
-                    <p class="text-xs font-semibold text-indigo-900">Pro Features</p>
-                    <p class="text-[10px] text-indigo-600 mt-0.5">Unlock advanced analytics</p>
-                </div>
+                <a href="/profile" wire:navigate
+                class="px-2 py-1.5 text-sm {{ request()->routeIs('profile') ? ' text-gray-700 font-medium' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                    <i class="w-5 h-4 text-xs text-center fas fa-trophy"></i>
+                    <span class="ml-3">Profile</span>
+                </a>
             </div>
         </div>
     </x-slot>
