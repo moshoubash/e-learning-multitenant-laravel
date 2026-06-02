@@ -2,7 +2,7 @@
     <div class="flex items-center justify-between mb-8">
         <div>
             <h1 class="text-2xl font-bold text-gray-900">{{ __('messages.Courses Management') }}</h1>
-            <p class="mt-1 text-sm text-gray-500">Manage all courses across the platform</p>
+            <p class="mt-1 text-sm text-gray-500">{{ __('messages.Manage all courses across the platform') }}</p>
         </div>
     </div>
 

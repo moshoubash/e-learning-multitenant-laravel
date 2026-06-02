@@ -1,4 +1,12 @@
 <x-ui.sidebar title="E-Learning" class="hidden lg:flex">
+    {{-- Navigation slot (top bar moved into sidebar) --}}
+    <x-slot name="navigation">
+        <livewire:layout.navigation />
+    </x-slot>
+    <x-slot name="navigationIcons">
+        <livewire:layout.navigation />
+    </x-slot>
+
     {{-- Menu group: My Learning --}}
     <div class="px-3 py-2">
         <p class="mb-1 px-2 text-[11px] font-semibold uppercase tracking-widest text-gray-400">

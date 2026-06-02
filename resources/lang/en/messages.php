@@ -336,4 +336,10 @@ return [
     'Review and grade student submissions' => 'Review and grade student submissions',
     'Create Quiz' => 'Create Quiz',
     'Create Course' => 'Create Course',
+    'Welcome back,' => 'Welcome back,',
+    'Users' => 'Users',
+    'Management' => 'Management',
+    'Manage all platform users and their roles' => 'Manage all platform users and their roles',
+    'Manage all courses across the platform' => 'Manage all courses across the platform',
+    'Manage all quizzes across the platform' => 'Manage all quizzes across the platform',
 ];

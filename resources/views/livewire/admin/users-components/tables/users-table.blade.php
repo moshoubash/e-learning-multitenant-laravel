@@ -1,4 +1,4 @@
-<div class="mb-6 overflow-hidden bg-white shadow-sm sm:rounded-lg">
+<div class="p-6 mb-6 overflow-hidden bg-white shadow-sm sm:rounded-lg">
     <div class="flex items-center justify-between">
         <div class="p-4 border-b border-gray-200">
             <h3 class="text-lg font-semibold text-gray-700">{{ __('messages.Active Users') }}</h3>
@@ -10,7 +10,7 @@
         </button>
     </div>
 
-    <table class="w-full text-left">
+    <table class="w-full mx-0 mt-4 text-left">
         <thead class="bg-gray-50">
             <tr>
                 <th class="p-4 text-sm font-semibold text-gray-600">{{ __("messages.Name") }}</th>
