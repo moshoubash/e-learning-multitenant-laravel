@@ -2,23 +2,23 @@
 <x-ui.sidebar title="Admin" class="hidden lg:flex">
     {{-- Menu group: Management --}}
     <div class="px-3 py-2">
-        <p class="mb-1 px-2 text-[11px] font-semibold uppercase tracking-widest text-gray-400">Management</p>
+        <p class="mb-1 px-2 text-[11px] font-semibold uppercase tracking-widest text-gray-400">{{ __('messages.Management') }}</p>
 
         <nav class="space-y-0.5">
             <a href="{{ route('tenant.admin.users') }}" wire:navigate
                class="flex items-center px-2 py-1.5 text-sm rounded-lg {{ request()->routeIs('tenant.admin.users*') ? 'bg-indigo-50 text-indigo-700 font-medium' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
                 <i class="w-5 h-4 text-xs text-center fas fa-users"></i>
-                <span class="ml-3">Users</span>
+                <span class="ml-3">{{ __('messages.Users') }}</span>
             </a>
             <a href="{{ route('tenant.admin.courses') }}" wire:navigate
                class="flex items-center px-2 py-1.5 text-sm rounded-lg {{ request()->routeIs('tenant.admin.courses*') ? 'bg-indigo-50 text-indigo-700 font-medium' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
                 <i class="w-5 h-4 text-xs text-center fas fa-book-open"></i>
-                <span class="ml-3">Courses</span>
+                <span class="ml-3">{{ __('messages.Courses') }}</span>
             </a>
             <a href="{{ route('tenant.admin.quizzes') }}" wire:navigate
                class="flex items-center px-2 py-1.5 text-sm rounded-lg {{ request()->routeIs('tenant.admin.quizzes*') ? 'bg-indigo-50 text-indigo-700 font-medium' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
                 <i class="w-5 h-4 text-xs text-center fas fa-question-circle"></i>
-                <span class="ml-3">Quizzes</span>
+                <span class="ml-3">{{ __('messages.Quizzes') }}</span>
             </a>
         </nav>
     </div>
@@ -30,7 +30,7 @@
                 <a href="/profile" wire:navigate
                 class="px-2 py-1.5 text-sm {{ request()->routeIs('profile') ? ' text-gray-700 font-medium' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
                     <i class="w-5 h-4 text-xs text-center fas fa-trophy"></i>
-                    <span class="ml-3">Profile</span>
+                    <span class="ml-3">{{ __('messages.Profile') }}</span>
                 </a>
             </div>
         </div>

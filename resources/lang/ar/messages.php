@@ -362,4 +362,10 @@ return [
     'Review and grade student submissions' => 'مراجعة وتقييم تقديمات الطلاب',
     'Create Quiz' => 'إنشاء اختبار',
     'Create Course' => 'إنشاء دورة',
+    'Welcome back,' => 'مرحباً مجدداً،',
+    'Users' => 'المستخدمون',
+    'Management' => 'الإدارة',
+    'Manage all platform users and their roles' => 'إدارة جميع مستخدمي المنصة وأدوارهم',
+    'Manage all courses across the platform' => 'إدارة جميع الدورات عبر المنصة',
+    'Manage all quizzes across the platform' => 'إدارة جميع الاختبارات عبر المنصة',
 ];
