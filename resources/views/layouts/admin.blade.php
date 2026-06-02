@@ -28,17 +28,11 @@
       @sidebar-collapsed.window="sidebarCollapsed = $event.detail.collapsed"
       @resize.window="isLargeScreen = window.innerWidth >= 1024">
 
-    {{-- Top Navigation Bar --}}
-    <div class="fixed top-0 left-0 z-40 w-full transition-all duration-300 ease-in-out"
-         :style="isLargeScreen ? `${isRtl ? 'right' : 'left'}: ${sidebarCollapsed ? '3.5rem' : '16rem'};">
-        <livewire:layout.navigation />
-    </div>
-
-    {{-- Sidebar --}}
+    {{-- Sidebar with integrated navigation --}}
     <x-admin.sidebar />
 
     {{-- Main Content Area --}}
-    <div class="pt-16 transition-all duration-300 ease-in-out"
+    <div class="transition-all duration-300 ease-in-out"
          :style="isLargeScreen ? `padding-${isRtl ? 'right' : 'left'}: ${sidebarCollapsed ? '3.5rem' : '16rem'}` : ''">
         <div class="px-6 py-6 mx-auto max-w-7xl">
             <main>

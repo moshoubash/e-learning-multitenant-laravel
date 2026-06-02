@@ -9,8 +9,18 @@
 @endphp
 
 <div x-data="{ collapsed: false, isRtl: {{ $isRtl ? 'true' : 'false' }} }"
-     {{ $attributes->merge(['class' => 'fixed top-16 z-30 flex flex-col h-[calc(100%-4rem)] bg-white border-gray-200 transition-all duration-300 ease-in-out overflow-hidden']) }}
+     {{ $attributes->merge(['class' => 'fixed top-0 z-30 flex flex-col h-screen bg-white border-gray-200 transition-all duration-300 ease-in-out ']) }}
      :class="[collapsed ? 'w-14' : 'w-64', isRtl ? 'right-0' : 'left-0']">
+
+    {{-- Navigation (top bar moved into sidebar) --}}
+    <div x-show="!collapsed" class="border-b border-gray-200">
+        {{ $navigation ?? '' }}
+    </div>
+
+    {{-- Collapsed navigation --}}
+    <div x-show="collapsed" class="py-2 border-b border-gray-200">
+        {{ $navigationIcons ?? '' }}
+    </div>
 
     {{-- Header with title and collapse toggle --}}
     <div class="flex items-center justify-between px-4 py-4">
