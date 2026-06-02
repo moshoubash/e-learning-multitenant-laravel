@@ -22,11 +22,16 @@ new class extends Component {
 
 <nav x-data="{ open: false }" class="bg-white ">
     <!-- Primary Navigation Menu -->
-    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div class="px-4 mx-auto max-w-7xl">
         <div class="flex justify-between h-16">
-            <div class="flex">
+            <div class="flex items-center">
+                <!-- Logo -->
+                <a href="/" class="flex-shrink-0 hidden sm:flex">
+                    <x-application-logo class="w-8 h-8 text-gray-800 fill-current" />
+                </a>
+
                 <!-- Navigation Links -->
-                <div class="hidden @if(app()->getLocale() === 'ar') gap-8 @else space-x-8 @endif sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden @if(app()->getLocale() === 'ar') mr-8 gap-8 @else ml-8 space-x-8 @endif sm:-my-px sm:flex">
                     <x-nav-link :href="tenant() ? route('tenant.dashboard') : route('dashboard')"
                         :active="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('messages.Dashboard') }}

@@ -24,12 +24,13 @@
     @livewireStyles
 </head>
 <body class="font-sans antialiased bg-gray-50"
-      x-data="{ sidebarCollapsed: false, isRtl: {{ app()->getLocale() === 'ar' ? 'true' : 'false' }} }"
-      @sidebar-collapsed.window="sidebarCollapsed = $event.detail.collapsed">
+      x-data="{ sidebarCollapsed: false, isRtl: {{ app()->getLocale() === 'ar' ? 'true' : 'false' }}, isLargeScreen: window.innerWidth >= 1024 }"
+      @sidebar-collapsed.window="sidebarCollapsed = $event.detail.collapsed"
+      @resize.window="isLargeScreen = window.innerWidth >= 1024">
 
     {{-- Top Navigation Bar --}}
-    <div class="fixed top-0 z-40 transition-all duration-300 ease-in-out"
-         :style="`${isRtl ? 'right' : 'left'}: ${sidebarCollapsed ? '4rem' : '13rem'}; width: calc(100% - ${sidebarCollapsed ? '4rem' : '13rem'})`">
+    <div class="fixed top-0 left-0 z-40 w-full transition-all duration-300 ease-in-out"
+         :style="isLargeScreen ? `${isRtl ? 'right' : 'left'}: ${sidebarCollapsed ? '3.5rem' : '16rem'};">
         <livewire:layout.navigation />
     </div>
 
@@ -38,7 +39,7 @@
 
     {{-- Main Content Area --}}
     <div class="pt-16 transition-all duration-300 ease-in-out"
-         :style="`padding-${isRtl ? 'right' : 'left'}: ${sidebarCollapsed ? '4rem' : '13rem'}`">
+         :style="isLargeScreen ? `padding-${isRtl ? 'right' : 'left'}: ${sidebarCollapsed ? '3.5rem' : '16rem'}` : ''">
         <div class="px-6 py-6 mx-auto max-w-7xl">
             <main>
                 {{ $slot }}
