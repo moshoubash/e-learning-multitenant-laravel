@@ -34,6 +34,8 @@ class PaymentController extends Controller
                 ->with('error', 'Course not found.');
         }
 
+        $this->authorize('view', $course);
+
         // Check if already enrolled
         $isEnrolled = Enrollment::where('course_id', $courseId)
             ->where('user_id', Auth::id())
@@ -107,10 +109,7 @@ class PaymentController extends Controller
                 ->with('error', 'Enrollment not found.');
         }
 
-        if ($enrollment->user_id !== Auth::id()) {
-            return redirect()->route('tenant.student.courses')
-                ->with('error', 'Unauthorized access.');
-        }
+        $this->authorize('view', $enrollment);
 
         return redirect()->route('tenant.student.checkout.success', ['enrollmentId' => $enrollmentId]);
     }

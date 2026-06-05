@@ -11,7 +11,25 @@ class ProcessPaymentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        $user = $this->user();
+
+        if (! $user) {
+            return false;
+        }
+
+        $courseId = $this->input('course_id');
+
+        if (! $courseId) {
+            return false;
+        }
+
+        $course = \App\Models\Tenant\Course::find($courseId);
+
+        if (! $course) {
+            return false;
+        }
+
+        return $user->can('view', $course);
     }
 
     /**
