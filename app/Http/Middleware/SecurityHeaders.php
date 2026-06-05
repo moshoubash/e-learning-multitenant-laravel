@@ -57,8 +57,8 @@ class SecurityHeaders
 
         if (app()->environment('production')) {
             return "default-src 'self'; "
-                . "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://maxst.icons8.com; "
-                . "style-src 'self' 'unsafe-inline' https://fonts.bunny.net https://maxst.icons8.com; "
+                . "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://maxst.icons8.com https://cdn.quilljs.com; "
+                . "style-src 'self' 'unsafe-inline' https://fonts.bunny.net https://maxst.icons8.com https://cdn.quilljs.com; "
                 . "font-src 'self' https://fonts.bunny.net https://maxst.icons8.com data:; "
                 . "img-src 'self' data: blob: https:; "
                 . "media-src 'self' https:; "
@@ -71,8 +71,8 @@ class SecurityHeaders
         // dev tools (Vue/React devtools, Alpine x-data expressions)
         // need. Without these, npm run dev shows an unstyled page.
         return "default-src 'self'; "
-            . "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://maxst.icons8.com {$viteHosts}; "
-            . "style-src 'self' 'unsafe-inline' https://fonts.bunny.net https://maxst.icons8.com {$viteHosts}; "
+            . "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://maxst.icons8.com https://cdn.quilljs.com {$viteHosts}; "
+            . "style-src 'self' 'unsafe-inline' https://fonts.bunny.net https://maxst.icons8.com https://cdn.quilljs.com {$viteHosts}; "
             . "font-src 'self' https://fonts.bunny.net https://maxst.icons8.com data:; "
             . "img-src 'self' data: blob: https: {$viteHosts}; "
             . "media-src 'self' https: {$viteHosts}; "
