@@ -18,14 +18,18 @@ class SecurityHeaders
      * Hosts / schemes the Vite dev server may run on. These must be
      * allowed in the dev CSP or the browser blocks the @vite/client
      * script, the live-reload WebSocket, and the CSS/JS bundles.
+     *
+     * NOTE: Vite's default IPv6 binding produces URLs like
+     * 'http://[::]:5173' which are NOT valid in a CSP source list
+     * (the spec rejects IPv6 in brackets). We force Vite to bind
+     * to 'localhost' via vite.config.js so this list only needs the
+     * IPv4 forms.
      */
     private const VITE_DEV_HOSTS = [
         'http://localhost:5173',
         'http://127.0.0.1:5173',
-        'http://[::]:5173',
         'ws://localhost:5173',
         'ws://127.0.0.1:5173',
-        'ws://[::]:5173',
     ];
 
     public function handle(Request $request, Closure $next): Response
