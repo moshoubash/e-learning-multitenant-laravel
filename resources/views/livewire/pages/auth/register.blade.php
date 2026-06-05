@@ -23,8 +23,8 @@ new #[Layout('layouts.guest')] class extends Component {
 
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . $userModel],
-            'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+            'email' => ['required', 'string', 'lowercase', 'email:rfc,dns', 'max:255', 'unique:' . $userModel],
+            'password' => \App\Support\PasswordRules::default(),
         ]);
 
         $validated['password'] = Hash::make($validated['password']);

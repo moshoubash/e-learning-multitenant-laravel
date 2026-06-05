@@ -36,7 +36,7 @@ new #[Layout('layouts.guest')] class extends Component
         $this->validate([
             'token' => ['required'],
             'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+            'password' => \App\Support\PasswordRules::default(),
         ]);
 
         // Here we will attempt to reset the user's password. If it is successful we
