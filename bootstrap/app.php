@@ -26,6 +26,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(prepend: [
             \Stancl\Tenancy\Middleware\InitializeTenancyByDomain::class,
+            \App\Http\Middleware\EnsureAppKeyIsStrong::class,
+            \App\Http\Middleware\ForceHttpsInProduction::class,
         ]);
 
         $middleware->alias([
