@@ -35,12 +35,22 @@ class LoginForm extends Form
         if (!Auth::guard($guard)->attempt($this->only(['email', 'password']), $this->remember)) {
             RateLimiter::hit($this->throttleKey());
 
+            \App\Support\SecurityEvent::log(\App\Support\SecurityEvent::LOGIN_FAILURE, [
+                'email' => $this->email,
+                'guard' => $guard,
+            ]);
+
             throw ValidationException::withMessages([
                 'form.email' => trans('auth.failed'),
             ]);
         }
 
         RateLimiter::clear($this->throttleKey());
+
+        \App\Support\SecurityEvent::log(\App\Support\SecurityEvent::LOGIN_SUCCESS, [
+            'email' => $this->email,
+            'guard' => $guard,
+        ]);
     }
 
     /**
@@ -55,6 +65,11 @@ class LoginForm extends Form
         event(new Lockout(request()));
 
         $seconds = RateLimiter::availableIn($this->throttleKey());
+
+        \App\Support\SecurityEvent::log(\App\Support\SecurityEvent::LOGIN_LOCKOUT, [
+            'email' => $this->email,
+            'seconds' => $seconds,
+        ]);
 
         throw ValidationException::withMessages([
             'form.email' => trans('auth.throttle', [
