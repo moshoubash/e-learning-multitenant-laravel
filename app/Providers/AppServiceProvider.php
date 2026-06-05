@@ -12,7 +12,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(
+            \App\Support\SafeHttp::class,
+            fn ($app) => new \App\Support\SafeHttp($app->make(\Illuminate\Http\Client\Factory::class))
+        );
     }
 
     /**
