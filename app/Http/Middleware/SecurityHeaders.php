@@ -59,8 +59,10 @@ class SecurityHeaders
             return "default-src 'self'; "
                 . "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://maxst.icons8.com; "
                 . "style-src 'self' 'unsafe-inline' https://fonts.bunny.net https://maxst.icons8.com; "
-                . "font-src 'self' https://fonts.bunny.net data:; "
+                . "font-src 'self' https://fonts.bunny.net https://maxst.icons8.com data:; "
                 . "img-src 'self' data: blob: https:; "
+                . "media-src 'self' https:; "
+                . "frame-src 'self' https://www.youtube.com https://player.vimeo.com; "
                 . "connect-src 'self'; "
                 . "frame-ancestors 'self'; base-uri 'self'; form-action 'self';";
         }
@@ -71,8 +73,10 @@ class SecurityHeaders
         return "default-src 'self'; "
             . "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://maxst.icons8.com {$viteHosts}; "
             . "style-src 'self' 'unsafe-inline' https://fonts.bunny.net https://maxst.icons8.com {$viteHosts}; "
-            . "font-src 'self' https://fonts.bunny.net data:; "
+            . "font-src 'self' https://fonts.bunny.net https://maxst.icons8.com data:; "
             . "img-src 'self' data: blob: https: {$viteHosts}; "
+            . "media-src 'self' https: {$viteHosts}; "
+            . "frame-src 'self' https://www.youtube.com https://player.vimeo.com {$viteHosts}; "
             . "connect-src 'self' ws: wss: {$viteHosts}; "
             . "frame-ancestors 'self'; base-uri 'self'; form-action 'self';";
     }
