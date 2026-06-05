@@ -9,13 +9,16 @@ export default defineConfig({
         }),
     ],
     server: {
-        // Force 'localhost' instead of '[::]' (Vite's IPv6 default).
-        // The browser CSP source list cannot express IPv6 in brackets,
-        // and the @vite/client script tag must use a hostname the
-        // browser can match against a CSP host-source.
-        host: 'localhost',
+        // Bind to all interfaces so the dev server is reachable both
+        // from 'localhost' and from a tenant subdomain on the same
+        // machine. 'origin' then forces the URLs Vite emits in
+        // @vite/client, the CSS <link>, and the HMR WebSocket to
+        // use 'http://localhost:5173' so the browser CSP source list
+        // can match them.
+        host: true,
         port: 5173,
         strictPort: false,
+        origin: 'http://localhost:5173',
         cors: true,
         allowedHosts: true,
         hmr: {
