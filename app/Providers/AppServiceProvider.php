@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -34,16 +35,14 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register model -> policy mappings for tenant-owned resources.
      *
-     * Auto-discovery handles the rest (Laravel 11+ convention:
-     * App\Policies\{Model}Policy for App\Models\Tenant\{Model}).
+     * Uses the Gate facade so we don't depend on the legacy 'gate'
+     * string binding that no longer exists in Laravel 11+.
      */
     protected function registerPolicies(): void
     {
-        $gate = $this->app->make('gate');
-
-        $gate->policy(\App\Models\Tenant\Course::class, \App\Policies\CoursePolicy::class);
-        $gate->policy(\App\Models\Tenant\Enrollment::class, \App\Policies\EnrollmentPolicy::class);
-        $gate->policy(\App\Models\Tenant\Quiz::class, \App\Policies\QuizPolicy::class);
+        Gate::policy(\App\Models\Tenant\Course::class, \App\Policies\CoursePolicy::class);
+        Gate::policy(\App\Models\Tenant\Enrollment::class, \App\Policies\EnrollmentPolicy::class);
+        Gate::policy(\App\Models\Tenant\Quiz::class, \App\Policies\QuizPolicy::class);
     }
 
     /**
