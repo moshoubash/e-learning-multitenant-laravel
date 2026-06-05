@@ -1,0 +1,57 @@
+name: Security Audit
+
+on:
+  push:
+    branches: [main, security/**]
+  pull_request:
+    branches: [main]
+
+jobs:
+  composer-audit:
+    name: Composer Security Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, dom, fileinfo, mysql, sqlite
+          coverage: none
+
+      - name: Cache Composer
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache
+          key: ${{ runner.os }}-php-${{ hashFiles('composer.json') }}
+          restore-keys: ${{ runner.os }}-php-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Run composer audit
+        run: composer audit --no-dev --format=json | tee audit.json
+
+      - name: Fail on high or critical severity advisories
+        run: |
+          python3 - <<'PY'
+          import json, sys
+          with open('audit.json') as f:
+              data = json.load(f)
+          blockers = {'high', 'critical'}
+          bad = []
+          for pkg, items in data.get('advisories', {}).items():
+              for it in items:
+                  sev = (it.get('severity') or '').lower()
+                  if sev in blockers:
+                      bad.append(f"{pkg} {it.get('cve') or it.get('advisoryId')} ({sev})")
+          if bad:
+              print("Blocking advisories found:", file=sys.stderr)
+              for b in bad:
+                  print(" -", b, file=sys.stderr)
+              sys.exit(1)
+          print("No high/critical advisories.")
+          PY
