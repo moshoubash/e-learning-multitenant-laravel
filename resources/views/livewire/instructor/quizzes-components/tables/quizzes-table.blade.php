@@ -5,7 +5,7 @@
         </div>
         <button wire:click="openQuizCreateModal()"
             class="px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
-            <i class="mr-2 fas fa-plus"></i>
+            <i class="@rim('mr-2') fas fa-plus"></i>
             {{ __('messages.Add Quiz') }}
         </button>
     </div>
@@ -57,15 +57,15 @@
                     <td class="p-4">
                         <div class="flex items-center">
                             <button wire:click="openAttemptsModal({{ $quiz->id }})"
-                                class="mr-2 text-purple-600 hover:text-purple-800" title="View Attempts">
+                                class="@rim('mr-2') text-purple-600 hover:text-purple-800" title="View Attempts">
                                 <i class="fas fa-users"></i>
                             </button>
                             <button wire:click="openQuestionCreateModal({{ $quiz->id }})"
-                                class="mr-2 text-green-600 hover:text-green-800" title="Add Question">
+                                class="@rim('mr-2') text-green-600 hover:text-green-800" title="Add Question">
                                 <i class="fas fa-plus-circle"></i>
                             </button>
                             <button wire:click="openQuizEditModal({{ $quiz->id }})"
-                                class="mr-2 text-blue-600 hover:text-blue-800" title="Edit">
+                                class="@rim('mr-2') text-blue-600 hover:text-blue-800" title="Edit">
                                 <i class="fas fa-edit"></i>
                             </button>
                             <button wire:click="openQuizDeleteModal({{ $quiz->id }})"

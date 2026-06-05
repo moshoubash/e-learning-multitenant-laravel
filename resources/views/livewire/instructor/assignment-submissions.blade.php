@@ -49,7 +49,7 @@
                             <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                 {{ __('messages.Graded By') }}
                             </th>
-                            <th class="px-6 py-3 text-xs font-medium tracking-wider text-right text-gray-500 uppercase">
+                            <th class="px-6 py-3 text-xs font-medium tracking-wider @rimauto('text-right') text-gray-500 uppercase">
                                 {{ __('messages.Actions') }}
                             </th>
                         </tr>
@@ -131,10 +131,10 @@
                                         </div>
                                     @endif
                                 </td>
-                                <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                                <td class="px-6 py-4 text-sm font-medium @rimauto('text-right') whitespace-nowrap">
                                     <button wire:click="openGradingModal({{ $submission->id }})"
                                         class="text-blue-600 hover:text-blue-900">
-                                        <i class="fas fa-edit"></i>
+                                        <i class="@rim('mr-1') fas fa-edit"></i>
                                         {{ $submission->graded_at ? __('messages.View/Edit Grade') : __('messages.Grade') }}
                                     </button>
                                 </td>
@@ -216,7 +216,7 @@
                                 <div class="mt-3">
                                     <a href="{{ $this->gradingSubmission->file_path }}" target="_blank"
                                         class="inline-flex items-center text-sm text-blue-600 hover:text-blue-800">
-                                        <i class="mr-1 fas fa-paperclip"></i>
+                                        <i class="@rim('mr-1') fas fa-paperclip"></i>
                                         {{ __('messages.View Attached File') }}
                                     </a>
                                 </div>

@@ -5,7 +5,7 @@
         </div>
         <button wire:click="openCreateModal"
             class="px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
-            <i class="mr-2 fas fa-plus"></i>
+            <i class="@rim('mr-2') fas fa-plus"></i>
             {{ __('messages.Add Course') }}
         </button>
     </div>
@@ -53,7 +53,7 @@
                     <td class="p-4">
                         <div class="flex items-center">
                             <button wire:click="openEditModal({{ $course->id }})"
-                                class="mr-3 text-blue-600 hover:text-blue-800" title="Edit">
+                                class="@rim('mr-3') text-blue-600 hover:text-blue-800" title="Edit">
                                 <i class="fas fa-edit"></i>
                             </button>
                             <button wire:click="openDeleteModal({{ $course->id }})" class="text-red-600 hover:text-red-800"
@@ -62,7 +62,7 @@
                             </button>
                             @if($course->sections && count($course->sections) === 0)
                                 <button wire:click="openSectionCreateModal({{ $course->id }})"
-                                    class="ml-3 text-green-600 hover:text-green-800" title="Add Section">
+                                    class="@rim('ml-3') text-green-600 hover:text-green-800" title="Add Section">
                                     <i class="fas fa-plus-circle"></i>
                                 </button>
                             @endif
@@ -78,7 +78,7 @@
                                     <h4 class="text-sm font-semibold text-gray-600">{{ __('messages.Sections & Lessons') }}</h4>
                                     <button wire:click="openSectionCreateModal({{ $course->id }})"
                                         class="px-3 py-1 text-xs font-medium text-white bg-green-600 rounded hover:bg-green-700">
-                                        <i class="mr-1 fas fa-plus"></i>
+                                        <i class="@rim('mr-1') fas fa-plus"></i>
                                         {{ __('messages.Add Section') }}
                                     </button>
                                 </div>

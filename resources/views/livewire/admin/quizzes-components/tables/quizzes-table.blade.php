@@ -30,11 +30,11 @@
                     </td>
                     <td class="p-4">
                         <button wire:click="openEditQuizModal({{ $quiz->id }})"
-                            class="mr-3 text-blue-600 hover:text-blue-800" title="Edit Quiz">
+                            class="@rim('mr-3') text-blue-600 hover:text-blue-800" title="Edit Quiz">
                             <i class="fas fa-edit"></i>
                         </button>
                         <button wire:click="openAttemptsModal({{ $quiz->id }})"
-                            class="mr-3 text-green-600 hover:text-green-800" title="View Attempts">
+                            class="@rim('mr-3') text-green-600 hover:text-green-800" title="View Attempts">
                             <i class="fas fa-list"></i>
                         </button>
                     </td>

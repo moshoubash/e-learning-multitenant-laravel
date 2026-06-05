@@ -2,13 +2,13 @@
     {{-- Section Header --}}
     <div class="flex items-center justify-between px-4 py-3 bg-gray-100">
         <div class="flex items-center">
-            <i class="mr-2 text-gray-500 fas fa-folder"></i>
+            <i class="@rim('mr-2') text-gray-500 fas fa-folder"></i>
             <span class="font-medium text-gray-700">{{ $section->title }}</span>
-            <span class="@if(app()->getLocale() === 'ar') mr-2 @else ml-2 @endif text-xs text-gray-500">
+            <span class="@rim('ml-2') text-xs text-gray-500">
                 ({{ __('messages.Order') }}: {{ $section->order }})
             </span>
             @if($section->deleted_at)
-                <span class="ml-2 px-2 py-0.5 bg-red-100 text-red-600 text-xs rounded">Deleted</span>
+                <span class="@rim('ml-2') px-2 py-0.5 bg-red-100 text-red-600 text-xs rounded">Deleted</span>
             @endif
         </div>
         <div class="flex items-center space-x-2">
@@ -49,15 +49,15 @@
         <div class="px-4 py-2 border-b border-purple-200 bg-purple-50">
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
-                    <i class="mr-2 text-purple-500 fas fa-clipboard-list"></i>
+                    <i class="@rim('mr-2') text-purple-500 fas fa-clipboard-list"></i>
                     <span class="font-medium text-purple-700">{{ $section->quiz->title }}</span>
-                    <span class="@if(app()->getLocale() === 'ar') mr-2 @else ml-2 @endif text-xs text-purple-500">({{ __('messages.questions') }}
+                    <span class="@rim('ml-2') text-xs text-purple-500">({{ __('messages.questions') }}
                         {{ $section->quiz->questions->count() ?? 0 }})</span>
-                    <span class="@if(app()->getLocale() === 'ar') mr-2 @else ml-2 @endif text-xs text-purple-500">
+                    <span class="@rim('ml-2') text-xs text-purple-500">
                         {{ __('messages.Pass') }}: {{ $section->quiz->pass_percentage }}%
                     </span>
                     @if($section->quiz->deleted_at)
-                        <span class="ml-2 px-2 py-0.5 bg-red-100 text-red-600 text-xs rounded">Deleted</span>
+                        <span class="@rim('ml-2') px-2 py-0.5 bg-red-100 text-red-600 text-xs rounded">Deleted</span>
                     @endif
                 </div>
                 <div class="flex items-center space-x-2">
@@ -87,15 +87,15 @@
                 <div class="flex items-center justify-between px-4 py-2 hover:bg-gray-50">
                     <div class="flex items-center">
                         <i
-                            class="fas @if($lesson->type === 'video') fa-play-circle text-blue-500 @elseif($lesson->type === 'text') fa-file @elseif($lesson->type === 'quiz') fa-list-check text-purple-500 @else fa-file-text text-gray-500 @endif @if(app()->getLocale() === 'ar') ml-3 @else mr-3 @endif"></i>
+                            class="fas @if($lesson->type === 'video') fa-play-circle text-blue-500 @elseif($lesson->type === 'text') fa-file @elseif($lesson->type === 'quiz') fa-list-check text-purple-500 @else fa-file-text text-gray-500 @endif @rim('mr-3')"></i>
                         <span class="text-sm text-gray-700">{{ $lesson->title }}</span>
-                        <span class="@if(app()->getLocale() === 'ar') mr-2 @else ml-2 @endif text-xs text-gray-400 ">
+                        <span class="@rim('ml-2') text-xs text-gray-400 ">
                             @if($lesson->duration_seconds)
                                 {{ gmdate('i:s', $lesson->duration_seconds) }}
                             @endif
                         </span>
                         @if($lesson->deleted_at)
-                            <span class="ml-2 px-2 py-0.5 bg-red-100 text-red-600 text-xs rounded">Deleted</span>
+                            <span class="@rim('ml-2') px-2 py-0.5 bg-red-100 text-red-600 text-xs rounded">Deleted</span>
                         @endif
                     </div>
                     <div class="flex items-center space-x-2">

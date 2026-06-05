@@ -12,7 +12,7 @@
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 max-h-[90vh] overflow-y-auto">
                     <h3 class="mb-4 text-lg font-medium text-gray-900">
                         {{ __('messages.Student Attempts') }}: {{ $quiz?->title ?? 'Quiz' }}
-                        <span class="ml-2 text-sm font-normal text-gray-500">({{ $attempts->count() }} {{ __('messages.attempts') }})</span>
+                        <span class="@rim('ml-2') text-sm font-normal text-gray-500">({{ $attempts->count() }} {{ __('messages.attempts') }})</span>
                     </h3>
 
                     @if($attempts->count() > 0)
@@ -38,11 +38,11 @@
                                         <td class="p-3">
                                             @if($attempt->passed)
                                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                    <i class="@if(app()->getLocale() === 'ar') ml-1 @else mr-1 @endif fas fa-check-circle"></i> {{ __('messages.Passed') }}
+                                                    <i class="@rim('mr-1') fas fa-check-circle"></i> {{ __('messages.Passed') }}
                                                 </span>
                                             @else
                                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                                    <i class="@if(app()->getLocale() === 'ar') ml-1 @else mr-1 @endif fas fa-times-circle"></i> {{ __('messages.Failed') }}
+                                                    <i class="@rim('mr-1') fas fa-times-circle"></i> {{ __('messages.Failed') }}
                                                 </span>
                                             @endif
                                         </td>

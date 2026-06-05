@@ -83,9 +83,9 @@
                                         @foreach($editingAssignment->attachments as $attachment)
                                             <li class="flex items-center justify-between p-2 bg-white border rounded">
                                                 <div class="flex items-center">
-                                                    <i class="mr-2 text-gray-400 fas fa-file"></i>
+                                                    <i class="@rim('mr-2') text-gray-400 fas fa-file"></i>
                                                     <span class="text-sm text-gray-700">{{ $attachment->file_name }}</span>
-                                                    <span class="ml-2 text-xs text-gray-400">({{ number_format($attachment->size / 1024, 1) }} KB)</span>
+                                                    <span class="@rim('ml-2') text-xs text-gray-400">({{ number_format($attachment->size / 1024, 1) }} KB)</span>
                                                 </div>
                                                 <button type="button" wire:click="removeAttachment({{ $attachment->id }})"
                                                     class="text-red-500 hover:text-red-700">

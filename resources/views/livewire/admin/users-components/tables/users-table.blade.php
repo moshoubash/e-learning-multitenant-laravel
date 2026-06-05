@@ -5,7 +5,7 @@
         </div>
         <button wire:click="openCreateModal"
             class="px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
-            <i class="mr-2 fas fa-plus"></i>
+            <i class="@rim('mr-2') fas fa-plus"></i>
             {{ __('messages.Add User') }}
         </button>
     </div>
@@ -41,7 +41,7 @@
 
 
                     <td class="p-4">
-                        <button wire:click="openEditModal({{ $user->id }})" class="mr-3 text-blue-600 hover:text-blue-800"
+                        <button wire:click="openEditModal({{ $user->id }})" class="@rim('mr-3') text-blue-600 hover:text-blue-800"
                             title="Edit">
                             <i class="fas fa-edit"></i>
                         </button>

@@ -34,11 +34,11 @@
                                     <td class="p-3">
                                         @if($attempt->passed)
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                <i class="mr-1 fas fa-check-circle"></i> {{ __('messages.Passed') }}
+                                                <i class="@rim('mr-1') fas fa-check-circle"></i> {{ __('messages.Passed') }}
                                             </span>
                                         @else
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                                <i class="mr-1 fas fa-times-circle"></i> {{ __('messages.Failed') }}
+                                                <i class="@rim('mr-1') fas fa-times-circle"></i> {{ __('messages.Failed') }}
                                             </span>
                                         @endif
                                     </td>

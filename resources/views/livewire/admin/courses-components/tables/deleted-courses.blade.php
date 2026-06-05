@@ -23,7 +23,7 @@
                         <td class="p-4">
                             <button wire:click="openRestoreModal({{ $course->id }})" class="text-green-600 hover:text-green-800"
                                 title="Restore">
-                                <i class="fas fa-undo"></i> {{ __('messages.Restore') }}
+                                <i class="@rim('mr-1') fas fa-undo"></i> {{ __('messages.Restore') }}
                             </button>
                         </td>
                     </tr>

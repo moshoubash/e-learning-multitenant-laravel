@@ -47,7 +47,7 @@
                         <h4 class="font-semibold text-gray-700">{{ __('messages.Questions') }} ({{ $editingQuiz->questions->count() }})</h4>
                         <button wire:click="openQuestionCreateModal({{ $editingQuiz->id }})"
                             class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-md text-sm font-medium">
-                            <i class="fas fa-plus mr-1"></i> {{ __('messages.Add Question') }}
+                            <i class="fas fa-plus @rim('mr-1')"></i> {{ __('messages.Add Question') }}
                         </button>
                     </div>
 
@@ -56,7 +56,7 @@
                             <div class="flex justify-between items-start mb-3">
                                 <div>
                                     <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">#{{ $question->order }}</span>
-                                    <span class="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">{{ ucfirst($question->type) }}</span>
+                                    <span class="@rim('ml-2') text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">{{ ucfirst($question->type) }}</span>
                                 </div>
                                 <div class="flex gap-2">
                                     <button wire:click="openQuestionEditModal({{ $question->id }})" class="text-blue-600 hover:text-blue-800 text-sm">
@@ -78,11 +78,11 @@
                                     <div class="flex items-center justify-between bg-gray-50 p-2 rounded">
                                         <div class="flex items-center">
                                             @if($option->is_correct)
-                                                <span class="w-5 h-5 mr-2 flex items-center justify-center bg-green-500 text-white rounded-full text-xs">
+                                                <span class="w-5 h-5 @rim('mr-2') flex items-center justify-center bg-green-500 text-white rounded-full text-xs">
                                                     <i class="fas fa-check"></i>
                                                 </span>
                                             @else
-                                                <span class="w-5 h-5 mr-2 flex items-center justify-center border border-gray-300 rounded-full text-xs"></span>
+                                                <span class="w-5 h-5 @rim('mr-2') flex items-center justify-center border border-gray-300 rounded-full text-xs"></span>
                                             @endif
                                             <span class="{{ $option->is_correct ? 'text-green-700 font-medium' : 'text-gray-700' }}">
                                                 {{ $option->option_text }}
