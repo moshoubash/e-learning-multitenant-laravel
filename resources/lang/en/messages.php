@@ -343,6 +343,10 @@ return [
     'Manage all courses across the platform' => 'Manage all courses across the platform',
     'Manage all quizzes across the platform' => 'Manage all quizzes across the platform',
 
+    'General' => 'General',
+    'Account' => 'Account',
+    'Language' => 'Language',
+
     // Dashboard KPIs / charts / tables
     'Total Users' => 'Total Users',
     'Total Courses' => 'Total Courses',

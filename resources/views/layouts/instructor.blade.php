@@ -25,17 +25,26 @@
     @livewireStyles
 </head>
 <body class="font-sans antialiased bg-gray-50"
-      x-data="{ sidebarCollapsed: false, isRtl: {{ app()->getLocale() === 'ar' ? 'true' : 'false' }}, isLargeScreen: window.innerWidth >= 1024 }"
+      x-data="{
+            sidebarCollapsed: false,
+            isRtl: {{ app()->getLocale() === 'ar' ? 'true' : 'false' }},
+            isLargeScreen: window.innerWidth >= 1024
+         }"
       @sidebar-collapsed.window="sidebarCollapsed = $event.detail.collapsed"
       @resize.window="isLargeScreen = window.innerWidth >= 1024">
 
-    {{-- Sidebar with integrated navigation --}}
+    {{-- Sidebar (drawer on mobile, fixed on desktop) --}}
     <x-instructor.sidebar />
 
+    {{-- Mobile top bar (only on small screens) --}}
+    <x-ui.topbar />
+
     {{-- Main Content Area --}}
-    <div class="transition-all duration-300 ease-in-out"
-         :style="isLargeScreen ? `padding-${isRtl ? 'right' : 'left'}: ${sidebarCollapsed ? '3.5rem' : '16rem'}` : ''">
-        <div class="px-6 py-6 mx-auto max-w-7xl">
+    <div class="transition-all duration-300 ease-in-out min-h-screen"
+         :class="isLargeScreen ? (isRtl
+                ? (sidebarCollapsed ? 'mr-14' : 'mr-64')
+                : (sidebarCollapsed ? 'ml-14' : 'ml-64')) : ''">
+        <div class="px-4 py-6 mx-auto sm:px-6 max-w-7xl">
             <main>
                 {{ $slot }}
             </main>

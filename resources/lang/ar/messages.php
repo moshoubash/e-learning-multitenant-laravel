@@ -369,6 +369,10 @@ return [
     'Manage all courses across the platform' => 'إدارة جميع الدورات عبر المنصة',
     'Manage all quizzes across the platform' => 'إدارة جميع الاختبارات عبر المنصة',
 
+    'General' => 'عام',
+    'Account' => 'الحساب',
+    'Language' => 'اللغة',
+
     // Dashboard KPIs / charts / tables
     'Total Users' => 'إجمالي المستخدمين',
     'Total Courses' => 'إجمالي الدورات',
