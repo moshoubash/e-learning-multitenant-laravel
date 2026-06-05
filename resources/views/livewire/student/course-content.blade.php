@@ -320,7 +320,7 @@
                         <!-- Lesson Content -->
                         @if($selectedLesson->type === 'text' || $selectedLesson->type === 'video' && $selectedLesson->content)
                             <div class="prose text-gray-700 max-w-none {{ $isContainEnglish ? 'text-left' : 'text-right' }}">
-                                {!! nl2br($selectedLesson->content) !!}
+                                {!! nl2br(e($selectedLesson->content)) !!}
                             </div>
                         @elseif($selectedLesson->type === 'quiz')
                             <div class="p-4 border border-purple-200 rounded-lg bg-purple-50">

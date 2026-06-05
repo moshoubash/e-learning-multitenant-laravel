@@ -862,9 +862,9 @@ class Courses extends Component
     {
         return [
             'createTitle' => 'required|string|max:255',
-            'createSlug' => 'required|string|max:255|unique:courses,slug',
-            'createDescription' => 'nullable|string',
-            'createPrice' => 'required|numeric|min:0',
+            'createSlug' => 'required|string|max:255|alpha_dash|unique:courses,slug',
+            'createDescription' => 'nullable|string|max:5000',
+            'createPrice' => 'required|numeric|min:0|max:999999.99',
             'createStatus' => 'required|in:draft,published,archived',
             'createInstructorId' => 'required|exists:users,id',
         ];
@@ -874,9 +874,9 @@ class Courses extends Component
     {
         return [
             'editTitle' => 'required|string|max:255',
-            'editSlug' => 'required|string|max:255|unique:courses,slug,' . optional($this->editingCourse)->id,
-            'editDescription' => 'nullable|string',
-            'editPrice' => 'required|numeric|min:0',
+            'editSlug' => 'required|string|max:255|alpha_dash|unique:courses,slug,' . optional($this->editingCourse)->id,
+            'editDescription' => 'nullable|string|max:5000',
+            'editPrice' => 'required|numeric|min:0|max:999999.99',
             'editStatus' => 'required|in:draft,published,archived',
             'editInstructorId' => 'required|exists:users,id',
         ];
