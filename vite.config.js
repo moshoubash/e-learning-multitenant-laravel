@@ -8,4 +8,12 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        host: true,
+        strictPort: false,
+        cors: true,
+        hmr: {
+            clientPort: 5173,
+        },
+    },
 });
