@@ -30,6 +30,8 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\ForceHttpsInProduction::class,
         ]);
 
+        $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
+
         $middleware->alias([
             'tenant' => \Stancl\Tenancy\Middleware\InitializeTenancyByDomain::class,
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
