@@ -10,8 +10,10 @@ export default defineConfig({
     ],
     server: {
         host: true,
+        port: 5173,
         strictPort: false,
         cors: true,
+        allowedHosts: true,
         hmr: {
             clientPort: 5173,
         },
