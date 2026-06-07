@@ -69,7 +69,3 @@ database/
     ├── central/          — Central database migrations
     └── tenant/           — Per-tenant database migrations
 ```
-
-## License
-
-[MIT](LICENSE)
