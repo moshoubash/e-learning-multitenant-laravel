@@ -242,21 +242,48 @@
                 @elseif($selectedLesson)
                     @if($selectedLesson->type === 'video' && $selectedLesson->video_url)
                         <!-- Plyr Video Player -->
-                        <div class="aspect-video">
+                        <div class="aspect-video" wire:ignore.self>
                             <video
-                                x-data="{}"
-                                x-init="$nextTick(() => { new Plyr($refs.player) })"
-                                x-ref="player"
+                                class="js-lesson-video w-full"
+                                data-lesson-id="{{ $selectedLesson->id }}"
                                 playsinline
                                 controls
                                 preload="metadata"
-                                class="w-full"
                             >
-                                <!-- Removed crossorigin from here -->
                                 <source src="{{ $selectedLesson->video_url }}" type="video/mp4" />
                                 Your browser does not support the video tag.
                             </video>
                         </div>
+
+                        @push('scripts')
+                            <script>
+                                (function () {
+                                    if (window.__lessonPlyrBound) { return; }
+                                    window.__lessonPlyrBound = true;
+
+                                    function initAll() {
+                                        if (typeof Plyr === 'undefined') { return; }
+                                        document.querySelectorAll('video.js-lesson-video:not([data-plyr-inited])').forEach(function (video) {
+                                            new Plyr(video, {
+                                                controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'fullscreen'],
+                                                loadSprite: false,
+                                                iconUrl: false
+                                            });
+                                            video.setAttribute('data-plyr-inited', '1');
+                                        });
+                                    }
+
+                                    document.addEventListener('DOMContentLoaded', initAll);
+                                    document.addEventListener('livewire:navigated', initAll);
+
+                                    if (window.Livewire) {
+                                        Livewire.hook('morph.updated', function () {
+                                            setTimeout(initAll, 0);
+                                        });
+                                    }
+                                })();
+                            </script>
+                        @endpush
 
                         <div wire:loading.delay>
                             <div class="text-center text-white">
