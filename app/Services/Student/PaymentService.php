@@ -61,7 +61,7 @@ class PaymentService
                     'user_id' => Auth::id(),
                     'course_id' => $course->id,
                     'enrolled_at' => now(),
-                    'status' => 'active',
+                    'status' => Enrollment::STATUS_ACTIVE,
                 ]);
 
                 // Transaction::create([...]);
