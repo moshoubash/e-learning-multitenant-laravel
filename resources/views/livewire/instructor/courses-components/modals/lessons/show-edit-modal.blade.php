@@ -47,17 +47,6 @@
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                             @error('lessonEditOrder') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
                         </div>
-                        <div class="mb-4">
-                            <label class="flex items-center space-x-2 rtl:space-x-reverse">
-                                <input type="checkbox" wire:model.boolean="lessonEditIsFreePreview"
-                                    class="w-4 h-4 text-blue-600 border-gray-300 rounded-md focus:ring-blue-500">
-                                <span class="text-sm font-medium text-gray-700">{{ __('messages.Free preview') }}</span>
-                            </label>
-                            <p class="mt-1 text-xs text-gray-500">
-                                {{ __('messages.Allow non-enrolled visitors to watch this lesson before they buy.') }}
-                            </p>
-                            @error('lessonEditIsFreePreview') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
-                        </div>
                         <div class="mb-4" x-show="$wire.lessonEditType === 'video'">
                             <label class="block mb-1 text-sm font-medium text-gray-700">{{ __('messages.Video URL') }}</label>
                             <input type="url" wire:model.lazy="lessonEditVideoUrl"
