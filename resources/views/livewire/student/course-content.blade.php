@@ -242,17 +242,14 @@
                 @elseif($selectedLesson)
                     @if($selectedLesson->type === 'video' && $selectedLesson->video_url)
                         <!-- Plyr Video Player -->
-                        <div class="aspect-video">
+                        <div class="aspect-video" wire:ignore.self>
                             <video
-                                x-data="{}"
-                                x-init="$nextTick(() => { new Plyr($refs.player) })"
-                                x-ref="player"
+                                class="js-lesson-video w-full"
+                                data-lesson-id="{{ $selectedLesson->id }}"
                                 playsinline
                                 controls
                                 preload="metadata"
-                                class="w-full"
                             >
-                                <!-- Removed crossorigin from here -->
                                 <source src="{{ $selectedLesson->video_url }}" type="video/mp4" />
                                 Your browser does not support the video tag.
                             </video>
