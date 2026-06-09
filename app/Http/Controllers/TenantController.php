@@ -29,7 +29,7 @@ class TenantController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        $allowedPlans = ['school', 'university', 'organization'];
+        $allowedPlans = ['free', 'pro', 'enterprise'];
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -43,7 +43,7 @@ class TenantController extends Controller
         $tenant = Tenant::create([
             'name' => $validated['name'],
             'slug' => $validated['slug'] ?? \Illuminate\Support\Str::slug($validated['name']),
-            'plan' => $validated['plan'] ?? 'school',
+            'plan' => $validated['plan'] ?? 'free',
             'is_active' => $validated['is_active'] ?? true,
             'settings' => $validated['data'] ?? [],
         ]);
@@ -78,7 +78,7 @@ class TenantController extends Controller
     public function update(Request $request, string $id): JsonResponse
     {
         $tenant = Tenant::findOrFail($id);
-        $allowedPlans = ['school', 'university', 'organization'];
+        $allowedPlans = ['free', 'pro', 'enterprise'];
 
         $validated = $request->validate([
             'name' => 'sometimes|string|max:255',

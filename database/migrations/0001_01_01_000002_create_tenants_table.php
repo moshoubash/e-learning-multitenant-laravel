@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('domain')->nullable();
-            $table->enum('plan', ['school', 'university', 'organization'])->default('school');
+            $table->enum('plan', ['free', 'pro', 'enterprise'])->default('free');
             $table->boolean('is_active')->default(true);
             $table->json('settings')->nullable();
             $table->timestamps();
