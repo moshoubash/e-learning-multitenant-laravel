@@ -115,6 +115,7 @@ class Courses extends Component
     public $lessonCreateDuration = 0;
     public $lessonCreateOrder = 0;
     public $lessonCreateVideoUrl = '';
+    public $lessonCreateIsFreePreview = false;
     public $courseVideo = null;
 
     // Assignment create form fields
@@ -135,6 +136,7 @@ class Courses extends Component
     public $lessonEditDuration = 0;
     public $lessonEditOrder = 0;
     public $lessonEditVideoUrl = '';
+    public $lessonEditIsFreePreview = false;
 
     // Assignment edit form fields
     public $assignmentEditTitle = '';
@@ -683,6 +685,7 @@ class Courses extends Component
         $this->lessonEditDuration = $this->editingLesson->duration_seconds;
         $this->lessonEditOrder = $this->editingLesson->order;
         $this->lessonEditVideoUrl = $this->editingLesson->video_url ?? '';
+        $this->lessonEditIsFreePreview = (bool) $this->editingLesson->is_free_preview;
         $this->showLessonEditModal = true;
     }
 
@@ -715,6 +718,7 @@ class Courses extends Component
         $this->lessonCreateDuration = 0;
         $this->lessonCreateOrder = 0;
         $this->lessonCreateVideoUrl = '';
+        $this->lessonCreateIsFreePreview = false;
     }
 
     public function resetLessonFormFields()
@@ -728,6 +732,7 @@ class Courses extends Component
         $this->lessonEditDuration = 0;
         $this->lessonEditOrder = 0;
         $this->lessonEditVideoUrl = '';
+        $this->lessonEditIsFreePreview = false;
     }
 
     public function storeLesson()
@@ -742,6 +747,7 @@ class Courses extends Component
                 'duration_seconds' => $this->lessonCreateDuration,
                 'order' => $this->lessonCreateOrder,
                 'video_url' => $this->lessonCreateVideoUrl ?: null,
+                'is_free_preview' => (bool) $this->lessonCreateIsFreePreview,
             ], $this->courseVideo);
         } catch (\Throwable $exception) {
             Toaster::error($exception->getMessage());
@@ -770,6 +776,7 @@ class Courses extends Component
             'duration_seconds' => $this->lessonEditDuration,
             'order' => $this->lessonEditOrder,
             'video_url' => $this->lessonEditVideoUrl ?: null,
+            'is_free_preview' => (bool) $this->lessonEditIsFreePreview,
         ]);
 
         $this->closeLessonModal();
@@ -905,6 +912,7 @@ class Courses extends Component
             'lessonCreateType' => 'required|in:video,text',
             'lessonCreateContent' => 'nullable|string',
             'lessonCreateOrder' => 'required|integer|min:0',
+            'lessonCreateIsFreePreview' => 'boolean',
             'courseVideo' => 'nullable|file|mimes:mp4,mov,avi,wmv|max:102400',
         ];
     }
@@ -916,6 +924,7 @@ class Courses extends Component
             'lessonEditType' => 'required|in:video,text,quiz',
             'lessonEditContent' => 'nullable|string',
             'lessonEditOrder' => 'required|integer|min:0',
+            'lessonEditIsFreePreview' => 'boolean',
         ];
     }
 
