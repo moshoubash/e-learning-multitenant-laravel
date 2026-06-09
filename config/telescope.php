@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'enabled' => env('TELESCOPE_ENABLED', ! app()->environment('production')),
+    'enabled' => env('TELESCOPE_ENABLED', env('APP_ENV', 'production') !== 'production'),
     'domain' => env('TELESCOPE_DOMAIN'),
     'path' => env('TELESCOPE_PATH', 'telescope'),
     'middleware' => [
@@ -9,7 +9,7 @@ return [
     ],
     'storage' => [
         'driver' => env('TELESCOPE_STORAGE_DRIVER', 'database'),
-        'connection' => env('TELESCOPE_DB_CONNECTION'),
+        'connection' => env('TELESCOPE_DB_CONNECTION', env('DB_CONNECTION', 'sqlite')),
         'chunk' => 1000,
     ],
     'queue' => [
