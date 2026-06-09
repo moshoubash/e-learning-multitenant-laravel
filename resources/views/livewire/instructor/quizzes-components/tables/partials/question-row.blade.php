@@ -8,7 +8,7 @@
             </span>
             <span class="@rim('ml-2') text-xs text-gray-500">({{ __('messages.Order') }}: {{ $question->order }})</span>
         </div>
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center space-x-2 rtl:space-x-reverse">
             <button wire:click="openOptionCreateModal({{ $question->id }})"
                 class="text-sm text-green-600 hover:text-green-800" title="Add Option">
                 <i class="fas fa-plus-circle"></i>
@@ -35,7 +35,7 @@
                             <span class="@rim('ml-2') px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded">Correct</span>
                         @endif
                     </div>
-                    <div class="flex items-center space-x-2">
+                    <div class="flex items-center space-x-2 rtl:space-x-reverse">
                         <button wire:click="openOptionEditModal({{ $option->id }})"
                             class="text-sm text-blue-600 hover:text-blue-800" title="Edit">
                             <i class="fas fa-edit"></i>

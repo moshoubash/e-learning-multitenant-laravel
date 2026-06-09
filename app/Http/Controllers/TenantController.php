@@ -7,7 +7,6 @@ namespace App\Http\Controllers;
 use App\Models\Tenant;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Stancl\Tenancy\UUIDGenerator;
 
 class TenantController extends Controller
 {
@@ -35,14 +34,11 @@ class TenantController extends Controller
             'data' => 'nullable|array',
         ]);
 
-        // Create tenant with UUID
         $tenant = Tenant::create([
-            'id' => UUIDGenerator::generate(),
             'name' => $validated['name'],
-            'data' => $validated['data'] ?? [],
+            'settings' => $validated['data'] ?? [],
         ]);
 
-        // Create domain for tenant
         $tenant->domains()->create([
             'domain' => $validated['domain'],
         ]);
@@ -79,7 +75,13 @@ class TenantController extends Controller
             'data' => 'nullable|array',
         ]);
 
-        $tenant->update($validated);
+        if (array_key_exists('data', $validated)) {
+            $tenant->settings = $validated['data'];
+        }
+        if (array_key_exists('name', $validated)) {
+            $tenant->name = $validated['name'];
+        }
+        $tenant->save();
 
         return response()->json([
             'status' => 'success',

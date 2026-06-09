@@ -11,7 +11,7 @@
                 <span class="@rim('ml-2') px-2 py-0.5 bg-red-100 text-red-600 text-xs rounded">Deleted</span>
             @endif
         </div>
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center space-x-2 rtl:space-x-reverse">
             @if(!$section->quiz)
                 <button wire:click="openQuizCreateModal({{ $section->id }})"
                     class="text-sm text-purple-600 hover:text-purple-800" title="Add Quiz">
@@ -60,7 +60,7 @@
                         <span class="@rim('ml-2') px-2 py-0.5 bg-red-100 text-red-600 text-xs rounded">Deleted</span>
                     @endif
                 </div>
-                <div class="flex items-center space-x-2">
+                <div class="flex items-center space-x-2 rtl:space-x-reverse">
                     <a href="{{ route('tenant.instructor.quizzes') }}" class="text-sm text-purple-600 hover:text-purple-800"
                         title="Manage Questions">
                         <i class="fas fa-external-link-alt"></i>
@@ -98,7 +98,7 @@
                             <span class="@rim('ml-2') px-2 py-0.5 bg-red-100 text-red-600 text-xs rounded">Deleted</span>
                         @endif
                     </div>
-                    <div class="flex items-center space-x-2">
+                    <div class="flex items-center space-x-2 rtl:space-x-reverse">
                         <button wire:click="openLessonEditModal({{ $lesson->id }})"
                             class="text-sm text-blue-600 hover:text-blue-800" title="Edit">
                             <i class="fas fa-edit"></i>
