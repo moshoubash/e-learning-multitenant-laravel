@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,6 +20,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Support\SafeHttp::class,
             fn ($app) => new \App\Support\SafeHttp($app->make(\Illuminate\Http\Client\Factory::class))
         );
+
+        if (! $this->app->environment('production') && class_exists(\Laravel\Telescope\TelescopeServiceProvider::class)) {
+            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+        }
     }
 
     /**
@@ -33,6 +40,30 @@ class AppServiceProvider extends ServiceProvider
 
         $this->registerBladeDirectives();
         $this->registerPolicies();
+        $this->registerSlowQueryLogger();
+    }
+
+    /**
+     * Log SQL queries that exceed a configurable threshold to the
+     * 'slow_queries' channel. The threshold defaults to 500 ms and
+     * can be raised/lowered via SLOW_QUERY_THRESHOLD_MS in .env.
+     */
+    protected function registerSlowQueryLogger(): void
+    {
+        $thresholdMs = (float) env('SLOW_QUERY_THRESHOLD_MS', 500);
+
+        DB::listen(function (QueryExecuted $query) use ($thresholdMs) {
+            if ($query->time < $thresholdMs) {
+                return;
+            }
+
+            Log::channel('slow_queries')->warning('Slow query', [
+                'connection' => $query->connectionName,
+                'time_ms' => $query->time,
+                'sql' => $query->sql,
+                'bindings' => $query->bindings,
+            ]);
+        });
     }
 
     /**

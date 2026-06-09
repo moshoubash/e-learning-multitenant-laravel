@@ -1,0 +1,20 @@
+<?php
+
+return [
+    'enabled' => env('TELESCOPE_ENABLED', ! app()->environment('production')),
+    'domain' => env('TELESCOPE_DOMAIN'),
+    'path' => env('TELESCOPE_PATH', 'telescope'),
+    'middleware' => [
+        'web',
+    ],
+    'storage' => [
+        'driver' => env('TELESCOPE_STORAGE_DRIVER', 'database'),
+        'connection' => env('TELESCOPE_DB_CONNECTION'),
+        'chunk' => 1000,
+    ],
+    'queue' => [
+        'connection' => env('TELESCOPE_QUEUE_CONNECTION'),
+        'queue' => env('TELESCOPE_QUEUE'),
+    ],
+    'watchers' => [],
+];
