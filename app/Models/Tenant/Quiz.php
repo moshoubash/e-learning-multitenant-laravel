@@ -26,19 +26,14 @@ class Quiz extends Model
         ];
     }
 
-    // public function lesson(): BelongsTo
-    // {
-    //     return $this->belongsTo(Lesson::class);
-    // }
-
-    // public function course(): BelongsTo
-    // {
-    //     return $this->belongsTo(Course::class);
-    // }
-
     public function section(): BelongsTo
     {
         return $this->belongsTo(Section::class);
+    }
+
+    public function course(): ?Course
+    {
+        return $this->section?->course;
     }
 
     public function questions(): HasMany
