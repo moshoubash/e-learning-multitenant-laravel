@@ -91,6 +91,9 @@ class CourseContentService
             ->update([
                 'progress_percent' => $progressPercent,
                 'completed_at' => $progressPercent === 100 ? now() : null,
+                'status' => $progressPercent === 100
+                    ? Enrollment::STATUS_COMPLETED
+                    : Enrollment::STATUS_ACTIVE,
             ]);
 
         return $progressPercent;
