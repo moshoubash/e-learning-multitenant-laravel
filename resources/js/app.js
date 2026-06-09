@@ -1,6 +1,7 @@
 import './bootstrap';
 import '../../vendor/masmerise/livewire-toaster/resources/js';
 import Plyr from 'plyr';
+import iconUrl from '../images/plyr.svg?url';
 import Quill from 'quill';
 
 window.Plyr = Plyr;
@@ -12,8 +13,8 @@ function initLessonPlyr() {
         try {
             new window.Plyr(video, {
                 controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'fullscreen'],
-                loadSprite: false,
-                iconUrl: false
+                loadSprite: true,
+                iconUrl: iconUrl
             });
             video.setAttribute('data-plyr-inited', '1');
         } catch (e) {
