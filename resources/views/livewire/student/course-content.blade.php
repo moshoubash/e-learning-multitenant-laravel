@@ -241,6 +241,11 @@
                     </div>
                 @elseif($selectedLesson)
                     @if($selectedLesson->type === 'video' && $selectedLesson->video_url)
+                        @if($selectedLesson->is_free_preview)
+                            <div class="px-3 py-1 mb-2 text-xs font-semibold text-blue-700 bg-blue-100 rounded inline-block">
+                                {{ __('messages.Free preview') }}
+                            </div>
+                        @endif
                         <!-- Plyr Video Player -->
                         <div class="aspect-video" wire:ignore.self>
                             <video

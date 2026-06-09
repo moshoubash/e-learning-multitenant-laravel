@@ -126,6 +126,17 @@ class CourseContent extends Component
         return $this->courseContentService()->isLessonCompleted($lessonId, auth()->id());
     }
 
+    public function canViewLesson(Lesson $lesson): bool
+    {
+        if ($lesson->isPreview()) {
+            return true;
+        }
+
+        $courseId = $lesson->section?->course_id ?? $this->courseId;
+
+        return $this->courseContentService()->ensureEnrolled($courseId, auth()->id());
+    }
+
     // Submission methods
     public function toggleSubmissionForm()
     {
