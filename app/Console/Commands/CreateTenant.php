@@ -16,7 +16,7 @@ class CreateTenant extends Command
     protected $signature = 'tenant:create
                             {name : The name of the tenant (e.g. "School A")}
                             {slug : The slug for the tenant (e.g. "school-a")}
-                            {--plan=free : The plan for the tenant (free, pro, enterprise)}
+                            {--plan=school : The plan for the tenant (school, university, organization)}
                             {--domain= : The custom domain (e.g. schoola.com)}';
 
     /**
@@ -41,8 +41,8 @@ class CreateTenant extends Command
         }
 
         // Validate plan
-        if (!in_array($plan, ['free', 'pro', 'enterprise'])) {
-            $this->error("Invalid plan: '{$plan}'. Use: free, pro, or enterprise.");
+        if (!in_array($plan, ['school', 'university', 'organization'])) {
+            $this->error("Invalid plan: '{$plan}'. Use: school, university, or organization.");
             return self::FAILURE;
         }
 
