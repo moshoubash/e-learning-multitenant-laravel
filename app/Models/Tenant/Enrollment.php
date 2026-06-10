@@ -16,6 +16,7 @@ class Enrollment extends Model
         'enrolled_at',
         'completed_at',
         'progress_percent',
+        'status',
     ];
 
     protected function casts(): array
@@ -25,6 +26,31 @@ class Enrollment extends Model
             'completed_at' => 'datetime',
             'progress_percent' => 'integer',
         ];
+    }
+
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_ACTIVE = 'active';
+    public const STATUS_CANCELLED = 'cancelled';
+    public const STATUS_COMPLETED = 'completed';
+
+    public static function statuses(): array
+    {
+        return [
+            self::STATUS_PENDING,
+            self::STATUS_ACTIVE,
+            self::STATUS_CANCELLED,
+            self::STATUS_COMPLETED,
+        ];
+    }
+
+    public function isActive(): bool
+    {
+        return $this->status === self::STATUS_ACTIVE;
+    }
+
+    public function isCompleted(): bool
+    {
+        return $this->status === self::STATUS_COMPLETED;
     }
 
     public function user(): BelongsTo

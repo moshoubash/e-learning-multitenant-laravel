@@ -49,6 +49,18 @@ class CourseContent extends Component
         }
 
         $this->progressPercent = $this->courseContentService()->calculateProgress($this->courseId, auth()->id());
+        $this->syncProgressFromEnrollment();
+    }
+
+    protected function syncProgressFromEnrollment(): void
+    {
+        $enrollment = \App\Models\Tenant\Enrollment::where('course_id', $this->courseId)
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if ($enrollment) {
+            $this->progressPercent = (int) $enrollment->progress_percent;
+        }
     }
 
     public function getCourse()
@@ -119,6 +131,11 @@ class CourseContent extends Component
             $this->progressPercent = $this->courseContentService()->calculateProgress($this->courseId, auth()->id());
             Toaster::success('Lesson marked as complete!');
         }
+    }
+
+    public function refreshProgress(): void
+    {
+        $this->syncProgressFromEnrollment();
     }
 
     public function isLessonCompleted($lessonId)

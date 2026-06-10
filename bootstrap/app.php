@@ -40,5 +40,9 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->reportable(function (\Throwable $e) {
+            if (config('sentry.dsn') && app()->bound('sentry')) {
+                app('sentry')->captureException($e);
+            }
+        });
     })->create();

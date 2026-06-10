@@ -134,6 +134,13 @@ return [
             'days' => env('LOG_SECURITY_DAYS', 90),
         ],
 
+        'slow_queries' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/slow-queries.log'),
+            'level' => 'warning',
+            'days' => env('LOG_SLOW_QUERIES_DAYS', 30),
+        ],
+
     ],
 
 ];

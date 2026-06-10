@@ -7,7 +7,7 @@ namespace App\Http\Controllers;
 use App\Models\Tenant;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Stancl\Tenancy\UUIDGenerator;
+use Illuminate\Validation\Rule;
 
 class TenantController extends Controller
 {
@@ -29,20 +29,25 @@ class TenantController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
+        $allowedPlans = ['school', 'university', 'organization'];
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255|unique:tenants,slug',
             'domain' => 'required|string|max:255|unique:domains,domain',
+            'plan' => ['nullable', Rule::in($allowedPlans)],
+            'is_active' => 'nullable|boolean',
             'data' => 'nullable|array',
         ]);
 
-        // Create tenant with UUID
         $tenant = Tenant::create([
-            'id' => UUIDGenerator::generate(),
             'name' => $validated['name'],
-            'data' => $validated['data'] ?? [],
+            'slug' => $validated['slug'] ?? \Illuminate\Support\Str::slug($validated['name']),
+            'plan' => $validated['plan'] ?? 'school',
+            'is_active' => $validated['is_active'] ?? true,
+            'settings' => $validated['data'] ?? [],
         ]);
 
-        // Create domain for tenant
         $tenant->domains()->create([
             'domain' => $validated['domain'],
         ]);
@@ -73,17 +78,68 @@ class TenantController extends Controller
     public function update(Request $request, string $id): JsonResponse
     {
         $tenant = Tenant::findOrFail($id);
+        $allowedPlans = ['school', 'university', 'organization'];
 
         $validated = $request->validate([
             'name' => 'sometimes|string|max:255',
+            'slug' => 'sometimes|string|max:255|unique:tenants,slug,'.$tenant->id,
+            'plan' => ['sometimes', Rule::in($allowedPlans)],
+            'is_active' => 'sometimes|boolean',
             'data' => 'nullable|array',
         ]);
 
-        $tenant->update($validated);
+        if (array_key_exists('name', $validated)) {
+            $tenant->name = $validated['name'];
+        }
+        if (array_key_exists('slug', $validated)) {
+            $tenant->slug = $validated['slug'];
+        }
+        if (array_key_exists('plan', $validated)) {
+            $tenant->plan = $validated['plan'];
+        }
+        if (array_key_exists('is_active', $validated)) {
+            $tenant->is_active = (bool) $validated['is_active'];
+        }
+        if (array_key_exists('data', $validated)) {
+            $tenant->settings = $validated['data'];
+        }
+        $tenant->save();
 
         return response()->json([
             'status' => 'success',
             'message' => 'Tenant updated successfully.',
+            'data' => $tenant,
+        ]);
+    }
+
+    /**
+     * Activate a tenant (set is_active = true).
+     */
+    public function activate(string $id): JsonResponse
+    {
+        $tenant = Tenant::findOrFail($id);
+        $tenant->is_active = true;
+        $tenant->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Tenant activated.',
+            'data' => $tenant,
+        ]);
+    }
+
+    /**
+     * Deactivate a tenant (set is_active = false).
+     */
+    public function deactivate(string $id): JsonResponse
+    {
+        $tenant = Tenant::findOrFail($id);
+        $tenant->is_active = false;
+        $tenant->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Tenant deactivated.',
             'data' => $tenant,
         ]);
     }
@@ -95,7 +151,6 @@ class TenantController extends Controller
     {
         $tenant = Tenant::findOrFail($id);
 
-        // Delete tenant (this also deletes associated domains and database)
         $tenant->delete();
 
         return response()->json([

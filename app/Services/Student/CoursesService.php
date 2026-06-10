@@ -52,7 +52,7 @@ class CoursesService
         return Enrollment::create([
             'course_id' => $courseId,
             'user_id' => $userId,
-            'status' => 'active',
+            'status' => Enrollment::STATUS_ACTIVE,
         ]);
     }
 }

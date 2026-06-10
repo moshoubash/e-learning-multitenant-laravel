@@ -2,6 +2,7 @@
 
 namespace App\Services\Student;
 
+use App\Jobs\RecalculateCourseProgress;
 use App\Models\Tenant\Course;
 use App\Models\Tenant\Enrollment;
 use App\Models\Tenant\Lesson;
@@ -51,7 +52,7 @@ class CourseContentService
 
     public function markLessonComplete(int $lessonId, int $userId): LessonProgress
     {
-        return LessonProgress::updateOrCreate(
+        $progress = LessonProgress::updateOrCreate(
             [
                 'user_id' => $userId,
                 'lesson_id' => $lessonId,
@@ -61,6 +62,18 @@ class CourseContentService
                 'last_watched_at' => now(),
             ]
         );
+
+        $lesson = Lesson::with('section')->find($lessonId);
+        if ($lesson && $lesson->section) {
+            $this->dispatchProgressRecalculation($lesson->section->course_id, $userId);
+        }
+
+        return $progress;
+    }
+
+    public function dispatchProgressRecalculation(int $courseId, int $userId): void
+    {
+        RecalculateCourseProgress::dispatch($courseId, $userId);
     }
 
     public function isLessonCompleted(int $lessonId, int $userId): bool
@@ -77,6 +90,10 @@ class CourseContentService
             $query->where('course_id', $courseId);
         })->count();
 
+        if ($totalLessons === 0) {
+            return 0;
+        }
+
         $completedLessons = LessonProgress::where('user_id', $userId)
             ->whereHas('lesson.section', function ($query) use ($courseId) {
                 $query->where('course_id', $courseId);
@@ -84,15 +101,6 @@ class CourseContentService
             ->where('is_completed', true)
             ->count();
 
-        $progressPercent = $totalLessons > 0 ? (int) round(($completedLessons / $totalLessons) * 100) : 0;
-
-        Enrollment::where('course_id', $courseId)
-            ->where('user_id', $userId)
-            ->update([
-                'progress_percent' => $progressPercent,
-                'completed_at' => $progressPercent === 100 ? now() : null,
-            ]);
-
-        return $progressPercent;
+        return (int) round(($completedLessons / $totalLessons) * 100);
     }
 }
