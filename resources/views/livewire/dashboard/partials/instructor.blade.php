@@ -55,12 +55,12 @@
                                     {{ __('messages.' . ucfirst($course->status)) }}
                                 </x-ui.status-pill>
                             </td>
-                            <td class="px-5 py-3 text-right text-sm font-semibold text-gray-700">
+                            <td class="px-5 py-3 text-sm font-semibold text-right text-gray-700">
                                 {{ $course->enrollments_count }}
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="3" class="px-5 py-6 text-center text-sm text-gray-500">{{ __('messages.No Enrolled Courses') }}</td></tr>
+                        <tr><td colspan="3" class="px-5 py-6 text-sm text-center text-gray-500">{{ __('messages.No Enrolled Courses') }}</td></tr>
                     @endforelse
                 </tbody>
             </table>
@@ -87,7 +87,7 @@
                             <td class="px-5 py-3 text-xs text-gray-500">{{ $enrollment->enrolled_at?->diffForHumans() }}</td>
                         </tr>
                     @empty
-                        <tr><td colspan="3" class="px-5 py-6 text-center text-sm text-gray-500">{{ __('messages.No Enrolled Courses') }}</td></tr>
+                        <tr><td colspan="3" class="px-5 py-6 text-sm text-center text-gray-500">{{ __('messages.No Enrolled Courses') }}</td></tr>
                     @endforelse
                 </tbody>
             </table>
@@ -124,7 +124,11 @@
                         <td class="px-5 py-3 text-xs text-gray-500">{{ $submission->submitted_at?->diffForHumans() }}</td>
                     </tr>
                 @empty
-                    <tr><td colspan="5" class="px-5 py-6 text-center text-sm text-gray-500">{{ __('messages.No submissions found') }}</td></tr>
+                    <tr>
+                        <td colspan="5" class="px-5 py-6 text-sm text-center text-gray-500">
+                            {{ __('messages.No submissions found') }}
+                        </td>
+                    </tr>
                 @endforelse
             </tbody>
         </table>

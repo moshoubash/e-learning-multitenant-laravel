@@ -26,7 +26,7 @@
         @if($quiz)
             @if(!$this->canTakeQuiz() && !$submitted)
                 <!-- Cannot Reattempt Message -->
-                <div class="p-8 text-center">
+                <div class="p-8" style="display: flex; flex-direction: column; align-items: center;">
                     <i class="mb-4 text-6xl text-green-500 fas fa-check-circle"></i>
                     <h3 class="text-2xl font-bold text-green-600">{{ __('messages.Quiz Already Passed!') }}</h3>
                     <p class="mt-2 text-gray-600">{{ __('messages.You have already passed this quiz with a score of :score%', ['score' => $previousAttempt->score]) }}</p>
@@ -103,7 +103,7 @@
             @else
                 <!-- Quiz Questions -->
                 @if(!$this->canReattempt() && $previousAttempt)
-                    <div class="p-4 my-6 text-sm text-yellow-700 bg-yellow-100 border border-yellow-300 rounded-lg">
+                    <div class="p-4 mx-6 my-4 text-sm text-yellow-700 bg-yellow-100 border border-yellow-300 rounded-lg">
                         <i class="@if(app()->getLocale() === 'ar') ml-2 @else mr-2 @endif fas fa-exclamation-triangle"></i>
                         {{ __('messages.You have a previous attempt with a score of :score%. You can retake the quiz to try for a better score.', ['score' => $previousAttempt->score]) }}
                     </div>
