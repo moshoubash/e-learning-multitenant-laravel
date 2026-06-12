@@ -9,8 +9,10 @@ return [
     ],
     'storage' => [
         'driver' => env('TELESCOPE_STORAGE_DRIVER', 'database'),
-        'connection' => env('TELESCOPE_DB_CONNECTION'),
-        'chunk' => 1000,
+        'database' => [
+            'connection' => env('TELESCOPE_DB_CONNECTION', config('database.default')),
+            'chunk' => 1000,
+        ],
     ],
     'queue' => [
         'connection' => env('TELESCOPE_QUEUE_CONNECTION'),
