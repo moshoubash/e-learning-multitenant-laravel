@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Livewire\Actions\Logout;
 use Illuminate\Http\Request;
@@ -22,6 +23,14 @@ Route::middleware('guest')->group(function () {
     Volt::route('reset-password/{token}', 'pages.auth.reset-password')
         ->middleware('throttle:3,1')
         ->name('password.reset');
+
+    Route::get('auth/google/redirect', [GoogleAuthController::class, 'redirect'])
+        ->middleware('throttle:10,1')
+        ->name('auth.google.redirect');
+
+    Route::get('auth/google/callback', [GoogleAuthController::class, 'callback'])
+        ->middleware('throttle:10,1')
+        ->name('auth.google.callback');
 });
 
 Route::middleware(tenant() ? 'auth:tenant' : 'auth')->group(function () {

@@ -62,9 +62,9 @@ class SecurityHeaders
                 . "font-src 'self' https://fonts.bunny.net https://maxst.icons8.com data:; "
                 . "img-src 'self' data: blob: https:; "
                 . "media-src 'self' https:; "
-                . "frame-src 'self' https://www.youtube.com https://player.vimeo.com; "
+                . "frame-src 'self' https://www.youtube.com https://player.vimeo.com https://accounts.google.com; "
                 . "connect-src 'self'; "
-                . "frame-ancestors 'self'; base-uri 'self'; form-action 'self';";
+                . "frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://accounts.google.com;";
         }
 
         // Development: allow Vite HMR + the unsafe-eval that some
@@ -76,8 +76,8 @@ class SecurityHeaders
             . "font-src 'self' https://fonts.bunny.net https://maxst.icons8.com data:; "
             . "img-src 'self' data: blob: https: {$viteHosts}; "
             . "media-src 'self' https: {$viteHosts}; "
-            . "frame-src 'self' https://www.youtube.com https://player.vimeo.com {$viteHosts}; "
+            . "frame-src 'self' https://www.youtube.com https://player.vimeo.com https://accounts.google.com {$viteHosts}; "
             . "connect-src 'self' ws: wss: {$viteHosts}; "
-            . "frame-ancestors 'self'; base-uri 'self'; form-action 'self';";
+            . "frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://accounts.google.com {$viteHosts};";
     }
 }
