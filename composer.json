@@ -24,7 +24,6 @@
         "masmerise/livewire-toaster": "^2.10",
         "php-ffmpeg/php-ffmpeg": "^1.4",
         "spatie/laravel-permission": "^7.4",
-        "sentry/sentry-laravel": "^4.0",
         "stancl/tenancy": "^3.10",
         "stripe/stripe-php": "^20.1"
     },

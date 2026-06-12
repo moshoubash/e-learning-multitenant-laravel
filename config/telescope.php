@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'enabled' => env('TELESCOPE_ENABLED', ! app()->environment('production')),
+    'enabled' => env('TELESCOPE_ENABLED', env('APP_ENV') !== 'production'),
     'domain' => env('TELESCOPE_DOMAIN'),
     'path' => env('TELESCOPE_PATH', 'telescope'),
     'middleware' => [
