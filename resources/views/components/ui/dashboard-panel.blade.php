@@ -9,9 +9,9 @@
 <div {{ $attributes->merge(['class' => 'bg-white rounded-2xl shadow-sm']) }}>
     @if($title || $action)
         <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
-            <h3 class="text-sm font-semibold tracking-wider text-gray-700 uppercase flex items-center">
+            <h3 class="flex items-center text-sm font-semibold tracking-wider text-gray-700 uppercase">
                 @if($icon)
-                    <i class="text-gray-400 {{ $icon }} {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
+                    <i class="text-gray-400 text-center {{ $icon }} {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
                 @endif
                 {{ $title }}
             </h3>

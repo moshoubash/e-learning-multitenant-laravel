@@ -90,7 +90,7 @@ return [
     'Edit User' => 'تعديل المستخدم',
     'Created At' => 'تاريخ الإنشاء',
 
-    'Admin' => 'ادمن',
+    'Admin' => 'آدمن',
     'Instructor' => 'مدرس',
     'Student' => 'طالب',
 
