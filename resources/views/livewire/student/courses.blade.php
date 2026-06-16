@@ -1,227 +1,183 @@
 <div>
-    <div class="flex items-center justify-between mb-8">
+    <header class="h-16 flex justify-between items-center px-[24px] bg-surface-container-lowest border-b-2 border-on-surface sticky top-0 z-40">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">{{ __('messages.Browse Courses') }}</h1>
-            <p class="mt-1 text-sm text-gray-500">{{ __('messages.Discover new courses and continue learning') }}</p>
+            <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ __('messages.Browse Courses') }}</h2>
+            <p class="text-[12px] font-medium uppercase text-secondary mt-0.5 tracking-wider">{{ __('messages.Discover new courses and continue learning') }}</p>
         </div>
-    </div>
+    </header>
 
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <!-- Course List Sidebar -->
-        <div class="lg:col-span-1">
-            <!-- Enrolled Courses Section -->
-            @php
-                $enrolledCourses = \App\Models\Tenant\Enrollment::where('user_id', auth()->id())
-                    ->with('course.instructor', 'course.sections.lessons')
-                    ->get()
-                    ->filter(fn($e) => $e->course && $e->course->status === 'published')
-                    ->pluck('course');
-            @endphp
+    <div class="p-[24px] max-w-[1400px] mx-auto">
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            {{-- Course List Sidebar --}}
+            <div class="lg:col-span-1 space-y-6">
+                {{-- Enrolled Courses Section --}}
+                @php
+                    $enrolledCourses = \App\Models\Tenant\Enrollment::where('user_id', auth()->id())
+                        ->with('course.instructor', 'course.sections.lessons')
+                        ->get()
+                        ->filter(fn($e) => $e->course && $e->course->status === 'published')
+                        ->pluck('course');
+                @endphp
 
-            @if($enrolledCourses->count() > 0)
-                <div class="mb-4 overflow-hidden shadow-sm bg-green-50 sm:rounded-lg">
-                    <div class="p-4 border-b border-green-200">
-                        <h3 class="text-lg font-semibold text-green-700">
-                            <i class="fas fa-graduation-cap @if(app()->getLocale() === 'ar') ml-2 @else mr-2 @endif"></i>{{ __('messages.My Enrolled Courses') }}
-                        </h3>
+                @if($enrolledCourses->count() > 0)
+                    <div class="bg-surface-container-lowest neo-border neo-radius overflow-hidden">
+                        <div class="p-4 border-b-2 border-on-surface">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.My Enrolled Courses') }}</h3>
+                        </div>
+                        <div class="divide-y divide-[#E5E5E5]">
+                            @foreach($enrolledCourses as $course)
+                                <div wire:click="selectCourse({{ $course->id }})"
+                                    class="p-4 cursor-pointer hover:bg-surface-container-high transition-colors duration-100"
+                                    style="border-left: 4px solid {{ $selectedCourse == $course->id ? '#FFD600' : 'transparent' }}">
+                                    <h4 class="font-bold text-sm text-on-surface">{{ $course->title }}</h4>
+                                    <p class="mt-1 text-xs text-secondary">{{ $course->instructor->name ?? 'N/A' }}</p>
+                                    <div class="flex items-center gap-3 mt-2 text-[10px] text-secondary font-bold uppercase tracking-widest">
+                                        <span><i class="fas fa-folder mr-1"></i> {{ $course->sections->count() }} {{ __('messages.sections') }}</span>
+                                        <span><i class="fas fa-book mr-1"></i> {{ $course->sections->sum(fn($s) => $s->lessons->count()) }} {{ __('messages.lessons') }}</span>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
-                    <div class="divide-y divide-green-100">
-                        @foreach($enrolledCourses as $course)
+                @endif
+
+                {{-- Available Courses Section --}}
+                <div class="bg-surface-container-lowest neo-border neo-radius overflow-hidden">
+                    <div class="p-4 border-b-2 border-on-surface">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Available Courses') }}</h3>
+                    </div>
+                    <div class="divide-y divide-[#E5E5E5]">
+                        @forelse($courses as $course)
                             <div wire:click="selectCourse({{ $course->id }})"
-                                class="p-4 cursor-pointer hover:bg-green-100 "
-                                style="border-left: 4px solid {{ $selectedCourse == $course->id ? '#22c55e' : 'transparent' }}"
-                                >
-                                <h4 class="font-medium text-gray-800">{{ $course->title }}</h4>
-                                <p class="mt-1 text-sm text-gray-500">{{ $course->instructor->name ?? 'N/A' }}</p>
-                                <div class="flex items-center mt-2 text-xs text-gray-400">
-                                    <span class="@if(app()->getLocale() === 'ar') ml-3 @else mr-3 @endif">
-                                        <i class="@if(app()->getLocale() === 'ar') ml-1 @else mr-1 @endif fas fa-folder"></i>
-                                        {{ __('messages.sections') }}
-                                         {{ $course->sections->count() }}
-                                    </span>
-                                    <span>
-                                        <i class="@if(app()->getLocale() === 'ar') ml-1 @else mr-1 @endif fas fa-book"></i>
-                                        {{ __('messages.lessons') }}
-                                        {{ $course->sections->sum(fn($s) => $s->lessons->count()) }}
-                                    </span>
+                                class="p-4 cursor-pointer hover:bg-surface-container-high transition-colors duration-100"
+                                style="border-left: 4px solid {{ $selectedCourse == $course->id ? '#FFD600' : 'transparent' }}">
+                                <h4 class="font-bold text-sm text-on-surface">{{ $course->title }}</h4>
+                                <p class="mt-1 text-xs text-secondary">{{ $course->instructor->name ?? 'N/A' }}</p>
+                                <div class="flex items-center gap-3 mt-2 text-[10px] text-secondary font-bold uppercase tracking-widest">
+                                    <span><i class="fas fa-folder mr-1"></i> {{ $course->sections->count() }} {{ __('messages.sections') }}</span>
+                                    <span><i class="fas fa-book mr-1"></i> {{ $course->sections->sum(fn($s) => $s->lessons->count()) }} {{ __('messages.lessons') }}</span>
                                 </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
-
-            <!-- Available Courses Section -->
-            <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                <div class="p-4 border-b border-gray-200">
-                    <h3 class="text-lg font-semibold text-gray-700">{{ __('messages.Available Courses') }}</h3>
-                </div>
-                <div class="divide-y divide-gray-100">
-                    @forelse($courses as $course)
-                        <div wire:click="selectCourse({{ $course->id }})"
-                            class="p-4 cursor-pointer hover:bg-gray-50 "
-                            style="border-left: 4px solid {{ $selectedCourse == $course->id ? '#3b82f6' : 'transparent' }}"
-                            >
-                            <h4 class="font-medium text-gray-800">{{ $course->title }}</h4>
-                            <p class="mt-1 text-sm text-gray-500">{{ $course->instructor->name ?? 'N/A' }}</p>
-                            <div class="flex items-center mt-2 text-xs text-gray-400">
-                                <span class="@if(app()->getLocale() === 'ar') ml-3 @else mr-3 @endif">
-                                    <i class="@if(app()->getLocale() === 'ar') ml-1 @else mr-1 @endif fas fa-folder"></i>
-                                    {{ __('messages.sections') }}
-                                    {{ $course->sections->count() }}
-                                </span>
-                                <span>
-                                    <i class="@if(app()->getLocale() === 'ar') ml-1 @else mr-1 @endif fas fa-book"></i>
-                                    {{ __('messages.lessons') }}
-                                    {{ $course->sections->sum(fn($s) => $s->lessons->count()) }}
-                                </span>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="p-4 text-center text-gray-500">
-                            <i class="mb-2 text-4xl fas fa-book-open"></i>
-                            <p>No courses available yet.</p>
-                        </div>
-                    @endforelse
-                </div>
-            </div>
-        </div>
-
-        <!-- Course Content Area -->
-        <div class="lg:col-span-2">
-            @if($selectedCourse)
-                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                    <!-- Course Header -->
-                    <div class="p-6 border-b border-gray-200">
-                        <h3 class="text-2xl font-bold text-gray-800">{{ $selectedCourseData->title }}</h3>
-                        <p class="mt-2 text-gray-500">{{ __('messages.By') }} {{ $selectedCourseData->instructor->name ?? 'N/A' }}</p>
-                        <div class="flex items-center mt-4 text-sm text-gray-500">
-                            <span class="@if(app()->getLocale() === 'ar') ml-4 @else mr-4 @endif">
-                                <i class="@if(app()->getLocale() === 'ar') ml-1 @else mr-1 @endif fas fa-dollar-sign"></i> {{ number_format($selectedCourseData->price, 2) }}
-                            </span>
-                            <span class="@if(app()->getLocale() === 'ar') ml-4 @else mr-4 @endif">
-                                <i class="@if(app()->getLocale() === 'ar') ml-1 @else mr-1 @endif fas fa-folder"></i>
-                                {{ __('messages.sections') }}
-                                {{ $selectedCourseData->sections->count() }}
-                            </span>
-                        </div>
-                        @if($selectedCourseData->description)
-                            <p class="mt-4 text-gray-600">{{ $selectedCourseData->description }}</p>
-                        @endif
-
-                        <!-- Enroll Button -->
-                        @if(!$this->isEnrolled($selectedCourseData->id))
-                            <div class="mt-6">
-                                <button wire:click="enrollInCourse({{ $selectedCourseData->id }})"
-                                    class="px-6 py-3 font-medium text-white transition-colors bg-green-600 rounded-lg hover:bg-green-700">
-                                    <i class="@if(app()->getLocale() === 'ar') ml-2 @else mr-2 @endif fas fa-graduation-cap"></i>
-                                    @if($selectedCourseData->price == 0)
-                                        {{ __('messages.Enroll for Free') }}
-                                    @else
-                                        {{ __('messages.Enroll Now') }} - ${{ number_format($selectedCourseData->price, 2) }}
-                                    @endif
-                                </button>
-                            </div>
-                        @else
-                            <div class="mt-6">
-                                <span
-                                    class="inline-flex items-center px-4 py-2 font-medium text-green-700 bg-green-100 rounded-lg">
-                                    <i class="@if(app()->getLocale() === 'ar') ml-2 @else mr-2 @endif fas fa-check-circle"></i>
-                                    {{ __('messages.Enrolled') }}
-                                </span>
-                            </div>
-                        @endif
-                    </div>
-
-                    <!-- Curriculum -->
-                    <div class="p-6">
-                        <h4 class="mb-4 text-lg font-semibold text-gray-700">{{ __('messages.Course Curriculum') }}</h4>
-
-                        @forelse($selectedCourseData->sections->sortBy('order') as $section)
-                            <div class="mb-4 overflow-hidden border border-gray-200 rounded-lg">
-                                <!-- Section Header -->
-                                <div wire:click="toggleSection({{ $section->id }})"
-                                    class="flex items-center justify-between p-4 bg-gray-100 cursor-pointer hover:bg-gray-50">
-                                    <div class="flex items-center">
-                                        @if(app()->getLocale() === 'ar')
-                                            <i class="fas fa-chevron-left @if(app()->getLocale() === 'ar') ml-3 @else mr-3 @endif text-gray-400 transition-transform {{ $this->isSectionExpanded($section->id) ? 'rotate-90' : '' }}"></i>
-                                        @else
-                                            <i class="fas fa-chevron-right @if(app()->getLocale() === 'ar') ml-3 @else mr-3 @endif text-gray-400 transition-transform {{ $this->isSectionExpanded($section->id) ? 'rotate-90' : '' }}"></i>
-                                        @endif
-
-                                        <span class="font-medium text-gray-800">{{ $section->title }}</span>
-                                    </div>
-                                    <span class="text-sm text-gray-500">
-                                        {{ __('messages.lessons') }}
-                                        {{ $section->lessons->count() }}
-                                    </span>
-                                </div>
-
-                                <!-- Lessons List -->
-                                @if($this->isSectionExpanded($section->id))
-                                    <div class="divide-y divide-gray-100">
-                                        @forelse($section->lessons->sortBy('order') as $lesson)
-                                            <div class="p-4 hover:bg-gray-50">
-                                                <div class="flex items-center justify-between">
-                                                    <div class="flex items-center">
-                                                        <i
-                                                            class="fas @if($lesson->type === 'video') fa-play-circle text-blue-500
-                                                            @elseif($lesson->type === 'text') fa-file
-                                                                                        @elseif($lesson->type === 'quiz') fa-list-check text-purple-500 @else fa-file-text text-gray-400 @endif @if(app()->getLocale() === 'ar') ml-3 @else mr-3 @endif"></i>
-                                                        <span class="text-gray-700">{{ $lesson->title }}</span>
-                                                    </div>
-                                                    <div class="flex items-center text-sm text-gray-400">
-                                                        @if($lesson->duration_seconds)
-                                                            {{ gmdate('i:s', $lesson->duration_seconds) }}
-                                                        @endif
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        @empty
-                                            <div class="p-4 text-sm text-center text-gray-500">
-                                                No lessons in this section yet.
-                                            </div>
-                                        @endforelse
-
-                                        <!-- Quiz if exist -->
-                                        @if($section->quiz)
-                                            <div class="p-4 border-t border-purple-100 bg-purple-50">
-                                                <div class="flex items-center justify-between">
-                                                    <div class="flex items-center">
-                                                        <i class="@if(app()->getLocale() === 'ar') ml-3 @else mr-3 @endif text-purple-500 fas fa-question-circle"></i>
-                                                        <span class="font-medium text-purple-700">{{ $section->quiz->title }}</span>
-                                                        <span class="@if(app()->getLocale() === 'ar') mr-2 @else ml-2 @endif px-2 py-0.5 bg-purple-100 text-purple-700 text-xs rounded">
-                                                            {{ __('messages.questions') }}
-                                                            {{ $section->quiz->questions->count() }}
-                                                        </span>
-                                                    </div>
-                                                    <div class="flex items-center text-sm text-purple-500">
-                                                        {{ __('messages.Pass') }}: {{ $section->quiz->pass_percentage }}%
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    </div>
-                                @endif
                             </div>
                         @empty
-                            <div class="py-8 text-center text-gray-500">
-                                <i class="mb-2 text-4xl fas fa-folder-open"></i>
-                                <p class="text-center">{{ __('messages.No sections available yet.') }}</p>
+                            <div class="p-8 text-center">
+                                <i class="fas fa-book-open text-4xl text-secondary mb-2"></i>
+                                <p class="text-sm text-secondary">{{ __('messages.No courses found.') }}</p>
                             </div>
                         @endforelse
                     </div>
                 </div>
-            @else
-                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                    <div class="p-12 text-center">
-                        <i class="mb-4 text-6xl text-gray-300 fas fa-book-open"></i>
-                        <h3 class="text-lg font-medium text-gray-700">{{ __('messages.Select a Course') }}</h3>
-                        <p class="mt-2 text-gray-500">Choose a course from the list to view its curriculum.</p>
+            </div>
+
+            {{-- Course Content Area --}}
+            <div class="lg:col-span-2">
+                @if($selectedCourse && $selectedCourseData)
+                    <div class="bg-surface-container-lowest neo-border neo-radius overflow-hidden">
+                        {{-- Course Header --}}
+                        <div class="p-[24px] border-b-2 border-on-surface">
+                            <h3 class="text-[24px] font-bold text-on-surface leading-tight tracking-[0.02em]">{{ $selectedCourseData->title }}</h3>
+                            <p class="mt-2 text-sm text-secondary">{{ __('messages.By') }} {{ $selectedCourseData->instructor->name ?? 'N/A' }}</p>
+                            <div class="flex items-center gap-4 mt-4 text-xs text-secondary font-bold uppercase tracking-widest">
+                                <span><i class="fas fa-dollar-sign mr-1"></i> ${{ number_format($selectedCourseData->price, 2) }}</span>
+                                <span><i class="fas fa-folder mr-1"></i> {{ __('messages.sections') }} {{ $selectedCourseData->sections->count() }}</span>
+                            </div>
+                            @if($selectedCourseData->description)
+                                <p class="mt-4 text-sm text-on-surface">{{ $selectedCourseData->description }}</p>
+                            @endif
+
+                            {{-- Enroll Button --}}
+                            @if(!$this->isEnrolled($selectedCourseData->id))
+                                <div class="mt-6">
+                                    <button wire:click="enrollInCourse({{ $selectedCourseData->id }})"
+                                        class="px-5 py-2 neo-border neo-radius bg-primary-container text-on-surface font-bold uppercase text-xs tracking-widest hover:bg-on-surface hover:text-white transition-colors">
+                                        <i class="fas fa-graduation-cap mr-2"></i>
+                                        @if($selectedCourseData->price == 0)
+                                            {{ __('messages.Enroll for Free') }}
+                                        @else
+                                            {{ __('messages.Enroll Now') }} - ${{ number_format($selectedCourseData->price, 2) }}
+                                        @endif
+                                    </button>
+                                </div>
+                            @else
+                                <div class="mt-6">
+                                    <span class="inline-flex items-center px-3 py-1.5 neo-border-sm neo-radius text-xs font-bold bg-surface-container-high text-on-surface">
+                                        <i class="fas fa-check-circle mr-2"></i>
+                                        {{ __('messages.Enrolled') }}
+                                    </span>
+                                </div>
+                            @endif
+                        </div>
+
+                        {{-- Curriculum --}}
+                        <div class="p-[24px]">
+                            <h4 class="text-sm font-bold uppercase tracking-widest text-on-surface mb-4">{{ __('messages.Course Curriculum') }}</h4>
+
+                            @forelse($selectedCourseData->sections->sortBy('order') as $section)
+                                <div class="mb-3 neo-border neo-radius overflow-hidden">
+                                    {{-- Section Header --}}
+                                    <div wire:click="toggleSection({{ $section->id }})"
+                                        class="flex items-center justify-between p-4 bg-surface-container-low cursor-pointer hover:bg-surface-container transition-colors">
+                                        <div class="flex items-center gap-3">
+                                            <i class="fas fa-chevron-right text-secondary text-xs transition-transform {{ $this->isSectionExpanded($section->id) ? 'rotate-90' : '' }}"></i>
+                                            <span class="font-bold text-sm text-on-surface">{{ $section->title }}</span>
+                                        </div>
+                                        <span class="text-xs text-secondary font-bold uppercase tracking-widest">{{ $section->lessons->count() }} {{ __('messages.lessons') }}</span>
+                                    </div>
+
+                                    {{-- Lessons List --}}
+                                    @if($this->isSectionExpanded($section->id))
+                                        <div class="divide-y divide-[#E5E5E5]">
+                                            @forelse($section->lessons->sortBy('order') as $lesson)
+                                                <div class="p-4 hover:bg-surface-container-high transition-colors">
+                                                    <div class="flex items-center justify-between">
+                                                        <div class="flex items-center gap-3">
+                                                            <i class="fas {{ $lesson->type === 'video' ? 'fa-play-circle text-on-surface' : ($lesson->type === 'text' ? 'fa-file-alt text-on-surface' : 'fa-list-check text-on-surface') }}"></i>
+                                                            <span class="text-sm text-on-surface">{{ $lesson->title }}</span>
+                                                        </div>
+                                                        @if($lesson->duration_seconds)
+                                                            <span class="text-xs text-secondary font-bold">{{ gmdate('i:s', $lesson->duration_seconds) }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            @empty
+                                                <div class="p-4 text-sm text-center text-secondary">
+                                                    {{ __('messages.No sections available yet.') }}
+                                                </div>
+                                            @endforelse
+
+                                            {{-- Quiz if exists --}}
+                                            @if($section->quiz)
+                                                <div class="p-4 bg-primary-container/20 neo-border-sm neo-radius m-2">
+                                                    <div class="flex items-center justify-between">
+                                                        <div class="flex items-center gap-3">
+                                                            <i class="fas fa-question-circle text-on-surface"></i>
+                                                            <span class="font-bold text-sm text-on-surface">{{ $section->quiz->title }}</span>
+                                                            <span class="px-2 py-0.5 neo-border-sm neo-radius text-[10px] font-bold bg-surface-container-high text-on-surface">{{ $section->quiz->questions->count() }} {{ __('messages.questions') }}</span>
+                                                        </div>
+                                                        <span class="text-xs font-bold text-on-surface">{{ __('messages.Pass') }}: {{ $section->quiz->pass_percentage }}%</span>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    @endif
+                                </div>
+                            @empty
+                                <div class="py-8 text-center">
+                                    <i class="fas fa-folder-open text-4xl text-secondary mb-2"></i>
+                                    <p class="text-sm text-secondary">{{ __('messages.No sections available yet.') }}</p>
+                                </div>
+                            @endforelse
+                        </div>
                     </div>
-                </div>
-            @endif
+                @else
+                    <div class="bg-surface-container-lowest neo-border neo-radius">
+                        <div class="p-12 text-center">
+                            <i class="fas fa-book-open text-6xl text-secondary mb-4"></i>
+                            <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Select a Course') }}</h3>
+                            <p class="mt-2 text-sm text-secondary">{{ __('messages.Discover new courses and continue learning') }}</p>
+                        </div>
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
 </div>
