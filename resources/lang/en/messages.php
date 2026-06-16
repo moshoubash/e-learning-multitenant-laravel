@@ -374,5 +374,7 @@ return [
     'Pass Rate' => 'Pass Rate',
     'from last month' => 'from last month',
     'Recent Submissions' => 'Recent Submissions',
-    'quizzes' => 'quizzes'
+    'quizzes' => 'quizzes',
+    'No quiz scores yet' => 'No quiz scores yet',
+    'No quiz attempts yet' => 'No quiz attempts yet',
 ];

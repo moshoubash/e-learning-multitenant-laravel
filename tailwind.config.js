@@ -12,7 +12,24 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Space Grotesk', ...defaultTheme.fontFamily.sans],
+            },
+            colors: {
+                'primary-container': '#FFD600',
+                'on-surface': '#0A0A0A',
+                'surface-container-lowest': '#FFFFFF',
+                'surface-container-low': '#F3F3F3',
+                'surface-container': '#EEEEEE',
+                'surface-container-high': '#E8E8E8',
+                'surface-container-highest': '#E2E2E2',
+                secondary: '#5f5e5e',
+                error: '#ba1a1a',
+                'on-primary-container': '#705d00',
+            },
+            borderRadius: {
+                DEFAULT: '0.125rem',
+                lg: '0.25rem',
+                full: '0.75rem',
             },
         },
     },

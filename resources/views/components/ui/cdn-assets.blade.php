@@ -1,16 +1,11 @@
 {{--
   Shared CDN asset headers for the auth and app layouts.
-  Subresource Integrity (SRI) hashes guarantee that the browser
-  will refuse to execute a CDN response whose contents don't match
-  the hash, mitigating CDN compromise / supply-chain injection.
-
-  Mitigates OWASP A08:2021 - Software and Data Integrity Failures.
 --}}
-<link rel="preconnect" href="https://fonts.bunny.net">
-<link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap"
-      rel="stylesheet"
-      integrity="sha384-niUMpAoiVQxGCgijC6I6GMtyHty4Tkh2cNtwBi7gJArQpplGBpBseMI4UXMYaEG4"
-      crossorigin="anonymous">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 
 <link rel="stylesheet"
       href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css"

@@ -1,32 +1,59 @@
-<div class="space-y-6">
-    {{-- Page header --}}
-    <div class="flex items-center justify-between">
-        <div>
-            <h1 class="text-2xl font-bold text-gray-900">{{ __('messages.Dashboard') }}</h1>
-            <p class="mt-1 text-sm text-gray-500">{{ __('messages.Welcome back,') }} {{ auth()->user()->name }}</p>
-        </div>
-    </div>
+@php
+    $icons = ['fa-graduation-cap', 'fa-check-circle', 'fa-question-circle', 'fa-chart-line'];
+@endphp
 
-    {{-- KPI cards --}}
-    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        @foreach ($kpis as $kpi)
-            <x-ui.kpi-card
-                :label="$kpi['label']"
-                :value="$kpi['value']"
-                :progress="$kpi['progress'] ?? null"
-                :color="$kpi['color'] ?? '#6366f1'"
-                :change="$kpi['change'] ?? null"
-            >
-                <x-slot name="icon">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-lg"
-                         style="background-color: {{ ($kpi['color'] ?? '#6366f1') }}1a; color: {{ $kpi['color'] ?? '#6366f1' }};">
-                        <i class="{{ $kpi['icon'] ?? 'fas fa-chart-line' }}"></i>
+<div>
+    {{-- TopAppBar --}}
+    <header class="h-16 flex justify-between items-center px-[24px] bg-surface-container-lowest border-b-2 border-on-surface sticky top-0 z-40">
+        <div>
+            <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ __('messages.Dashboard') }}</h2>
+            <p class="text-[12px] font-medium uppercase text-secondary mt-0.5 tracking-wider">{{ __('messages.Welcome back,') }} {{ auth()->user()->name }}!</p>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="w-10 h-10 neo-border neo-radius flex items-center justify-center hover:bg-surface-container-high transition-transform active:scale-95">
+                <i class="fas fa-bell"></i>
+            </button>
+            <button class="w-10 h-10 neo-border neo-radius bg-primary-container flex items-center justify-center hover:bg-surface-container-high transition-transform active:scale-95 overflow-hidden">
+                <i class="fas fa-user-circle text-on-surface"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="p-[24px] max-w-[1400px] mx-auto space-y-[24px]">
+    {{-- Content Row 1: Stats --}}
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        @foreach($kpis as $index => $kpi)
+            @if(isset($kpi['progress']))
+                {{-- Pass Rate card with SVG donut --}}
+                <div class="bg-surface-container-lowest neo-border p-[24px] neo-radius flex flex-col justify-between">
+                    <span class="text-[10px] font-bold uppercase text-secondary tracking-widest">{{ $kpi['label'] }}</span>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-[40px] font-bold text-on-surface leading-none tracking-tight">{{ $kpi['value'] }}</span>
+                        <div class="relative w-[60px] h-[60px]">
+                            @php
+                                $circumference = 2 * pi() * 26;
+                                $progress = (int) $kpi['value'];
+                                $dashoffset = $circumference * (1 - $progress / 100);
+                            @endphp
+                            <svg class="w-full h-full transform -rotate-90">
+                                <circle cx="30" cy="30" fill="transparent" r="26" stroke="#E5E2E1" stroke-width="6"></circle>
+                                <circle cx="30" cy="30" fill="transparent" r="26" stroke="#0A0A0A" stroke-dasharray="{{ $circumference }}" stroke-dashoffset="{{ $dashoffset }}" stroke-width="6"></circle>
+                            </svg>
+                        </div>
                     </div>
-                </x-slot>
-                @if(!empty($kpi['sub']))
-                    <span class="mt-2 text-xs text-gray-500">{{ $kpi['sub'] }}</span>
-                @endif
-            </x-ui.kpi-card>
+                </div>
+            @else
+                {{-- Standard stat card --}}
+                <div class="bg-surface-container-lowest neo-border p-[24px] neo-radius flex flex-col justify-between">
+                    <span class="text-[10px] font-bold uppercase text-secondary tracking-widest">{{ $kpi['label'] }}</span>
+                    <div class="flex justify-between items-end mt-4">
+                        <span class="text-[40px] font-bold text-on-surface leading-none tracking-tight">{{ $kpi['value'] }}</span>
+                        <div class="w-8 h-8 neo-border bg-surface-container-high flex items-center justify-center neo-radius">
+                            <i class="fas {{ $icons[$index] ?? 'fa-graduation-cap' }} text-sm"></i>
+                        </div>
+                    </div>
+                </div>
+            @endif
         @endforeach
     </div>
 
@@ -38,4 +65,5 @@
     @else
         @include('livewire.dashboard.partials.student')
     @endif
+</div>
 </div>
