@@ -12,9 +12,6 @@ new class extends Component
     public string $password = '';
     public string $password_confirmation = '';
 
-    /**
-     * Update the password for the currently authenticated user.
-     */
     public function updatePassword(): void
     {
         try {
@@ -24,7 +21,6 @@ new class extends Component
             ]);
         } catch (ValidationException $e) {
             $this->reset('current_password', 'password', 'password_confirmation');
-
             throw $e;
         }
 
@@ -33,45 +29,47 @@ new class extends Component
         ]);
 
         $this->reset('current_password', 'password', 'password_confirmation');
-
         $this->dispatch('password-updated');
     }
 }; ?>
 
 <section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900">
+    <header class="mb-6">
+        <h2 class="text-[16px] font-bold uppercase tracking-widest text-on-surface leading-none">
             {{ __('messages.Update Password') }}
         </h2>
-
-        <p class="mt-1 text-sm text-gray-600">
+        <p class="mt-2 text-sm text-secondary">
             {{ __('messages.Ensure your account is using a long, random password to stay secure.') }}
         </p>
     </header>
 
-    <form wire:submit="updatePassword" class="mt-6 space-y-6">
+    <form wire:submit="updatePassword" class="space-y-5">
         <div>
-            <x-input-label for="update_password_current_password" :value="__('messages.Current Password')" />
-            <x-text-input wire:model="current_password" id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
+            <label for="update_password_current_password" class="block text-xs font-bold uppercase tracking-widest text-secondary mb-1.5">{{ __('messages.Current Password') }}</label>
+            <input wire:model="current_password" id="update_password_current_password" name="current_password" type="password" autocomplete="current-password"
+                   class="block w-full px-3 py-2.5 neo-border neo-radius bg-surface-container-low text-on-surface text-sm focus:outline-none focus:bg-surface-container-lowest focus:border-on-surface transition-colors" />
             <x-input-error :messages="$errors->get('current_password')" class="mt-2" />
         </div>
 
         <div>
-            <x-input-label for="update_password_password" :value="__('messages.New Password')" />
-            <x-text-input wire:model="password" id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+            <label for="update_password_password" class="block text-xs font-bold uppercase tracking-widest text-secondary mb-1.5">{{ __('messages.New Password') }}</label>
+            <input wire:model="password" id="update_password_password" name="password" type="password" autocomplete="new-password"
+                   class="block w-full px-3 py-2.5 neo-border neo-radius bg-surface-container-low text-on-surface text-sm focus:outline-none focus:bg-surface-container-lowest focus:border-on-surface transition-colors" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <div>
-            <x-input-label for="update_password_password_confirmation" :value="__('messages.Confirm Password')" />
-            <x-text-input wire:model="password_confirmation" id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+            <label for="update_password_password_confirmation" class="block text-xs font-bold uppercase tracking-widest text-secondary mb-1.5">{{ __('messages.Confirm Password') }}</label>
+            <input wire:model="password_confirmation" id="update_password_password_confirmation" name="password_confirmation" type="password" autocomplete="new-password"
+                   class="block w-full px-3 py-2.5 neo-border neo-radius bg-surface-container-low text-on-surface text-sm focus:outline-none focus:bg-surface-container-lowest focus:border-on-surface transition-colors" />
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('messages.Save') }}</x-primary-button>
-
-            <x-action-message class="me-3" on="password-updated">
+        <div class="flex items-center gap-4 pt-2">
+            <button type="submit" class="px-5 py-2 neo-border neo-radius bg-on-surface text-white text-xs font-bold uppercase tracking-widest hover:bg-primary-container hover:text-on-surface hover:border-on-surface transition-colors">
+                {{ __('messages.Save') }}
+            </button>
+            <x-action-message class="text-sm text-on-surface font-bold" on="password-updated">
                 {{ __('messages.Saved.') }}
             </x-action-message>
         </div>
