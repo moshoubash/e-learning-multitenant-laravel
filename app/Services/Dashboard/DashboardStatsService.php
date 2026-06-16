@@ -48,28 +48,28 @@ class DashboardStatsService
                 'label' => __('messages.Total Users'),
                 'value' => number_format($totalUsers),
                 'icon' => 'fas fa-users',
-                'color' => '#6366f1',
+                'color' => '#0A0A0A',
                 'change' => $this->percentChange($newUsersThisMonth, $newUsersLastMonth),
             ],
             [
                 'label' => __('messages.Total Courses'),
                 'value' => number_format($totalCourses),
                 'icon' => 'fas fa-book-open',
-                'color' => '#10b981',
+                'color' => '#FFD600',
                 'change' => $this->percentChange($newCoursesThisMonth, $newCoursesLastMonth),
             ],
             [
                 'label' => __('messages.Total Enrollments'),
                 'value' => number_format($totalEnrollments),
                 'icon' => 'fas fa-graduation-cap',
-                'color' => '#f59e0b',
+                'color' => '#705d00',
                 'change' => $this->percentChange($newEnrollmentsThisMonth, $newEnrollmentsLastMonth),
             ],
             [
                 'label' => __('messages.Quiz Attempts'),
                 'value' => number_format($totalQuizAttempts),
                 'icon' => 'fas fa-question-circle',
-                'color' => '#0ea5e9',
+                'color' => '#5f5e5e',
                 'change' => null,
                 'sub' => number_format($totalQuizzes) . ' ' . __('messages.quizzes'),
             ],
@@ -82,7 +82,7 @@ class DashboardStatsService
 
         $labels = [];
         $data = [];
-        $palette = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#0ea5e9', '#8b5cf6'];
+        $palette = ['#FFD600', '#0A0A0A', '#5f5e5e', '#ba1a1a', '#705d00', '#E2E2E2'];
 
         foreach ($roles as $index => $role) {
             $labels[] = ucfirst($role->name);
@@ -117,12 +117,12 @@ class DashboardStatsService
                 [
                     'label' => __('messages.Enrollments'),
                     'data' => $this->monthlyCounts(Enrollment::class, 'enrolled_at'),
-                    'color' => '#6366f1',
+                    'color' => '#0A0A0A',
                 ],
                 [
                     'label' => __('messages.New Users'),
                     'data' => $this->monthlyCounts(User::class, 'created_at'),
-                    'color' => '#10b981',
+                    'color' => '#FFD600',
                 ],
             ],
         ];
@@ -136,7 +136,7 @@ class DashboardStatsService
 
         $labels = [];
         $data = [];
-        $colors = ['#10b981', '#f59e0b', '#9ca3af'];
+        $colors = ['#FFD600', '#705d00', '#E2E2E2'];
 
         $order = ['published', 'draft', 'archived'];
         foreach ($order as $i => $status) {
@@ -210,27 +210,27 @@ class DashboardStatsService
                 'label' => __('messages.My Courses'),
                 'value' => number_format($totalCourses),
                 'icon' => 'fas fa-book-open',
-                'color' => '#6366f1',
+                'color' => '#0A0A0A',
                 'sub' => number_format($publishedCourses) . ' ' . __('messages.published'),
             ],
             [
                 'label' => __('messages.My Students'),
                 'value' => number_format($totalStudents),
                 'icon' => 'fas fa-user-graduate',
-                'color' => '#10b981',
+                'color' => '#FFD600',
                 'sub' => number_format($totalEnrollments) . ' ' . __('messages.enrollments'),
             ],
             [
                 'label' => __('messages.My Quizzes'),
                 'value' => number_format($totalQuizzes),
                 'icon' => 'fas fa-question-circle',
-                'color' => '#0ea5e9',
+                'color' => '#705d00',
             ],
             [
                 'label' => __('messages.Pending Review'),
                 'value' => number_format($pendingSubmissions),
                 'icon' => 'fas fa-inbox',
-                'color' => '#f59e0b',
+                'color' => '#5f5e5e',
             ],
         ];
     }
@@ -258,7 +258,7 @@ class DashboardStatsService
                 [
                     'label' => __('messages.Students'),
                     'data' => $data,
-                    'color' => '#6366f1',
+                    'color' => '#0A0A0A',
                 ],
             ],
         ];
@@ -284,7 +284,7 @@ class DashboardStatsService
                 [
                     'label' => __('messages.Quiz Attempts'),
                     'data' => $data,
-                    'color' => '#0ea5e9',
+                    'color' => '#5f5e5e',
                 ],
             ],
         ];
@@ -318,7 +318,7 @@ class DashboardStatsService
                 [
                     'label' => __('messages.Submissions'),
                     'data' => $data,
-                    'backgroundColor' => ['#10b981', '#f59e0b'],
+                    'backgroundColor' => ['#FFD600', '#5f5e5e'],
                 ],
             ],
         ];
@@ -381,28 +381,28 @@ class DashboardStatsService
                 'label' => __('messages.Enrolled Courses'),
                 'value' => number_format($totalEnrolled),
                 'icon' => 'fas fa-graduation-cap',
-                'color' => '#6366f1',
+                'color' => '#0A0A0A',
                 'sub' => number_format($inProgress) . ' ' . __('messages.In Progress'),
             ],
             [
                 'label' => __('messages.Completed'),
                 'value' => number_format($completed),
                 'icon' => 'fas fa-check-circle',
-                'color' => '#10b981',
+                'color' => '#FFD600',
                 'sub' => number_format($lessonsCompleted) . ' ' . __('messages.lessons'),
             ],
             [
                 'label' => __('messages.Quiz Attempts'),
                 'value' => number_format($totalAttempts),
                 'icon' => 'fas fa-question-circle',
-                'color' => '#0ea5e9',
+                'color' => '#5f5e5e',
                 'sub' => number_format($passedAttempts) . ' ' . __('messages.Passed'),
             ],
             [
                 'label' => __('messages.Pass Rate'),
                 'value' => $passRate . '%',
                 'icon' => 'fas fa-chart-line',
-                'color' => '#f59e0b',
+                'color' => '#705d00',
                 'progress' => $passRate,
             ],
         ];
@@ -434,7 +434,7 @@ class DashboardStatsService
                 [
                     'label' => __('messages.Lessons Completed'),
                     'data' => $data,
-                    'color' => '#6366f1',
+                    'color' => '#0A0A0A',
                 ],
             ],
         ];
@@ -463,7 +463,7 @@ class DashboardStatsService
                 [
                     'label' => __('messages.Score'),
                     'data' => $data,
-                    'color' => '#10b981',
+                    'color' => '#FFD600',
                 ],
             ],
         ];
