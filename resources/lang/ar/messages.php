@@ -403,4 +403,5 @@ return [
     'quizzes' => 'الاختبارات',
     'No quiz scores yet' => 'لا توجد نتائج اختبارات بعد',
     'No quiz attempts yet' => 'لا توجد محاولات اختبار بعد',
+    'Correct' => 'صحيح',
 ];

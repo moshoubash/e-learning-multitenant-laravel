@@ -377,4 +377,5 @@ return [
     'quizzes' => 'quizzes',
     'No quiz scores yet' => 'No quiz scores yet',
     'No quiz attempts yet' => 'No quiz attempts yet',
+    'Correct' => 'Correct',
 ];

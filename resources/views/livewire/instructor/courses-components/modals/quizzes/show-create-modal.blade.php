@@ -1,35 +1,33 @@
 @if($showQuizCreateModal)
     <div class="fixed inset-0 z-50 overflow-y-auto" x-data="{ show: true }" x-show="show">
         <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" wire:click="closeQuizModal"></div>
+            <div class="fixed inset-0 bg-on-surface/60 transition-opacity" wire:click="closeQuizModal"></div>
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-            <div
-                class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('messages.Create Quiz for Section') }}</h3>
+            <div class="inline-block overflow-hidden ltr:text-left rtl:text-right align-bottom transition-all transform bg-surface-container-lowest neo-border neo-radius sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface mb-4">{{ __('messages.Create Quiz for Section') }}</h3>
                     <form>
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('messages.Quiz Title') }}</label>
+                            <label class="block mb-1 text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Quiz Title') }}</label>
                             <input type="text" wire:model.lazy="quizCreateTitle"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
-                            @error('quizCreateTitle') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                                class="w-full px-3 py-2 neo-border-sm neo-radius bg-surface-container-low text-on-surface text-sm focus:outline-none focus:ring-0 placeholder:text-secondary">
+                            @error('quizCreateTitle') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('messages.Pass Percentage') }}</label>
+                            <label class="block mb-1 text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Pass Percentage') }}</label>
                             <input type="number" wire:model.lazy="quizCreatePassPercentage" min="1" max="100"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
-                            @error('quizCreatePassPercentage') <span class="text-red-500 text-xs">{{ $message }}</span>
-                            @enderror
+                                class="w-full px-3 py-2 neo-border-sm neo-radius bg-surface-container-low text-on-surface text-sm focus:outline-none focus:ring-0">
+                            @error('quizCreatePassPercentage') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
                         </div>
                     </form>
                 </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <div class="px-4 py-3 bg-surface-container-low sm:px-6 sm:flex sm:flex-row-reverse">
                     <button wire:click="storeQuiz" type="button"
-                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                        class="inline-flex justify-center w-full px-4 py-2 neo-border neo-radius bg-primary-container text-on-surface text-xs font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors sm:ltr:ml-3 sm:rtl:mr-3 sm:w-auto">
                         {{ __('messages.Create') }}
                     </button>
                     <button wire:click="closeQuizModal" type="button"
-                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        class="inline-flex justify-center w-full px-4 py-2 mt-3 neo-border-sm neo-radius text-xs font-bold text-on-surface bg-surface-container hover:bg-on-surface hover:text-white transition-colors sm:mt-0 sm:ltr:ml-3 sm:rtl:mr-3 sm:w-auto">
                         {{ __('messages.Cancel') }}
                     </button>
                 </div>
