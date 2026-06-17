@@ -1,15 +1,15 @@
 <div>
     <header class="h-16 flex justify-between items-center px-[24px] bg-surface-container-lowest border-b-2 border-on-surface sticky top-0 z-40">
         <div class="flex items-center gap-4">
-            <a href="{{ route('tenant.student.courses') }}" class="text-secondary hover:text-on-surface transition-colors">
-                <i class="fas fa-arrow-left text-lg"></i>
+            <a href="{{ route('tenant.student.courses') }}" class="transition-colors text-secondary hover:text-on-surface">
+                <i class="text-lg fas fa-arrow-left"></i>
             </a>
             <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ $course->title ?? __('messages.Course') }}</h2>
         </div>
         <div class="flex items-center gap-3">
             <span class="text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Progress') }}: {{ $progressPercent }}%</span>
-            <div class="w-32 h-2 neo-border-sm neo-radius bg-surface-container overflow-hidden">
-                <div class="h-full bg-on-surface neo-radius transition-all duration-300" style="width: {{ $progressPercent }}%"></div>
+            <div class="w-32 h-2 overflow-hidden neo-border-sm neo-radius bg-surface-container">
+                <div class="h-full transition-all duration-300 bg-on-surface neo-radius" style="width: {{ $progressPercent }}%"></div>
             </div>
         </div>
     </header>
@@ -18,7 +18,7 @@
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
             {{-- Video/Content Area --}}
             <div class="lg:col-span-2">
-                <div class="bg-surface-container-lowest neo-border neo-radius overflow-hidden">
+                <div class="overflow-hidden bg-surface-container-lowest neo-border neo-radius">
                     @if($selectedAssignment)
                         <div class="p-[24px]">
                             <div class="flex items-center justify-between mb-4">
@@ -27,14 +27,14 @@
                                     <p class="text-xs text-secondary">{{ $selectedAssignment->section->title ?? __('messages.Section') }}</p>
                                 </div>
                                 <button wire:click="$set('selectedAssignment', null)"
-                                    class="px-4 py-2 neo-border-sm neo-radius text-xs font-bold text-on-surface bg-surface-container hover:bg-on-surface hover:text-white transition-colors">
+                                    class="px-4 py-2 text-xs font-bold transition-colors neo-border-sm neo-radius text-on-surface bg-surface-container hover:bg-on-surface hover:text-white">
                                     <i class="fas fa-arrow-left ltr:mr-2 rtl:ml-2"></i>
                                     {{ __('messages.Back') }}
                                 </button>
                             </div>
 
                             {{-- Assignment Status Info --}}
-                            <div class="p-4 neo-border-sm neo-radius bg-surface-container-low mb-4">
+                            <div class="p-4 mb-4 neo-border-sm neo-radius bg-surface-container-low">
                                 <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
                                     @if($selectedAssignment->max_score)
                                         <div class="text-center">
@@ -70,7 +70,7 @@
                             {{-- Description --}}
                             @if($selectedAssignment->description)
                                 <div class="mb-4 text-sm text-on-surface">
-                                    <h4 class="text-xs font-bold uppercase tracking-widest text-on-surface mb-2">{{ __('messages.Description') }}</h4>
+                                    <h4 class="mb-2 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Description') }}</h4>
                                     {!! nl2br(e($selectedAssignment->description)) !!}
                                 </div>
                             @endif
@@ -78,15 +78,15 @@
                             {{-- Instructions --}}
                             @if($selectedAssignment->instructions)
                                 <div class="mb-4 text-sm text-on-surface">
-                                    <h4 class="text-xs font-bold uppercase tracking-widest text-on-surface mb-2">{{ __('messages.Instructions') }}</h4>
+                                    <h4 class="mb-2 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Instructions') }}</h4>
                                     {!! nl2br(e($selectedAssignment->instructions)) !!}
                                 </div>
                             @endif
 
                             {{-- Attachments --}}
                             @if($selectedAssignment->attachments && $selectedAssignment->attachments->count() > 0)
-                                <div class="p-4 neo-border-sm neo-radius bg-primary-container/20 mb-4">
-                                    <h4 class="text-xs font-bold uppercase tracking-widest text-on-surface mb-3">
+                                <div class="p-4 mb-4 neo-border-sm neo-radius bg-primary-container/20">
+                                    <h4 class="mb-3 text-xs font-bold tracking-widest uppercase text-on-surface">
                                         <i class="fas fa-paperclip ltr:mr-2 rtl:ml-2"></i>
                                         {{ __('messages.Attachments') }} ({{ $selectedAssignment->attachments->count() }})
                                     </h4>
@@ -116,8 +116,8 @@
                             @endphp
 
                             @if($userSubmission)
-                                <div class="p-4 neo-border-sm neo-radius bg-primary-container/20 mb-4">
-                                    <h4 class="text-xs font-bold uppercase tracking-widest text-on-surface mb-3">
+                                <div class="p-4 mb-4 neo-border-sm neo-radius bg-primary-container/20">
+                                    <h4 class="mb-3 text-xs font-bold tracking-widest uppercase text-on-surface">
                                         <i class="fas fa-check-circle ltr:mr-2 rtl:ml-2"></i>
                                         {{ __('messages.Your Submission') }}
                                     </h4>
@@ -151,14 +151,14 @@
                                                         {{ __('messages.Score') }}: {{ $userSubmission->score }}/{{ $selectedAssignment->max_score ?? 100 }}
                                                     </span>
                                                     @if($selectedAssignment->max_score)
-                                                        <span class="text-xs text-secondary font-bold">
+                                                        <span class="text-xs font-bold text-secondary">
                                                             ({{ round(($userSubmission->score / $selectedAssignment->max_score) * 100) }}%)
                                                         </span>
                                                     @endif
                                                 </div>
                                                 @if($userSubmission->feedback)
                                                     <div class="mt-3">
-                                                        <strong class="text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Feedback') }}:</strong>
+                                                        <strong class="text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Feedback') }}:</strong>
                                                         <p class="mt-1 text-sm text-on-surface">{!! nl2br(e($userSubmission->feedback)) !!}</p>
                                                     </div>
                                                 @endif
@@ -178,33 +178,33 @@
                                     @if(!$userSubmission)
                                         @if($showSubmissionForm)
                                             <div class="p-4 neo-border-sm neo-radius bg-surface-container-low">
-                                                <h4 class="text-xs font-bold uppercase tracking-widest text-on-surface mb-4">{{ __('messages.Submit Your Work') }}</h4>
+                                                <h4 class="mb-4 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Submit Your Work') }}</h4>
                                                 <form wire:submit="submitAssignment">
                                                     <div class="mb-4">
-                                                        <label class="block mb-2 text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Content') }}</label>
+                                                        <label class="block mb-2 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Content') }}</label>
                                                         <textarea wire:model.lazy="submissionContent" rows="5"
-                                                            class="w-full px-3 py-2 neo-border-sm neo-radius bg-surface-container-lowest text-on-surface text-sm placeholder:text-secondary focus:outline-none focus:ring-0"
+                                                            class="w-full px-3 py-2 text-sm neo-border-sm neo-radius bg-surface-container-lowest text-on-surface placeholder:text-secondary focus:outline-none focus:ring-0"
                                                             placeholder="{{ __('messages.Enter your submission content') }}"></textarea>
-                                                        @error('submissionContent') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
+                                                        @error('submissionContent') <span class="block mt-1 text-xs font-bold text-error">{{ $message }}</span> @enderror
                                                     </div>
                                                     <div class="mb-4">
-                                                        <label class="block mb-2 text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Files') }}</label>
+                                                        <label class="block mb-2 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Files') }}</label>
                                                         <input type="file" wire:model="submissionFiles" multiple
-                                                            class="w-full px-3 py-2 neo-border-sm neo-radius bg-surface-container-lowest text-on-surface text-sm file:neo-border-sm file:neo-radius file:bg-surface-container file:text-on-surface file:text-xs file:font-bold file:uppercase file:tracking-widest file:px-3 file:py-1 file:mr-3 file:cursor-pointer focus:outline-none focus:ring-0">
-                                                        @error('submissionFiles.*') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
+                                                            class="w-full px-3 py-2 text-sm neo-border-sm neo-radius bg-surface-container-lowest text-on-surface file:neo-border-sm file:neo-radius file:bg-surface-container file:text-on-surface file:text-xs file:font-bold file:uppercase file:tracking-widest file:px-3 file:py-1 file:mr-3 file:cursor-pointer focus:outline-none focus:ring-0">
+                                                        @error('submissionFiles.*') <span class="block mt-1 text-xs font-bold text-error">{{ $message }}</span> @enderror
                                                         @if(count($submissionFiles) > 0)
-                                                            <div class="mt-2 text-xs text-secondary font-bold">
+                                                            <div class="mt-2 text-xs font-bold text-secondary">
                                                                 {{ count($submissionFiles) }} {{ __('messages.file(s) selected') }}
                                                             </div>
                                                         @endif
                                                     </div>
                                                     <div class="flex gap-3">
                                                         <button type="submit"
-                                                            class="px-4 py-2 neo-border neo-radius bg-primary-container text-on-surface text-xs font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
+                                                            class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-surface hover:bg-on-surface hover:text-white">
                                                             {{ __('messages.Submit Assignment') }}
                                                         </button>
                                                         <button type="button" wire:click="toggleSubmissionForm"
-                                                            class="px-4 py-2 neo-border-sm neo-radius text-xs font-bold text-on-surface bg-surface-container hover:bg-on-surface hover:text-white transition-colors">
+                                                            class="px-4 py-2 text-xs font-bold transition-colors neo-border-sm neo-radius text-on-surface bg-surface-container hover:bg-on-surface hover:text-white">
                                                             {{ __('messages.Cancel') }}
                                                         </button>
                                                     </div>
@@ -212,7 +212,7 @@
                                             </div>
                                         @else
                                             <button wire:click="toggleSubmissionForm"
-                                                class="w-full px-4 py-3 neo-border neo-radius bg-primary-container text-on-surface text-xs font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
+                                                class="w-full px-4 py-3 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-surface hover:bg-on-surface hover:text-white">
                                                 <i class="fas fa-upload ltr:mr-2 rtl:ml-2"></i>
                                                 {{ __('messages.Submit Assignment') }}
                                             </button>
@@ -231,7 +231,7 @@
                     @elseif($selectedLesson)
                         @if($selectedLesson->type === 'video' && $selectedLesson->video_url)
                             <div class="aspect-video bg-on-surface" wire:ignore.self>
-                                <video class="js-lesson-video w-full h-full" data-lesson-id="{{ $selectedLesson->id }}" playsinline controls preload="metadata">
+                                <video class="w-full h-full js-lesson-video" data-lesson-id="{{ $selectedLesson->id }}" playsinline controls preload="metadata">
                                     <source src="{{ $selectedLesson->video_url }}" type="video/mp4" />
                                 </video>
                             </div>
@@ -269,12 +269,12 @@
                                 </div>
                                 @if(!$this->isLessonCompleted($selectedLesson->id))
                                     <button wire:click="markLessonComplete"
-                                        class="px-4 py-2 neo-border neo-radius bg-primary-container text-on-surface text-xs font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
+                                        class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-surface hover:bg-on-surface hover:text-white">
                                         <i class="fas fa-check ltr:mr-2 rtl:ml-2"></i>
                                         {{ __('messages.Mark Complete') }}
                                     </button>
                                 @else
-                                    <span class="inline-flex items-center px-3 py-1 neo-border-sm neo-radius bg-surface-container-high text-on-surface text-xs font-bold">
+                                    <span class="inline-flex items-center px-3 py-1 text-xs font-bold neo-border-sm neo-radius bg-surface-container-high text-on-surface">
                                         <i class="fas fa-check-circle ltr:mr-1 rtl:ml-1"></i>
                                         {{ __('messages.Completed') }}
                                     </span>
@@ -313,7 +313,7 @@
             <div class="lg:col-span-1">
                 <div class="sticky top-[100px] bg-surface-container-lowest neo-border neo-radius overflow-hidden">
                     <div class="p-4 border-b-2 border-on-surface bg-surface-container-low">
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface">
+                        <h3 class="text-xs font-bold tracking-widest uppercase text-on-surface">
                             <i class="fas fa-list ltr:mr-2 rtl:ml-2"></i>
                             {{ __('messages.Course Content') }}
                         </h3>
@@ -323,7 +323,7 @@
                         @forelse($course->sections as $section)
                             <div class="border-b border-on-surface/10">
                                 <div wire:click="toggleSection({{ $section->id }})"
-                                    class="flex items-center justify-between p-4 cursor-pointer bg-surface-container-low hover:bg-surface-container transition-colors">
+                                    class="flex items-center justify-between p-4 transition-colors cursor-pointer bg-surface-container-low hover:bg-surface-container">
                                     <div class="flex items-center">
                                         <i class="fas fa-chevron-right text-secondary text-xs transition-transform ltr:mr-2 rtl:ml-2 {{ $this->isSectionExpanded($section->id) ? 'rotate-90' : '' }}"></i>
                                         <span class="text-xs font-bold text-on-surface">{{ $section->title }}</span>
@@ -335,18 +335,18 @@
                                     <div class="divide-y divide-on-surface/5">
                                         @foreach($section->lessons as $lesson)
                                             <div wire:click="selectLesson({{ $lesson->id }})"
-                                                class="p-3 cursor-pointer hover:bg-surface-container-high transition-colors"
+                                                class="p-3 transition-colors cursor-pointer hover:bg-surface-container-high"
                                                 style="{{ $selectedLesson && $selectedLesson->id === $lesson->id ? 'background-color: #FFD600; border-left: 4px solid #0A0A0A;' : '' }}">
                                                 <div class="flex items-center justify-between">
                                                     <div class="flex items-center">
                                                         @if($this->isLessonCompleted($lesson->id))
-                                                            <i class="fas fa-check-circle text-on-surface ltr:mr-3 rtl:ml-3 text-xs"></i>
+                                                            <i class="text-xs fas fa-check-circle text-on-surface ltr:mr-3 rtl:ml-3"></i>
                                                         @elseif($lesson->type === 'video')
-                                                            <i class="fas fa-play-circle text-secondary ltr:mr-3 rtl:ml-3 text-xs"></i>
+                                                            <i class="text-xs fas fa-play-circle text-secondary ltr:mr-3 rtl:ml-3"></i>
                                                         @elseif($lesson->type === 'text')
-                                                            <i class="fas fa-file-alt text-secondary ltr:mr-3 rtl:ml-3 text-xs"></i>
+                                                            <i class="text-xs fas fa-file-alt text-secondary ltr:mr-3 rtl:ml-3"></i>
                                                         @else
-                                                            <i class="fas fa-file text-secondary ltr:mr-3 rtl:ml-3 text-xs"></i>
+                                                            <i class="text-xs fas fa-file text-secondary ltr:mr-3 rtl:ml-3"></i>
                                                         @endif
                                                         <span class="text-xs {{ $selectedLesson && $selectedLesson->id === $lesson->id ? 'font-bold text-on-surface' : 'text-on-surface' }}">
                                                             {{ $lesson->title }}
@@ -360,14 +360,14 @@
                                         @endforeach
 
                                         @if($section->assignments && $section->assignments->count() > 0)
-                                            <div class="pt-3 mt-3 border-t border-on-surface/10 px-3 pb-2">
+                                            <div class="px-3 pt-3 pb-2 mt-3 border-t border-on-surface/10">
                                                 <div class="text-[10px] font-bold uppercase tracking-widest text-secondary mb-2">{{ __('messages.Assignments') }}</div>
                                                 @foreach($section->assignments as $assignment)
                                                     <div wire:click="selectAssignment({{ $assignment->id }})"
                                                         class="p-3 cursor-pointer hover:bg-surface-container-high transition-colors {{ $selectedAssignment && $selectedAssignment->id === $assignment->id ? 'bg-primary-container' : '' }}">
                                                         <div class="flex items-center justify-between">
                                                             <div class="flex items-center gap-2">
-                                                                <i class="fas fa-tasks text-secondary text-xs"></i>
+                                                                <i class="text-xs fas fa-tasks text-secondary"></i>
                                                                 <span class="text-xs text-on-surface">{{ $assignment->title }}</span>
                                                             </div>
                                                             <span class="text-[10px] text-secondary text-xs">{{ $assignment->order }}</span>
@@ -378,22 +378,21 @@
                                         @endif
 
                                         @if($section->quiz)
-                                            <div class="p-3 neo-border-sm neo-radius bg-primary-container/20 m-2">
-                                                <a href="{{ route('tenant.student.quiz', $section->quiz->id) }}"
-                                                    class="flex items-center justify-between">
-                                                    <div class="flex items-center">
-                                                        <i class="fas fa-clipboard-list text-on-surface ltr:mr-3 rtl:ml-3 text-xs"></i>
-                                                        <span class="text-xs font-bold text-on-surface">{{ $section->quiz->title }}</span>
-                                                    </div>
-                                                    <i class="fas fa-external-link-alt text-secondary text-[10px]"></i>
-                                                </a>
-                                            </div>
+                                            <a href="{{ route('tenant.student.quiz', $section->quiz->id) }}"
+                                                wire:navigate
+                                                class="flex items-center justify-between p-3 mb-3 ml-3 mr-3 transition-colors cursor-pointer hover:bg-surface-container-high">
+                                                <div class="flex items-center">
+                                                    <i class="text-xs fas fa-clipboard-list text-secondary ltr:mr-3 rtl:ml-3"></i>
+                                                    <span class="text-xs text-on-surface">{{ $section->quiz->title }}</span>
+                                                </div>
+                                                <i class="fas fa-chevron-right text-secondary text-[10px]"></i>
+                                            </a>
                                         @endif
                                     </div>
                                 @endif
                             </div>
                         @empty
-                            <div class="p-6 text-center text-xs text-secondary">
+                            <div class="p-6 text-xs text-center text-secondary">
                                 <p>{{ __('messages.No content available yet.') }}</p>
                             </div>
                         @endforelse

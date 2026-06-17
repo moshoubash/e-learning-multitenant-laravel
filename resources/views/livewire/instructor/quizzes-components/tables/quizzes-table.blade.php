@@ -23,7 +23,7 @@
             <tbody class="divide-y divide-[#E5E5E5] rtl:text-right">
                 @foreach ($quizzes as $quiz)
                     <tr>
-                        <td class="pl-4 text-center">
+                        <td class="text-center rtl:pr-4 ltr:pl-4">
                             <button wire:click="toggleQuizExpand({{ $quiz->id }})" class="transition-colors text-secondary hover:text-on-surface">
                                 <i class="fas {{ $quiz->questions && count($quiz->questions) > 0 ? ($expandedQuizzes && in_array($quiz->id, $expandedQuizzes) ? 'fa-chevron-up' : 'fa-chevron-down') : 'fa-minus' }}"></i>
                             </button>

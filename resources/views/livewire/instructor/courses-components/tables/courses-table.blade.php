@@ -22,7 +22,7 @@
             <tbody class="divide-y divide-[#E5E5E5] rtl:text-right">
                 @foreach ($courses as $course)
                     <tr>
-                        <td class="pl-4 text-center">
+                        <td class="text-center rtl:pr-4 ltr:pl-4">
                             <button wire:click="toggleCourseExpand({{ $course->id }})"
                                 class="transition-colors text-secondary hover:text-on-surface">
                                 <i class="fas {{ $course->sections && count($course->sections) > 0 ? ($expandedCourses && in_array($course->id, $expandedCourses) ? 'fa-chevron-up' : 'fa-chevron-down') : 'fa-minus' }}"></i>
