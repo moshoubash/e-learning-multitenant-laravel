@@ -9,10 +9,12 @@
             <span class="text-xs text-secondary ltr:ml-2 rtl:mr-2">({{ __('messages.Order') }}: {{ $question->order }})</span>
         </div>
         <div class="flex items-center gap-2">
-            <button wire:click="openOptionCreateModal({{ $question->id }})"
-                class="w-7 h-7 neo-border-sm neo-radius flex items-center justify-center text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors" title="Add Option">
-                <i class="fas fa-plus-circle text-xs"></i>
-            </button>
+            @if($question->type !== 'true_false')
+                <button wire:click="openOptionCreateModal({{ $question->id }})"
+                    class="w-7 h-7 neo-border-sm neo-radius flex items-center justify-center text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors" title="Add Option">
+                    <i class="fas fa-plus-circle text-xs"></i>
+                </button>
+            @endif
             <button wire:click="openQuestionEditModal({{ $question->id }})"
                 class="w-7 h-7 neo-border-sm neo-radius flex items-center justify-center text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors" title="Edit">
                 <i class="fas fa-edit text-xs"></i>

@@ -16,9 +16,13 @@
                         <div class="mb-4">
                             <label class="flex items-center">
                                 <input type="checkbox" wire:model.lazy="optionCreateIsCorrect"
-                                    class="w-4 h-4 neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0 ltr:mr-2 rtl:ml-2">
+                                    class="w-4 h-4 neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0 ltr:mr-2 rtl:ml-2"
+                                    {{ $optionCreateQuestionType === 'single' && $optionCreateQuestionHasCorrect ? 'disabled' : '' }}>
                                 <span class="text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Mark as correct answer') }}</span>
                             </label>
+                            @if($optionCreateQuestionType === 'single' && $optionCreateQuestionHasCorrect)
+                                <p class="mt-1 text-xs text-secondary italic">{{ __('messages.This question already has a correct answer. Uncheck the current correct option first.') }}</p>
+                            @endif
                         </div>
                     </form>
                 </div>

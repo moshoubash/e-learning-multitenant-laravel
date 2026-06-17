@@ -404,4 +404,6 @@ return [
     'No quiz scores yet' => 'لا توجد نتائج اختبارات بعد',
     'No quiz attempts yet' => 'لا توجد محاولات اختبار بعد',
     'Correct' => 'صحيح',
+    'True/False questions cannot have additional options.' => 'لا يمكن إضافة خيارات إضافية للأسئلة من نوع صح/خطأ.',
+    'This question already has a correct answer. Uncheck the current correct option first.' => 'هذا السؤال لديه بالفعل إجابة صحيحة. قم بإلغاء تحديد الخيار الصحيح الحالي أولاً.',
 ];

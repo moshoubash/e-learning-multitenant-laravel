@@ -378,4 +378,6 @@ return [
     'No quiz scores yet' => 'No quiz scores yet',
     'No quiz attempts yet' => 'No quiz attempts yet',
     'Correct' => 'Correct',
+    'True/False questions cannot have additional options.' => 'True/False questions cannot have additional options.',
+    'This question already has a correct answer. Uncheck the current correct option first.' => 'This question already has a correct answer. Uncheck the current correct option first.',
 ];

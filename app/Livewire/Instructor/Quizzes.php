@@ -81,9 +81,13 @@ class Quizzes extends Component
     // Option form fields
     public $optionCreateText = '';
     public $optionCreateIsCorrect = false;
+    public $optionCreateQuestionType = 'single';
+    public $optionCreateQuestionHasCorrect = false;
 
     public $optionEditText = '';
     public $optionEditIsCorrect = false;
+    public $optionEditQuestionType = 'single';
+    public $optionEditQuestionHasCorrect = false;
 
     //  QUIZ METHODS
 
@@ -284,11 +288,22 @@ class Quizzes extends Component
             return;
         }
 
-        $this->questionManager()->createQuestion($this->selectedQuizId, [
+        $question = $this->questionManager()->createQuestion($this->selectedQuizId, [
             'question' => $this->questionCreateText,
             'type' => $this->questionCreateType,
             'order' => $this->questionCreateOrder,
         ]);
+
+        if ($this->questionCreateType === 'true_false') {
+            $this->optionManager()->createOption($question->id, [
+                'option_text' => 'True',
+                'is_correct' => true,
+            ]);
+            $this->optionManager()->createOption($question->id, [
+                'option_text' => 'False',
+                'is_correct' => false,
+            ]);
+        }
 
         $this->closeQuestionModal();
         Toaster::success('Question created successfully!');
@@ -303,11 +318,33 @@ class Quizzes extends Component
             return;
         }
 
+        $oldType = $this->editingQuestion->type;
+
         $this->questionManager()->updateQuestion($this->editingQuestion, [
             'question' => $this->questionEditText,
             'type' => $this->questionEditType,
             'order' => $this->questionEditOrder,
         ]);
+
+        if ($this->questionEditType === 'true_false' && $oldType !== 'true_false') {
+            $this->editingQuestion->options()->delete();
+            $this->optionManager()->createOption($this->editingQuestion->id, [
+                'option_text' => 'True',
+                'is_correct' => true,
+            ]);
+            $this->optionManager()->createOption($this->editingQuestion->id, [
+                'option_text' => 'False',
+                'is_correct' => false,
+            ]);
+        }
+
+        if ($this->questionEditType === 'single' && $this->optionManager()->countOptions($this->editingQuestion->id) > 1) {
+            $correctCount = $this->editingQuestion->options()->where('is_correct', true)->count();
+            if ($correctCount > 1) {
+                $firstCorrect = $this->editingQuestion->options()->where('is_correct', true)->first();
+                $this->editingQuestion->options()->where('is_correct', true)->where('id', '!=', $firstCorrect->id)->update(['is_correct' => false]);
+            }
+        }
 
         $this->closeQuestionModal();
         Toaster::success('Question updated successfully!');
@@ -326,7 +363,21 @@ class Quizzes extends Component
 
     public function openOptionCreateModal($questionId): void
     {
+        $question = $this->questionManager()->findQuestionWithOptions($questionId);
+
+        if (! $question) {
+            Toaster::error(__('messages.Question not found.'));
+            return;
+        }
+
+        if ($question->type === 'true_false') {
+            Toaster::error(__('messages.True/False questions cannot have additional options.'));
+            return;
+        }
+
         $this->selectedQuestionId = $questionId;
+        $this->optionCreateQuestionType = $question->type;
+        $this->optionCreateQuestionHasCorrect = $question->options->where('is_correct', true)->count() > 0;
         $this->resetOptionCreateForm();
         $this->showOptionCreateModal = true;
     }
@@ -340,8 +391,15 @@ class Quizzes extends Component
             return;
         }
 
+        $this->editingOption->loadMissing('question.options');
+
         $this->optionEditText = $this->editingOption->option_text;
         $this->optionEditIsCorrect = $this->editingOption->is_correct;
+        $this->optionEditQuestionType = $this->editingOption->question->type;
+        $this->optionEditQuestionHasCorrect = $this->editingOption->question->options
+            ->where('is_correct', true)
+            ->where('id', '!=', $id)
+            ->count() > 0;
         $this->showOptionEditModal = true;
     }
 
@@ -372,11 +430,23 @@ class Quizzes extends Component
         $this->deletingOption = null;
         $this->optionEditText = '';
         $this->optionEditIsCorrect = false;
+        $this->optionEditQuestionType = 'single';
+        $this->optionEditQuestionHasCorrect = false;
     }
 
     public function storeOption(): void
     {
         $this->validate($this->optionCreateRules());
+
+        $question = $this->questionManager()->findById($this->selectedQuestionId);
+
+        if ($question && $question->type === 'single' && $this->optionCreateIsCorrect) {
+            $this->optionManager()->unmarkAllCorrect($this->selectedQuestionId);
+        }
+
+        if ($question && $question->type === 'single' && $this->optionManager()->hasCorrectOption($this->selectedQuestionId)) {
+            $this->optionCreateIsCorrect = false;
+        }
 
         $this->optionManager()->createOption($this->selectedQuestionId, [
             'option_text' => $this->optionCreateText,
@@ -394,6 +464,12 @@ class Quizzes extends Component
         if (! $this->editingOption) {
             Toaster::error(__('messages.Option not found.'));
             return;
+        }
+
+        $this->editingOption->loadMissing('question');
+
+        if ($this->editingOption->question->type === 'single' && $this->optionEditIsCorrect) {
+            $this->optionManager()->unmarkAllCorrect($this->editingOption->question_id);
         }
 
         $this->optionManager()->updateOption($this->editingOption, [
