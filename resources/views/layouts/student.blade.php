@@ -14,11 +14,11 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="flex min-h-screen font-sans antialiased bg-surface-container-low selection:bg-primary-container selection:text-on-surface">
+<body class="flex h-screen overflow-hidden font-sans antialiased bg-surface-container-low selection:bg-primary-container selection:text-on-surface">
 
     <x-student.sidebar />
 
-    <main class="ltr:ml-[240px] rtl:mr-[240px] flex-1 min-h-screen">
+    <main class="ltr:ml-[240px] rtl:mr-[240px] flex-1 h-screen overflow-y-auto no-scrollbar">
         {{ $slot }}
     </main>
 
