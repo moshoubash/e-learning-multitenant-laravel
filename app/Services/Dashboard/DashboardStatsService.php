@@ -9,6 +9,7 @@ use App\Models\Tenant\LessonProgress;
 use App\Models\Tenant\Quiz;
 use App\Models\Tenant\QuizAttempt;
 use App\Models\Tenant\User;
+use App\Services\DesignConfigService;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -48,28 +49,28 @@ class DashboardStatsService
                 'label' => __('messages.Total Users'),
                 'value' => number_format($totalUsers),
                 'icon' => 'fas fa-users',
-                'color' => '#0A0A0A',
+                'color' => $this->dynamicColor('on_surface'),
                 'change' => $this->percentChange($newUsersThisMonth, $newUsersLastMonth),
             ],
             [
                 'label' => __('messages.Total Courses'),
                 'value' => number_format($totalCourses),
                 'icon' => 'fas fa-book-open',
-                'color' => '#FFD600',
+                'color' => $this->dynamicColor('primary_container'),
                 'change' => $this->percentChange($newCoursesThisMonth, $newCoursesLastMonth),
             ],
             [
                 'label' => __('messages.Total Enrollments'),
                 'value' => number_format($totalEnrollments),
                 'icon' => 'fas fa-graduation-cap',
-                'color' => '#705d00',
+                'color' => $this->dynamicColor('on_primary_container'),
                 'change' => $this->percentChange($newEnrollmentsThisMonth, $newEnrollmentsLastMonth),
             ],
             [
                 'label' => __('messages.Quiz Attempts'),
                 'value' => number_format($totalQuizAttempts),
                 'icon' => 'fas fa-question-circle',
-                'color' => '#5f5e5e',
+                'color' => $this->dynamicColor('secondary'),
                 'change' => null,
                 'sub' => number_format($totalQuizzes) . ' ' . __('messages.quizzes'),
             ],
@@ -82,7 +83,7 @@ class DashboardStatsService
 
         $labels = [];
         $data = [];
-        $palette = ['#FFD600', '#0A0A0A', '#5f5e5e', '#ba1a1a', '#705d00', '#E2E2E2'];
+        $palette = $this->dynamicChartColors();
 
         foreach ($roles as $index => $role) {
             $labels[] = ucfirst($role->name);
@@ -117,12 +118,12 @@ class DashboardStatsService
                 [
                     'label' => __('messages.Enrollments'),
                     'data' => $this->monthlyCounts(Enrollment::class, 'enrolled_at'),
-                    'color' => '#0A0A0A',
+                    'color' => $this->dynamicColor('on_surface'),
                 ],
                 [
                     'label' => __('messages.New Users'),
                     'data' => $this->monthlyCounts(User::class, 'created_at'),
-                    'color' => '#FFD600',
+                    'color' => $this->dynamicColor('primary_container'),
                 ],
             ],
         ];
@@ -136,7 +137,8 @@ class DashboardStatsService
 
         $labels = [];
         $data = [];
-        $colors = ['#FFD600', '#705d00', '#E2E2E2'];
+        $chartColors = $this->dynamicChartColors();
+        $colors = [$chartColors[0] ?? '#FFD600', $chartColors[4] ?? '#705d00', $chartColors[5] ?? '#E2E2E2'];
 
         $order = ['published', 'draft', 'archived'];
         foreach ($order as $i => $status) {
@@ -210,27 +212,27 @@ class DashboardStatsService
                 'label' => __('messages.My Courses'),
                 'value' => number_format($totalCourses),
                 'icon' => 'fas fa-book-open',
-                'color' => '#0A0A0A',
+                'color' => $this->dynamicColor('on_surface'),
                 'sub' => number_format($publishedCourses) . ' ' . __('messages.published'),
             ],
             [
                 'label' => __('messages.My Students'),
                 'value' => number_format($totalStudents),
                 'icon' => 'fas fa-user-graduate',
-                'color' => '#FFD600',
+                'color' => $this->dynamicColor('primary_container'),
                 'sub' => number_format($totalEnrollments) . ' ' . __('messages.enrollments'),
             ],
             [
                 'label' => __('messages.My Quizzes'),
                 'value' => number_format($totalQuizzes),
                 'icon' => 'fas fa-question-circle',
-                'color' => '#705d00',
+                'color' => $this->dynamicColor('on_primary_container'),
             ],
             [
                 'label' => __('messages.Pending Review'),
                 'value' => number_format($pendingSubmissions),
                 'icon' => 'fas fa-inbox',
-                'color' => '#5f5e5e',
+                'color' => $this->dynamicColor('secondary'),
             ],
         ];
     }
@@ -258,7 +260,7 @@ class DashboardStatsService
                 [
                     'label' => __('messages.Students'),
                     'data' => $data,
-                    'color' => '#0A0A0A',
+                    'color' => $this->dynamicColor('on_surface'),
                 ],
             ],
         ];
@@ -284,7 +286,7 @@ class DashboardStatsService
                 [
                     'label' => __('messages.Quiz Attempts'),
                     'data' => $data,
-                    'color' => '#5f5e5e',
+                    'color' => $this->dynamicColor('secondary'),
                 ],
             ],
         ];
@@ -318,7 +320,7 @@ class DashboardStatsService
                 [
                     'label' => __('messages.Submissions'),
                     'data' => $data,
-                    'backgroundColor' => ['#FFD600', '#5f5e5e'],
+                    'backgroundColor' => [$this->dynamicColor('primary_container'), $this->dynamicColor('secondary')],
                 ],
             ],
         ];
@@ -381,28 +383,28 @@ class DashboardStatsService
                 'label' => __('messages.Enrolled Courses'),
                 'value' => number_format($totalEnrolled),
                 'icon' => 'fas fa-graduation-cap',
-                'color' => '#0A0A0A',
+                'color' => $this->dynamicColor('on_surface'),
                 'sub' => number_format($inProgress) . ' ' . __('messages.In Progress'),
             ],
             [
                 'label' => __('messages.Completed'),
                 'value' => number_format($completed),
                 'icon' => 'fas fa-check-circle',
-                'color' => '#FFD600',
+                'color' => $this->dynamicColor('primary_container'),
                 'sub' => number_format($lessonsCompleted) . ' ' . __('messages.lessons'),
             ],
             [
                 'label' => __('messages.Quiz Attempts'),
                 'value' => number_format($totalAttempts),
                 'icon' => 'fas fa-question-circle',
-                'color' => '#5f5e5e',
+                'color' => $this->dynamicColor('secondary'),
                 'sub' => number_format($passedAttempts) . ' ' . __('messages.Passed'),
             ],
             [
                 'label' => __('messages.Pass Rate'),
                 'value' => $passRate . '%',
                 'icon' => 'fas fa-chart-line',
-                'color' => '#705d00',
+                'color' => $this->dynamicColor('on_primary_container'),
                 'progress' => $passRate,
             ],
         ];
@@ -434,7 +436,7 @@ class DashboardStatsService
                 [
                     'label' => __('messages.Lessons Completed'),
                     'data' => $data,
-                    'color' => '#0A0A0A',
+                    'color' => $this->dynamicColor('on_surface'),
                 ],
             ],
         ];
@@ -463,7 +465,7 @@ class DashboardStatsService
                 [
                     'label' => __('messages.Score'),
                     'data' => $data,
-                    'color' => '#FFD600',
+                    'color' => $this->dynamicColor('primary_container'),
                 ],
             ],
         ];
@@ -523,6 +525,21 @@ class DashboardStatsService
             $data[] = (int) ($rows[$key] ?? 0);
         }
         return $data;
+    }
+
+    protected function designConfig(): DesignConfigService
+    {
+        return app(DesignConfigService::class);
+    }
+
+    protected function dynamicColor(string $key): string
+    {
+        return $this->designConfig()->getColor($key);
+    }
+
+    protected function dynamicChartColors(): array
+    {
+        return $this->designConfig()->getChartColors();
     }
 
     protected function percentChange(int $current, int $previous): ?int

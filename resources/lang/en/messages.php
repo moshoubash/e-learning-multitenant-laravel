@@ -380,4 +380,17 @@ return [
     'Correct' => 'Correct',
     'True/False questions cannot have additional options.' => 'True/False questions cannot have additional options.',
     'This question already has a correct answer. Uncheck the current correct option first.' => 'This question already has a correct answer. Uncheck the current correct option first.',
+
+    // Design Config
+    'Design Configuration' => 'Design Configuration',
+    'Customize the appearance of your system' => 'Customize the appearance of your system',
+    'Design' => 'Design',
+    'Reset Defaults' => 'Reset Defaults',
+    'This is a live preview of your color scheme' => 'This is a live preview of your color scheme',
+    'Preview' => 'Preview',
+    'Main Colors' => 'Main Colors',
+    'Surface Colors' => 'Surface Colors',
+    'Chart Colors' => 'Chart Colors',
+    'Design configuration saved successfully!' => 'Design configuration saved successfully!',
+    'Design configuration reset to defaults!' => 'Design configuration reset to defaults!',
 ];

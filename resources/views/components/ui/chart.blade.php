@@ -28,7 +28,18 @@
             if (!el || el.dataset.initialized === '1') return;
             el.dataset.initialized = '1';
 
-            const palette = ['#FFD600', '#0A0A0A', '#5f5e5e', '#ba1a1a', '#705d00', '#E2E2E2', '#333333', '#8B8000'];
+            const cssVar = (name, fallback) => getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
+            const palette = [
+                cssVar('--color-primary-container', '#FFD600'),
+                cssVar('--color-on-surface', '#0A0A0A'),
+                cssVar('--color-secondary', '#5f5e5e'),
+                cssVar('--color-error', '#ba1a1a'),
+                cssVar('--color-on-primary-container', '#705d00'),
+                cssVar('--color-surface-container-highest', '#E2E2E2'),
+                '#333333', '#8B8000'
+            ];
+            const secondaryColor = cssVar('--color-secondary', '#5f5e5e');
+            const gridColor = cssVar('--color-surface-container-highest', '#E2E2E2');
             const labels = @json($labels);
             const rawDatasets = @json($datasets);
             const chartType = @json($type);
@@ -70,7 +81,7 @@
                                 boxWidth: 10,
                                 boxHeight: 10,
                                 padding: 12,
-                                color: '#5f5e5e',
+                                color: secondaryColor,
                                 font: { size: 11, weight: 'bold' }
                             }
                         }
@@ -78,12 +89,12 @@
                     scales: (chartType === 'doughnut' || chartType === 'pie') ? {} : {
                         x: {
                             grid: { display: false },
-                            ticks: { color: '#5f5e5e', font: { size: 11, weight: 'bold' } }
+                            ticks: { color: secondaryColor, font: { size: 11, weight: 'bold' } }
                         },
                         y: {
                             beginAtZero: true,
-                            grid: { color: '#E2E2E2' },
-                            ticks: { color: '#5f5e5e', font: { size: 11, weight: 'bold' }, precision: 0 }
+                            grid: { color: gridColor },
+                            ticks: { color: secondaryColor, font: { size: 11, weight: 'bold' }, precision: 0 }
                         }
                     }
                 }
