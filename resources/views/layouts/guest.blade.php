@@ -18,9 +18,7 @@
     <body class="font-sans text-on-surface antialiased bg-surface-container-low">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 px-4">
             <div>
-                <a href="/" wire:navigate>
-                    <x-application-logo class="w-20 h-20" />
-                </a>
+                <x-application-logo class="w-20 h-20" />
             </div>
 
             <div class="w-full sm:max-w-md mt-6 p-6 bg-surface-container-lowest neo-border neo-radius">
