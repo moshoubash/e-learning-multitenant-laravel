@@ -1,19 +1,18 @@
 <div>
-    <div class="flex items-center justify-between mb-8">
+    <header class="h-16 flex justify-between items-center px-[24px] bg-surface-container-lowest border-b-2 border-on-surface sticky top-0 z-40">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">{{ __('messages.Courses Management') }}</h1>
-            <p class="mt-1 text-sm text-gray-500">{{ __('messages.Manage all courses across the platform') }}</p>
+            <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ __('messages.Courses Management') }}</h2>
+            <p class="text-[12px] font-medium uppercase text-secondary mt-0.5 tracking-wider">{{ __('messages.Manage all courses across the platform') }}</p>
         </div>
+    </header>
+
+    <div class="p-[24px] max-w-[1400px] mx-auto space-y-6">
+        @include('livewire.admin.courses-components.tables.courses-table')
+        @include('livewire.admin.courses-components.tables.deleted-courses')
+
+        @include('livewire.admin.courses-components.modals.show-create-modal')
+        @include('livewire.admin.courses-components.modals.show-edit-modal')
+        @include('livewire.admin.courses-components.modals.show-delete-modal')
+        @include('livewire.admin.courses-components.modals.show-restore-modal')
     </div>
-
-    <!-- Tables -->
-    @include('livewire.admin.courses-components.tables.courses-table')
-
-    @include('livewire.admin.courses-components.tables.deleted-courses')
-
-    <!-- Modals -->
-    @include('livewire.admin.courses-components.modals.show-create-modal')
-    @include('livewire.admin.courses-components.modals.show-edit-modal')
-    @include('livewire.admin.courses-components.modals.show-delete-modal')
-    @include('livewire.admin.courses-components.modals.show-restore-modal')
 </div>

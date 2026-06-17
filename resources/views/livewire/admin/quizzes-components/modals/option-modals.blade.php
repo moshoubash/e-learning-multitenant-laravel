@@ -2,35 +2,34 @@
 @if($showOptionCreateModal)
     <div class="fixed inset-0 z-[70] overflow-y-auto" x-data="{ show: true }" x-show="show">
         <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" wire:click="closeModals"></div>
+            <div class="fixed inset-0 bg-on-surface/60 transition-opacity" wire:click="closeModals"></div>
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-            <div
-                class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('messages.Add Option') }}</h3>
+            <div class="inline-block overflow-hidden ltr:text-left rtl:text-right align-bottom transition-all transform bg-surface-container-lowest neo-border neo-radius sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface mb-4">{{ __('messages.Add Option') }}</h3>
                     <form>
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('messages.Option Text') }}</label>
+                            <label class="block mb-1 text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Option Text') }}</label>
                             <input type="text" wire:model.lazy="optionCreateText"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            @error('optionCreateText') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                                class="w-full px-3 py-2 neo-border-sm neo-radius bg-surface-container-low text-on-surface text-sm focus:outline-none focus:ring-0 placeholder:text-secondary">
+                            @error('optionCreateText') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-4">
-                            <label class="flex items-center">
+                            <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" wire:model.lazy="optionCreateIsCorrect"
-                                    class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                                <span class="ml-2 text-sm text-gray-700">{{ __('messages.Correct Answer') }}</span>
+                                    class="w-4 h-4 text-primary-container border-on-surface neo-border-sm rounded focus:outline-none">
+                                <span class="text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Correct Answer') }}</span>
                             </label>
                         </div>
                     </form>
                 </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <div class="px-4 py-3 bg-surface-container-low sm:px-6 sm:flex sm:flex-row-reverse">
                     <button wire:click="storeOption" type="button"
-                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                        class="inline-flex justify-center w-full px-4 py-2 neo-border neo-radius bg-primary-container text-on-surface text-xs font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors sm:ltr:ml-3 sm:rtl:mr-3 sm:w-auto">
                         {{ __('messages.Create') }}
                     </button>
                     <button wire:click="closeModals" type="button"
-                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        class="inline-flex justify-center w-full px-4 py-2 mt-3 neo-border-sm neo-radius text-xs font-bold text-on-surface bg-surface-container hover:bg-on-surface hover:text-white transition-colors sm:mt-0 sm:ltr:ml-3 sm:rtl:mr-3 sm:w-auto">
                         {{ __('messages.Cancel') }}
                     </button>
                 </div>
@@ -43,35 +42,34 @@
 @if($showOptionEditModal && $editingOption)
     <div class="fixed inset-0 z-[70] overflow-y-auto" x-data="{ show: true }" x-show="show">
         <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" wire:click="closeModals"></div>
+            <div class="fixed inset-0 bg-on-surface/60 transition-opacity" wire:click="closeModals"></div>
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-            <div
-                class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">{{ __('messages.Edit Option') }}</h3>
+            <div class="inline-block overflow-hidden ltr:text-left rtl:text-right align-bottom transition-all transform bg-surface-container-lowest neo-border neo-radius sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface mb-4">{{ __('messages.Edit Option') }}</h3>
                     <form>
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('messages.Option Text') }}</label>
+                            <label class="block mb-1 text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Option Text') }}</label>
                             <input type="text" wire:model.lazy="optionEditText"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            @error('optionEditText') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                                class="w-full px-3 py-2 neo-border-sm neo-radius bg-surface-container-low text-on-surface text-sm focus:outline-none focus:ring-0 placeholder:text-secondary">
+                            @error('optionEditText') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-4">
-                            <label class="flex items-center">
+                            <label class="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" wire:model.lazy="optionEditIsCorrect"
-                                    class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                                <span class="ml-2 text-sm text-gray-700">{{ __('messages.Correct Answer') }}</span>
+                                    class="w-4 h-4 text-primary-container border-on-surface neo-border-sm rounded focus:outline-none">
+                                <span class="text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Correct Answer') }}</span>
                             </label>
                         </div>
                     </form>
                 </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <div class="px-4 py-3 bg-surface-container-low sm:px-6 sm:flex sm:flex-row-reverse">
                     <button wire:click="updateOption" type="button"
-                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                        class="inline-flex justify-center w-full px-4 py-2 neo-border neo-radius bg-primary-container text-on-surface text-xs font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors sm:ltr:ml-3 sm:rtl:mr-3 sm:w-auto">
                         {{ __('messages.Update') }}
                     </button>
                     <button wire:click="closeModals" type="button"
-                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        class="inline-flex justify-center w-full px-4 py-2 mt-3 neo-border-sm neo-radius text-xs font-bold text-on-surface bg-surface-container hover:bg-on-surface hover:text-white transition-colors sm:mt-0 sm:ltr:ml-3 sm:rtl:mr-3 sm:w-auto">
                         {{ __('messages.Cancel') }}
                     </button>
                 </div>
@@ -84,31 +82,29 @@
 @if($showOptionDeleteModal && $deletingOption)
     <div class="fixed inset-0 z-[70] overflow-y-auto" x-data="{ show: true }" x-show="show">
         <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" wire:click="closeModals"></div>
+            <div class="fixed inset-0 bg-on-surface/60 transition-opacity" wire:click="closeModals"></div>
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-            <div
-                class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div class="inline-block overflow-hidden ltr:text-left rtl:text-right align-bottom transition-all transform bg-surface-container-lowest neo-border neo-radius sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="sm:flex sm:items-start">
-                        <div
-                            class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                            <i class="fas fa-exclamation-triangle text-red-600"></i>
+                        <div class="flex items-center justify-center w-12 h-12 mx-auto neo-border-sm neo-radius bg-error/10 shrink-0 sm:mx-0">
+                            <i class="text-error fas fa-exclamation-triangle"></i>
                         </div>
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                            <h3 class="text-lg font-medium text-gray-900">{{ __('messages.Delete Option') }}</h3>
-                            <p class="mt-2 text-sm text-gray-500">
+                        <div class="mt-3 text-center sm:mt-0 sm:ltr:ml-4 sm:rtl:mr-4 sm:ltr:text-left rtl:text-right">
+                            <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Delete Option') }}</h3>
+                            <p class="mt-2 text-sm text-secondary">
                                 {{ __('messages.Are you sure you want to delete this option?') }}
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <div class="px-4 py-3 bg-surface-container-low sm:px-6 sm:flex sm:flex-row-reverse">
                     <button wire:click="deleteOption" type="button"
-                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                        class="inline-flex justify-center w-full px-4 py-2 neo-border neo-radius bg-error text-white text-xs font-bold uppercase tracking-widest hover:bg-on-surface transition-colors sm:ltr:ml-3 sm:rtl:mr-3 sm:w-auto">
                         {{ __('messages.Delete') }}
                     </button>
                     <button wire:click="closeModals" type="button"
-                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        class="inline-flex justify-center w-full px-4 py-2 mt-3 neo-border-sm neo-radius text-xs font-bold text-on-surface bg-surface-container hover:bg-on-surface hover:text-white transition-colors sm:mt-0 sm:ltr:ml-3 sm:rtl:mr-3 sm:w-auto">
                         {{ __('messages.Cancel') }}
                     </button>
                 </div>

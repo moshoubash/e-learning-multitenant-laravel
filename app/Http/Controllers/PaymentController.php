@@ -6,12 +6,14 @@ use App\Http\Requests\ProcessPaymentRequest;
 use App\Models\Tenant\Course;
 use App\Models\Tenant\Enrollment;
 use App\Services\Student\PaymentService;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Livewire;
 
-class PaymentController extends Controller
-{
+class PaymentController extends Controller{
+    use AuthorizesRequests;
+
     protected PaymentService $paymentService;
 
     public function __construct(PaymentService $paymentService)

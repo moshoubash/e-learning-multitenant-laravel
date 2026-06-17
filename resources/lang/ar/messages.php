@@ -400,5 +400,8 @@ return [
     'Pass Rate' => 'نسبة النجاح',
     'from last month' => 'من الشهر الماضي',
     'Recent Submissions' => 'أحدث التقديمات',
-    'quizzes' => 'الاختبارات'
+    'quizzes' => 'الاختبارات',
+    'No quiz scores yet' => 'لا توجد نتائج اختبارات بعد',
+    'No quiz attempts yet' => 'لا توجد محاولات اختبار بعد',
+    'Correct' => 'صحيح',
 ];
