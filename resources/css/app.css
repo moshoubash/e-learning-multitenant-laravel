@@ -14,10 +14,10 @@
 
 @layer utilities {
     .neo-border {
-        border: 2px solid #0A0A0A;
+        border: 2px solid var(--color-on-surface, #0A0A0A);
     }
     .neo-border-sm {
-        border: 1.5px solid #0A0A0A;
+        border: 1.5px solid var(--color-on-surface, #0A0A0A);
     }
     .neo-radius {
         border-radius: 4px;

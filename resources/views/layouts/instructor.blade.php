@@ -12,6 +12,7 @@
     @stack('styles')
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('partials.dynamic-design-styles')
     @livewireStyles
 </head>
 <body class="flex h-screen overflow-hidden font-sans antialiased bg-surface-container-low selection:bg-primary-container selection:text-on-surface">
