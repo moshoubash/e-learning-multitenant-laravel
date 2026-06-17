@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tenant;
 use App\Models\Tenant\User as TenantUser;
 use App\Models\User;
+use App\Services\OAuthService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -25,6 +26,8 @@ class GoogleAuthController extends Controller
                 ->withErrors(['google' => 'Google sign-in is not configured on this server.']);
         }
 
+        $this->applyGoogleConfig();
+
         return Socialite::driver('google')->redirect();
     }
 
@@ -33,6 +36,8 @@ class GoogleAuthController extends Controller
         if (! $this->googleConfigured()) {
             return redirect()->route('login');
         }
+
+        $this->applyGoogleConfig();
 
         try {
             $googleUser = Socialite::driver('google')->user();
@@ -152,8 +157,19 @@ class GoogleAuthController extends Controller
 
     protected function googleConfigured(): bool
     {
+        if (tenant()) {
+            return app(OAuthService::class)->isProviderConfigured('google');
+        }
+
         $config = config('services.google');
 
         return ! empty($config['client_id']) && ! empty($config['client_secret']);
+    }
+
+    protected function applyGoogleConfig(): void
+    {
+        if (tenant()) {
+            app(OAuthService::class)->applyConfigToServices('google');
+        }
     }
 }
