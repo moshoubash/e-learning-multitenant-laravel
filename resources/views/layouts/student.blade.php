@@ -9,6 +9,12 @@
 
     <x-ui.cdn-assets />
 
+    <style>
+        :root {
+            --primary-theme-color: var(--color-primary-container, #FFD600);
+        }
+    </style>
+
     @stack('styles')
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
