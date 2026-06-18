@@ -37,10 +37,10 @@
             <i class="w-5 text-center fas fa-question-circle"></i>
             <span class="text-[14px] font-medium">{{ __('messages.Quizzes') }}</span>
         </a>
-        <a href="{{ route('tenant.admin.design') }}" wire:navigate
-           class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.admin.design*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
-            <i class="w-5 text-center fas fa-palette"></i>
-            <span class="text-[14px] font-medium">{{ __('messages.Design') }}</span>
+        <a href="{{ route('tenant.admin.integrations') }}" wire:navigate
+           class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.admin.integrations*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
+            <i class="w-5 text-center fas fa-plug"></i>
+            <span class="text-[14px] font-medium">{{ __('messages.Integrations') }}</span>
         </a>
         <a href="{{ route('tenant.profile') }}" wire:navigate
            class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.profile') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
@@ -66,7 +66,7 @@
                 <p class="text-xs text-secondary">ID: {{ $user?->id ?? '—' }}</p>
             </div>
             <div class="flex items-center gap-1">
-               
+
                 <form method="POST" action="{{ route('logout') }}" class="inline">
                     @csrf
                     <button type="submit" class="flex items-center justify-center w-8 h-8 transition-colors hover:bg-surface-container-high neo-radius" title="{{ __('messages.Log Out') }}">

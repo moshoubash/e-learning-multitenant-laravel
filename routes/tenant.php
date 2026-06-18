@@ -29,7 +29,7 @@ Route::middleware(['auth:tenant'])->group(function () {
     Route::livewire('/admin/users', 'admin.users')->middleware('role:admin')->name('tenant.admin.users');
     Route::livewire('/admin/courses', 'admin.courses')->middleware('role:admin')->name('tenant.admin.courses');
     Route::livewire('/admin/quizzes', 'admin.quizzes')->middleware('role:admin')->name('tenant.admin.quizzes');
-    Route::livewire('/admin/design', 'admin.design-config')->middleware('role:admin')->name('tenant.admin.design');
+    Route::livewire('/admin/integrations', 'admin.integrations')->middleware('role:admin')->name('tenant.admin.integrations');
 
     Route::livewire('/instructor/courses', 'instructor.courses')->middleware('role:instructor')->name('tenant.instructor.courses');
     Route::livewire('/instructor/quizzes', 'instructor.quizzes')->middleware('role:instructor')->name('tenant.instructor.quizzes');

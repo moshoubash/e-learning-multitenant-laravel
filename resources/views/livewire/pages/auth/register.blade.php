@@ -87,7 +87,7 @@ new #[Layout('layouts.guest')] class extends Component {
         </div>
     </form>
 
-    @if (config('services.google.client_id') && config('services.google.client_secret'))
+    @if (app(\App\Services\OAuthService::class)->isProviderConfigured('google'))
         <div class="relative my-6">
             <div class="absolute inset-0 flex items-center" aria-hidden="true">
                 <div class="w-full border-t border-surface-container-high"></div>
