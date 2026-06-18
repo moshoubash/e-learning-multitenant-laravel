@@ -14,14 +14,17 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        @include('partials.auth-dynamic-design-styles')
+        @livewireStyles
     </head>
-    <body class="font-sans text-on-surface antialiased bg-surface-container-low">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 px-4">
-            <div>
+    <body class="font-sans antialiased text-on-surface bg-surface-container-low">
+        <div class="flex flex-col items-center min-h-screen px-4 pt-6 sm:justify-center sm:pt-0">
+            <div class="{{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }}">
                 <x-application-logo class="w-20 h-20" />
             </div>
 
-            <div class="w-full sm:max-w-md mt-6 p-6 bg-surface-container-lowest neo-border neo-radius">
+            <div class="w-full p-6 mt-6 sm:max-w-md bg-surface-container-lowest neo-border neo-radius">
                 {{ $slot }}
             </div>
         </div>

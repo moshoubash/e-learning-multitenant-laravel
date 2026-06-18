@@ -17,6 +17,14 @@ class DesignConfigService
         'secondary' => '#5f5e5e',
         'error' => '#ba1a1a',
         'on_primary_container' => '#705d00',
+        'auth_body_bg' => '#F3F3F3',
+        'auth_card_bg' => '#FFFFFF',
+        'auth_primary' => '#FFD600',
+        'auth_on_primary' => '#705d00',
+        'auth_text' => '#0A0A0A',
+        'auth_secondary' => '#5f5e5e',
+        'auth_border' => '#0A0A0A',
+        'auth_error' => '#ba1a1a',
     ];
 
     private const CHART_DEFAULTS = ['#FFD600', '#0A0A0A', '#5f5e5e', '#ba1a1a', '#705d00', '#E2E2E2'];

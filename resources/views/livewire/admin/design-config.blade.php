@@ -92,6 +92,38 @@
                     @endforeach
                 </div>
             </div>
+
+            {{-- Auth Colors --}}
+            <div class="p-6 bg-surface-container-lowest neo-border neo-radius lg:col-span-2">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Auth Page Colors') }}</h3>
+                    <span class="px-2 py-1 text-[10px] font-bold uppercase tracking-widest bg-primary-container/20 text-on-primary-container neo-border-sm neo-radius">{{ __('messages.Separate from main design') }}</span>
+                </div>
+                <p class="mb-4 text-xs text-secondary">{{ __('messages.These colors only apply to login, register, and other auth pages') }}</p>
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                    @foreach ([
+                        ['label' => 'auth-body-bg', 'prop' => 'authBodyBg', 'err' => 'authBodyBg'],
+                        ['label' => 'auth-card-bg', 'prop' => 'authCardBg', 'err' => 'authCardBg'],
+                        ['label' => 'auth-primary', 'prop' => 'authPrimary', 'err' => 'authPrimary'],
+                        ['label' => 'auth-on-primary', 'prop' => 'authOnPrimary', 'err' => 'authOnPrimary'],
+                        ['label' => 'auth-text', 'prop' => 'authText', 'err' => 'authText'],
+                        ['label' => 'auth-secondary', 'prop' => 'authSecondary', 'err' => 'authSecondary'],
+                        ['label' => 'auth-border', 'prop' => 'authBorder', 'err' => 'authBorder'],
+                        ['label' => 'auth-error', 'prop' => 'authError', 'err' => 'authError'],
+                    ] as $field)
+                        <div class="flex items-center gap-4">
+                            <input type="color" wire:model.lazy="{{ $field['prop'] }}"
+                                class="w-12 h-12 border-0 cursor-pointer neo-border-sm neo-radius">
+                            <div class="flex-1">
+                                <label class="block text-xs font-bold tracking-widest uppercase text-on-surface">{{ $field['label'] }}</label>
+                                <input type="text" wire:model.lazy="{{ $field['prop'] }}"
+                                    class="w-full px-3 py-1.5 mt-1 text-xs font-mono neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0">
+                                @error($field['err']) <span class="text-xs text-error mt-0.5 block font-bold">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
     </div>
 

@@ -26,6 +26,15 @@ class DesignConfig extends Component
     public string $chart5 = '#705d00';
     public string $chart6 = '#E2E2E2';
 
+    public string $authBodyBg = '#F3F3F3';
+    public string $authCardBg = '#FFFFFF';
+    public string $authPrimary = '#FFD600';
+    public string $authOnPrimary = '#705d00';
+    public string $authText = '#0A0A0A';
+    public string $authSecondary = '#5f5e5e';
+    public string $authBorder = '#0A0A0A';
+    public string $authError = '#ba1a1a';
+
     public function mount(DesignConfigService $service)
     {
         $colors = $service->getColors();
@@ -48,6 +57,15 @@ class DesignConfig extends Component
         $this->chart4 = $chartColors[3] ?? '#ba1a1a';
         $this->chart5 = $chartColors[4] ?? '#705d00';
         $this->chart6 = $chartColors[5] ?? '#E2E2E2';
+
+        $this->authBodyBg = $colors['auth_body_bg'] ?? '#F3F3F3';
+        $this->authCardBg = $colors['auth_card_bg'] ?? '#FFFFFF';
+        $this->authPrimary = $colors['auth_primary'] ?? '#FFD600';
+        $this->authOnPrimary = $colors['auth_on_primary'] ?? '#705d00';
+        $this->authText = $colors['auth_text'] ?? '#0A0A0A';
+        $this->authSecondary = $colors['auth_secondary'] ?? '#5f5e5e';
+        $this->authBorder = $colors['auth_border'] ?? '#0A0A0A';
+        $this->authError = $colors['auth_error'] ?? '#ba1a1a';
     }
 
     public function save(DesignConfigService $service)
@@ -69,6 +87,14 @@ class DesignConfig extends Component
             'chart4' => 'required|regex:/^#[0-9A-Fa-f]{6}$/',
             'chart5' => 'required|regex:/^#[0-9A-Fa-f]{6}$/',
             'chart6' => 'required|regex:/^#[0-9A-Fa-f]{6}$/',
+            'authBodyBg' => 'required|regex:/^#[0-9A-Fa-f]{6}$/',
+            'authCardBg' => 'required|regex:/^#[0-9A-Fa-f]{6}$/',
+            'authPrimary' => 'required|regex:/^#[0-9A-Fa-f]{6}$/',
+            'authOnPrimary' => 'required|regex:/^#[0-9A-Fa-f]{6}$/',
+            'authText' => 'required|regex:/^#[0-9A-Fa-f]{6}$/',
+            'authSecondary' => 'required|regex:/^#[0-9A-Fa-f]{6}$/',
+            'authBorder' => 'required|regex:/^#[0-9A-Fa-f]{6}$/',
+            'authError' => 'required|regex:/^#[0-9A-Fa-f]{6}$/',
         ]);
 
         $service->saveColors([
@@ -90,6 +116,14 @@ class DesignConfig extends Component
                 $this->chart5,
                 $this->chart6,
             ],
+            'auth_body_bg' => $this->authBodyBg,
+            'auth_card_bg' => $this->authCardBg,
+            'auth_primary' => $this->authPrimary,
+            'auth_on_primary' => $this->authOnPrimary,
+            'auth_text' => $this->authText,
+            'auth_secondary' => $this->authSecondary,
+            'auth_border' => $this->authBorder,
+            'auth_error' => $this->authError,
         ]);
 
         $this->js('window.location.reload()');
@@ -113,6 +147,14 @@ class DesignConfig extends Component
         $this->chart4 = '#ba1a1a';
         $this->chart5 = '#705d00';
         $this->chart6 = '#E2E2E2';
+        $this->authBodyBg = '#F3F3F3';
+        $this->authCardBg = '#FFFFFF';
+        $this->authPrimary = '#FFD600';
+        $this->authOnPrimary = '#705d00';
+        $this->authText = '#0A0A0A';
+        $this->authSecondary = '#5f5e5e';
+        $this->authBorder = '#0A0A0A';
+        $this->authError = '#ba1a1a';
 
         $service->saveColors([
             'primary_container' => '#FFD600',
@@ -126,6 +168,14 @@ class DesignConfig extends Component
             'error' => '#ba1a1a',
             'on_primary_container' => '#705d00',
             'chart_colors' => ['#FFD600', '#0A0A0A', '#5f5e5e', '#ba1a1a', '#705d00', '#E2E2E2'],
+            'auth_body_bg' => '#F3F3F3',
+            'auth_card_bg' => '#FFFFFF',
+            'auth_primary' => '#FFD600',
+            'auth_on_primary' => '#705d00',
+            'auth_text' => '#0A0A0A',
+            'auth_secondary' => '#5f5e5e',
+            'auth_border' => '#0A0A0A',
+            'auth_error' => '#ba1a1a',
         ]);
 
         $this->js('window.location.reload()');

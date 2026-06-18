@@ -455,4 +455,8 @@ return [
     'No log files found.' => 'لم يتم العثور على ملفات سجل.',
     'Last 500 lines' => 'آخر 500 سطر',
     'File is empty' => 'الملف فارغ',
+
+    'Auth Page Colors' => 'ألوان صفحة تسجيل الدخول',
+    'Separate from main design' => 'منفصل عن التصميم الرئيسي',
+    'These colors only apply to login, register, and other auth pages' => 'هذه الألوان تنطبق فقط على صفحات تسجيل الدخول والتسجيل وصفحات المصادقة الأخرى',
 ];

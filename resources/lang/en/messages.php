@@ -429,4 +429,8 @@ return [
     'No log files found.' => 'No log files found.',
     'Last 500 lines' => 'Last 500 lines',
     'File is empty' => 'File is empty',
+
+    'Auth Page Colors' => 'Auth Page Colors',
+    'Separate from main design' => 'Separate from main design',
+    'These colors only apply to login, register, and other auth pages' => 'These colors only apply to login, register, and other auth pages',
 ];
