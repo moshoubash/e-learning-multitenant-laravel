@@ -47,6 +47,11 @@
             <i class="w-5 text-center fas fa-palette"></i>
             <span class="text-[14px] font-medium">{{ __('messages.Design') }}</span>
         </a>
+        <a href="{{ route('tenant.admin.logs') }}" wire:navigate
+           class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.admin.logs*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
+            <i class="w-5 text-center fas fa-file-alt"></i>
+            <span class="text-[14px] font-medium">{{ __('messages.Logs') }}</span>
+        </a>
         <a href="{{ route('tenant.profile') }}" wire:navigate
            class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.profile') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
             <i class="w-5 text-center fas fa-user"></i>

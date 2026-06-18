@@ -58,12 +58,12 @@ class SecurityHeaders
         if (app()->environment('production')) {
             return "default-src 'self'; "
                 . "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://maxst.icons8.com https://js.stripe.com; "
-                . "style-src 'self' 'unsafe-inline' https://fonts.bunny.net https://maxst.icons8.com; "
-                . "font-src 'self' https://fonts.bunny.net https://maxst.icons8.com data:; "
+                . "style-src 'self' 'unsafe-inline' https://fonts.bunny.net https://maxst.icons8.com https://fonts.googleapis.com; "
+                . "font-src 'self' https://fonts.bunny.net https://fonts.gstatic.com https://maxst.icons8.com data:; "
                 . "img-src 'self' data: blob: https:; "
                 . "media-src 'self' https:; "
                 . "frame-src 'self' https://www.youtube.com https://player.vimeo.com https://accounts.google.com https://js.stripe.com; "
-                . "connect-src 'self' https://api.stripe.com; "
+                . "connect-src 'self' https://api.stripe.com https://cdn.jsdelivr.net; "
                 . "frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://accounts.google.com;";
         }
 
@@ -72,12 +72,12 @@ class SecurityHeaders
         // need. Without these, npm run dev shows an unstyled page.
         return "default-src 'self'; "
             . "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://maxst.icons8.com https://js.stripe.com {$viteHosts}; "
-            . "style-src 'self' 'unsafe-inline' https://fonts.bunny.net https://maxst.icons8.com {$viteHosts}; "
-            . "font-src 'self' https://fonts.bunny.net https://maxst.icons8.com data:; "
+            . "style-src 'self' 'unsafe-inline' https://fonts.bunny.net https://maxst.icons8.com https://fonts.googleapis.com {$viteHosts}; "
+            . "font-src 'self' https://fonts.bunny.net https://fonts.gstatic.com https://maxst.icons8.com data:; "
             . "img-src 'self' data: blob: https: {$viteHosts}; "
             . "media-src 'self' https: {$viteHosts}; "
             . "frame-src 'self' https://www.youtube.com https://player.vimeo.com https://accounts.google.com https://js.stripe.com {$viteHosts}; "
-            . "connect-src 'self' ws: wss: https://api.stripe.com {$viteHosts}; "
+            . "connect-src 'self' ws: wss: https://api.stripe.com https://cdn.jsdelivr.net {$viteHosts}; "
             . "frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://accounts.google.com {$viteHosts};";
     }
 }
