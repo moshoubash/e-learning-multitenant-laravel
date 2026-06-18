@@ -433,4 +433,18 @@ return [
     'Auth Page Colors' => 'Auth Page Colors',
     'Separate from main design' => 'Separate from main design',
     'These colors only apply to login, register, and other auth pages' => 'These colors only apply to login, register, and other auth pages',
+
+    'Max Attempts' => 'Max Attempts',
+    'Allow students to retake this quiz multiple times' => 'Allow students to retake this quiz multiple times',
+    'Re-attempts' => 'Re-attempts',
+    'Not allowed' => 'Not allowed',
+    'No re-attempt' => 'No re-attempt',
+    'times' => 'times',
+    'Maximum Attempts Reached' => 'Maximum Attempts Reached',
+    'You have used all :max allowed attempts for this quiz.' => 'You have used all :max allowed attempts for this quiz.',
+    'No more attempts allowed.' => 'No more attempts allowed.',
+    'Attempt :count of :max' => 'Attempt :count of :max',
+    'Attempt' => 'Attempt',
+    'of' => 'of',
+    'Highest Score' => 'Highest Score',
 ];

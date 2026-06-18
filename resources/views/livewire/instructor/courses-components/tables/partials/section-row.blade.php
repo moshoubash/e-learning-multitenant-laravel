@@ -49,6 +49,11 @@
                     <span class="font-bold text-sm text-on-surface">{{ $section->quiz->title }}</span>
                     <span class="text-xs text-secondary ltr:ml-2 rtl:mr-2">({{ __('messages.questions') }} {{ $section->quiz->questions->count() ?? 0 }})</span>
                     <span class="text-xs text-on-surface ltr:ml-2 rtl:mr-2 font-bold">{{ __('messages.Pass') }}: {{ $section->quiz->pass_percentage }}%</span>
+                    @if($section->quiz->can_reattempt)
+                        <span class="text-xs text-on-surface ltr:ml-2 rtl:mr-2 font-bold">{{ __('messages.Re-attempts') }}: {{ $section->quiz->max_attempts ?? 1 }}</span>
+                    @else
+                        <span class="text-xs text-secondary ltr:ml-2 rtl:mr-2">{{ __('messages.No re-attempt') }}</span>
+                    @endif
                     @if($section->quiz->deleted_at)
                         <span class="px-2 py-0.5 neo-border-sm neo-radius text-[10px] font-bold bg-error/10 text-error ltr:ml-2 rtl:mr-2">{{ __('messages.Deleted') }}</span>
                     @endif

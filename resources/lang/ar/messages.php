@@ -459,4 +459,19 @@ return [
     'Auth Page Colors' => 'ألوان صفحة تسجيل الدخول',
     'Separate from main design' => 'منفصل عن التصميم الرئيسي',
     'These colors only apply to login, register, and other auth pages' => 'هذه الألوان تنطبق فقط على صفحات تسجيل الدخول والتسجيل وصفحات المصادقة الأخرى',
+
+    'Max Attempts' => 'الحد الأقصى للمحاولات',
+    'Allow students to retake this quiz multiple times' => 'السماح للطلاب بإعادة هذا الاختبار عدة مرات',
+    'Re-attempts' => 'إعادة المحاولة',
+    'Not allowed' => 'غير مسموح',
+    'No re-attempt' => 'لا توجد إعادة محاولة',
+    'times' => 'مرات',
+
+    'Maximum Attempts Reached' => 'تم الوصول للحد الأقصى للمحاولات',
+    'You have used all :max allowed attempts for this quiz.' => 'لقد استخدمت جميع المحاولات :max المسموح بها لهذا الاختبار.',
+    'No more attempts allowed.' => 'لا يُسمح بالمزيد من المحاولات.',
+    'Attempt :count of :max' => 'محاولة :count من :max',
+    'Attempt' => 'محاولة',
+    'of' => 'من',
+    'Highest Score' => 'أعلى درجة',
 ];

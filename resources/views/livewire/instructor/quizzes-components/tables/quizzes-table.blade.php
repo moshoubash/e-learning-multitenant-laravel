@@ -16,6 +16,7 @@
                     <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Title') }}</th>
                     <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Section') }}</th>
                     <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Pass %') }}</th>
+                    <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Re-attempts') }}</th>
                     <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Questions') }}</th>
                     <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Actions') }}</th>
                 </tr>
@@ -44,6 +45,13 @@
                             @endif
                         </td>
                         <td class="p-4 text-sm font-bold text-on-surface">{{ $quiz->pass_percentage }}%</td>
+                        <td class="p-4 text-sm text-on-surface">
+                            @if($quiz->can_reattempt)
+                                <span class="font-bold">{{ $quiz->max_attempts ?? 1 }} {{ __('messages.times') }}</span>
+                            @else
+                                <span class="text-secondary">{{ __('messages.Not allowed') }}</span>
+                            @endif
+                        </td>
                         <td class="p-4 text-sm font-bold text-on-surface">{{ $quiz->questions ? count($quiz->questions) : 0 }}</td>
                         <td class="p-4">
                             <div class="flex items-center gap-2">

@@ -63,11 +63,13 @@ class Quizzes extends Component
     public $quizCreateSectionId = '';
     public $quizCreatePassPercentage = 70;
     public $quizCreateCanReattempt = false;
+    public $quizCreateMaxAttempts = 1;
 
     public $quizEditTitle = '';
     public $quizEditSectionId = '';
     public $quizEditPassPercentage = 70;
     public $quizEditCanReattempt = false;
+    public $quizEditMaxAttempts = 1;
 
     // Question form fields
     public $questionCreateText = '';
@@ -133,6 +135,7 @@ class Quizzes extends Component
         $this->quizEditSectionId = $this->editingQuiz->section_id;
         $this->quizEditPassPercentage = $this->editingQuiz->pass_percentage;
         $this->quizEditCanReattempt = $this->editingQuiz->can_reattempt ?? false;
+        $this->quizEditMaxAttempts = $this->editingQuiz->max_attempts ?? 1;
         $this->showQuizEditModal = true;
     }
 
@@ -156,6 +159,7 @@ class Quizzes extends Component
         $this->quizCreateSectionId = '';
         $this->quizCreatePassPercentage = 70;
         $this->quizCreateCanReattempt = false;
+        $this->quizCreateMaxAttempts = 1;
     }
 
     public function resetQuizFormFields()
@@ -166,6 +170,7 @@ class Quizzes extends Component
         $this->quizEditSectionId = '';
         $this->quizEditPassPercentage = 70;
         $this->quizEditCanReattempt = false;
+        $this->quizEditMaxAttempts = 1;
     }
 
     public function storeQuiz(): void
@@ -186,6 +191,7 @@ class Quizzes extends Component
             'section_id' => $this->quizCreateSectionId,
             'pass_percentage' => $this->quizCreatePassPercentage,
             'can_reattempt' => $this->quizCreateCanReattempt,
+            'max_attempts' => $this->quizCreateCanReattempt ? $this->quizCreateMaxAttempts : 1,
         ]);
 
         $this->closeQuizModal();
@@ -206,6 +212,7 @@ class Quizzes extends Component
             'section_id' => $this->quizEditSectionId,
             'pass_percentage' => $this->quizEditPassPercentage,
             'can_reattempt' => $this->quizEditCanReattempt,
+            'max_attempts' => $this->quizEditCanReattempt ? $this->quizEditMaxAttempts : 1,
         ]);
 
         $this->closeQuizModal();
@@ -539,6 +546,7 @@ class Quizzes extends Component
             'quizCreateTitle' => 'required|string|max:255',
             'quizCreateSectionId' => 'required|exists:sections,id',
             'quizCreatePassPercentage' => 'required|integer|min:1|max:100',
+            'quizCreateMaxAttempts' => 'nullable|integer|min:1|max:100',
         ];
     }
 
@@ -548,6 +556,7 @@ class Quizzes extends Component
             'quizEditTitle' => 'required|string|max:255',
             'quizEditSectionId' => 'required|exists:sections,id',
             'quizEditPassPercentage' => 'required|integer|min:1|max:100',
+            'quizEditMaxAttempts' => 'nullable|integer|min:1|max:100',
         ];
     }
 

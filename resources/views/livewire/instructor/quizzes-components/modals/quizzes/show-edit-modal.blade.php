@@ -37,6 +37,14 @@
                                 <span class="text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Allow Re-attempt') }}</span>
                             </label>
                         </div>
+                        <div class="mb-4" x-data="{ show: $wire.entangle('quizEditCanReattempt') }">
+                            <div x-show="show" x-transition>
+                                <label class="block mb-1 text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Max Attempts') }}</label>
+                                <input type="number" wire:model.lazy="quizEditMaxAttempts" min="1" max="100"
+                                    class="w-full px-3 py-2 neo-border-sm neo-radius bg-surface-container-low text-on-surface text-sm focus:outline-none focus:ring-0">
+                                @error('quizEditMaxAttempts') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="px-4 py-3 bg-surface-container-low sm:px-6 sm:flex sm:flex-row-reverse">

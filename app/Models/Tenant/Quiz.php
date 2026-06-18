@@ -16,6 +16,7 @@ class Quiz extends Model
         'title',
         'pass_percentage',
         'can_reattempt',
+        'max_attempts',
     ];
 
     protected function casts(): array
@@ -23,6 +24,7 @@ class Quiz extends Model
         return [
             'pass_percentage' => 'integer',
             'can_reattempt' => 'boolean',
+            'max_attempts' => 'integer',
         ];
     }
 

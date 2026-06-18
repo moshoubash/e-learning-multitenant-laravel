@@ -13,20 +13,34 @@
 
     <div class="p-[24px] max-w-[1400px] mx-auto">
         <div class="bg-surface-container-lowest neo-border neo-radius overflow-hidden">
-            @if($quiz)
-                @if(!$this->canTakeQuiz() && !$submitted)
-                    <div class="p-12 text-center">
-                        <i class="mb-4 text-5xl text-primary-container fas fa-check-circle"></i>
-                        <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Quiz Already Passed!') }}</h3>
-                        <p class="mt-2 text-sm text-secondary">{{ __('messages.You have already passed this quiz with a score of :score%', ['score' => $previousAttempt->score]) }}</p>
-                        <p class="mt-1 text-xs text-secondary">{{ __('messages.Re-attempt is not allowed for this quiz.') }}</p>
-                        <a href="{{ route('tenant.student.course', $quiz->section->course->slug ?? 'courses') }}"
-                            class="inline-flex items-center px-5 py-2 mt-6 neo-border neo-radius bg-primary-container text-on-surface text-xs font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
-                            <i class="fas fa-arrow-left ltr:mr-2 rtl:ml-2"></i>
-                            {{ __('messages.Back to Course') }}
-                        </a>
-                    </div>
-                @elseif($previousAttempt && !$submitted)
+        @if($quiz)
+            @if(!$this->canTakeQuiz() && !$submitted)
+                <div class="p-12 text-center">
+                    <i class="mb-4 text-5xl text-primary-container fas {{ $this->attemptsExhausted() ? 'fa-times-circle' : 'fa-check-circle' }}"></i>
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface">
+                        {{ $this->attemptsExhausted() ? __('messages.Maximum Attempts Reached') : __('messages.Quiz Already Passed!') }}
+                    </h3>
+                    <p class="mt-2 text-sm text-secondary">
+                        {{ $this->attemptsExhausted()
+                            ? __('messages.You have used all :max allowed attempts for this quiz.', ['max' => $quiz->max_attempts ?? 1])
+                            : __('messages.You have already passed this quiz with a score of :score%', ['score' => $previousAttempt->score]) }}
+                    </p>
+                    @if($this->highestScore())
+                        <p class="mt-1 text-sm font-bold text-on-surface">{{ __('messages.Highest Score') }}: {{ $this->highestScore() }}%</p>
+                    @endif
+                    <p class="mt-1 text-xs text-secondary">
+                        {{ $this->attemptsExhausted()
+                            ? __('messages.No more attempts allowed.')
+                            : __('messages.Re-attempt is not allowed for this quiz.') }}
+                    </p>
+                    <a href="{{ route('tenant.student.course', $quiz->section->course->slug ?? 'courses') }}"
+                        class="inline-flex items-center px-5 py-2 mt-6 neo-border neo-radius bg-primary-container text-on-surface text-xs font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
+                        <i class="fas fa-arrow-left ltr:mr-2 rtl:ml-2"></i>
+                        {{ __('messages.Back to Course') }}
+                    </a>
+                </div>
+            @else
+                @if($previousAttempt && !$submitted)
                     <div class="p-4 neo-border-sm neo-radius bg-primary-container/20 m-[24px]">
                         <div class="flex items-center justify-between">
                             <div>
@@ -41,6 +55,12 @@
                                     @else
                                         <span class="px-2 py-0.5 neo-border-sm neo-radius text-[10px] font-bold bg-error/20 text-error ltr:ml-2 rtl:mr-2">{{ __('messages.Not Passed') }}</span>
                                     @endif
+                                </p>
+                                <p class="mt-1 text-xs text-on-surface">
+                                    <span class="font-bold">{{ __('messages.Highest Score') }}:</span> {{ $this->highestScore() }}%
+                                </p>
+                                <p class="mt-1 text-xs text-secondary">
+                                    {{ __('messages.Attempt :count of :max', ['count' => $this->attemptCount(), 'max' => $quiz->max_attempts ?? 1]) }}
                                 </p>
                             </div>
                         </div>
@@ -77,6 +97,12 @@
                             </div>
                         </div>
 
+                        @if($this->highestScore())
+                            <div class="mb-6 text-sm text-on-surface">
+                                <span class="font-bold">{{ __('messages.Highest Score') }}:</span> {{ $this->highestScore() }}%
+                            </div>
+                        @endif
+
                         <div class="flex justify-center gap-4">
                             @if($this->canReattempt() && $previousAttempt)
                                 <button wire:click="resetQuiz"
@@ -96,7 +122,7 @@
                     <div class="p-[24px]">
                         <div class="pb-4 mb-6 border-b-2 border-on-surface">
                             <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface">{{ $quiz->title }}</h3>
-                            <p class="mt-1 text-xs text-secondary">{{ __('messages.questions') }} {{ $quiz->questions->count() }} | {{ __('messages.Pass') }}: {{ $quiz->pass_percentage }}%</p>
+                            <p class="mt-1 text-xs text-secondary">{{ __('messages.questions') }} {{ $quiz->questions->count() }} | {{ __('messages.Pass') }}: {{ $quiz->pass_percentage }}% | {{ __('messages.Attempt') }} {{ $this->attemptCount() + 1 }} {{ __('messages.of') }} {{ $quiz->max_attempts ?? 1 }}</p>
                         </div>
 
                         @foreach($quiz->questions->sortBy('order') as $questionIndex => $question)
@@ -157,13 +183,14 @@
                         </div>
                     </div>
                 @endif
-            @else
-                <div class="p-12 text-center">
-                    <i class="mb-4 text-5xl text-secondary fas fa-exclamation-triangle"></i>
-                    <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Quiz not found') }}</h3>
-                    <p class="mt-2 text-sm text-secondary">{{ __('messages.The quiz you\'re looking for doesn\'t exist.') }}</p>
-                </div>
             @endif
-        </div>
+        @else
+            <div class="p-12 text-center">
+                <i class="mb-4 text-5xl text-secondary fas fa-exclamation-triangle"></i>
+                <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Quiz not found') }}</h3>
+                <p class="mt-2 text-sm text-secondary">{{ __('messages.The quiz you\'re looking for doesn\'t exist.') }}</p>
+            </div>
+        @endif
+    </div>
     </div>
 </div>
