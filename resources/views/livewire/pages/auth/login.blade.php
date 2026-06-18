@@ -21,7 +21,13 @@ new #[Layout('layouts.guest')] class extends Component {
 
         Session::regenerate();
 
-        $this->redirectIntended(default: route("{$guard}.dashboard", absolute: false), navigate: true);
+        // $this->redirectIntended(default: route("{$guard}.dashboard", absolute: false), navigate: true);
+
+        // Clear any intended URL saved in the session fallback
+        Session::forget('url.intended');
+
+        // Redirect to home and replace the browser history state
+        $this->redirect('/');
     }
 }; ?>
 
