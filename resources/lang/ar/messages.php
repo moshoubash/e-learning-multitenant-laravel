@@ -427,4 +427,16 @@ return [
     'This question already has a correct answer. Uncheck the current correct option first.' => 'هذا السؤال لديه بالفعل إجابة صحيحة. قم بإلغاء تحديد الخيار الصحيح الحالي أولاً.',
     'Or continue with' => 'أو تابع مع',
     'Sign in with Google' => 'تسجيل الدخول باستخدام Google',
+    // Design Config
+    'Design Configuration' => 'إعدادات التصميم',
+    'Customize the appearance of your system' => 'تخصيص مظهر نظامك',
+    'Design' => 'التصميم',
+    'Reset Defaults' => 'إعادة التعيين',
+    'This is a live preview of your color scheme' => 'هذه معاينة حية لنظام الألوان الخاص بك',
+    'Preview' => 'معاينة',
+    'Main Colors' => 'الألوان الرئيسية',
+    'Surface Colors' => 'ألوان الأسطح',
+    'Chart Colors' => 'ألوان المخططات',
+    'Design configuration saved successfully!' => 'تم حفظ إعدادات التصميم بنجاح!',
+    'Design configuration reset to defaults!' => 'تم إعادة تعيين إعدادات التصميم إلى الافتراضية!',
 ];
