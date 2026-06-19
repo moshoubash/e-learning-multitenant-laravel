@@ -4,8 +4,9 @@
             <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ __('messages.Design Configuration') }}</h2>
             <p class="text-[12px] font-medium uppercase text-secondary mt-0.5 tracking-wider">{{ __('messages.Customize the appearance of your system') }}</p>
         </div>
-        <div class="flex items-center gap-2">
-            <button wire:click="resetDefaults"
+    <div class="flex items-center gap-2">
+        @livewire('shared.notification-bell')
+        <button wire:click="resetDefaults"
                 class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-surface-container text-on-surface hover:bg-on-surface hover:text-white">
                 {{ __('messages.Reset Defaults') }}
             </button>

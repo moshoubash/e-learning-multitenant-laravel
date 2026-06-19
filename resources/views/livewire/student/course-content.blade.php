@@ -7,7 +7,8 @@
             <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ $course->title ?? __('messages.Course') }}</h2>
         </div>
         <div class="flex items-center gap-3">
-            <span class="text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Progress') }}: {{ $progressPercent }}%</span>
+            @livewire('shared.notification-bell')
+            <span class="text-[10px] font-bold uppercase tracking-widest text-secondary ltr:ml-2 rtl:mr-2">{{ __('messages.Progress') }}: {{ $progressPercent }}%</span>
             <div class="w-32 h-2 overflow-hidden neo-border-sm neo-radius bg-surface-container">
                 <div class="h-full transition-all duration-300 bg-on-surface neo-radius" style="width: {{ $progressPercent }}%"></div>
             </div>
