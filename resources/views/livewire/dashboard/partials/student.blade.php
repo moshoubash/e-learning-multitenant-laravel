@@ -99,6 +99,7 @@
                 <tbody class="divide-y divide-[#E5E5E5]">
                     @forelse($tables['enrollments'] as $enrollment)
                         @php $progress = (int) $enrollment->progress_percent; @endphp
+                        @if(!$enrollment->course) @continue @endif
                         <tr>
                             <td class="px-6 py-4 text-sm font-bold text-on-surface">
                                 <a href="{{ route('tenant.student.course', optional($enrollment->course)->slug) }}" class="hover:underline">

@@ -23,6 +23,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth:tenant'])->group(function () {
     Route::get('/dashboard', \App\Livewire\Dashboard::class)->name('tenant.dashboard');
+    Route::get('/notifications', \App\Livewire\Notifications::class)->name('tenant.notifications');
 
     Route::get('/profile', \App\Livewire\Profile::class)->name('tenant.profile');
 

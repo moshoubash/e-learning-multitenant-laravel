@@ -9,13 +9,8 @@
             <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ __('messages.Dashboard') }}</h2>
             <p class="text-[12px] font-medium uppercase text-secondary mt-0.5 tracking-wider">{{ __('messages.Welcome back,') }} {{ auth()->user()->name }}!</p>
         </div>
-        <div class="flex items-center gap-4">
-            <button class="w-10 h-10 neo-border neo-radius flex items-center justify-center hover:bg-surface-container-high transition-transform active:scale-95">
-                <i class="fas fa-bell"></i>
-            </button>
-            <button class="w-10 h-10 neo-border neo-radius bg-primary-container flex items-center justify-center hover:bg-surface-container-high transition-transform active:scale-95 overflow-hidden">
-                <i class="fas fa-user-circle text-on-surface"></i>
-            </button>
+        <div class="flex items-center gap-2">
+            @livewire('shared.notification-bell')
         </div>
     </header>
 

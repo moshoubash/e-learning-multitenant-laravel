@@ -4,6 +4,10 @@ namespace App\Services\Student;
 
 use App\Models\Tenant\Quiz;
 use App\Models\Tenant\QuizAttempt;
+use App\Models\Tenant\User;
+use App\Notifications\QuizReattemptAvailable;
+use App\Notifications\QuizResult;
+use App\Notifications\QuizSubmitted;
 
 class QuizTakingService
 {
@@ -75,12 +79,42 @@ class QuizTakingService
 
         $result = $this->calculateScore($quiz, $selectedAnswers);
 
-        return QuizAttempt::create([
+        $attempt = QuizAttempt::create([
             'user_id' => $userId,
             'quiz_id' => $quizId,
             'score' => $result['score'],
             'passed' => $result['passed'],
             'submitted_at' => now(),
         ]);
+
+        $quiz->load('section.course.instructor');
+        $student = User::find($userId);
+
+        // Notify instructor
+        $instructor = $quiz->section?->course?->instructor;
+        if ($instructor && $student) {
+            $instructor->notify(new QuizSubmitted($student, $quiz, $result['score'], $result['passed']));
+        }
+
+        // Notify student of result
+        if ($student) {
+            $attemptCount = QuizAttempt::where('quiz_id', $quizId)
+                ->where('user_id', $userId)
+                ->count();
+            $student->notify(new QuizResult($quiz, $result['score'], $result['passed'], $attemptCount));
+        }
+
+        // Notify student if re-attempt is available
+        if ($quiz->can_reattempt && $student) {
+            $attemptCount = QuizAttempt::where('quiz_id', $quizId)
+                ->where('user_id', $userId)
+                ->count();
+            $remaining = ($quiz->max_attempts ?? 1) - $attemptCount;
+            if ($remaining > 0) {
+                $student->notify(new QuizReattemptAvailable($quiz, $remaining));
+            }
+        }
+
+        return $attempt;
     }
 }

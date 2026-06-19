@@ -8,6 +8,7 @@ use App\Models\Tenant\Assignment;
 use App\Models\Tenant\AssignmentAttachment;
 use App\Models\Tenant\Lesson;
 use App\Models\Tenant\User;
+use App\Notifications\NewCoursePublished;
 use App\Services\Instructor\AssignmentService;
 use App\Services\Instructor\CourseService;
 use App\Services\Instructor\LessonService;
@@ -274,7 +275,7 @@ class Courses extends Component
     {
         $this->validate($this->courseCreateRules());
 
-        $this->courseService()->createCourse([
+        $course = $this->courseService()->createCourse([
             'title' => $this->createTitle,
             'slug' => $this->createSlug,
             'description' => $this->createDescription,
@@ -282,6 +283,10 @@ class Courses extends Component
             'status' => $this->createStatus,
             'instructor_id' => $this->createInstructorId,
         ]);
+
+        if ($course->status === 'published') {
+            $this->notifyStudentsNewCourse($course);
+        }
 
         $this->closeModal();
         Toaster::success('Course created successfully!');
@@ -296,6 +301,8 @@ class Courses extends Component
             return;
         }
 
+        $oldStatus = $this->editingCourse->status;
+
         $this->courseService()->updateCourse($this->editingCourse, [
             'title' => $this->editTitle,
             'slug' => $this->editSlug,
@@ -305,8 +312,23 @@ class Courses extends Component
             'instructor_id' => $this->editInstructorId,
         ]);
 
+        if ($oldStatus !== 'published' && $this->editStatus === 'published') {
+            $course = Course::find($this->editingCourse->id);
+            if ($course) {
+                $this->notifyStudentsNewCourse($course);
+            }
+        }
+
         $this->closeModal();
         Toaster::success('Course updated successfully!');
+    }
+
+    protected function notifyStudentsNewCourse(Course $course): void
+    {
+        $students = User::role('student')->get();
+        foreach ($students as $student) {
+            $student->notify(new NewCoursePublished($course));
+        }
     }
 
     public function softDelete()

@@ -12,6 +12,7 @@
     <div class="p-[24px] max-w-[1400px] mx-auto">
         <div class="overflow-hidden bg-surface-container-lowest neo-border neo-radius">
             @forelse($enrollments as $enrollment)
+                @if(!$enrollment->course) @continue @endif
                 @php
                     $progress = $this->getCourseProgress($enrollment);
                 @endphp

@@ -475,6 +475,7 @@ class DashboardStatsService
     {
         return Enrollment::with(['course.instructor'])
             ->where('user_id', $userId)
+            ->whereHas('course')
             ->orderByDesc('enrolled_at')
             ->limit($limit)
             ->get();

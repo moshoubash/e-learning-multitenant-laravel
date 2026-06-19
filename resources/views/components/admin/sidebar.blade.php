@@ -22,6 +22,11 @@
             <i class="w-5 text-center fas fa-home"></i>
             <span class="text-[14px] font-medium">{{ __('messages.Dashboard') }}</span>
         </a>
+        <a href="{{ route('tenant.notifications') }}" wire:navigate
+           class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.notifications*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
+            <i class="w-5 text-center fas fa-bell"></i>
+            <span class="text-[14px] font-medium">{{ __('messages.Notifications') }}</span>
+        </a>
         <a href="{{ route('tenant.admin.users') }}" wire:navigate
            class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.admin.users*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
             <i class="w-5 text-center fas fa-users"></i>

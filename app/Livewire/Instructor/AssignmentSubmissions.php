@@ -4,6 +4,7 @@ namespace App\Livewire\Instructor;
 
 use App\Models\Tenant\Assignment;
 use App\Models\Tenant\AssignmentSubmission;
+use App\Notifications\AssignmentGraded;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
@@ -112,7 +113,16 @@ class AssignmentSubmissions extends Component
             'feedback'   => $this->gradeFeedback,
             'graded_by'  => Auth::id(),
             'graded_at'  => now(),
+            'status'     => 'graded',
         ]);
+
+        if ($submission->student) {
+            $submission->student->notify(new AssignmentGraded(
+                $submission->assignment,
+                $this->gradeScore,
+                $this->gradeFeedback,
+            ));
+        }
 
         Toaster::success('Grade submitted successfully!');
         $this->closeGradingModal();

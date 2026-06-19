@@ -9,6 +9,9 @@
                 {{ __('messages.Pass') }}: {{ $quiz->pass_percentage }}%
             </span>
         </div>
+        <div class="flex items-center gap-2">
+            @livewire('shared.notification-bell')
+        </div>
     </header>
 
     <div class="p-[24px] max-w-[1400px] mx-auto">
