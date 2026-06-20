@@ -65,7 +65,7 @@
                     <div class="space-y-2">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-bold tracking-widest uppercase text-on-surface">{{ $label }}</span>
-                            <span class="px-2 py-0.5 neo-border-sm neo-radius text-[10px] font-bold leading-none {{ $passed ? 'bg-primary-container' : 'bg-surface-container-lowest' }}">{{ $passed ? __('messages.Passed') : __('messages.Failed') }}</span>
+                            <span class="px-2 py-0.5 neo-border-sm neo-radius text-[10px] font-bold leading-none {{ $passed ? 'bg-primary-container text-on-primary-container' : 'bg-surface-container-lowest' }}">{{ $passed ? __('messages.Passed') : __('messages.Failed') }}</span>
                         </div>
                         <div class="w-full h-4 overflow-hidden neo-border neo-radius bg-surface-container">
                             <div class="h-full {{ $passed ? 'bg-primary-container' : 'bg-error' }}" style="width: {{ $score }}%;" title="{{ $score }}%"></div>
@@ -119,7 +119,7 @@
                             </td>
                             <td class="px-6 py-4">
                                 <a href="{{ route('tenant.student.course', optional($enrollment->course)->slug) }}"
-                                   class="inline-block px-3 py-1 neo-border neo-radius bg-primary-container text-[10px] font-bold uppercase leading-none hover:translate-x-0.5 hover:translate-y-0.5 transition-transform">{{ __('messages.Continue') }}</a>
+                                   class="inline-block px-3 py-1 neo-border neo-radius bg-primary-container text-on-primary-container text-[10px] font-bold uppercase leading-none hover:translate-x-0.5 hover:translate-y-0.5 transition-transform">{{ __('messages.Continue') }}</a>
                             </td>
                         </tr>
                     @empty
@@ -137,7 +137,7 @@
             @forelse($tables['attempts'] as $attempt)
                 @php $score = (int) $attempt->score; @endphp
                 <div class="flex items-center gap-4 p-3 border-2 border-on-surface neo-radius">
-                    <div class="w-[44px] h-[44px] shrink-0 neo-border neo-radius bg-primary-container flex items-center justify-center font-bold text-lg leading-none">{{ $score }}</div>
+                    <div class="w-[44px] h-[44px] shrink-0 neo-border neo-radius bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-lg leading-none">{{ $score }}</div>
                     <div class="flex-1 min-w-0">
                         <h4 class="text-xs font-bold leading-tight tracking-wider uppercase text-on-surface">{{ optional($attempt->quiz)->title ?? '—' }}</h4>
                         <p class="text-[10px] text-secondary mt-1 leading-none">{{ $attempt->submitted_at?->diffForHumans() }}</p>

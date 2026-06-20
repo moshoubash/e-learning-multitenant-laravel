@@ -1,7 +1,7 @@
 <div>
     <div class="px-[24px] max-w-[1400px] mx-auto space-y-6">
-        <div class="h-16 flex items-center justify-between">
-            <h1 class="text-lg font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Notifications') }}</h1>
+        <div class="flex items-center justify-between h-16">
+            <h1 class="text-lg font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Notifications') }}</h1>
             <div class="flex items-center gap-2">
                 @if($unreadCount > 0)
                     <button wire:click="markAllAsRead"
@@ -18,31 +18,31 @@
             </div>
         </div>
 
-        <div class="flex gap-2 border-b-2 border-on-surface pb-2">
+        <div class="flex gap-2 pb-2 border-b-2 border-on-surface">
             <button wire:click="$set('filter', 'all')"
                 class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest transition-colors neo-radius
-                    {{ $filter === 'all' ? 'bg-primary-container text-on-surface neo-border-sm' : 'text-secondary hover:text-on-surface' }}">
+                    {{ $filter === 'all' ? 'bg-primary-container text-on-primary-container neo-border-sm' : 'text-secondary hover:text-on-surface' }}">
                 {{ __('messages.All') }} ({{ auth()->user()->notifications()->count() }})
             </button>
             <button wire:click="$set('filter', 'unread')"
                 class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest transition-colors neo-radius
-                    {{ $filter === 'unread' ? 'bg-primary-container text-on-surface neo-border-sm' : 'text-secondary hover:text-on-surface' }}">
+                    {{ $filter === 'unread' ? 'bg-primary-container text-on-primary-container neo-border-sm' : 'text-secondary hover:text-on-surface' }}">
                 {{ __('messages.Unread') }} ({{ $unreadCount }})
             </button>
             <button wire:click="$set('filter', 'read')"
                 class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest transition-colors neo-radius
-                    {{ $filter === 'read' ? 'bg-primary-container text-on-surface neo-border-sm' : 'text-secondary hover:text-on-surface' }}">
+                    {{ $filter === 'read' ? 'bg-primary-container text-on-primary-container neo-border-sm' : 'text-secondary hover:text-on-surface' }}">
                 {{ __('messages.Read') }} ({{ auth()->user()->readNotifications()->count() }})
             </button>
         </div>
 
-        <div class="bg-surface-container-lowest neo-border neo-radius overflow-hidden">
+        <div class="overflow-hidden bg-surface-container-lowest neo-border neo-radius">
             @forelse($notifications as $notification)
                 <div class="p-4 border-b border-on-surface/10 flex items-start justify-between gap-4
                     {{ is_null($notification->read_at) ? 'bg-primary-container/5' : '' }}">
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-2">
-                            <p class="text-sm font-bold text-on-surface truncate">{{ $notification->data['title'] ?? '' }}</p>
+                            <p class="text-sm font-bold truncate text-on-surface">{{ $notification->data['title'] ?? '' }}</p>
                             @if(is_null($notification->read_at))
                                 <span class="w-2 h-2 neo-radius bg-error shrink-0"></span>
                             @endif
@@ -62,13 +62,13 @@
                     <div class="flex items-center gap-1 shrink-0">
                         @if(is_null($notification->read_at))
                             <button wire:click="markAsRead('{{ $notification->id }}')"
-                                class="w-8 h-8 flex items-center justify-center neo-border-sm neo-radius text-xs text-secondary hover:bg-surface-container-low hover:text-on-surface transition-colors"
+                                class="flex items-center justify-center w-8 h-8 text-xs transition-colors neo-border-sm neo-radius text-secondary hover:bg-surface-container-low hover:text-on-surface"
                                 title="{{ __('messages.Mark as read') }}">
                                 <i class="fas fa-check"></i>
                             </button>
                         @endif
                         <button wire:click="deleteNotification('{{ $notification->id }}')"
-                            class="w-8 h-8 flex items-center justify-center neo-border-sm neo-radius text-xs text-secondary hover:bg-surface-container-low hover:text-error transition-colors"
+                            class="flex items-center justify-center w-8 h-8 text-xs transition-colors neo-border-sm neo-radius text-secondary hover:bg-surface-container-low hover:text-error"
                             title="{{ __('messages.Delete') }}">
                             <i class="fas fa-trash"></i>
                         </button>
@@ -77,7 +77,7 @@
             @empty
                 <div class="p-12 text-center">
                     <i class="mb-4 text-5xl text-secondary fas fa-bell-slash"></i>
-                    <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface">
+                    <h3 class="text-sm font-bold tracking-widest uppercase text-on-surface">
                         {{ $filter === 'all' ? __('messages.No notifications') : ($filter === 'unread' ? __('messages.No unread notifications') : __('messages.No read notifications')) }}
                     </h3>
                     <p class="mt-2 text-sm text-secondary">{{ __('messages.When you get notifications, they will appear here.') }}</p>

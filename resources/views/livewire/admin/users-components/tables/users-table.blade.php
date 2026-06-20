@@ -2,7 +2,7 @@
     <div class="p-[24px] border-b-2 border-on-surface flex items-center justify-between">
         <h3 class="text-[18px] font-bold uppercase tracking-widest text-on-surface leading-none">{{ __('messages.Active Users') }}</h3>
         <button wire:click="openCreateModal"
-            class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-surface hover:bg-on-surface hover:text-white">
+            class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
             <i class="fas fa-plus ltr:mr-2 rtl:ml-2"></i>
             {{ __('messages.Add User') }}
         </button>

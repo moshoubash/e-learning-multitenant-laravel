@@ -4,7 +4,7 @@
             <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ __('messages.My Enrolled Courses') }}</h2>
             <p class="text-[12px] font-medium uppercase text-secondary mt-0.5 tracking-wider">{{ __('messages.Continue where you left off') }}</p>
         </div>
-        <a href="{{ route('tenant.student.courses') }}" class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-surface hover:bg-on-surface hover:text-white">
+        <a href="{{ route('tenant.student.courses') }}" class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
             {{ __('messages.Browse More') }} <i class="ml-1 fas fa-arrow-right"></i>
         </a>
     </header>
@@ -44,7 +44,7 @@
                                 </div>
                             @elseif($progress['progress_percent'] == 100)
                                 <div class="flex items-center mt-3">
-                                    <span class="inline-flex items-center px-2 py-1 neo-border-sm neo-radius text-[10px] font-bold bg-primary-container text-on-surface">
+                                    <span class="inline-flex items-center px-2 py-1 neo-border-sm neo-radius text-[10px] font-bold bg-primary-container text-on-primary-container">
                                         <i class="mr-1 fas fa-check-circle"></i>
                                         {{ __('messages.Course Completed!') }}
                                     </span>
@@ -55,7 +55,7 @@
                         {{-- Actions --}}
                         <div class="shrink-0">
                             <a href="{{ route('tenant.student.course', $enrollment->course->slug) }}"
-                                class="inline-flex items-center px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-surface hover:bg-on-surface hover:text-white">
+                                class="inline-flex items-center px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
                                 <i class="fas fa-play-circle rtl:ml-2 ltr:mr-2"></i>
                                 {{ __('messages.Continue') }}
                             </a>

@@ -11,7 +11,7 @@
                 {{ __('messages.Reset Defaults') }}
             </button>
             <button wire:click="save"
-                class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-surface hover:bg-on-surface hover:text-white">
+                class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
                 <i class="fas fa-save ltr:mr-2 rtl:ml-2"></i>
                 {{ __('messages.Save') }}
             </button>
@@ -87,8 +87,8 @@
                             <input type="color" wire:model.lazy="{{ $chart }}"
                                 class="w-full h-10 border-0 cursor-pointer neo-border-sm neo-radius">
                             <input type="text" wire:model.lazy="{{ $chart }}"
-                                class="w-full px-2 py-1 text-xs font-mono text-center neo-border-sm neo-radius bg-surface-container-lowest text-on-surface focus:outline-none focus:ring-0">
-                            @error($chart) <span class="text-xs text-error font-bold">{{ $message }}</span> @enderror
+                                class="w-full px-2 py-1 font-mono text-xs text-center neo-border-sm neo-radius bg-surface-container-lowest text-on-surface focus:outline-none focus:ring-0">
+                            @error($chart) <span class="text-xs font-bold text-error">{{ $message }}</span> @enderror
                         </div>
                     @endforeach
                 </div>

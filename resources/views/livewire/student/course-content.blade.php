@@ -336,33 +336,32 @@
                                     <div class="divide-y divide-on-surface/5">
                                         @foreach($section->lessons as $lesson)
                                             <div wire:click="selectLesson({{ $lesson->id }})"
-                                                class="p-3 transition-colors cursor-pointer hover:bg-surface-container-high"
-                                                style="{{ $selectedLesson && $selectedLesson->id === $lesson->id ? 'background-color: #FFD600; border-left: 4px solid #0A0A0A;' : '' }}">
+                                                class="p-3 transition-colors cursor-pointer hover:bg-surface-container-high {{ $selectedLesson && $selectedLesson->id === $lesson->id ? 'bg-primary-container border-l-4-gray-400  ' : '' }}">
                                                 <div class="flex items-center justify-between">
                                                     <div class="flex items-center">
                                                         @if($this->isLessonCompleted($lesson->id))
-                                                            <i class="text-xs fas fa-check-circle text-on-surface ltr:mr-3 rtl:ml-3"></i>
+                                                            <i class="text-xs fas fa-check-circle text-on-primary-container ltr:mr-3 rtl:ml-3"></i>
                                                         @elseif($lesson->type === 'video')
-                                                            <i class="text-xs fas fa-play-circle text-secondary ltr:mr-3 rtl:ml-3"></i>
+                                                            <i class="text-xs fas fa-play-circle text-on-primary-container ltr:mr-3 rtl:ml-3"></i>
                                                         @elseif($lesson->type === 'text')
-                                                            <i class="text-xs fas fa-file-alt text-secondary ltr:mr-3 rtl:ml-3"></i>
+                                                            <i class="text-xs fas fa-file-alt text-on-primary-container ltr:mr-3 rtl:ml-3"></i>
                                                         @else
-                                                            <i class="text-xs fas fa-file text-secondary ltr:mr-3 rtl:ml-3"></i>
+                                                            <i class="text-xs fas fa-file text-on-primary-container ltr:mr-3 rtl:ml-3"></i>
                                                         @endif
-                                                        <span class="text-xs {{ $selectedLesson && $selectedLesson->id === $lesson->id ? 'font-bold text-on-surface' : 'text-on-surface' }}">
+                                                        <span class="text-xs {{ $selectedLesson && $selectedLesson->id === $lesson->id ? 'font-bold text-on-primary-container' : 'text-on-surface' }}">
                                                             {{ $lesson->title }}
                                                         </span>
                                                     </div>
                                                     @if($lesson->duration_seconds)
-                                                        <span class="text-[10px] text-secondary font-bold">{{ gmdate('i:s', $lesson->duration_seconds) }}</span>
+                                                        <span class="text-[10px] text-on-primary-container font-bold">{{ gmdate('i:s', $lesson->duration_seconds) }}</span>
                                                     @endif
                                                 </div>
                                             </div>
                                         @endforeach
 
                                         @if($section->assignments && $section->assignments->count() > 0)
-                                            <div class="px-3 pt-3 pb-2 mt-3 border-t border-on-surface/10">
-                                                <div class="text-[10px] font-bold uppercase tracking-widest text-secondary mb-2">{{ __('messages.Assignments') }}</div>
+                                            <div class="pt-3 mt-3 border-t border-on-surface/10">
+                                                <div class="text-[10px] px-3 font-bold uppercase tracking-widest text-secondary mb-2">{{ __('messages.Assignments') }}</div>
                                                 @foreach($section->assignments as $assignment)
                                                     <div wire:click="selectAssignment({{ $assignment->id }})"
                                                         class="p-3 cursor-pointer hover:bg-surface-container-high transition-colors {{ $selectedAssignment && $selectedAssignment->id === $assignment->id ? 'bg-primary-container' : '' }}">
@@ -381,7 +380,7 @@
                                         @if($section->quiz)
                                             <a href="{{ route('tenant.student.quiz', $section->quiz->id) }}"
                                                 wire:navigate
-                                                class="flex items-center justify-between p-3 mb-3 ml-3 mr-3 transition-colors cursor-pointer hover:bg-surface-container-high">
+                                                class="flex items-center justify-between p-3 mb-3 transition-colors cursor-pointer hover:bg-surface-container-high">
                                                 <div class="flex items-center">
                                                     <i class="text-xs fas fa-clipboard-list text-secondary ltr:mr-3 rtl:ml-3"></i>
                                                     <span class="text-xs text-on-surface">{{ $section->quiz->title }}</span>
