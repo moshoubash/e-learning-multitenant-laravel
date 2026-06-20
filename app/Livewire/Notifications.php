@@ -59,7 +59,7 @@ class Notifications extends Component
             $query = $user?->readNotifications();
         }
 
-        $notifications = $query?->latest()->paginate(20) ?? collect();
+        $notifications = $query?->latest()->paginate(10) ?? collect();
         $unreadCount = $user?->unreadNotifications()->count() ?? 0;
 
         $layout = match (true) {

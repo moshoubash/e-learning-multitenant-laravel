@@ -487,4 +487,15 @@ return [
     'Re-attempt Available' => 'Re-attempt Available',
     'You can retake :quiz (:remaining attempts remaining)' => 'You can retake :quiz (:remaining attempts remaining)',
     'No content available yet.' => 'No content available yet.',
+
+    'Admin Panel' => 'Admin Panel',
+    'Student Portal' => 'Student Portal',
+    'Instructor Portal' => 'Instructor Portal',
+
+    'Showing' => 'Showing',
+    'to' => 'To',
+    'results' => 'Results',
+    'Pagination Navigation' => 'Pagination Navigation',
+    'pagination.previous' => 'Previous',
+    'pagination.next' => 'Next',
 ];

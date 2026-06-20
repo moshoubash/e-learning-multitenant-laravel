@@ -513,5 +513,17 @@ return [
     ':assignment is due :date' => ':assignment مستحق في :date',
     'Re-attempt Available' => 'إعادة المحاولة متاحة',
     'You can retake :quiz (:remaining attempts remaining)' => 'يمكنك إعادة :quiz (بقي :remaining محاولات)',
-    'No content available yet.' => 'لا يوجد محتوى متاح بعد.'
+    'No content available yet.' => 'لا يوجد محتوى متاح بعد.',
+
+    'Admin Panel' => 'لوحة الادمن',
+    'Student Portal' => 'بوابة الطالب',
+    'Instructor Portal' => 'لوحة المدرس',
+
+    'Showing' => 'عرض',
+    'to' => 'إلى',
+    'results' => 'النتائج',
+    'Pagination Navigation' => 'التنقل عبر الصفحات',
+    'pagination.previous' => 'السابق',
+    'pagination.next' => 'التالي',
+
 ];

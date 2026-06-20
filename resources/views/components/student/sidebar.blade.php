@@ -5,13 +5,13 @@
 
 <aside class="fixed ltr:left-0 rtl:right-0 top-0 h-full w-[240px] flex flex-col bg-surface-container-lowest ltr:border-r-2 rtl:border-l-2 border-on-surface z-50">
     {{-- Brand Header --}}
-    <div class="flex items-center gap-3 p-6 border-b-2 border-on-surface">
+    <div class="flex items-center h-16 gap-3 p-6 border-b-2 border-on-surface">
         <div class="flex items-center justify-center w-10 h-10 neo-border bg-primary-container neo-radius">
             <i class="fas fa-graduation-cap text-on-surface"></i>
         </div>
         <div>
-            <h1 class="text-[24px] font-bold text-on-surface uppercase leading-none tracking-[0.08em]">LEARN_OS</h1>
-            <p class="text-[10px] font-bold uppercase tracking-widest text-secondary mt-1">Neo-Brutalist LMS</p>
+            <h1 class="text-[16px] font-bold text-on-surface uppercase leading-none tracking-[0.08em]">GRID LMS</h1>
+            <p class="text-[10px] font-bold uppercase tracking-widest text-secondary mt-1">{{ __('messages.Student Portal') }}</p>
         </div>
     </div>
 
