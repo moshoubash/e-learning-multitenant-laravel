@@ -34,28 +34,31 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <div class="mb-4 text-sm text-secondary">
+    <div class="mb-6 text-sm font-medium" style="color: var(--color-secondary, #5f5e5e);">
         {{ __('messages.This is a secure area of the application. Please confirm your password before continuing.') }}
     </div>
 
-    <form wire:submit="confirmPassword">
+    <form wire:submit="confirmPassword" class="space-y-6">
         <div>
             <x-input-label for="password" :value="__('messages.Password')" />
-
             <x-text-input wire:model="password"
-                          id="password"
-                          class="block mt-1 w-full"
-                          type="password"
-                          name="password"
-                          required autocomplete="current-password" />
-
+                id="password"
+                class="block w-full mt-2"
+                type="password"
+                name="password"
+                required autocomplete="current-password"
+                placeholder="••••••••" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <div class="flex justify-end mt-4">
-            <x-primary-button>
+        <div class="pt-2">
+            <button type="submit"
+                class="w-full py-4 px-6 font-bold uppercase tracking-widest transition-all duration-200"
+                style="background-color: var(--color-primary-container, #FFD600); border: 2px solid var(--color-on-surface, #0A0A0A); border-radius: 4px; color: var(--color-on-surface, #0A0A0A);"
+                onmouseover="this.style.backgroundColor='var(--color-on-surface,#0A0A0A)'; this.style.color='var(--color-primary-container,#FFD600)';"
+                onmouseout="this.style.backgroundColor='var(--color-primary-container,#FFD600)'; this.style.color='var(--color-on-surface,#0A0A0A)';">
                 {{ __('messages.Confirm') }}
-            </x-primary-button>
+            </button>
         </div>
     </form>
 </div>
