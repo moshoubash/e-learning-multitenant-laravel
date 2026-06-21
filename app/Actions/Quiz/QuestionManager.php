@@ -3,6 +3,7 @@
 namespace App\Actions\Quiz;
 
 use App\Models\Tenant\QuizQuestion;
+use App\Models\Tenant\QuizOption;
 
 final class QuestionManager
 {

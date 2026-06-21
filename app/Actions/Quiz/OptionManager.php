@@ -27,4 +27,23 @@ final class OptionManager
     {
         return QuizOption::find($id);
     }
+
+    public function hasCorrectOption(int $questionId): bool
+    {
+        return QuizOption::where('question_id', $questionId)
+            ->where('is_correct', true)
+            ->exists();
+    }
+
+    public function unmarkAllCorrect(int $questionId): void
+    {
+        QuizOption::where('question_id', $questionId)
+            ->where('is_correct', true)
+            ->update(['is_correct' => false]);
+    }
+
+    public function countOptions(int $questionId): int
+    {
+        return QuizOption::where('question_id', $questionId)->count();
+    }
 }

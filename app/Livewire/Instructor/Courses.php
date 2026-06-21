@@ -8,6 +8,7 @@ use App\Models\Tenant\Assignment;
 use App\Models\Tenant\AssignmentAttachment;
 use App\Models\Tenant\Lesson;
 use App\Models\Tenant\User;
+use App\Notifications\NewCoursePublished;
 use App\Services\Instructor\AssignmentService;
 use App\Services\Instructor\CourseService;
 use App\Services\Instructor\LessonService;
@@ -150,10 +151,14 @@ class Courses extends Component
     // Quiz create form fields
     public $quizCreateTitle = '';
     public $quizCreatePassPercentage = 70;
+    public $quizCreateCanReattempt = false;
+    public $quizCreateMaxAttempts = 1;
 
     // Quiz edit form fields
     public $quizEditTitle = '';
     public $quizEditPassPercentage = 70;
+    public $quizEditCanReattempt = false;
+    public $quizEditMaxAttempts = 1;
 
     // max order in sections
     public $maxOrderInSections = 0;
@@ -270,7 +275,7 @@ class Courses extends Component
     {
         $this->validate($this->courseCreateRules());
 
-        $this->courseService()->createCourse([
+        $course = $this->courseService()->createCourse([
             'title' => $this->createTitle,
             'slug' => $this->createSlug,
             'description' => $this->createDescription,
@@ -278,6 +283,10 @@ class Courses extends Component
             'status' => $this->createStatus,
             'instructor_id' => $this->createInstructorId,
         ]);
+
+        if ($course->status === 'published') {
+            $this->notifyStudentsNewCourse($course);
+        }
 
         $this->closeModal();
         Toaster::success('Course created successfully!');
@@ -292,6 +301,8 @@ class Courses extends Component
             return;
         }
 
+        $oldStatus = $this->editingCourse->status;
+
         $this->courseService()->updateCourse($this->editingCourse, [
             'title' => $this->editTitle,
             'slug' => $this->editSlug,
@@ -301,8 +312,23 @@ class Courses extends Component
             'instructor_id' => $this->editInstructorId,
         ]);
 
+        if ($oldStatus !== 'published' && $this->editStatus === 'published') {
+            $course = Course::find($this->editingCourse->id);
+            if ($course) {
+                $this->notifyStudentsNewCourse($course);
+            }
+        }
+
         $this->closeModal();
         Toaster::success('Course updated successfully!');
+    }
+
+    protected function notifyStudentsNewCourse(Course $course): void
+    {
+        $students = User::role('student')->get();
+        foreach ($students as $student) {
+            $student->notify(new NewCoursePublished($course));
+        }
     }
 
     public function softDelete()
@@ -827,6 +853,8 @@ class Courses extends Component
 
         $this->quizEditTitle = $this->editingQuiz->title;
         $this->quizEditPassPercentage = $this->editingQuiz->pass_percentage;
+        $this->quizEditCanReattempt = $this->editingQuiz->can_reattempt ?? false;
+        $this->quizEditMaxAttempts = $this->editingQuiz->max_attempts ?? 1;
         $this->showQuizEditModal = true;
     }
 
@@ -848,6 +876,8 @@ class Courses extends Component
     {
         $this->quizCreateTitle = '';
         $this->quizCreatePassPercentage = 70;
+        $this->quizCreateCanReattempt = false;
+        $this->quizCreateMaxAttempts = 1;
     }
 
     public function resetQuizFormFields()
@@ -856,6 +886,8 @@ class Courses extends Component
         $this->deletingQuiz = null;
         $this->quizEditTitle = '';
         $this->quizEditPassPercentage = 70;
+        $this->quizEditCanReattempt = false;
+        $this->quizEditMaxAttempts = 1;
     }
 
     protected function courseCreateRules(): array
@@ -954,6 +986,7 @@ class Courses extends Component
         return [
             'quizCreateTitle' => 'required|string|max:255',
             'quizCreatePassPercentage' => 'required|integer|min:1|max:100',
+            'quizCreateMaxAttempts' => 'nullable|integer|min:1|max:100',
         ];
     }
 
@@ -962,6 +995,7 @@ class Courses extends Component
         return [
             'quizEditTitle' => 'required|string|max:255',
             'quizEditPassPercentage' => 'required|integer|min:1|max:100',
+            'quizEditMaxAttempts' => 'nullable|integer|min:1|max:100',
         ];
     }
 
@@ -978,6 +1012,8 @@ class Courses extends Component
             $this->quizService()->createQuizForSection($this->selectedSectionId, [
                 'title' => $this->quizCreateTitle,
                 'pass_percentage' => $this->quizCreatePassPercentage,
+                'can_reattempt' => $this->quizCreateCanReattempt,
+                'max_attempts' => $this->quizCreateCanReattempt ? $this->quizCreateMaxAttempts : 1,
             ]);
         } catch (\Throwable $exception) {
             Toaster::error($exception->getMessage());
@@ -1001,6 +1037,8 @@ class Courses extends Component
         $this->quizService()->updateQuiz($this->editingQuiz, [
             'title' => $this->quizEditTitle,
             'pass_percentage' => $this->quizEditPassPercentage,
+            'can_reattempt' => $this->quizEditCanReattempt,
+            'max_attempts' => $this->quizEditCanReattempt ? $this->quizEditMaxAttempts : 1,
         ]);
 
         $this->closeQuizModal();

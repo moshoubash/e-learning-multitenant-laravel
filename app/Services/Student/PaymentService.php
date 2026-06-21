@@ -4,6 +4,8 @@ namespace App\Services\Student;
 
 use App\Models\Tenant\Course;
 use App\Models\Tenant\Enrollment;
+use App\Notifications\EnrollmentConfirmed;
+use App\Notifications\NewEnrollment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -63,6 +65,15 @@ class PaymentService
                     'enrolled_at' => now(),
                     'status' => Enrollment::STATUS_ACTIVE,
                 ]);
+
+                $course->load('instructor');
+                $student = Auth::user();
+                if ($course->instructor) {
+                    $course->instructor->notify(new NewEnrollment($student, $course));
+                }
+                if ($student) {
+                    $student->notify(new EnrollmentConfirmed($course));
+                }
 
                 // Transaction::create([...]);
 

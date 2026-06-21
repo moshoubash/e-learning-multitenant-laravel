@@ -4,6 +4,8 @@ namespace App\Livewire\Student;
 
 use App\Models\Tenant\Course;
 use App\Models\Tenant\Enrollment;
+use App\Notifications\EnrollmentConfirmed;
+use App\Notifications\NewEnrollment;
 use App\Services\Student\PaymentService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
@@ -134,6 +136,15 @@ class Checkout extends Component
                 'enrolled_at' => now(),
                 'status' => 'active',
             ]);
+
+            $this->course->load('instructor');
+            $student = Auth::user();
+            if ($this->course->instructor) {
+                $this->course->instructor->notify(new NewEnrollment($student, $this->course));
+            }
+            if ($student) {
+                $student->notify(new EnrollmentConfirmed($this->course));
+            }
 
             $this->isProcessing = false;
             $this->redirect(route('tenant.student.payment.confirmation', ['enrollmentId' => $enrollment->id]));

@@ -11,10 +11,10 @@
     $chartId = 'chart-' . uniqid();
 @endphp
 
-<div {{ $attributes->merge(['class' => 'bg-white rounded-2xl shadow-sm p-5']) }}>
+<div {{ $attributes->merge(['class' => 'bg-surface-container-lowest neo-radius p-5']) }}>
     @if($title)
         <div class="flex items-center justify-between mb-4">
-            <h3 class="text-sm font-semibold tracking-wider text-gray-700 uppercase">{{ $title }}</h3>
+            <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface">{{ $title }}</h3>
         </div>
     @endif
 
@@ -28,7 +28,18 @@
             if (!el || el.dataset.initialized === '1') return;
             el.dataset.initialized = '1';
 
-            const palette = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#0ea5e9', '#8b5cf6', '#ec4899', '#14b8a6'];
+            const cssVar = (name, fallback) => getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
+            const palette = [
+                cssVar('--color-primary-container', '#FFD600'),
+                cssVar('--color-on-surface', '#0A0A0A'),
+                cssVar('--color-secondary', '#5f5e5e'),
+                cssVar('--color-error', '#ba1a1a'),
+                cssVar('--color-on-primary-container', '#705d00'),
+                cssVar('--color-surface-container-highest', '#E2E2E2'),
+                '#333333', '#8B8000'
+            ];
+            const secondaryColor = cssVar('--color-secondary', '#5f5e5e');
+            const gridColor = cssVar('--color-surface-container-highest', '#E2E2E2');
             const labels = @json($labels);
             const rawDatasets = @json($datasets);
             const chartType = @json($type);
@@ -70,20 +81,20 @@
                                 boxWidth: 10,
                                 boxHeight: 10,
                                 padding: 12,
-                                color: '#6b7280',
-                                font: { size: 11 }
+                                color: secondaryColor,
+                                font: { size: 11, weight: 'bold' }
                             }
                         }
                     },
                     scales: (chartType === 'doughnut' || chartType === 'pie') ? {} : {
                         x: {
                             grid: { display: false },
-                            ticks: { color: '#9ca3af', font: { size: 11 } }
+                            ticks: { color: secondaryColor, font: { size: 11, weight: 'bold' } }
                         },
                         y: {
                             beginAtZero: true,
-                            grid: { color: '#f3f4f6' },
-                            ticks: { color: '#9ca3af', font: { size: 11 }, precision: 0 }
+                            grid: { color: gridColor },
+                            ticks: { color: secondaryColor, font: { size: 11, weight: 'bold' }, precision: 0 }
                         }
                     }
                 }
