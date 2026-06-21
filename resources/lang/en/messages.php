@@ -513,4 +513,6 @@ return [
     'Pagination Navigation' => 'Pagination Navigation',
     'pagination.previous' => 'Previous',
     'pagination.next' => 'Next',
+    'No quizzes found.' => 'No quizzes found.',
+    'Select a Course' => 'Select a Course',
 ];

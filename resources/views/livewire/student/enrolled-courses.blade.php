@@ -69,7 +69,7 @@
                     <p class="mt-2 text-sm text-secondary">{{ __('messages.Start learning by enrolling in a course.') }}</p>
                     <a href="{{ route('tenant.student.courses') }}"
                         class="inline-flex items-center px-4 py-2 mt-4 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
-                        <i class="mr-2 fas fa-search"></i>
+                        <i class="ltr:mr-2 rtl:ml-2 fas fa-search"></i>
                         {{ __('messages.Browse Courses') }}
                     </a>
                 </div>
