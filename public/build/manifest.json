@@ -1,0 +1,24 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-D2q5veax.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/images/plyr.svg": {
+    "file": "assets/plyr-Bk-OlDKi.svg",
+    "src": "resources/images/plyr.svg"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-sxTL-KUr.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "assets": [
+      "assets/plyr-Bk-OlDKi.svg"
+    ]
+  }
+}
