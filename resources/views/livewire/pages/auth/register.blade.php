@@ -100,7 +100,7 @@ new #[Layout('layouts.guest')] class extends Component {
         </div>
 
         <div>
-            <a href="{{ route('auth.google.redirect') }}" wire:navigate
+            <a href="{{ route('auth.google.redirect') }}"
                 class="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-bold transition-all duration-200"
                 style="background-color: var(--color-surface-container-lowest, #FFFFFF); border: 2px solid var(--color-on-surface, #0A0A0A); border-radius: 4px; color: var(--color-on-surface, #0A0A0A);"
                 onmouseover="this.style.backgroundColor='var(--color-surface-container-high, #E8E8E8)';"
