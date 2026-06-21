@@ -515,4 +515,6 @@ return [
     'pagination.next' => 'Next',
     'No quizzes found.' => 'No quizzes found.',
     'Select a Course' => 'Select a Course',
+    'No lessons yet. Click the + button to add a lesson.' => 'No lessons yet. Click the + button to add a lesson.',
+    'Enter the direct video URL (MP4, WebM, etc.)' => 'Enter the direct video URL (MP4, WebM, etc.)',
 ];

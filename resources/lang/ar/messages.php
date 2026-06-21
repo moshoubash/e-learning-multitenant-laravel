@@ -544,4 +544,6 @@ return [
     'A new verification link has been sent to the email address you provided during registration.' => 'تم إرسال رابط تحقق جديد إلى البريد الإلكتروني الذي قدمته أثناء التسجيل.',
     'No quizzes found.' => 'لم يتم العثور على اختبارات.',
     'Select a Course' => 'اختر دورة',
+    'No lessons yet. Click the + button to add a lesson.' => 'لا توجد دروس بعد. انقر على زر + لإضافة درس.',
+    'Enter the direct video URL (MP4, WebM, etc.)' => 'أدخل رابط الفيديو المباشر (MP4، WebM، إلخ)',
 ];
