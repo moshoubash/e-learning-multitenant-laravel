@@ -37,7 +37,7 @@
                             : __('messages.Re-attempt is not allowed for this quiz.') }}
                     </p>
                     <a href="{{ route('tenant.student.course', $quiz->section->course->slug ?? 'courses') }}"
-                        class="inline-flex items-center px-5 py-2 mt-6 neo-border neo-radius bg-primary-container text-on-surface text-xs font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
+                        class="inline-flex items-center px-5 py-2 mt-6 neo-border neo-radius bg-primary-container text-on-primary-container text-xs font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
                         <i class="fas fa-arrow-left ltr:mr-2 rtl:ml-2"></i>
                         {{ __('messages.Back to Course') }}
                     </a>
@@ -109,7 +109,7 @@
                         <div class="flex justify-center gap-4">
                             @if($this->canReattempt() && $previousAttempt)
                                 <button wire:click="resetQuiz"
-                                    class="px-5 py-2 neo-border neo-radius bg-primary-container text-on-surface text-xs font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
+                                    class="px-5 py-2 neo-border neo-radius bg-primary-container text-on-primary-container text-xs font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
                                     <i class="fas fa-redo ltr:mr-2 rtl:ml-2"></i>
                                     {{ __('messages.Try Again') }}
                                 </button>
@@ -179,7 +179,7 @@
 
                         <div class="pt-4 mt-6 border-t-2 border-on-surface">
                             <button wire:click="submitQuiz"
-                                class="w-full py-3 neo-border neo-radius bg-primary-container text-on-surface font-bold text-xs uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
+                                class="w-full py-3 neo-border neo-radius bg-primary-container text-on-primary-container font-bold text-xs uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
                                 <i class="fas fa-check ltr:mr-2 rtl:ml-2"></i>
                                 {{ __('messages.Submit Quiz') }}
                             </button>

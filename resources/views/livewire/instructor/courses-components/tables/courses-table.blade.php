@@ -2,7 +2,7 @@
     <div class="p-[24px] border-b-2 border-on-surface flex items-center justify-between">
         <h3 class="text-[18px] font-bold uppercase tracking-widest text-on-surface leading-none">{{ __('messages.Active Courses') }}</h3>
         <button wire:click="openCreateModal"
-            class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-surface hover:bg-on-surface hover:text-white">
+            class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
             <i class="fas fa-plus ltr:mr-2 rtl:ml-2"></i>
             {{ __('messages.Add Course') }}
         </button>
@@ -24,7 +24,7 @@
                     <tr>
                         <td class="text-center rtl:pr-4 ltr:pl-4">
                             <button wire:click="toggleCourseExpand({{ $course->id }})"
-                                class="transition-colors text-secondary hover:text-on-surface">
+                                class="transition-colors text-secondary hover:text-on-primary-container">
                                 <i class="fas {{ $course->sections && count($course->sections) > 0 ? ($expandedCourses && in_array($course->id, $expandedCourses) ? 'fa-chevron-up' : 'fa-chevron-down') : 'fa-minus' }}"></i>
                             </button>
                         </td>
@@ -71,7 +71,7 @@
                                     <div class="flex items-center justify-between mb-3">
                                         <h4 class="text-xs font-bold tracking-widest uppercase text-secondary">{{ __('messages.Sections & Lessons') }}</h4>
                                         <button wire:click="openSectionCreateModal({{ $course->id }})"
-                                            class="px-3 py-1 neo-border-sm neo-radius text-[10px] font-bold bg-primary-container text-on-surface hover:bg-on-surface hover:text-white transition-colors">
+                                            class="px-3 py-1 neo-border-sm neo-radius text-[10px] font-bold bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white transition-colors">
                                             <i class="fas fa-plus ltr:mr-1 rtl:ml-1"></i>
                                             {{ __('messages.Add Section') }}
                                         </button>

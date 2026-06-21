@@ -5,13 +5,13 @@
             <div class="flex items-center gap-2">
                 @if($unreadCount > 0)
                     <button wire:click="markAllAsRead"
-                        class="px-3 py-1.5 neo-border-sm neo-radius bg-surface-container text-on-surface text-[10px] font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
+                        class="px-3 py-1.5 neo-border-sm neo-radius bg-surface-container text-on-primary-container text-[10px] font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
                         <i class="fas fa-check-double ltr:mr-1 rtl:ml-1"></i>
                         {{ __('messages.Mark all as read') }}
                     </button>
                 @endif
                 <button wire:click="deleteAllRead"
-                    class="px-3 py-1.5 neo-border-sm neo-radius bg-surface-container text-on-surface text-[10px] font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
+                    class="px-3 py-1.5 neo-border-sm neo-radius bg-primary-container text-on-primary-container text-[10px] font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
                     <i class="fas fa-trash ltr:mr-1 rtl:ml-1"></i>
                     {{ __('messages.Delete read') }}
                 </button>
@@ -52,7 +52,7 @@
                             <span class="text-[10px] text-secondary/60">{{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</span>
                             @if($notification->data['action_url'] ?? null)
                                 <a href="{{ $notification->data['action_url'] }}" target="_blank"
-                                    class="text-[10px] font-bold uppercase tracking-widest text-primary-container hover:text-on-surface transition-colors">
+                                    class="text-[10px] font-bold uppercase tracking-widest text-on-primary-container hover:text-on-surface transition-colors">
                                     <i class="fas fa-external-link-alt ltr:mr-1 rtl:ml-1"></i>
                                     {{ __('messages.View') }}
                                 </a>

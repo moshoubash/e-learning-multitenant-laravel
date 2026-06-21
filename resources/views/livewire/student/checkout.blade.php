@@ -93,7 +93,7 @@
 
                 <button x-data @click.prevent="processStripePayment()"
                     :disabled="{{ $isProcessing ? 'true' : 'false' }}"
-                    class="w-full px-6 py-3 mt-4 neo-border neo-radius bg-primary-container text-on-surface font-bold text-xs uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                    class="w-full px-6 py-3 mt-4 neo-border neo-radius bg-primary-container text-on-primary-container font-bold text-xs uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
                     <span x-show="!{{ $isProcessing }}">
                         <i class="fas fa-lock ltr:mr-2 rtl:ml-2"></i>
                         {{ __('messages.Pay') }} ${{ number_format($course->price, 2) }}

@@ -66,10 +66,10 @@ new class extends Component
         </div>
 
         <div class="flex items-center gap-4 pt-2">
-            <button type="submit" class="px-5 py-2 neo-border neo-radius bg-on-surface text-white text-xs font-bold uppercase tracking-widest hover:bg-primary-container hover:text-on-surface hover:border-on-surface transition-colors">
+            <button type="submit" class="px-5 py-2 text-xs font-bold tracking-widest uppercase transition-colors text-on-primary-container neo-border neo-radius bg-primary-container hover:bg-on-surface hover:text-primary-container hover:border-on-surface">
                 {{ __('messages.Save') }}
             </button>
-            <x-action-message class="text-sm text-on-surface font-bold" on="password-updated">
+            <x-action-message class="text-sm font-bold text-on-surface" on="password-updated">
                 {{ __('messages.Saved.') }}
             </x-action-message>
         </div>

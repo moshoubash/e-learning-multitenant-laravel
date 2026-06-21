@@ -15,7 +15,7 @@
     @include('partials.dynamic-design-styles')
     @livewireStyles
 </head>
-<body class="flex h-screen overflow-hidden font-sans antialiased bg-surface-container-low selection:bg-primary-container selection:text-on-surface">
+<body class="flex h-screen overflow-hidden font-sans antialiased bg-surface-container-low selection:bg-primary-container selection:text-on-primary-container">
 
     <x-instructor.sidebar />
 

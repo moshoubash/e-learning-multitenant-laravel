@@ -79,7 +79,7 @@ new class extends Component
                 </div>
                 <div class="flex justify-end gap-3">
                     <button type="button" x-on:click="$dispatch('close-modal', 'confirm-user-deletion')"
-                            class="px-5 py-2 neo-border neo-radius bg-surface-container-lowest text-on-surface text-xs font-bold uppercase tracking-widest hover:bg-surface-container-high transition-colors">
+                            class="px-5 py-2 neo-border neo-radius bg-surface-container-lowest text-on-primary-container text-xs font-bold uppercase tracking-widest hover:bg-surface-container-high transition-colors">
                         {{ __('messages.Cancel') }}
                     </button>
                     <button type="submit"

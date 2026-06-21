@@ -1,7 +1,7 @@
 <div class="relative" x-data="{ open: $wire.entangle('showDropdown') }">
     <button wire:click="toggleDropdown" @click.outside="open = false"
         class="relative flex items-center justify-center w-9 h-9 transition-transform neo-border neo-radius hover:bg-surface-container-high active:scale-95">
-        <i class="text-xs fas fa-bell text-on-surface"></i>
+        <i class="text-xs fas fa-bell text-primary-container"></i>
         @if($unreadCount > 0)
             <span class="absolute inline-flex items-center justify-center bg-error text-white neo-radius -top-1.5 -right-1.5 w-4 h-4 text-[8px] font-bold">
                 {{ $unreadCount > 99 ? '99+' : $unreadCount }}
@@ -15,7 +15,7 @@
             <h3 class="text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Notifications') }}</h3>
             @if($unreadCount > 0)
                 <button wire:click="markAllAsRead"
-                    class="text-[10px] font-bold uppercase tracking-widest text-secondary hover:text-on-surface transition-colors">
+                    class="text-[10px] font-bold uppercase tracking-widest text-secondary hover:text-primary-container transition-colors">
                     {{ __('messages.Mark all as read') }}
                 </button>
             @endif

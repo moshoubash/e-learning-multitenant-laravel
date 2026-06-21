@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         <button wire:click="updateQuiz"
-                            class="px-4 py-2 mt-3 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-surface hover:bg-on-surface hover:text-white">
+                            class="px-4 py-2 mt-3 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
                             {{ __('messages.Update Quiz') }}
                         </button>
                     </div>
@@ -45,7 +45,7 @@
                     <div class="flex items-center justify-between mb-4">
                         <h4 class="text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Questions') }} ({{ $editingQuiz->questions->count() }})</h4>
                         <button wire:click="openQuestionCreateModal({{ $editingQuiz->id }})"
-                            class="px-3 py-1.5 neo-border-sm neo-radius text-[10px] font-bold bg-primary-container text-on-surface hover:bg-on-surface hover:text-white transition-colors">
+                            class="px-3 py-1.5 neo-border-sm neo-radius text-[10px] font-bold bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white transition-colors">
                             <i class="fas fa-plus ltr:mr-1 rtl:ml-1"></i> {{ __('messages.Add Question') }}
                         </button>
                     </div>
@@ -59,11 +59,11 @@
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <button wire:click="openQuestionEditModal({{ $question->id }})"
-                                        class="flex items-center justify-center w-8 h-8 transition-colors neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container">
+                                        class="flex items-center justify-center w-8 h-8 transition-colors neo-border-sm neo-radius text-primary-container hover:bg-primary-container hover:text-on-primary-container">
                                         <i class="text-xs fas fa-edit"></i>
                                     </button>
                                     <button wire:click="openOptionCreateModal({{ $question->id }})"
-                                        class="flex items-center justify-center w-8 h-8 transition-colors neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Add Option">
+                                        class="flex items-center justify-center w-8 h-8 transition-colors neo-border-sm neo-radius text-primary-container hover:bg-primary-container hover:text-on-primary-container" title="Add Option">
                                         <i class="text-xs fas fa-plus"></i>
                                     </button>
                                     <button wire:click="openQuestionDeleteModal({{ $question->id }})"
@@ -91,7 +91,7 @@
                                         </div>
                                         <div class="flex items-center gap-2">
                                             <button wire:click="openOptionEditModal({{ $option->id }})"
-                                                class="flex items-center justify-center w-8 h-8 transition-colors neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container">
+                                                class="flex items-center justify-center w-8 h-8 transition-colors neo-border-sm neo-radius text-primary-container hover:bg-primary-container hover:text-on-primary-container">
                                                 <i class="text-xs fas fa-edit"></i>
                                             </button>
                                             <button wire:click="openOptionDeleteModal({{ $option->id }})"
@@ -113,7 +113,7 @@
                 </div>
                 <div class="px-4 py-3 bg-surface-container-low sm:px-6 sm:flex sm:flex-row-reverse">
                     <button wire:click="closeModals" type="button"
-                        class="inline-flex justify-center w-full px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-surface-container text-on-surface hover:bg-on-surface hover:text-white sm:w-auto">
+                        class="inline-flex justify-center w-full px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-surface-container text-on-primary-container hover:bg-on-surface hover:text-white sm:w-auto">
                         {{ __('messages.Close') }}
                     </button>
                 </div>

@@ -31,7 +31,7 @@
                             @foreach($enrolledCourses as $course)
                                 <div wire:click="selectCourse({{ $course->id }})"
                                     class="p-4 transition-colors duration-100 cursor-pointer hover:bg-surface-container-high"
-                                    style="border-left: 4px solid {{ $selectedCourse == $course->id ? 'var(--primary-container)' : 'transparent' }}">
+                                    style="border-left: 4px solid {{ $selectedCourse == $course->id ? 'var(--color-primary-container)' : 'transparent' }}">
                                     <h4 class="text-sm font-bold text-on-surface">{{ $course->title }}</h4>
                                     <p class="mt-1 text-xs text-secondary">{{ $course->instructor->name ?? 'N/A' }}</p>
                                     <div class="flex items-center gap-3 mt-2 text-[10px] text-secondary font-bold uppercase tracking-widest">
@@ -53,7 +53,7 @@
                         @forelse($courses as $course)
                             <div wire:click="selectCourse({{ $course->id }})"
                                 class="p-4 transition-colors duration-100 cursor-pointer hover:bg-surface-container-high"
-                                style="border-left: 4px solid {{ $selectedCourse == $course->id ? '#FFD600' : 'transparent' }}">
+                                style="border-left: 4px solid {{ $selectedCourse == $course->id ? 'var(--color-primary-container)' : 'transparent' }}">
                                 <h4 class="text-sm font-bold text-on-surface">{{ $course->title }}</h4>
                                 <p class="mt-1 text-xs text-secondary">{{ $course->instructor->name ?? 'N/A' }}</p>
                                 <div class="flex items-center gap-3 mt-2 text-[10px] text-secondary font-bold uppercase tracking-widest">

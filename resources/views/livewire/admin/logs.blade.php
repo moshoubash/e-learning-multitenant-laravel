@@ -72,7 +72,7 @@
                             <span class="text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Last 500 lines') }}</span>
                         </div>
                         <div class="p-4 overflow-auto max-h-96 neo-border-sm neo-radius bg-on-surface text-surface-container-lowest" style="background-color: #0A0A0A; color: #E2E2E2;">
-                            <pre class="text-xs leading-relaxed whitespace-pre-wrap font-mono">{{ $logContent ?: __('messages.File is empty') }}</pre>
+                            <pre class="font-mono text-xs leading-relaxed whitespace-pre-wrap">{{ $logContent ?: __('messages.File is empty') }}</pre>
                         </div>
                     </div>
                     <div class="px-4 py-3 bg-surface-container-low sm:px-6 sm:flex sm:flex-row-reverse">

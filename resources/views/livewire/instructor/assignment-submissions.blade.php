@@ -94,7 +94,7 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <button wire:click="openGradingModal({{ $submission->id }})"
-                                        class="px-3 py-1 neo-border-sm neo-radius text-[10px] font-bold uppercase tracking-widest bg-primary-container text-on-surface hover:bg-on-surface hover:text-white transition-colors">
+                                        class="px-3 py-1 neo-border-sm neo-radius text-[10px] font-bold uppercase tracking-widest bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white transition-colors">
                                         <i class="fas fa-edit ltr:mr-1 rtl:ml-1"></i>
                                         {{ $submission->graded_at ? __('messages.View/Edit Grade') : __('messages.Grade') }}
                                     </button>
@@ -189,7 +189,7 @@
                     </div>
                     <div class="px-4 py-3 bg-surface-container-low sm:px-6 sm:flex sm:flex-row-reverse">
                         <button wire:click="submitGrade" type="button"
-                            class="inline-flex justify-center w-full px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-surface hover:bg-on-surface hover:text-white sm:ltr:ml-3 sm:rtl:mr-3 sm:w-auto">
+                            class="inline-flex justify-center w-full px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white sm:ltr:ml-3 sm:rtl:mr-3 sm:w-auto">
                             {{ __('messages.Submit Grade') }}
                         </button>
                         <button wire:click="closeGradingModal" type="button"

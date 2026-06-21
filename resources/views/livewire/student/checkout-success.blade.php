@@ -67,7 +67,7 @@
                 <div class="border-t-2 border-on-surface p-[24px]">
                     <div class="flex flex-col gap-4 sm:flex-row">
                         <a href="{{ route('tenant.student.course', ['course' => $enrollment->course->slug ?? '#']) }}"
-                            class="flex-1 px-6 py-3 neo-border neo-radius bg-primary-container text-on-surface font-bold text-xs uppercase tracking-widest text-center hover:bg-on-surface hover:text-white transition-colors">
+                            class="flex-1 px-6 py-3 neo-border neo-radius bg-primary-container text-on-primary-container font-bold text-xs uppercase tracking-widest text-center hover:bg-on-surface hover:text-white transition-colors">
                             <i class="fas fa-play ml-2"></i>
                             {{ __('messages.Start Learning') }}
                         </a>
@@ -87,7 +87,7 @@
                 <h2 class="text-sm font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Enrollment Not Found') }}</h2>
                 <p class="mt-2 text-sm text-secondary">{{ __('messages.We could not find the enrollment you are looking for.') }}</p>
                 <a href="{{ route('tenant.student.courses') }}"
-                    class="inline-flex items-center px-6 py-3 mt-4 neo-border neo-radius bg-primary-container text-on-surface font-bold text-xs uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
+                    class="inline-flex items-center px-6 py-3 mt-4 neo-border neo-radius bg-primary-container text-on-primary-container font-bold text-xs uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
                     <i class="fas fa-arrow-left ml-2"></i>
                     {{ __('messages.Back to Courses') }}
                 </a>

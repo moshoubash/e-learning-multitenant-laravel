@@ -201,7 +201,7 @@
                                                     </div>
                                                     <div class="flex gap-3">
                                                         <button type="submit"
-                                                            class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-surface hover:bg-on-surface hover:text-white">
+                                                            class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
                                                             {{ __('messages.Submit Assignment') }}
                                                         </button>
                                                         <button type="button" wire:click="toggleSubmissionForm"
@@ -213,7 +213,7 @@
                                             </div>
                                         @else
                                             <button wire:click="toggleSubmissionForm"
-                                                class="w-full px-4 py-3 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-surface hover:bg-on-surface hover:text-white">
+                                                class="w-full px-4 py-3 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
                                                 <i class="fas fa-upload ltr:mr-2 rtl:ml-2"></i>
                                                 {{ __('messages.Submit Assignment') }}
                                             </button>
@@ -270,7 +270,7 @@
                                 </div>
                                 @if(!$this->isLessonCompleted($selectedLesson->id))
                                     <button wire:click="markLessonComplete"
-                                        class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-surface hover:bg-on-surface hover:text-white">
+                                        class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
                                         <i class="fas fa-check ltr:mr-2 rtl:ml-2"></i>
                                         {{ __('messages.Mark Complete') }}
                                     </button>
@@ -336,7 +336,7 @@
                                     <div class="divide-y divide-on-surface/5">
                                         @foreach($section->lessons as $lesson)
                                             <div wire:click="selectLesson({{ $lesson->id }})"
-                                                class="p-3 transition-colors cursor-pointer hover:bg-surface-container-high {{ $selectedLesson && $selectedLesson->id === $lesson->id ? 'bg-primary-container border-l-4-gray-400  ' : '' }}">
+                                                class="p-3 transition-colors cursor-pointer hover:bg-surface-container-high {{ $selectedLesson && $selectedLesson->id === $lesson->id ? 'bg-primary-container' : '' }}">
                                                 <div class="flex items-center justify-between">
                                                     <div class="flex items-center">
                                                         @if($this->isLessonCompleted($lesson->id))
@@ -360,17 +360,21 @@
                                         @endforeach
 
                                         @if($section->assignments && $section->assignments->count() > 0)
-                                            <div class="pt-3 mt-3 border-t border-on-surface/10">
-                                                <div class="text-[10px] px-3 font-bold uppercase tracking-widest text-secondary mb-2">{{ __('messages.Assignments') }}</div>
+                                            <div class="border-t border-on-surface/10">
+                                                <div class="px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-secondary bg-surface-container-low">{{ __('messages.Assignments') }}</div>
                                                 @foreach($section->assignments as $assignment)
                                                     <div wire:click="selectAssignment({{ $assignment->id }})"
-                                                        class="p-3 cursor-pointer hover:bg-surface-container-high transition-colors {{ $selectedAssignment && $selectedAssignment->id === $assignment->id ? 'bg-primary-container' : '' }}">
+                                                        class="p-3 transition-colors cursor-pointer hover:bg-surface-container-high {{ $selectedAssignment && $selectedAssignment->id === $assignment->id ? 'bg-primary-container' : '' }}">
                                                         <div class="flex items-center justify-between">
-                                                            <div class="flex items-center gap-2">
-                                                                <i class="text-xs fas fa-tasks text-secondary"></i>
-                                                                <span class="text-xs text-on-surface">{{ $assignment->title }}</span>
+                                                            <div class="flex items-center">
+                                                                <i class="text-xs fas fa-tasks text-on-primary-container ltr:mr-3 rtl:ml-3"></i>
+                                                                <span class="text-xs {{ $selectedAssignment && $selectedAssignment->id === $assignment->id ? 'font-bold text-on-primary-container' : 'text-on-surface' }}">
+                                                                    {{ $assignment->title }}
+                                                                </span>
                                                             </div>
-                                                            <span class="text-[10px] text-secondary text-xs">{{ $assignment->order }}</span>
+                                                            @if($assignment->due_date)
+                                                                <span class="text-[10px] text-secondary font-bold">{{ $assignment->due_date->format('M d') }}</span>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 @endforeach
@@ -378,15 +382,18 @@
                                         @endif
 
                                         @if($section->quiz)
-                                            <a href="{{ route('tenant.student.quiz', $section->quiz->id) }}"
-                                                wire:navigate
-                                                class="flex items-center justify-between p-3 mb-3 transition-colors cursor-pointer hover:bg-surface-container-high">
-                                                <div class="flex items-center">
-                                                    <i class="text-xs fas fa-clipboard-list text-secondary ltr:mr-3 rtl:ml-3"></i>
-                                                    <span class="text-xs text-on-surface">{{ $section->quiz->title }}</span>
-                                                </div>
-                                                <i class="fas fa-chevron-right text-secondary text-[10px]"></i>
-                                            </a>
+                                            <div class="border-t border-on-surface/10">
+                                                <div class="px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-secondary bg-surface-container-low">{{ __('messages.Quiz') }}</div>
+                                                <a href="{{ route('tenant.student.quiz', $section->quiz->id) }}"
+                                                    wire:navigate
+                                                    class="p-3 transition-colors cursor-pointer hover:bg-surface-container-high flex items-center justify-between">
+                                                    <div class="flex items-center">
+                                                        <i class="text-xs fas fa-clipboard-list text-on-primary-container ltr:mr-3 rtl:ml-3"></i>
+                                                        <span class="text-xs text-on-surface">{{ $section->quiz->title }}</span>
+                                                    </div>
+                                                    <span class="text-[10px] text-secondary font-bold">{{ $section->quiz->questions->count() }} {{ __('messages.questions') }}</span>
+                                                </a>
+                                            </div>
                                         @endif
                                     </div>
                                 @endif

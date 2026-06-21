@@ -2,7 +2,7 @@
     <div class="p-[24px] border-b-2 border-on-surface flex items-center justify-between">
         <h3 class="text-[18px] font-bold uppercase tracking-widest text-on-surface leading-none">{{ __('messages.Active Quizzes') }}</h3>
         <button wire:click="openQuizCreateModal()"
-            class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-surface hover:bg-on-surface hover:text-white">
+            class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
             <i class="fas fa-plus ltr:mr-2 rtl:ml-2"></i>
             {{ __('messages.Add Quiz') }}
         </button>
@@ -25,7 +25,7 @@
                 @foreach ($quizzes as $quiz)
                     <tr>
                         <td class="text-center rtl:pr-4 ltr:pl-4">
-                            <button wire:click="toggleQuizExpand({{ $quiz->id }})" class="transition-colors text-secondary hover:text-on-surface">
+                            <button wire:click="toggleQuizExpand({{ $quiz->id }})" class="transition-colors text-secondary hover:text-on-primary-container">
                                 <i class="fas {{ $quiz->questions && count($quiz->questions) > 0 ? ($expandedQuizzes && in_array($quiz->id, $expandedQuizzes) ? 'fa-chevron-up' : 'fa-chevron-down') : 'fa-minus' }}"></i>
                             </button>
                         </td>
@@ -56,7 +56,7 @@
                         <td class="p-4">
                             <div class="flex items-center gap-2">
                                 <button wire:click="openAttemptsModal({{ $quiz->id }})"
-                                    class="flex items-center justify-center w-8 h-8 transition-colors neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="View Attempts">
+                                    class="flex items-center justify-center w-8 h-8 transition-colors neo-border-sm neo-radius text-on-primary-container hover:bg-primary-container hover:text-on-primary-container" title="View Attempts">
                                     <i class="text-xs fas fa-users"></i>
                                 </button>
                                 <button wire:click="openQuestionCreateModal({{ $quiz->id }})"
@@ -76,7 +76,7 @@
                     </tr>
                     @if($expandedQuizzes && in_array($quiz->id, $expandedQuizzes) && $quiz->questions && count($quiz->questions) > 0)
                         <tr>
-                            <td colspan="6" class="p-0 bg-surface-container-low">
+                            <td colspan="12" class="p-0 bg-surface-container-low">
                                 <div class="p-4">
                                     <div class="flex items-center justify-between mb-3">
                                         <h4 class="text-xs font-bold tracking-widest uppercase text-secondary">{{ __('messages.Questions & Options') }}</h4>
@@ -92,7 +92,7 @@
                     @endif
                 @endforeach
                 @if(count($quizzes) == 0)
-                    <tr><td colspan="6" class="p-8 text-sm text-center text-secondary">{{ __('messages.No quizzes found.') }}</td></tr>
+                    <tr><td colspan="12" class="p-8 text-sm text-center text-secondary">{{ __('messages.No quizzes found.') }}</td></tr>
                 @endif
             </tbody>
         </table>
