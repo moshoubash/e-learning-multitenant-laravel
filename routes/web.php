@@ -16,7 +16,9 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 |
 */
 
-Route::view('/', 'welcome')->name('home');
+Route::view('/', function() {
+    return 'Welcome to the Central Application';
+})->name('home');
 
 Route::get('dashboard', \App\Livewire\Dashboard::class)
     ->middleware(['auth', 'verified'])

@@ -25,6 +25,10 @@ class ForceHttpsInProduction
             return $next($request);
         }
 
+        if (! env('FORCE_HTTPS', true)) {
+            return $next($request);
+        }
+
         if ($request->is('up', 'health*')) {
             return $next($request);
         }
