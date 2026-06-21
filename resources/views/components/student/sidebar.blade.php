@@ -3,7 +3,7 @@
     $currentLocale = app()->getLocale();
 @endphp
 
-<aside class="fixed ltr:left-0 rtl:right-0 top-0 h-full w-[240px] flex flex-col bg-surface-container-lowest ltr:border-r-2 rtl:border-l-2 border-on-surface z-50">
+<aside class="fixed ltr:left-0 rtl:right-0 top-0 h-full w-[240px] hidden lg:flex flex-col bg-surface-container-lowest ltr:border-r-2 rtl:border-l-2 border-on-surface z-50">
     {{-- Brand Header --}}
     <div class="flex items-center h-16 gap-3 p-6 border-b-2 border-on-surface">
         <div class="flex items-center justify-center w-10 h-10 neo-border bg-primary-container neo-radius">

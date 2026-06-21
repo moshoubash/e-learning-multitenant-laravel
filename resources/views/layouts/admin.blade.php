@@ -19,9 +19,20 @@
 
     <x-admin.sidebar />
 
-    <main class="ltr:ml-[240px] rtl:mr-[240px] flex-1 h-screen overflow-y-auto no-scrollbar">
+    <main class="flex-1 h-screen overflow-y-auto no-scrollbar pb-20 lg:pb-0 ltr:ml-0 lg:ltr:ml-[240px] rtl:mr-0 lg:rtl:mr-[240px]">
         {{ $slot }}
     </main>
+
+    @php
+        $adminNavItems = [
+            ['route' => route('tenant.dashboard'), 'active' => 'tenant.dashboard', 'icon' => 'fas fa-home', 'label' => __('messages.Dashboard')],
+            ['route' => route('tenant.notifications'), 'active' => 'tenant.notifications*', 'icon' => 'fas fa-bell', 'label' => __('messages.Notifications')],
+            ['route' => route('tenant.admin.users'), 'active' => 'tenant.admin.users*', 'icon' => 'fas fa-users', 'label' => __('messages.Users')],
+            ['route' => route('tenant.admin.courses'), 'active' => 'tenant.admin.courses*', 'icon' => 'fas fa-book-open', 'label' => __('messages.Courses')],
+            ['route' => route('tenant.profile'), 'active' => 'tenant.profile', 'icon' => 'fas fa-user', 'label' => __('messages.Profile')],
+        ];
+    @endphp
+    <x-shared.bottom-nav :items="$adminNavItems" />
 
     <x-toaster-hub />
     @livewireScripts
