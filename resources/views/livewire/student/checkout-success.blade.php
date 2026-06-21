@@ -1,124 +1,97 @@
 <div>
-    <div class="flex items-center justify-between mb-8">
+    <header class="h-16 flex justify-between items-center px-[24px] bg-surface-container-lowest border-b-2 border-on-surface sticky top-0 z-40">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">{{ __('messages.Enrollment Confirmed') }}</h1>
-            <p class="mt-1 text-sm text-gray-500">Enrollment completed successfully</p>
-        </div>
+            <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ __('messages.Enrollment Confirmed') }}</h2>
+        <p class="text-[12px] font-medium uppercase text-secondary mt-0.5 tracking-wider">Enrollment completed successfully</p>
     </div>
+    <div class="flex items-center gap-2">
+        @livewire('shared.notification-bell')
+    </div>
+</header>
 
-    @if($isLoaded && $enrollment)
-        <!-- Success Message -->
-        <div class="overflow-hidden bg-white shadow-sm rounded-2xl">
-            <div class="px-8 py-2 text-center">
-                <!-- Success Icon -->
-                <div class="mb-6">
-                    <div class="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full">
-                        <i class="text-4xl text-green-600 fas fa-check"></i>
+    <div class="p-[24px] max-w-[1400px] mx-auto">
+        @if($isLoaded && $enrollment)
+            <div class="bg-surface-container-lowest neo-border neo-radius overflow-hidden">
+                {{-- Success Icon --}}
+                <div class="p-8 text-center">
+                    <div class="inline-flex items-center justify-center w-20 h-20 neo-border neo-radius bg-primary-container mb-4">
+                        <i class="text-4xl text-on-primary-container fas fa-check"></i>
                     </div>
+                    <h2 class="text-sm font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Congratulations!') }}</h2>
+                    <p class="mt-2 text-sm text-secondary">{{ __('messages.You have successfully enrolled in the course.') }}</p>
                 </div>
 
-                <h2 class="mb-2 text-2xl font-bold text-gray-800">
-                    {{ __('messages.Congratulations!') }}
-                </h2>
-                <p class="mb-6 text-gray-600">
-                    {{ __('messages.You have successfully enrolled in the course.') }}
-                </p>
-            </div>
-        </div>
-
-        <!-- Enrollment Details -->
-        <div class="mt-6 overflow-hidden bg-white shadow-sm rounded-2xl">
-            <div class="p-6 border-b border-gray-200">
-                <h3 class="mb-4 text-lg font-semibold text-gray-800">{{ __('messages.Enrollment Details') }}</h3>
-
-                <div class="flex items-start @if(app()->getLocale() === 'ar') gap-4 @else space-x-4 @endif">
-                    @if($enrollment->course && $enrollment->course->thumbnail)
-                        <img src="{{ Storage::url($enrollment->course->thumbnail) }}" alt="{{ $enrollment->course->title }}"
-                            class="object-cover w-32 h-24 rounded-lg">
-                    @else
-                        <div class="flex items-center justify-center w-32 h-24 bg-gray-200 rounded-lg">
-                            <i class="text-2xl text-gray-400 fas fa-book"></i>
-                        </div>
-                    @endif
-
-                    <div class="flex-1">
-                        <h4 class="text-lg font-semibold text-gray-800">
-                            {{ $enrollment->course->title ?? 'N/A' }}
-                        </h4>
-                        <p class="mt-1 text-sm text-gray-500">
-                            {{ __('messages.By') }} {{ $enrollment->course->instructor->name ?? 'N/A' }}
-                        </p>
-
-                        <div class="grid grid-cols-2 gap-4 mt-4 text-sm">
-                            <div>
-                                <span class="text-gray-500">{{ __('messages.Enrollment Date') }}:</span>
-                                <span class="ml-2 text-gray-800">
-                                    {{ $enrollment->enrolled_at ? $enrollment->enrolled_at->format('M d, Y') : 'N/A' }}
-                                </span>
+                {{-- Enrollment Details --}}
+                <div class="border-t-2 border-on-surface p-[24px]">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface mb-4">{{ __('messages.Enrollment Details') }}</h3>
+                    <div class="flex items-start gap-4">
+                        @if($enrollment->course && $enrollment->course->thumbnail)
+                            <img src="{{ Storage::url($enrollment->course->thumbnail) }}" alt="{{ $enrollment->course->title }}"
+                                class="object-cover w-32 h-24 neo-border-sm neo-radius">
+                        @else
+                            <div class="flex items-center justify-center w-32 h-24 neo-border-sm neo-radius bg-surface-container">
+                                <i class="text-2xl text-secondary fas fa-book"></i>
+                            </div>
+                        @endif
+                        <div class="flex-1">
+                            <h4 class="font-bold text-sm text-on-surface">{{ $enrollment->course->title ?? 'N/A' }}</h4>
+                            <p class="mt-1 text-sm text-secondary">{{ __('messages.By') }} {{ $enrollment->course->instructor->name ?? 'N/A' }}</p>
+                            <div class="mt-4 text-sm">
+                                <span class="text-secondary">{{ __('messages.Enrollment Date') }}:</span>
+                                <span class="ml-2 font-bold text-on-surface">{{ $enrollment->enrolled_at ? $enrollment->enrolled_at->format('M d, Y') : 'N/A' }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Next Steps -->
-            <div class="p-6 bg-gray-50">
-                <h4 class="mb-3 font-semibold text-gray-800">{{ __('messages.What\'s Next?') }}</h4>
-                <ul class="space-y-2 text-sm text-gray-600">
-                    <li class="flex items-center">
-                        <i class="@if(app()->getLocale() === 'ar') ml-2 @else mr-2 @endif text-green-500 fas fa-play-circle"></i>
-                        {{ __('messages.Start watching lessons and learning at your own pace') }}
-                    </li>
-                    <li class="flex items-center">
-                        <i class="@if(app()->getLocale() === 'ar') ml-2 @else mr-2 @endif text-green-500 fas fa-tasks"></i>
-                        {{ __('messages.Track your progress as you complete lessons') }}
-                    </li>
-                    <li class="flex items-center">
-                        <i class="@if(app()->getLocale() === 'ar') ml-2 @else mr-2 @endif text-green-500 fas fa-certificate"></i>
-                        {{ __('messages.Earn a certificate upon course completion') }}
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="p-6 border-t border-gray-200">
-                <div class="flex flex-col gap-4 sm:flex-row">
-                    <a href="{{ route('tenant.student.course', ['course' => $enrollment->course->slug ?? '#']) }}"
-                        class="flex-1 px-6 py-3 font-medium text-center text-white transition-colors bg-green-600 rounded-xl hover:bg-green-700">
-                        <i class="mr-2 fas fa-play"></i>
-                        {{ __('messages.Start Learning') }}
-                    </a>
-                    <a href="{{ route('tenant.student.courses') }}"
-                        class="flex-1 px-6 py-3 font-medium text-center text-gray-800 transition-colors bg-gray-200 rounded-xl hover:bg-gray-300">
-                        <i class="mr-2 fas fa-list"></i>
-                        {{ __('messages.Browse More Courses') }}
-                    </a>
+                {{-- Next Steps --}}
+                <div class="border-t-2 border-on-surface p-[24px] bg-surface-container-low">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-on-surface mb-3">{{ __('messages.What\'s Next?') }}</h4>
+                    <ul class="space-y-2 text-sm text-secondary">
+                        <li class="flex items-center">
+                            <i class="fas fa-play-circle text-primary-container mr-2 w-5 text-center"></i>
+                            {{ __('messages.Start watching lessons and learning at your own pace') }}
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-tasks text-primary-container mr-2 w-5 text-center"></i>
+                            {{ __('messages.Track your progress as you complete lessons') }}
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-certificate text-primary-container mr-2 w-5 text-center"></i>
+                            {{ __('messages.Earn a certificate upon course completion') }}
+                        </li>
+                    </ul>
                 </div>
-            </div>
-        </div>
-    @else
-        <!-- Error State -->
-        <div class="overflow-hidden bg-white shadow-sm rounded-2xl">
-            <div class="p-12 text-center">
-                <div class="mb-6">
-                    <div class="inline-flex items-center justify-center w-20 h-20 bg-red-100 rounded-full">
-                        <i class="text-4xl text-red-600 fas fa-exclamation-triangle"></i>
+
+                {{-- Action Buttons --}}
+                <div class="border-t-2 border-on-surface p-[24px]">
+                    <div class="flex flex-col gap-4 sm:flex-row">
+                        <a href="{{ route('tenant.student.course', ['course' => $enrollment->course->slug ?? '#']) }}"
+                            class="flex-1 px-6 py-3 neo-border neo-radius bg-primary-container text-on-primary-container font-bold text-xs uppercase tracking-widest text-center hover:bg-on-surface hover:text-white transition-colors">
+                            <i class="fas fa-play ml-2"></i>
+                            {{ __('messages.Start Learning') }}
+                        </a>
+                        <a href="{{ route('tenant.student.courses') }}"
+                            class="flex-1 px-6 py-3 neo-border neo-radius bg-surface-container text-on-surface font-bold text-xs uppercase tracking-widest text-center hover:bg-on-surface hover:text-white transition-colors">
+                            <i class="fas fa-list ml-2"></i>
+                            {{ __('messages.Browse More Courses') }}
+                        </a>
                     </div>
                 </div>
-
-                <h2 class="mb-2 text-2xl font-bold text-gray-800">
-                    {{ __('messages.Enrollment Not Found') }}
-                </h2>
-                <p class="mb-6 text-gray-600">
-                    {{ __('messages.We could not find the enrollment you are looking for.') }}
-                </p>
-
+            </div>
+        @else
+            <div class="bg-surface-container-lowest neo-border neo-radius p-12 text-center">
+                <div class="inline-flex items-center justify-center w-20 h-20 neo-border neo-radius bg-error/10 mb-4">
+                    <i class="text-4xl text-error fas fa-exclamation-triangle"></i>
+                </div>
+                <h2 class="text-sm font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Enrollment Not Found') }}</h2>
+                <p class="mt-2 text-sm text-secondary">{{ __('messages.We could not find the enrollment you are looking for.') }}</p>
                 <a href="{{ route('tenant.student.courses') }}"
-                    class="inline-flex items-center px-6 py-3 font-medium text-white transition-colors bg-green-600 rounded-xl hover:bg-green-700">
-                    <i class="mr-2 fas fa-arrow-left"></i>
+                    class="inline-flex items-center px-6 py-3 mt-4 neo-border neo-radius bg-primary-container text-on-primary-container font-bold text-xs uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
+                    <i class="fas fa-arrow-left ml-2"></i>
                     {{ __('messages.Back to Courses') }}
                 </a>
             </div>
-        </div>
-    @endif
+        @endif
+    </div>
 </div>

@@ -1,152 +1,175 @@
 <div>
-    <div class="flex items-center justify-between mb-6">
-        <div class="flex items-center">
-            <a href="{{ route('tenant.student.course', $quiz->section->course->slug ?? 'courses') }}"
-                class="@if(app()->getLocale() === 'ar') ml-4 @else mr-4 @endif text-gray-400 hover:text-gray-600">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    @if(app()->getLocale() === 'ar')
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7"/>
-                    @else
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7"/>
-                    @endif
-                </svg>
-            </a>
-            <h1 class="text-2xl font-bold text-gray-900">{{ $quiz->title ?? 'Quiz' }}</h1>
-        </div>
-        <div class="text-sm text-gray-500">
-            {{ __('messages.questions') }}
-            {{ $quiz->questions->count() ?? 0 }}
-            <span class="@if(app()->getLocale() === 'ar') mr-2 @else ml-2 @endif">
+    <header class="h-16 flex justify-between items-center px-[24px] bg-surface-container-lowest border-b-2 border-on-surface sticky top-0 z-40">
+        <div class="flex items-center gap-4">
+            <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ $quiz->title ?? 'Quiz' }}</h2>
+            <span class="px-3 py-1 neo-border-sm neo-radius text-[10px] font-bold uppercase tracking-widest bg-surface-container-high text-on-surface">
+                {{ __('messages.questions') }} {{ $quiz->questions->count() ?? 0 }}
+            </span>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface">
                 {{ __('messages.Pass') }}: {{ $quiz->pass_percentage }}%
             </span>
         </div>
-    </div>
+        <div class="flex items-center gap-2">
+            @livewire('shared.notification-bell')
+        </div>
+    </header>
 
-    <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+    <div class="p-[24px] max-w-[1400px] mx-auto">
+        <div class="bg-surface-container-lowest neo-border neo-radius overflow-hidden">
         @if($quiz)
             @if(!$this->canTakeQuiz() && !$submitted)
-                <!-- Cannot Reattempt Message -->
-                <div class="p-8" style="display: flex; flex-direction: column; align-items: center;">
-                    <i class="mb-4 text-6xl text-green-500 fas fa-check-circle"></i>
-                    <h3 class="text-2xl font-bold text-green-600">{{ __('messages.Quiz Already Passed!') }}</h3>
-                    <p class="mt-2 text-gray-600">{{ __('messages.You have already passed this quiz with a score of :score%', ['score' => $previousAttempt->score]) }}</p>
-                    <p class="mt-1 text-sm text-gray-500">{{ __('messages.Re-attempt is not allowed for this quiz.') }}</p>
-                    <div class="mt-6">
-                        <a href="{{ route('tenant.student.course', $quiz->section->course->slug ?? 'courses') }}"
-                            class="inline-flex items-center px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
-                            <i class="@if(app()->getLocale() === 'ar') ml-2 @else mr-2 @endif fas fa-arrow-left"></i>
-                            {{ __('messages.Back to Course') }}
-                        </a>
-                    </div>
-                </div>
-            @elseif($previousAttempt && !$submitted)
-                <!-- Previous Attempt Info -->
-                <div class="p-6 border-b border-blue-200 bg-blue-50">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h3 class="font-medium text-blue-800">
-                                <i class="@if(app()->getLocale() === 'ar') ml-2 @else mr-2 @endif fas fa-info-circle"></i>
-                                {{ __('messages.Previous Attempt') }}
-                            </h3>
-                            <p class="mt-1 text-sm text-blue-600">
-                                {{ __('messages.Your last score was :score%', ['score' => $previousAttempt->score]) }}
-                                @if($previousAttempt->passed)
-                                    <span class="text-green-600">({{ __('messages.Passed') }})</span>
-                                @else
-                                    <span class="text-red-600">({{ __('messages.Not Passed') }})</span>
-                                @endif
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            @endif
-
-            @if($submitted)
-                <!-- Results -->
-                <div class="p-8 text-center">
-                    <div class="mb-6">
-                        @if($passed)
-                            <i class="mb-4 text-6xl text-yellow-500 fas fa-trophy"></i>
-                            <h3 class="text-2xl font-bold text-green-600">{{ __('messages.Congratulations!') }}</h3>
-                            <p class="mt-2 text-gray-600">{{ __('messages.You passed the quiz!') }}</p>
-                        @else
-                            <i class="mb-4 text-6xl text-blue-500 fas fa-redo"></i>
-                            <h3 class="text-2xl font-bold text-orange-600">{{ __('messages.Almost There!') }}</h3>
-                            <p class="mt-2 text-gray-600">{{ __('messages.You need :percent% to pass', ['percent' => $quiz->pass_percentage]) }}</p>
-                        @endif
-                    </div>
-
-                    <div class="inline-block px-8 py-4 mb-6 bg-gray-100 rounded-lg">
-                        <div class="text-4xl font-bold {{ $passed ? 'text-green-600' : 'text-orange-600' }}">
-                            {{ $score }}%
-                        </div>
-                        <div class="mt-1 text-sm text-gray-500">
-                            {{ __('messages.Score') }}: {{ $score }}%
-                        </div>
-                    </div>
-
-                    <div class="flex justify-center @if(app()->getLocale() === 'ar') gap-4 @endif space-x-4">
-                        @if($this->canReattempt() && $previousAttempt)
-                            <button wire:click="resetQuiz" class="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
-                                <i class="@if(app()->getLocale() === 'ar') ml-2 @else mr-2 @endif fas fa-redo"></i>
-                                {{ __('messages.Try Again') }}
-                            </button>
-                        @endif
-
-                        <a href="{{ route('tenant.student.course', $quiz->section->course->slug ?? 'courses') }}"
-                            class="px-6 py-2 text-white bg-gray-600 rounded-lg hover:bg-gray-700">
-                            <i class="@if(app()->getLocale() === 'ar') ml-2 @else mr-2 @endif fas fa-arrow-left"></i>
-                            {{ __('messages.Back to Course') }}
-                        </a>
-                    </div>
+                <div class="p-12 text-center">
+                    <i class="mb-4 text-5xl text-primary-container fas {{ $this->attemptsExhausted() ? 'fa-times-circle' : 'fa-check-circle' }}"></i>
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface">
+                        {{ $this->attemptsExhausted() ? __('messages.Maximum Attempts Reached') : __('messages.Quiz Already Passed!') }}
+                    </h3>
+                    <p class="mt-2 text-sm text-secondary">
+                        {{ $this->attemptsExhausted()
+                            ? __('messages.You have used all :max allowed attempts for this quiz.', ['max' => $quiz->max_attempts ?? 1])
+                            : __('messages.You have already passed this quiz with a score of :score%', ['score' => $previousAttempt->score]) }}
+                    </p>
+                    @if($this->highestScore())
+                        <p class="mt-1 text-sm font-bold text-on-surface">{{ __('messages.Highest Score') }}: {{ $this->highestScore() }}%</p>
+                    @endif
+                    <p class="mt-1 text-xs text-secondary">
+                        {{ $this->attemptsExhausted()
+                            ? __('messages.No more attempts allowed.')
+                            : __('messages.Re-attempt is not allowed for this quiz.') }}
+                    </p>
+                    <a href="{{ route('tenant.student.course', $quiz->section->course->slug ?? 'courses') }}"
+                        class="inline-flex items-center px-5 py-2 mt-6 neo-border neo-radius bg-primary-container text-on-primary-container text-xs font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
+                        <i class="fas fa-arrow-left ltr:mr-2 rtl:ml-2"></i>
+                        {{ __('messages.Back to Course') }}
+                    </a>
                 </div>
             @else
-                <!-- Quiz Questions -->
-                @if(!$this->canReattempt() && $previousAttempt)
-                    <div class="p-4 mx-6 my-4 text-sm text-yellow-700 bg-yellow-100 border border-yellow-300 rounded-lg">
-                        <i class="@if(app()->getLocale() === 'ar') ml-2 @else mr-2 @endif fas fa-exclamation-triangle"></i>
-                        {{ __('messages.You have a previous attempt with a score of :score%. You can retake the quiz to try for a better score.', ['score' => $previousAttempt->score]) }}
+                @if($previousAttempt && !$submitted)
+                    <div class="p-4 neo-border-sm neo-radius bg-primary-container/20 m-[24px]">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface">
+                                    <i class="fas fa-info-circle ltr:mr-2 rtl:ml-2"></i>
+                                    {{ __('messages.Previous Attempt') }}
+                                </h3>
+                                <p class="mt-1 text-sm text-on-surface">
+                                    {{ __('messages.Your last score was :score%', ['score' => $previousAttempt->score]) }}
+                                    @if($previousAttempt->passed)
+                                        <span class="px-2 py-0.5 neo-border-sm neo-radius text-[10px] font-bold bg-primary-container text-on-primary-container ltr:ml-2 rtl:mr-2">{{ __('messages.Passed') }}</span>
+                                    @else
+                                        <span class="px-2 py-0.5 neo-border-sm neo-radius text-[10px] font-bold bg-error/20 text-error ltr:ml-2 rtl:mr-2">{{ __('messages.Not Passed') }}</span>
+                                    @endif
+                                </p>
+                                <p class="mt-1 text-xs text-on-surface">
+                                    <span class="font-bold">{{ __('messages.Highest Score') }}:</span> {{ $this->highestScore() }}%
+                                </p>
+                                <p class="mt-1 text-xs text-secondary">
+                                    {{ __('messages.Attempt :count of :max', ['count' => $this->attemptCount(), 'max' => $quiz->max_attempts ?? 1]) }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if($this->canReattempt())
+                        <div class="p-4 neo-border-sm neo-radius bg-surface-container-low m-[24px]">
+                            <p class="text-xs text-secondary">
+                                <i class="fas fa-exclamation-triangle text-primary-container ltr:mr-2 rtl:ml-2"></i>
+                                {{ __('messages.You have a previous attempt with a score of :score%. You can retake the quiz to try for a better score.', ['score' => $previousAttempt->score]) }}
+                            </p>
+                        </div>
+                    @endif
+                @endif
+
+                @if($submitted)
+                    <div class="p-12 text-center">
+                        @if($passed)
+                            <i class="mb-4 text-5xl text-primary-container fas fa-trophy"></i>
+                            <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Congratulations!') }}</h3>
+                            <p class="mt-2 text-sm text-secondary">{{ __('messages.You passed the quiz!') }}</p>
+                        @else
+                            <i class="mb-4 text-5xl text-primary-container fas fa-redo"></i>
+                            <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Almost There!') }}</h3>
+                            <p class="mt-2 text-sm text-secondary">{{ __('messages.You need :percent% to pass', ['percent' => $quiz->pass_percentage]) }}</p>
+                        @endif
+
+                        <div class="inline-block px-8 py-4 my-6 neo-border neo-radius bg-surface-container-high">
+                            <div class="text-4xl font-bold {{ $passed ? 'text-on-surface' : 'text-error' }}">
+                                {{ $score }}%
+                            </div>
+                            <div class="mt-1 text-xs text-secondary uppercase tracking-widest font-bold">
+                                {{ __('messages.Score') }}
+                            </div>
+                        </div>
+
+                        @if($this->highestScore())
+                            <div class="mb-6 text-sm text-on-surface">
+                                <span class="font-bold">{{ __('messages.Highest Score') }}:</span> {{ $this->highestScore() }}%
+                            </div>
+                        @endif
+
+                        <div class="flex justify-center gap-4">
+                            @if($this->canReattempt() && $previousAttempt)
+                                <button wire:click="resetQuiz"
+                                    class="px-5 py-2 neo-border neo-radius bg-primary-container text-on-primary-container text-xs font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
+                                    <i class="fas fa-redo ltr:mr-2 rtl:ml-2"></i>
+                                    {{ __('messages.Try Again') }}
+                                </button>
+                            @endif
+                            <a href="{{ route('tenant.student.course', $quiz->section->course->slug ?? 'courses') }}"
+                                class="px-5 py-2 neo-border neo-radius bg-surface-container text-on-surface text-xs font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
+                                <i class="fas fa-arrow-left ltr:mr-2 rtl:ml-2"></i>
+                                {{ __('messages.Back to Course') }}
+                            </a>
+                        </div>
                     </div>
                 @else
-                    <div class="p-6">
-                        <div class="pb-4 mb-6 border-b">
-                            <h3 class="text-lg font-semibold text-gray-800">{{ $quiz->title }}</h3>
-                            <p class="text-sm text-gray-500">{{ __('messages.questions') }} {{ $quiz->questions->count() }} • {{ __('messages.Pass') }}:
-                                {{ $quiz->pass_percentage }}%
-                            </p>
+                    <div class="p-[24px]">
+                        <div class="pb-4 mb-6 border-b-2 border-on-surface">
+                            <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface">{{ $quiz->title }}</h3>
+                            <p class="mt-1 text-xs text-secondary">{{ __('messages.questions') }} {{ $quiz->questions->count() }} | {{ __('messages.Pass') }}: {{ $quiz->pass_percentage }}% | {{ __('messages.Attempt') }} {{ $this->attemptCount() + 1 }} {{ __('messages.of') }} {{ $quiz->max_attempts ?? 1 }}</p>
                         </div>
 
                         @foreach($quiz->questions->sortBy('order') as $questionIndex => $question)
-                            <div class="p-4 mb-8 rounded-lg bg-gray-50">
+                            <div class="p-4 mb-6 neo-border-sm neo-radius bg-surface-container-low">
                                 <div class="flex items-start mb-4">
-                                    <span
-                                        class="inline-flex items-center justify-center w-8 h-8 @if(app()->getLocale() === 'ar') ml-3 @else mr-3 @endif text-sm font-medium text-white bg-blue-600 rounded-full">
+                                    <span class="inline-flex items-center justify-center w-8 h-8 neo-border-sm neo-radius bg-primary-container text-on-primary-container text-xs font-bold ltr:mr-3 rtl:ml-3 shrink-0">
                                         {{ $questionIndex + 1 }}
                                     </span>
-                                    <h4 class="flex-1 font-medium text-gray-800">{{ $question->question }}</h4>
+                                    <h4 class="flex-1 font-bold text-sm text-on-surface">{{ $question->question }}</h4>
                                 </div>
 
-                                <div class="space-y-2 ml-11">
+                                <div class="space-y-2 ltr:ml-11 rtl:mr-11">
                                     @if($question->type === 'multiple')
                                         @foreach($question->options as $option)
-                                            <label
-                                                class="flex items-center p-3 transition-colors bg-white border border-gray-200 rounded-lg cursor-pointer hover:bg-blue-50 {{ $this->isOptionSelected($question->id, $option->id) ? 'bg-blue-50 border-blue-300' : '' }}">
-                                                <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                            <label class="flex items-center p-3 neo-border-sm neo-radius cursor-pointer hover:bg-surface-container-high transition-colors
+                                                {{ $this->isOptionSelected($question->id, $option->id) ? 'bg-primary-container border-primary-container' : 'bg-surface-container-lowest' }}">
+                                                <div class="relative flex items-center justify-center w-4 h-4 neo-border-sm neo-radius bg-surface-container-low ltr:mr-3 rtl:ml-3
+                                                    {{ $this->isOptionSelected($question->id, $option->id) ? 'bg-on-surface' : '' }}">
+                                                    @if($this->isOptionSelected($question->id, $option->id))
+                                                        <i class="fas fa-check text-[10px] text-white"></i>
+                                                    @endif
+                                                </div>
+                                                <input type="checkbox" class="sr-only"
                                                     value="{{ $option->id }}"
                                                     wire:click.stop="selectOption({{ $question->id }}, {{ $option->id }}, true)"
                                                     @if($this->isOptionSelected($question->id, $option->id)) checked @endif>
-                                                <span class="@if(app()->getLocale() === 'ar') mr-3 @else ml-3 @endif text-gray-700">{{ $option->option_text }}</span>
+                                                <span class="text-sm text-on-surface">{{ $option->option_text }}</span>
                                             </label>
                                         @endforeach
                                     @else
                                         @foreach($question->options as $option)
-                                            <label
-                                                class="flex items-center p-3 rounded-lg cursor-pointer {{ $this->isOptionSelected($question->id, $option->id) ? 'bg-blue-100 border-blue-400' : 'bg-white border-gray-200' }} border hover:bg-blue-50 transition-colors"
+                                            <label class="flex items-center p-3 neo-border-sm neo-radius cursor-pointer hover:bg-surface-container-high transition-colors
+                                                {{ $this->isOptionSelected($question->id, $option->id) ? 'bg-primary-container border-primary-container' : 'bg-surface-container-lowest' }}"
                                                 wire:click="selectOption({{ $question->id }}, {{ $option->id }})">
-                                                <input type="radio" class="w-4 h-4 text-blue-600" name="question_{{ $question->id }}"
+                                                <div class="relative flex items-center justify-center w-4 h-4 neo-border-sm neo-radius bg-surface-container-low ltr:mr-3 rtl:ml-3
+                                                    {{ $this->isOptionSelected($question->id, $option->id) ? 'bg-on-surface' : '' }}">
+                                                    @if($this->isOptionSelected($question->id, $option->id))
+                                                        <div class="w-2 h-2 neo-radius bg-white"></div>
+                                                    @endif
+                                                </div>
+                                                <input type="radio" class="sr-only" name="question_{{ $question->id }}"
                                                     @if($this->isOptionSelected($question->id, $option->id)) checked @endif
                                                     wire:click="selectOption({{ $question->id }}, {{ $option->id }})">
-                                                <span class="@if(app()->getLocale() === 'ar') mr-3 @else ml-3 @endif text-gray-700">{{ $option->option_text }}</span>
+                                                <span class="text-sm text-on-surface">{{ $option->option_text }}</span>
                                             </label>
                                         @endforeach
                                     @endif
@@ -154,10 +177,10 @@
                             </div>
                         @endforeach
 
-                        <div class="pt-4 mt-6 border-t">
+                        <div class="pt-4 mt-6 border-t-2 border-on-surface">
                             <button wire:click="submitQuiz"
-                                class="w-full py-3 font-medium text-white transition-colors bg-green-600 rounded-lg hover:bg-green-700">
-                                <i class="@if(app()->getLocale() === 'ar') mr-3 @else ml-3 @endif fas fa-check"></i>
+                                class="w-full py-3 neo-border neo-radius bg-primary-container text-on-primary-container font-bold text-xs uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
+                                <i class="fas fa-check ltr:mr-2 rtl:ml-2"></i>
                                 {{ __('messages.Submit Quiz') }}
                             </button>
                         </div>
@@ -166,10 +189,11 @@
             @endif
         @else
             <div class="p-12 text-center">
-                <i class="mb-4 text-6xl text-gray-300 fas fa-exclamation-triangle"></i>
-                <h3 class="text-lg font-medium text-gray-700">{{ __('messages.Quiz not found') }}</h3>
-                <p class="mt-2 text-gray-500">{{ __('messages.The quiz you\'re looking for doesn\'t exist.') }}</p>
+                <i class="mb-4 text-5xl text-secondary fas fa-exclamation-triangle"></i>
+                <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Quiz not found') }}</h3>
+                <p class="mt-2 text-sm text-secondary">{{ __('messages.The quiz you\'re looking for doesn\'t exist.') }}</p>
             </div>
         @endif
+    </div>
     </div>
 </div>

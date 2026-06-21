@@ -17,9 +17,6 @@ new #[Layout('layouts.guest')] class extends Component
             'email' => ['required', 'string', 'email'],
         ]);
 
-        // We will send the password reset link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
         $status = Password::sendResetLink(
             $this->only('email')
         );
@@ -37,25 +34,40 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <div class="mb-4 text-sm text-gray-600">
+    <div class="mb-6 text-sm font-medium" style="color: var(--color-secondary, #5f5e5e);">
         {{ __('messages.Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
     </div>
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    <x-auth-session-status class="mb-6" :status="session('status')" />
 
-    <form wire:submit="sendPasswordResetLink">
-        <!-- Email Address -->
+    <form wire:submit="sendPasswordResetLink" class="space-y-6">
         <div>
             <x-input-label for="email" :value="__('messages.Email')" />
-            <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email" required autofocus />
+            <x-text-input wire:model="email" id="email" class="block w-full mt-2" type="email" name="email" required autofocus autocomplete="email" placeholder="admin@example.com" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
+        <div class="pt-2">
+            <button type="submit"
+                class="w-full px-6 py-4 font-bold tracking-widest uppercase transition-all duration-200"
+                style="background-color: var(--color-primary-container, #FFD600); border: 2px solid var(--color-on-surface, #0A0A0A); border-radius: 4px; color: var(--color-on-surface, #0A0A0A);"
+                onmouseover="this.style.backgroundColor='var(--color-on-surface,#0A0A0A)'; this.style.color='var(--color-primary-container,#FFD600)';"
+                onmouseout="this.style.backgroundColor='var(--color-primary-container,#FFD600)'; this.style.color='var(--color-on-surface,#0A0A0A)';">
                 {{ __('messages.Email Password Reset Link') }}
-            </x-primary-button>
+            </button>
         </div>
     </form>
 </div>
+
+@push('auth-extra')
+    <div class="mt-8 text-center">
+        <p class="text-sm font-medium" style="color: var(--color-on-surface, #0A0A0A);">
+            {{ __('messages.Remember your password?') }}
+            <a href="{{ route('login') }}" wire:navigate
+                class="px-1 font-bold underline transition-all decoration-2 hover:bg-primary-container"
+                style="color: var(--color-on-surface, #0A0A0A);">
+                {{ __('messages.Log in') }}
+            </a>
+        </p>
+    </div>
+@endpush

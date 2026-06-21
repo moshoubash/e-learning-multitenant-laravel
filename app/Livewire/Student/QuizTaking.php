@@ -26,36 +26,77 @@ class QuizTaking extends Component
         $this->loadQuiz();
     }
 
-    public function canReattempt(): bool
-    {
-        if (!$this->quiz) {
-            return false;
-        }
-        return $this->quiz->can_reattempt ?? false;
-    }
-
     public function canTakeQuiz(): bool
     {
         if (!$this->quiz) {
             return false;
         }
 
-        // If no previous attempt, student can take the quiz
-        if (!$this->previousAttempt) {
-            return true;
-        }
-
-        // If previous attempt exists, check if re-attempt is allowed
-        if ($this->canReattempt()) {
-            return true;
-        }
-
-        // If passed and re-attempt not allowed, cannot take quiz
-        if ($this->previousAttempt->passed) {
+        if (!$this->quiz->can_reattempt) {
             return false;
         }
 
-        return true;
+        $attemptCount = QuizAttempt::where('user_id', auth()->id())
+            ->where('quiz_id', $this->quiz->id)
+            ->count();
+
+        $maxAttempts = $this->quiz->max_attempts ?? 1;
+
+        if ($attemptCount < $maxAttempts) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function canReattempt(): bool
+    {
+        if (!$this->quiz) {
+            return false;
+        }
+
+        $attemptCount = QuizAttempt::where('user_id', auth()->id())
+            ->where('quiz_id', $this->quiz->id)
+            ->count();
+
+        $maxAttempts = $this->quiz->max_attempts ?? 1;
+
+        return $attemptCount < $maxAttempts;
+    }
+
+    public function attemptsExhausted(): bool
+    {
+        if (!$this->quiz || !$this->quiz->can_reattempt) {
+            return false;
+        }
+
+        $attemptCount = QuizAttempt::where('user_id', auth()->id())
+            ->where('quiz_id', $this->quiz->id)
+            ->count();
+
+        return $attemptCount >= ($this->quiz->max_attempts ?? 1);
+    }
+
+    public function attemptCount(): int
+    {
+        if (!$this->quiz) {
+            return 0;
+        }
+
+        return QuizAttempt::where('user_id', auth()->id())
+            ->where('quiz_id', $this->quiz->id)
+            ->count();
+    }
+
+    public function highestScore(): ?int
+    {
+        if (!$this->quiz) {
+            return null;
+        }
+
+        return QuizAttempt::where('user_id', auth()->id())
+            ->where('quiz_id', $this->quiz->id)
+            ->max('score');
     }
 
     public function loadQuiz()

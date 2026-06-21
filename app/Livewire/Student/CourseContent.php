@@ -8,6 +8,7 @@ use App\Models\Tenant\Course;
 use App\Models\Tenant\Enrollment;
 use App\Models\Tenant\Lesson;
 use App\Models\Tenant\LessonProgress;
+use App\Notifications\AssignmentSubmitted;
 use App\Services\Student\CourseContentService;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -182,6 +183,12 @@ class CourseContent extends Component
             'status' => 'submitted',
             'attempt_number' => $this->selectedAssignment->submissions->count() + 1,
         ]);
+
+        $instructor = $this->selectedAssignment->section?->course?->instructor
+            ?? $this->selectedAssignment->createdBy;
+        if ($instructor) {
+            $instructor->notify(new AssignmentSubmitted(auth()->user(), $this->selectedAssignment));
+        }
 
         // Store files
         $tenantId = tenant('id') ?? 'default';
