@@ -57,7 +57,7 @@ class SecurityHeaders
 
         if (app()->environment('production')) {
             return "default-src 'self'; "
-                . "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://maxst.icons8.com https://js.stripe.com; "
+                . "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://maxst.icons8.com https://js.stripe.com; "
                 . "style-src 'self' 'unsafe-inline' https://fonts.bunny.net https://maxst.icons8.com https://fonts.googleapis.com; "
                 . "font-src 'self' https://fonts.bunny.net https://fonts.gstatic.com https://maxst.icons8.com data:; "
                 . "img-src 'self' data: blob: https:; "
