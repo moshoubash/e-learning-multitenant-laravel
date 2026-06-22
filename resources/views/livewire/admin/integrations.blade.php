@@ -84,12 +84,13 @@
                 <div class="fixed inset-0 transition-opacity bg-on-surface/60" wire:click="closeModal"></div>
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
                 <div class="inline-block overflow-hidden align-bottom transition-all transform ltr:text-left rtl:text-right bg-surface-container-lowest neo-border neo-radius sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                    <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4" x-data="{ selectedProvider: '{{ $this->createProvider }}' }">
                         <h3 class="mb-4 text-sm font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Add Integration') }}</h3>
                         <form>
                             <div class="mb-4">
                                 <label class="block mb-1 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Provider') }}</label>
                                 <select wire:model.lazy="createProvider"
+                                    x-on:change="selectedProvider = $event.target.value"
                                     class="w-full px-3 py-2 text-sm neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0">
                                     @forelse($this->availableProviders as $provider)
                                         <option value="{{ $provider }}">{{ ucfirst($provider) }}</option>
@@ -111,14 +112,18 @@
                                     class="w-full px-3 py-2 text-sm neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0 placeholder:text-secondary">
                                 @error('createClientSecret') <span class="block mt-1 text-xs font-bold text-error">{{ $message }}</span> @enderror
                             </div>
-                            @if(in_array($createProvider, ['google']))
-                                <div class="mb-4">
-                                    <label class="block mb-1 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Redirect URL') }}</label>
-                                    <input type="url" wire:model.lazy="createRedirectUrl"
-                                        class="w-full px-3 py-2 text-sm neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0 placeholder:text-secondary">
-                                    @error('createRedirectUrl') <span class="block mt-1 text-xs font-bold text-error">{{ $message }}</span> @enderror
-                                </div>
-                            @endif
+                            <div class="mb-4">
+                                <label class="block mb-1 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Redirect URL') }}</label>
+                                <input type="url" wire:model.lazy="createRedirectUrl"
+                                    x-bind:disabled="selectedProvider === 'paypal'"
+                                    x-bind:class="{ 'opacity-50 cursor-not-allowed': selectedProvider === 'paypal' }"
+                                    class="w-full px-3 py-2 text-sm neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0 placeholder:text-secondary">
+                                <p x-show="selectedProvider === 'paypal'" class="mt-1 text-xs text-secondary">
+                                    <i class="fas fa-info-circle ltr:mr-1 rtl:ml-1"></i>
+                                    {{ __('messages.PayPal does not require a redirect URL.') }}
+                                </p>
+                                @error('createRedirectUrl') <span class="block mt-1 text-xs font-bold text-error">{{ $message }}</span> @enderror
+                            </div>
 
                             <div class="mb-4">
                                 <label class="flex items-center">
@@ -169,7 +174,14 @@
                             <div class="mb-4">
                                 <label class="block mb-1 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Redirect URL') }}</label>
                                 <input type="url" wire:model.lazy="editRedirectUrl"
-                                    class="w-full px-3 py-2 text-sm neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0 placeholder:text-secondary">
+                                    @if($editingIntegration->provider === 'paypal') disabled @endif
+                                    class="w-full px-3 py-2 text-sm neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0 placeholder:text-secondary @if($editingIntegration->provider === 'paypal') opacity-50 cursor-not-allowed @endif">
+                                @if($editingIntegration->provider === 'paypal')
+                                    <p class="mt-1 text-xs text-secondary">
+                                        <i class="fas fa-info-circle ltr:mr-1 rtl:ml-1"></i>
+                                        {{ __('messages.PayPal does not require a redirect URL.') }}
+                                    </p>
+                                @endif
                                 @error('editRedirectUrl') <span class="block mt-1 text-xs font-bold text-error">{{ $message }}</span> @enderror
                             </div>
                             <div class="mb-4">

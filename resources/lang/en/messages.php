@@ -410,6 +410,8 @@ return [
     'No integrations found.' => 'No integrations found.',
     'No providers available' => 'No providers available',
     'All providers have been added' => 'All providers have been added',
+    'PayPal does not require a redirect URL.' => 'PayPal does not require a redirect URL.',
+    'Provider already exists.' => 'Provider already exists.',
     'Provider' => 'Provider',
     'Client ID' => 'Client ID',
     'Client Secret' => 'Client Secret',

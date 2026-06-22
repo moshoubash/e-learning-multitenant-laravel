@@ -421,6 +421,8 @@ return [
     'No integrations found.' => 'لم يتم العثور على تكاملات.',
     'No providers available' => 'لا توجد مزودات متاحة',
     'All providers have been added' => 'تمت إضافة جميع المزودات',
+    'PayPal does not require a redirect URL.' => 'PayPal لا يتطلب عنوان URL لإعادة التوجيه.',
+    'Provider already exists.' => 'المزود موجود بالفعل.',
     'Provider' => 'المزود',
     'Client ID' => 'Client ID',
     'Client Secret' => 'Client Secret',

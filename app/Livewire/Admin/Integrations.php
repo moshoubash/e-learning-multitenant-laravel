@@ -90,6 +90,12 @@ class Integrations extends Component
     {
         $this->validate($this->createRules());
 
+        $exists = Integration::whereRaw('LOWER(provider) = ?', [strtolower($this->createProvider)])->exists();
+        if ($exists) {
+            $this->addError('createProvider', __('messages.Provider already exists.'));
+            return;
+        }
+
         Integration::create([
             'provider' => $this->createProvider,
             'client_id' => $this->createClientId,
@@ -146,7 +152,7 @@ class Integrations extends Component
     #[Computed]
     public function availableProviders(): array
     {
-        $existingProviders = Integration::pluck('provider')->toArray();
+        $existingProviders = Integration::pluck('provider')->map(fn($v) => strtolower($v))->toArray();
 
         return collect(['google', 'paypal'])
             ->reject(fn($provider) => in_array($provider, $existingProviders))
