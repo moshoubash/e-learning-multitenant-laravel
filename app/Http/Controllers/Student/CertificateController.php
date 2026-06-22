@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Models\Tenant\Course;
 use App\Models\Tenant\Enrollment;
-use Barryvdh\DomPDF\Facade\Pdf;
+use Dompdf\Dompdf;
 
 class CertificateController extends Controller
 {
@@ -29,17 +29,25 @@ class CertificateController extends Controller
 
         $instructor = $course->instructor;
 
-        $pdf = Pdf::loadView('partials.certificate-pdf', [
+        $html = view('partials.certificate-pdf', [
             'course' => $course,
             'enrollment' => $enrollment,
             'user' => $user,
             'certificateId' => $certificateId,
             'completedAt' => $completedAt,
             'instructor' => $instructor,
-        ]);
+        ])->render();
+
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
 
         $filename = 'certificate-' . $course->slug . '.pdf';
 
-        return $pdf->download($filename);
+        return response($dompdf->output(), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="'.$filename.'"',
+        ]);
     }
 }
