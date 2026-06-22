@@ -111,12 +111,15 @@
                                     class="w-full px-3 py-2 text-sm neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0 placeholder:text-secondary">
                                 @error('createClientSecret') <span class="block mt-1 text-xs font-bold text-error">{{ $message }}</span> @enderror
                             </div>
-                            <div class="mb-4">
-                                <label class="block mb-1 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Redirect URL') }}</label>
-                                <input type="url" wire:model.lazy="createRedirectUrl"
-                                    class="w-full px-3 py-2 text-sm neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0 placeholder:text-secondary">
-                                @error('createRedirectUrl') <span class="block mt-1 text-xs font-bold text-error">{{ $message }}</span> @enderror
-                            </div>
+                            @if(in_array($createProvider, ['google']))
+                                <div class="mb-4">
+                                    <label class="block mb-1 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Redirect URL') }}</label>
+                                    <input type="url" wire:model.lazy="createRedirectUrl"
+                                        class="w-full px-3 py-2 text-sm neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0 placeholder:text-secondary">
+                                    @error('createRedirectUrl') <span class="block mt-1 text-xs font-bold text-error">{{ $message }}</span> @enderror
+                                </div>
+                            @endif
+
                             <div class="mb-4">
                                 <label class="flex items-center">
                                     <input type="checkbox" wire:model.lazy="createIsActive"
