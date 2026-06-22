@@ -127,11 +127,25 @@ class CourseContent extends Component
 
     public function markLessonComplete()
     {
-        if ($this->selectedLesson) {
-            $this->courseContentService()->markLessonComplete($this->selectedLesson->id, auth()->id());
-            $this->progressPercent = $this->courseContentService()->calculateProgress($this->courseId, auth()->id());
-            Toaster::success('Lesson marked as complete!');
+        if (!$this->selectedLesson) {
+            return;
         }
+
+        $this->courseContentService()->markLessonComplete($this->selectedLesson->id, auth()->id());
+
+        $this->progressPercent = $this->courseContentService()->calculateProgress($this->courseId, auth()->id());
+
+        if ($this->progressPercent === 100) {
+            Enrollment::where('course_id', $this->courseId)
+                ->where('user_id', auth()->id())
+                ->update([
+                    'progress_percent' => 100,
+                    'completed_at' => now(),
+                    'status' => Enrollment::STATUS_COMPLETED,
+                ]);
+        }
+
+        Toaster::success('Lesson marked as complete!');
     }
 
     public function refreshProgress(): void
