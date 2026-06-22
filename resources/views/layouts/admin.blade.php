@@ -14,8 +14,11 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('partials.dynamic-design-styles')
     @livewireStyles
+    <style>
+        body { background-color: var(--color-surface-container-low, #f4f4f4); background-image: linear-gradient(color-mix(in srgb, var(--color-on-surface, #1a1c1c) 6%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--color-on-surface, #1a1c1c) 6%, transparent) 1px, transparent 1px), radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--color-on-surface, #1a1c1c) 15%, transparent) 1px, transparent 1px); background-size: 40px 40px, 40px 40px, 40px 40px; }
+    </style>
 </head>
-<body class="flex h-screen overflow-hidden font-sans antialiased bg-surface-container-low selection:bg-primary-container selection:text-on-primary-container">
+<body class="flex h-screen overflow-hidden font-sans antialiased selection:bg-primary-container selection:text-on-primary-container">
 
     <x-admin.sidebar />
 
