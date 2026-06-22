@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Models\Tenant\Integration;
 use Livewire\Component;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Masmerise\Toaster\Toaster;
 
@@ -142,6 +143,17 @@ class Integrations extends Component
         }
     }
 
+    #[Computed]
+    public function availableProviders(): array
+    {
+        $existingProviders = Integration::pluck('provider')->toArray();
+
+        return collect(['google', 'paypal'])
+            ->reject(fn($provider) => in_array($provider, $existingProviders))
+            ->values()
+            ->toArray();
+    }
+
     public function render()
     {
         $integrations = Integration::orderBy('provider')->paginate(10);
@@ -157,7 +169,7 @@ class Integrations extends Component
             'createProvider' => 'required|string|max:50|unique:integrations,provider',
             'createClientId' => 'required|string',
             'createClientSecret' => 'required|string',
-            'createRedirectUrl' => 'required|url',
+            'createRedirectUrl' => 'nullable|url',
             'createIsActive' => 'boolean',
         ];
     }
@@ -167,7 +179,7 @@ class Integrations extends Component
         return [
             'editClientId' => 'required|string',
             'editClientSecret' => 'required|string',
-            'editRedirectUrl' => 'required|url',
+            'editRedirectUrl' => 'nullable|url',
             'editIsActive' => 'boolean',
         ];
     }

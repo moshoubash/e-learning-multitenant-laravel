@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Payment\PayPalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,10 @@ Route::middleware(['auth:tenant'])->group(function () {
     Route::get('/student/checkout/{course}', [PaymentController::class, 'checkout'])->middleware('role:student')->name('tenant.student.checkout');
     Route::post('/student/payment/process', [PaymentController::class, 'process'])->middleware('role:student')->name('tenant.student.payment.process');
     Route::get('/student/payment/confirmation/{enrollmentId}', [PaymentController::class, 'confirmation'])->middleware('role:student')->name('tenant.student.payment.confirmation');
+
+    Route::post('/student/paypal/create/{course}', [PayPalController::class, 'create'])->middleware('role:student')->name('tenant.student.paypal.create');
+    Route::get('/student/paypal/success/{course}', [PayPalController::class, 'success'])->middleware('role:student')->name('tenant.student.paypal.success');
+    Route::get('/student/paypal/cancel/{course}', [PayPalController::class, 'cancel'])->middleware('role:student')->name('tenant.student.paypal.cancel');
 
     Route::livewire('/student/leaderboard', 'student.leaderboard')->middleware('role:student')->name('tenant.student.leaderboard');
 

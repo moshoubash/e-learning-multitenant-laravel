@@ -7,7 +7,8 @@
     <div class="flex items-center gap-2">
         @livewire('shared.notification-bell')
         <button wire:click="openCreateModal"
-                class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
+                @if(empty($this->availableProviders)) disabled title="{{ __('messages.All providers have been added') }}" @endif
+                class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white disabled:opacity-50 disabled:cursor-not-allowed">
                 <i class="fas fa-plus ltr:mr-2 rtl:ml-2"></i>
                 {{ __('messages.Add Integration') }}
             </button>
@@ -35,12 +36,14 @@
                                     <div class="flex items-center gap-2">
                                         @if($integration->provider === 'google')
                                             <i class="fab fa-google text-on-surface"></i>
+                                        @elseif($integration->provider === 'paypal')
+                                            <i class="fab fa-paypal text-on-surface"></i>
                                         @endif
                                         <span class="text-sm font-bold text-on-surface">{{ ucfirst($integration->provider) }}</span>
                                     </div>
                                 </td>
                                 <td class="p-4 font-mono text-sm text-on-surface">{{ $integration->client_id }}</td>
-                                <td class="p-4 text-sm text-on-surface">{{ $integration->redirect_url }}</td>
+                                <td class="p-4 text-sm text-on-surface">{{ $integration->redirect_url ?: '—' }}</td>
                                 <td class="p-4">
                                     <button wire:click="toggleActive({{ $integration->id }})"
                                         class="px-2.5 py-1 neo-border-sm neo-radius text-[10px] font-bold transition-colors {{ $integration->is_active ? 'bg-primary-container text-on-primary-container' : 'bg-surface-container text-secondary' }}">
@@ -88,7 +91,11 @@
                                 <label class="block mb-1 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Provider') }}</label>
                                 <select wire:model.lazy="createProvider"
                                     class="w-full px-3 py-2 text-sm neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0">
-                                    <option value="google">Google</option>
+                                    @forelse($this->availableProviders as $provider)
+                                        <option value="{{ $provider }}">{{ ucfirst($provider) }}</option>
+                                    @empty
+                                        <option value="" disabled>{{ __('messages.No providers available') }}</option>
+                                    @endforelse
                                 </select>
                                 @error('createProvider') <span class="block mt-1 text-xs font-bold text-error">{{ $message }}</span> @enderror
                             </div>

@@ -10,10 +10,10 @@
 </header>
 
     <div class="p-[24px] max-w-[1400px] mx-auto">
-        <div class="bg-surface-container-lowest neo-border neo-radius overflow-hidden">
+        <div class="overflow-hidden bg-surface-container-lowest neo-border neo-radius">
             {{-- Course Summary --}}
             <div class="p-[24px] border-b-2 border-on-surface">
-                <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface mb-4">{{ __('messages.Course Summary') }}</h3>
+                <h3 class="mb-4 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Course Summary') }}</h3>
                 <div class="flex items-start gap-4">
                     @if($course->thumbnail)
                         <img src="{{ Storage::url($course->thumbnail) }}" alt="{{ $course->title }}"
@@ -24,7 +24,7 @@
                         </div>
                     @endif
                     <div class="flex-1 min-w-0">
-                        <h4 class="font-bold text-sm text-on-surface">{{ $course->title }}</h4>
+                        <h4 class="text-sm font-bold text-on-surface">{{ $course->title }}</h4>
                         <p class="mt-1 text-sm text-secondary">{{ __('messages.By') }} {{ $course->instructor->name ?? 'N/A' }}</p>
                         <div class="flex items-center mt-2 text-xs text-secondary">
                             <span class="ltr:mr-4 rtl:ml-4">
@@ -45,7 +45,7 @@
 
             {{-- Payment Section --}}
             <div class="p-[24px]">
-                <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface mb-4">{{ __('messages.Payment Details') }}</h3>
+                <h3 class="mb-4 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Payment Details') }}</h3>
 
                 @if($errorMessage)
                     <div class="p-4 mb-4 neo-border-sm neo-radius bg-error/10">
@@ -65,14 +65,14 @@
                         <p class="mb-3 text-xs text-on-surface/70">{{ __('messages.Please complete the verification with your bank to complete the purchase.') }}</p>
                         <div id="stripe-3ds-container" class="mb-4"></div>
                         <button wire:click="retryPayment"
-                            class="px-4 py-2 neo-border-sm neo-radius text-xs font-bold text-on-surface bg-surface-container hover:bg-on-surface hover:text-white transition-colors">
+                            class="px-4 py-2 text-xs font-bold transition-colors neo-border-sm neo-radius text-on-surface bg-surface-container hover:bg-on-surface hover:text-white">
                             {{ __('messages.Use Different Payment Method') }}
                         </button>
                     </div>
                 @endif
 
                 <div class="mb-4">
-                    <label class="block mb-2 text-xs font-bold uppercase tracking-widest text-on-surface">
+                    <label class="block mb-2 text-xs font-bold tracking-widest uppercase text-on-surface">
                         {{ __('messages.Card Information') }}
                     </label>
                     <div id="card-element" class="p-4 neo-border-sm neo-radius bg-surface-container-low"
@@ -87,22 +87,42 @@
                 @if($isProcessing)
                     <div class="flex items-center justify-center py-4">
                         <div class="w-6 h-6 ltr:mr-3 rtl:ml-3 neo-border-sm neo-radius border-on-surface border-t-transparent animate-spin"></div>
-                        <span class="text-xs font-bold text-on-surface uppercase tracking-widest">{{ __('messages.Processing payment...') }}</span>
+                        <span class="text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Processing payment...') }}</span>
                     </div>
                 @endif
 
                 <button x-data @click.prevent="processStripePayment()"
                     :disabled="{{ $isProcessing ? 'true' : 'false' }}"
-                    class="w-full px-6 py-3 mt-4 neo-border neo-radius bg-primary-container text-on-primary-container font-bold text-xs uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                    class="w-full px-6 py-3 mt-4 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white disabled:opacity-50 disabled:cursor-not-allowed">
                     <span x-show="!{{ $isProcessing }}">
                         <i class="fas fa-lock ltr:mr-2 rtl:ml-2"></i>
-                        {{ __('messages.Pay') }} ${{ number_format($course->price, 2) }}
+                        {{ __('messages.Pay with Card') }} ${{ number_format($course->price, 2) }}
                     </span>
                     <span x-show="{{ $isProcessing }}">
                         <i class="fas fa-spinner fa-spin ltr:mr-2 rtl:ml-2"></i>
                         {{ __('messages.Processing...') }}
                     </span>
                 </button>
+
+                @if($this->paypalEnabled)
+                    <div class="relative my-4">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-on-surface/20"></div>
+                        </div>
+                        <div class="relative flex justify-center my-4">
+                            <span class="px-3 text-xs font-bold tracking-widest uppercase bg-surface-container-lowest text-secondary">{{ __('messages.Or') }}</span>
+                        </div>
+                    </div>
+
+                    <form action="{{ route('tenant.student.paypal.create', ['course' => $course->id]) }}" method="POST">
+                        @csrf
+                        <button type="submit" :disabled="{{ $isProcessing ? 'true' : 'false' }}"
+                            class="w-full px-6 py-3 neo-border neo-radius bg-[#0070BA] text-white font-bold text-xs uppercase tracking-widest hover:bg-[#003087] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
+                            <i class="text-lg fab fa-paypal ltr:mr-2 rtl:ml-2"></i>
+                            {{ __('messages.Pay with PayPal') }} ${{ number_format($course->price, 2) }}
+                        </button>
+                    </form>
+                @endif
             </div>
 
             {{-- Security & Terms --}}
@@ -115,7 +135,7 @@
         </div>
 
         <div class="mt-4 text-center">
-            <a href="{{ route('tenant.student.courses') }}" class="text-xs font-bold uppercase tracking-widest text-secondary hover:text-on-surface transition-colors">
+            <a href="{{ route('tenant.student.courses') }}" class="text-xs font-bold tracking-widest uppercase transition-colors text-secondary hover:text-on-surface">
                 <i class="fas fa-arrow-left ltr:mr-1 rtl:ml-1"></i>
                 {{ __('messages.Back to Courses') }}
             </a>

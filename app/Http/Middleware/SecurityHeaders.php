@@ -64,7 +64,7 @@ class SecurityHeaders
                 . "media-src 'self' https:; "
                 . "frame-src 'self' https://www.youtube.com https://player.vimeo.com https://accounts.google.com https://js.stripe.com; "
                 . "connect-src 'self' https://api.stripe.com https://cdn.jsdelivr.net; "
-                . "frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://accounts.google.com;";
+                . "frame-ancestors 'self'; base-uri 'self'; form-action *;";
         }
 
         // Development: allow Vite HMR + the unsafe-eval that some
@@ -78,6 +78,6 @@ class SecurityHeaders
             . "media-src 'self' https: {$viteHosts}; "
             . "frame-src 'self' https://www.youtube.com https://player.vimeo.com https://accounts.google.com https://js.stripe.com {$viteHosts}; "
             . "connect-src 'self' ws: wss: https://api.stripe.com https://cdn.jsdelivr.net {$viteHosts}; "
-            . "frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://accounts.google.com {$viteHosts};";
+            . "frame-ancestors 'self'; base-uri 'self'; form-action *;";
     }
 }

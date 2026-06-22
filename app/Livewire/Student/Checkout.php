@@ -7,7 +7,9 @@ use App\Models\Tenant\Enrollment;
 use App\Notifications\EnrollmentConfirmed;
 use App\Notifications\NewEnrollment;
 use App\Services\Student\PaymentService;
+use App\Services\Student\PayPalService;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\Attributes\On;
@@ -23,6 +25,12 @@ class Checkout extends Component
     public ?string $clientSecret = null;
 
     protected ?PaymentService $paymentService = null;
+
+    #[Computed]
+    public function paypalEnabled(): bool
+    {
+        return app(PayPalService::class)->isConfigured();
+    }
 
     public function mount(Course $course)
     {
