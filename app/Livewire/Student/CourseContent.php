@@ -241,6 +241,14 @@ class CourseContent extends Component
         return new CourseContentService();
     }
 
+    public function isCourseCompleted(): bool
+    {
+        return Enrollment::where('course_id', $this->courseId)
+            ->where('user_id', auth()->id())
+            ->where('status', Enrollment::STATUS_COMPLETED)
+            ->exists();
+    }
+
     public function render()
     {
         $course = $this->getCourse();

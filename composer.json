@@ -11,6 +11,7 @@
     "require": {
         "php": "^8.2",
         "aws/aws-sdk-php": "^3.381",
+        "barryvdh/laravel-dompdf": "^3.1",
         "james-heinrich/getid3": "^1.9",
         "laravel/breeze": "^2.4",
         "laravel/framework": "^12.0",

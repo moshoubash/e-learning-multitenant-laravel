@@ -49,6 +49,9 @@ Route::middleware(['auth:tenant'])->group(function () {
 
     Route::livewire('/student/leaderboard', 'student.leaderboard')->middleware('role:student')->name('tenant.student.leaderboard');
 
+    Route::livewire('/student/certificate/{course:slug}', 'student.certificate')->middleware('role:student')->name('tenant.student.certificate');
+    Route::get('/student/certificate/{course:slug}/download', [\App\Http\Controllers\Student\CertificateController::class, 'download'])->middleware('role:student')->name('tenant.student.certificate.download');
+
     Route::livewire('/student/checkout-livewire/{course}', 'student.checkout')->middleware('role:student')->name('tenant.student.checkout.livewire');
     Route::livewire('/student/checkout-success/{enrollmentId?}', 'student.checkout-success')->middleware('role:student')->name('tenant.student.checkout.success');
 });

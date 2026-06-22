@@ -275,9 +275,18 @@
                                         {{ __('messages.Mark Complete') }}
                                     </button>
                                 @else
-                                    <span class="inline-flex items-center px-3 py-1 text-xs font-bold neo-border-sm neo-radius bg-surface-container-high text-on-surface">
-                                        <i class="fas fa-check-circle ltr:mr-1 rtl:ml-1"></i>
-                                        {{ __('messages.Completed') }}
+                                    <span class="inline-flex items-center gap-2">
+                                        <span class="inline-flex items-center px-3 py-1 text-xs font-bold neo-border-sm neo-radius bg-surface-container-high text-on-surface">
+                                            <i class="fas fa-check-circle ltr:mr-1 rtl:ml-1"></i>
+                                            {{ __('messages.Completed') }}
+                                        </span>
+                                        @if($this->isCourseCompleted())
+                                            <a href="{{ route('tenant.student.certificate.download', $course->slug) }}" target="_blank"
+                                               class="inline-flex items-center gap-2 px-3 py-1 text-xs font-bold uppercase transition-all neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white shadow-[4px_4px_0px_0px_var(--color-on-surface)]">
+                                                <i class="fas fa-certificate"></i>
+                                                {{ __('messages.Get Certificate') }}
+                                            </a>
+                                        @endif
                                     </span>
                                 @endif
                             </div>
@@ -386,7 +395,7 @@
                                                 <div class="px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-secondary bg-surface-container-low">{{ __('messages.Quiz') }}</div>
                                                 <a href="{{ route('tenant.student.quiz', $section->quiz->id) }}"
                                                     wire:navigate
-                                                    class="p-3 transition-colors cursor-pointer hover:bg-surface-container-high flex items-center justify-between">
+                                                    class="flex items-center justify-between p-3 transition-colors cursor-pointer hover:bg-surface-container-high">
                                                     <div class="flex items-center">
                                                         <i class="text-xs fas fa-clipboard-list text-on-primary-container ltr:mr-3 rtl:ml-3"></i>
                                                         <span class="text-xs text-on-surface">{{ $section->quiz->title }}</span>
