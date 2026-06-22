@@ -25,7 +25,7 @@
                     GRID <span class="px-2 ltr:ml-1 rtl:mr-1 -tracking-[0.02em] not-italic" style="background-color: var(--color-primary-container, #FFD600); border: 2px solid var(--color-on-surface, #0A0A0A); border-radius: 4px;">LMS</span>
                 </h1>
                 <p class="mt-4 text-sm font-medium tracking-wide uppercase opacity-70 text-on-surface">
-                    Run your school like a product
+                                        Learning Management System for Schools, Universities and Organizations
                 </p>
             </div>
 
