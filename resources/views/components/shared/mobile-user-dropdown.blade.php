@@ -26,6 +26,16 @@
 
             <hr class="border-on-surface/20">
 
+            @if(auth()->user()->hasRole('admin'))
+
+            <a href="{{ route('tenant.admin.design') }}"
+                    class="flex items-center w-full px-3 py-2 text-xs font-bold transition-colors neo-radius hover:bg-primary-container hover:text-white">
+                    <i class="fas fa-sign-out-alt ltr:mr-2 rtl:ml-2"></i>
+                    {{ __('messages.Design') }}
+            </a>
+            @endif
+
+
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit"

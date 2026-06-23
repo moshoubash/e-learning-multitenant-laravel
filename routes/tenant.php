@@ -22,6 +22,10 @@ Route::get('/', function () {
     return redirect()->route('tenant.dashboard');
 });
 
+Route::fallback(function () {
+    return view('errors.404');
+})->name('tenant.fallback');
+
 Route::middleware(['auth:tenant'])->group(function () {
     Route::get('/dashboard', \App\Livewire\Dashboard::class)->name('tenant.dashboard');
     Route::get('/notifications', \App\Livewire\Notifications::class)->name('tenant.notifications');
