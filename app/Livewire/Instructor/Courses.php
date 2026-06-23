@@ -527,7 +527,7 @@ class Courses extends Component
         $this->assignmentCreateAllowLate = 1;
         $this->assignmentCreateStatus = 'draft';
         $this->assignmentCreateOrder = 0;
-        $this->assignmentCreateAttachments = null;
+        $this->assignmentCreateAttachments = [];
     }
 
     public function resetAssignmentFormFields()
@@ -579,7 +579,7 @@ class Courses extends Component
             return;
         }
 
-        $this->assignmentCreateAttachments = null;
+        $this->assignmentCreateAttachments = [];
         $this->closeAssignmentModal();
         Toaster::success('Assignment created successfully!');
     }
@@ -608,7 +608,7 @@ class Courses extends Component
             // Handle new attachments
             if (! empty($this->assignmentEditAttachments)) {
                 $this->storeAttachments($this->editingAssignment, $this->assignmentEditAttachments);
-                $this->assignmentEditAttachments = null;
+                $this->assignmentEditAttachments = [];
             }
         } catch (\Throwable $exception) {
             Toaster::error($exception->getMessage());
