@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
-Route::middleware(['guest', 'block.vpn'])->group(function () {
+Route::middleware(['guest'])->group(function () {
     Volt::route('register', 'pages.auth.register')
         ->middleware('throttle:50,1')
         ->name('register');
@@ -33,7 +33,7 @@ Route::middleware(['guest', 'block.vpn'])->group(function () {
         ->name('auth.google.callback');
 });
 
-Route::middleware(tenant() ? ['auth:tenant', 'block.vpn'] : ['auth', 'block.vpn'])->group(function () {
+Route::middleware(tenant() ? ['auth:tenant'] : ['auth'])->group(function () {
     Volt::route('verify-email', 'pages.auth.verify-email')
         ->name('verification.notice');
 

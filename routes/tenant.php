@@ -20,13 +20,13 @@ use App\Http\Controllers\Payment\PayPalController;
 
 Route::get('/', function () {
     return redirect()->route('tenant.dashboard');
-})->middleware('block.vpn');
+});
 
 Route::fallback(function () {
     return view('errors.404');
-})->middleware('block.vpn')->name('tenant.fallback');
+})->name('tenant.fallback');
 
-Route::middleware(['auth:tenant, block.vpn'])->group(function () {
+Route::middleware(['auth:tenant'])->group(function () {
     Route::get('/dashboard', \App\Livewire\Dashboard::class)->name('tenant.dashboard');
     Route::get('/notifications', \App\Livewire\Notifications::class)->name('tenant.notifications');
 
