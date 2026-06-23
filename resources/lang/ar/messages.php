@@ -319,6 +319,7 @@ return [
     'Current Attachments' => 'المرفقات الحالية',
     'Submissions' => 'التقديمات',
     'file(s) selected' => 'ملف(ملفات) مختارة',
+    'selected' => 'مختار',
     'Allowed' => 'مسموح',
     'Delete Assignment' => 'حذف الواجب',
     'Are you sure you want to delete this assignment? This action can be restored later.' => 'هل أنت متأكد أنك تريد حذف هذا الواجب؟ هذا الإجراء يمكن استعادته لاحقاً.',
