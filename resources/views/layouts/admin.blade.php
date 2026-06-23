@@ -23,7 +23,13 @@
 
     <x-admin.sidebar />
 
-    <main class="flex-1 h-screen overflow-y-auto no-scrollbar pb-20 lg:pb-0 ltr:ml-0 lg:ltr:ml-[240px] rtl:mr-0 lg:rtl:mr-[240px]">
+    {{-- Mobile top bar --}}
+    <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between h-14 px-[24px] bg-surface-container-lowest border-b-2 border-on-surface lg:hidden">
+        <span class="text-sm font-bold tracking-widest uppercase text-on-surface">{{ config('app.name') }}</span>
+        <x-shared.mobile-user-dropdown />
+    </header>
+
+    <main class="flex-1 h-screen overflow-y-auto no-scrollbar pt-14 lg:pt-0 pb-20 lg:pb-0 ltr:ml-0 lg:ltr:ml-[240px] rtl:mr-0 lg:rtl:mr-[240px]">
         {{ $slot }}
     </main>
 
