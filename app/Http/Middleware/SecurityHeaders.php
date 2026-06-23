@@ -25,6 +25,10 @@ class SecurityHeaders
      * to 'localhost' via vite.config.js so this list only needs the
      * IPv4 forms.
      */
+    private const CLOUD_FRONT_HOST = 'https://d1w6oovjx4x1vx.cloudfront.net';
+
+    private const S3_BUCKET_HOST = 'https://bucket-of-elearning.s3.eu-central-1.amazonaws.com';
+
     private const VITE_DEV_HOSTS = [
         'http://localhost:5173',
         'http://127.0.0.1:5173',
@@ -63,7 +67,7 @@ class SecurityHeaders
                 . "img-src 'self' data: blob: https:; "
                 . "media-src 'self' https:; "
                 . "frame-src 'self' https://www.youtube.com https://player.vimeo.com https://accounts.google.com https://js.stripe.com; "
-                . "connect-src 'self' https://api.stripe.com https://cdn.jsdelivr.net; "
+                . "connect-src 'self' https://api.stripe.com https://cdn.jsdelivr.net " . self::S3_BUCKET_HOST . "; "
                 . "frame-ancestors 'self'; base-uri 'self'; form-action *;";
         }
 
@@ -77,7 +81,7 @@ class SecurityHeaders
             . "img-src 'self' data: blob: https: {$viteHosts}; "
             . "media-src 'self' https: {$viteHosts}; "
             . "frame-src 'self' https://www.youtube.com https://player.vimeo.com https://accounts.google.com https://js.stripe.com {$viteHosts}; "
-            . "connect-src 'self' ws: wss: https://api.stripe.com https://cdn.jsdelivr.net {$viteHosts}; "
+            . "connect-src 'self' ws: wss: https://api.stripe.com https://cdn.jsdelivr.net " . self::S3_BUCKET_HOST . " {$viteHosts}; "
             . "frame-ancestors 'self'; base-uri 'self'; form-action *;";
     }
 }
