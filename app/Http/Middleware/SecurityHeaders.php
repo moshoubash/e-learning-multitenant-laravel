@@ -63,7 +63,7 @@ class SecurityHeaders
                 . "img-src 'self' data: blob: https:; "
                 . "media-src 'self' https:; "
                 . "frame-src 'self' https://www.youtube.com https://player.vimeo.com https://accounts.google.com https://js.stripe.com; "
-                . "connect-src 'self' https://api.stripe.com https://cdn.jsdelivr.net; "
+                . "connect-src 'self' https://api.stripe.com https://cdn.jsdelivr.net https://bucket-of-elearning.s3.eu-central-1.amazonaws.com; "
                 . "frame-ancestors 'self'; base-uri 'self'; form-action *;";
         }
 
@@ -77,7 +77,7 @@ class SecurityHeaders
             . "img-src 'self' data: blob: https: {$viteHosts}; "
             . "media-src 'self' https: {$viteHosts}; "
             . "frame-src 'self' https://www.youtube.com https://player.vimeo.com https://accounts.google.com https://js.stripe.com {$viteHosts}; "
-            . "connect-src 'self' ws: wss: https://api.stripe.com https://cdn.jsdelivr.net {$viteHosts}; "
+            . "connect-src 'self' ws: wss: https://api.stripe.com https://cdn.jsdelivr.net https://bucket-of-elearning.s3.eu-central-1.amazonaws.com {$viteHosts}; "
             . "frame-ancestors 'self'; base-uri 'self'; form-action *;";
     }
 }
