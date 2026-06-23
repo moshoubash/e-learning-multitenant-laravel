@@ -15,7 +15,7 @@ class AssignmentAttachment extends Model
         'file_name',
         'file_path',
         'file_type',
-        'size',
+//        'size',
     ];
 
     public function assignment(): BelongsTo

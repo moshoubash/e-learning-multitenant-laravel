@@ -635,7 +635,7 @@ class Courses extends Component
             'file_name' => $file->getClientOriginalName(),
             'file_path' => $baseUrl . '/' . $path,
             'file_type' => $file->getMimeType(),
-            'size' => $file->getSize(),
+            //'size' => $file->getSize(),
         ]);
     }
 
