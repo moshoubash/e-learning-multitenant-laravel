@@ -1,12 +1,16 @@
 <div>
-    <header class="h-16 flex justify-between items-center px-[24px] bg-surface-container-lowest border-b-2 border-on-surface sticky top-0 z-40">
-        <div>
-            <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ __('messages.Design Configuration') }}</h2>
-            <p class="text-[12px] font-medium uppercase text-secondary mt-0.5 tracking-wider">{{ __('messages.Customize the appearance of your system') }}</p>
+    <header class="px-[24px] py-[16px] bg-surface-container-lowest border-b-2 border-on-surface sticky top-0 z-40">
+        <div class="flex items-start justify-between">
+            <div>
+                <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ __('messages.Design Configuration') }}</h2>
+                <p class="text-[12px] font-medium uppercase text-secondary mt-0.5 tracking-wider">{{ __('messages.Customize the appearance of your system') }}</p>
+            </div>
+            <div>
+                @livewire('shared.notification-bell')
+            </div>
         </div>
-    <div class="flex items-center gap-2">
-        @livewire('shared.notification-bell')
-        <button wire:click="resetDefaults"
+        <div class="flex items-center gap-2 mt-3">
+            <button wire:click="resetDefaults"
                 class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-surface-container text-on-primary-container hover:bg-on-surface hover:text-white">
                 {{ __('messages.Reset Defaults') }}
             </button>
