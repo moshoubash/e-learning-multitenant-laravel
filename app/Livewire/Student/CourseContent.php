@@ -30,7 +30,7 @@ class CourseContent extends Component
 
     // Submission form fields
     public $submissionContent = '';
-    public $submissionFiles = [];
+    public $submissionFiles = null;
     public $showSubmissionForm = false;
 
     public function mount(Course $course)
@@ -163,14 +163,14 @@ class CourseContent extends Component
     {
         $this->showSubmissionForm = ! $this->showSubmissionForm;
         $this->submissionContent = '';
-        $this->submissionFiles = [];
+        $this->submissionFiles = null;
     }
 
     public function submitAssignment()
     {
         $this->validate([
             'submissionContent' => 'nullable|string',
-            'submissionFiles.*' => 'nullable|file|max:10240', // 10MB max per file
+            'submissionFiles' => 'nullable|file|max:10240', // 10MB max
         ]);
 
         if (empty($this->submissionContent) && empty($this->submissionFiles)) {
@@ -204,17 +204,17 @@ class CourseContent extends Component
             $instructor->notify(new AssignmentSubmitted(auth()->user(), $this->selectedAssignment));
         }
 
-        // Store files
-        $tenantId = tenant('id') ?? 'default';
-        foreach ($this->submissionFiles as $file) {
+        // Store file
+        if ($this->submissionFiles) {
+            $tenantId = tenant('id') ?? 'default';
             $baseUrl = 'https://d1w6oovjx4x1vx.cloudfront.net';
-            $path = $file->storeAs("submissions/{$tenantId}",  $file->getClientOriginalName(), 's3');
+            $path = $this->submissionFiles->storeAs("submissions/{$tenantId}", $this->submissionFiles->getClientOriginalName(), 's3');
             $submission->update([
                 'file_path' => $baseUrl . '/' . $path,
             ]);
         }
 
-        $this->submissionFiles = [];
+        $this->submissionFiles = null;
         $this->submissionContent = '';
         $this->showSubmissionForm = false;
 

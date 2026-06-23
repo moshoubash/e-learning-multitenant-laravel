@@ -308,7 +308,7 @@ return [
     'Upload additional files for students to reference' => 'Upload additional files for students to reference',
     'Current Attachments' => 'Current Attachments',
     'Submissions' => 'Submissions',
-    'file(s) selected' => 'file(s) selected',
+    'selected' => 'selected',
     'Allowed' => 'Allowed',
     'Delete Assignment' => 'Delete Assignment',
     'Are you sure you want to delete this assignment? This action can be restored later.' => 'Are you sure you want to delete this assignment? This action can be restored later.',
