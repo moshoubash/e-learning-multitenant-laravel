@@ -1,12 +1,35 @@
 <div>
-    <header class="h-16 flex justify-between items-center px-[24px] bg-surface-container-lowest border-b-2 border-on-surface sticky top-0 z-40">
-        <div>
-            <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ __('messages.My Enrolled Courses') }}</h2>
-            <p class="text-[12px] font-medium uppercase text-secondary mt-0.5 tracking-wider">{{ __('messages.Continue where you left off') }}</p>
+    <header class="px-[24px] py-[16px] bg-surface-container-lowest border-b-2 border-on-surface sticky top-0 z-40">
+        {{-- Desktop: single row --}}
+        <div class="items-center justify-between hidden lg:flex">
+            <div>
+                <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ __('messages.My Enrolled Courses') }}</h2>
+                <p class="text-[12px] font-medium uppercase text-secondary mt-0.5 tracking-wider">{{ __('messages.Continue where you left off') }}</p>
+            </div>
+            <div class="flex items-center gap-2">
+                @livewire('shared.notification-bell')
+                <a href="{{ route('tenant.student.courses') }}" class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
+                    {{ __('messages.Browse More') }} <i class="ml-1 fas fa-arrow-right"></i>
+                </a>
+            </div>
         </div>
-        <a href="{{ route('tenant.student.courses') }}" class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
-            {{ __('messages.Browse More') }} <i class="ml-1 fas fa-arrow-right"></i>
-        </a>
+        {{-- Mobile: two rows --}}
+        <div class="lg:hidden">
+            <div class="flex items-start justify-between">
+                <div>
+                    <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ __('messages.My Enrolled Courses') }}</h2>
+                    <p class="text-[12px] font-medium uppercase text-secondary mt-0.5 tracking-wider">{{ __('messages.Continue where you left off') }}</p>
+                </div>
+                <div>
+                    @livewire('shared.notification-bell')
+                </div>
+            </div>
+            <div class="flex items-center gap-2 mt-3">
+                <a href="{{ route('tenant.student.courses') }}" class="inline-flex items-center px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
+                    {{ __('messages.Browse More') }} <i class="ml-1 fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
     </header>
 
     <div class="p-[24px] max-w-[1400px] mx-auto">

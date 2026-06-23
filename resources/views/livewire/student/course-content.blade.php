@@ -1,16 +1,39 @@
 <div>
-    <header class="h-16 flex justify-between items-center px-[24px] bg-surface-container-lowest border-b-2 border-on-surface sticky top-0 z-40">
-        <div class="flex items-center gap-4">
-            <a href="{{ route('tenant.student.courses') }}" class="transition-colors text-secondary hover:text-on-surface">
-                <i class="text-lg fas fa-arrow-left"></i>
-            </a>
-            <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ $course->title ?? __('messages.Course') }}</h2>
+    <header class="px-[24px] py-[16px] bg-surface-container-lowest border-b-2 border-on-surface sticky top-0 z-40">
+        {{-- Desktop: single row --}}
+        <div class="items-center justify-between hidden lg:flex">
+            <div class="flex items-center gap-4">
+                <a href="{{ route('tenant.student.courses') }}" class="transition-colors text-secondary hover:text-on-surface">
+                    <i class="text-lg fas fa-arrow-left"></i>
+                </a>
+                <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ $course->title ?? __('messages.Course') }}</h2>
+            </div>
+            <div class="flex items-center gap-3">
+                @livewire('shared.notification-bell')
+                <span class="text-[10px] font-bold uppercase tracking-widest text-secondary ltr:ml-2 rtl:mr-2">{{ __('messages.Progress') }}: {{ $progressPercent }}%</span>
+                <div class="w-32 h-2 overflow-hidden neo-border-sm neo-radius bg-surface-container">
+                    <div class="h-full transition-all duration-300 bg-on-surface neo-radius" style="width: {{ $progressPercent }}%"></div>
+                </div>
+            </div>
         </div>
-        <div class="flex items-center gap-3">
-            @livewire('shared.notification-bell')
-            <span class="text-[10px] font-bold uppercase tracking-widest text-secondary ltr:ml-2 rtl:mr-2">{{ __('messages.Progress') }}: {{ $progressPercent }}%</span>
-            <div class="w-32 h-2 overflow-hidden neo-border-sm neo-radius bg-surface-container">
-                <div class="h-full transition-all duration-300 bg-on-surface neo-radius" style="width: {{ $progressPercent }}%"></div>
+        {{-- Mobile: two rows --}}
+        <div class="lg:hidden">
+            <div class="flex items-start justify-between">
+                <div class="flex items-center gap-4">
+                    <a href="{{ route('tenant.student.courses') }}" class="transition-colors text-secondary hover:text-on-surface">
+                        <i class="text-lg fas fa-arrow-left"></i>
+                    </a>
+                    <h2 class="text-[19px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ $course->title ?? __('messages.Course') }}</h2>
+                </div>
+                <div>
+                    @livewire('shared.notification-bell')
+                </div>
+            </div>
+            <div class="flex items-center gap-3 mt-3">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Progress') }}: {{ $progressPercent }}%</span>
+                <div class="flex-1 h-2 max-w-xs overflow-hidden neo-border-sm neo-radius bg-surface-container">
+                    <div class="h-full transition-all duration-300 bg-on-surface neo-radius" style="width: {{ $progressPercent }}%"></div>
+                </div>
             </div>
         </div>
     </header>
@@ -282,7 +305,7 @@
                                         </span>
                                         @if($this->isCourseCompleted())
                                             <a href="{{ route('tenant.student.certificate.download', $course->slug) }}" target="_blank"
-                                               class="inline-flex items-center gap-2 px-3 py-1 text-xs font-bold uppercase transition-all neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white shadow-[4px_4px_0px_0px_var(--color-on-surface)]">
+                                               class="inline-flex items-center gap-2 px-3 py-1 text-xs font-bold uppercase transition-all neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
                                                 <i class="fas fa-certificate"></i>
                                                 {{ __('messages.Get Certificate') }}
                                             </a>
