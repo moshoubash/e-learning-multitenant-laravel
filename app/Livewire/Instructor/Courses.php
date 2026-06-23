@@ -127,7 +127,7 @@ class Courses extends Component
     public $assignmentCreateAllowLate = 1;
     public $assignmentCreateStatus = 'draft';
     public $assignmentCreateOrder = 0;
-    public $assignmentCreateAttachments = null;
+    public $assignmentCreateAttachments = [];
 
     // Lesson edit form fields
     public $lessonEditTitle = '';
@@ -146,7 +146,7 @@ class Courses extends Component
     public $assignmentEditAllowLate = 1;
     public $assignmentEditStatus = 'draft';
     public $assignmentEditOrder = 0;
-    public $assignmentEditAttachments = null;
+    public $assignmentEditAttachments = [];
 
     // Quiz create form fields
     public $quizCreateTitle = '';
@@ -543,7 +543,7 @@ class Courses extends Component
         $this->assignmentCreateAllowLate = 1;
         $this->assignmentCreateStatus = 'draft';
         $this->assignmentCreateOrder = 0;
-        $this->assignmentCreateAttachments = null;
+        $this->assignmentCreateAttachments = [];
         $this->assignmentEditTitle = '';
         $this->assignmentEditDescription = '';
         $this->assignmentEditInstructions = '';
@@ -552,7 +552,7 @@ class Courses extends Component
         $this->assignmentEditAllowLate = 1;
         $this->assignmentEditStatus = 'draft';
         $this->assignmentEditOrder = 0;
-        $this->assignmentEditAttachments = null;
+        $this->assignmentEditAttachments = [];
     }
 
     public function storeAssignment()
@@ -620,23 +620,26 @@ class Courses extends Component
         Toaster::success('Assignment updated successfully!');
     }
 
-    protected function storeAttachments($assignment, $file)
+    protected function storeAttachments($assignment, $files)
     {
-        if (empty($file)) {
+        if (empty($files)) {
             return;
         }
 
         $tenantId = tenant('id') ?? 'default';
-        $baseUrl = 'https://d1w6oovjx4x1vx.cloudfront.net';
-        $path = $file->storeAs("assignments/{$tenantId}", $file->getClientOriginalName(), 's3');
 
-        AssignmentAttachment::create([
-            'assignment_id' => $assignment->id,
-            'file_name' => $file->getClientOriginalName(),
-            'file_path' => $baseUrl . '/' . $path,
-            'file_type' => $file->getMimeType(),
-            'size' => $file->getSize(),
-        ]);
+        foreach ($files as $file) {
+            $baseUrl = 'https://d1w6oovjx4x1vx.cloudfront.net';
+            $path = $file->storeAs("assignments/{$tenantId}",  $file->getClientOriginalName(), 's3');
+
+            AssignmentAttachment::create([
+                'assignment_id' => $assignment->id,
+                'file_name' => $file->getClientOriginalName(),
+                'file_path' => $baseUrl . '/' . $path,
+                'file_type' => $file->getMimeType(),
+                'size' => $file->getSize(),
+            ]);
+        }
     }
 
     public function removeAttachment($attachmentId)
@@ -959,7 +962,7 @@ class Courses extends Component
             'assignmentCreateAllowLate' => 'required|in:0,1',
             'assignmentCreateStatus' => 'required|in:draft,published,archived',
             'assignmentCreateOrder' => 'required|integer|min:0',
-            'assignmentCreateAttachments' => 'nullable|file|max:10240', // 10MB max
+            'assignmentCreateAttachments.*' => 'nullable|file|max:10240', // 10MB max per file
         ];
     }
 
@@ -974,7 +977,7 @@ class Courses extends Component
             'assignmentEditAllowLate' => 'required|in:0,1',
             'assignmentEditStatus' => 'required|in:draft,published,archived',
             'assignmentEditOrder' => 'required|integer|min:0',
-            'assignmentEditAttachments' => 'nullable|file|max:10240', // 10MB max
+            'assignmentEditAttachments.*' => 'nullable|file|max:10240', // 10MB max per file
         ];
     }
 

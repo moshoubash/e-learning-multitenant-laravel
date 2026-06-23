@@ -213,12 +213,12 @@
                                                     </div>
                                                     <div class="mb-4">
                                                         <label class="block mb-2 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Files') }}</label>
-                                                        <input type="file" wire:model="submissionFiles"
+                                                        <input type="file" wire:model="submissionFiles" multiple
                                                             class="w-full px-3 py-2 text-sm neo-border-sm neo-radius bg-surface-container-lowest text-on-surface file:neo-border-sm file:neo-radius file:bg-surface-container file:text-on-surface file:text-xs file:font-bold file:uppercase file:tracking-widest file:px-3 file:py-1 file:mr-3 file:cursor-pointer focus:outline-none focus:ring-0">
-                                                        @error('submissionFiles') <span class="block mt-1 text-xs font-bold text-error">{{ $message }}</span> @enderror
-                                                        @if($submissionFiles)
+                                                        @error('submissionFiles.*') <span class="block mt-1 text-xs font-bold text-error">{{ $message }}</span> @enderror
+                                                        @if(count($submissionFiles) > 0)
                                                             <div class="mt-2 text-xs font-bold text-secondary">
-                                                                {{ $submissionFiles->getClientOriginalName() }} {{ __('messages.selected') }}
+                                                                {{ count($submissionFiles) }} {{ __('messages.file(s) selected') }}
                                                             </div>
                                                         @endif
                                                     </div>

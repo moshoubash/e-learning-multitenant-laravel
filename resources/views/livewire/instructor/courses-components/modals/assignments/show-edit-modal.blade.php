@@ -70,9 +70,9 @@
                         <div class="p-4 neo-border-sm neo-radius bg-surface-container-low mb-4">
                             <label class="block mb-2 text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Attachments') }}</label>
                             <p class="mb-2 text-xs text-secondary">{{ __('messages.Upload additional files for students to reference') }}</p>
-                            <input type="file" wire:model="assignmentEditAttachments"
+                            <input type="file" wire:model="assignmentEditAttachments" multiple
                                 class="w-full px-3 py-2 neo-border-sm neo-radius bg-surface-container-lowest text-on-surface text-sm file:neo-border-sm file:neo-radius file:bg-surface-container file:text-on-surface file:text-xs file:font-bold file:uppercase file:tracking-widest file:px-3 file:py-1 file:ltr:mr-3 file:rtl:ml-3 file:cursor-pointer focus:outline-none focus:ring-0">
-                            @error('assignmentEditAttachments') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
+                            @error('assignmentEditAttachments.*') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
                             @if($editingAssignment && $editingAssignment->attachments->count() > 0)
                                 <div class="mt-4">
                                     <h4 class="mb-2 text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Current Attachments') }}</h4>
