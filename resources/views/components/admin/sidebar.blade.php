@@ -32,6 +32,11 @@
             <i class="w-5 text-center fas fa-users"></i>
             <span class="text-[14px] font-medium">{{ __('messages.Users') }}</span>
         </a>
+        <a href="{{ route('tenant.admin.roles-permissions') }}" wire:navigate
+            class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.admin.roles-permissions*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
+            <i class="w-5 text-center fas fa-shield-alt"></i>
+            <span class="text-[14px] font-medium">{{ __('messages.Roles & Permissions') }}</span>
+        </a>
         <a href="{{ route('tenant.admin.courses') }}" wire:navigate
            class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.admin.courses*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
             <i class="w-5 text-center fas fa-book-open"></i>
@@ -53,7 +58,7 @@
             <span class="text-[14px] font-medium">{{ __('messages.Design') }}</span>
         </a>
         <a href="{{ route('tenant.admin.logs') }}" wire:navigate
-           class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.admin.logs*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
+            class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.admin.logs*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
             <i class="w-5 text-center fas fa-file-alt"></i>
             <span class="text-[14px] font-medium">{{ __('messages.Logs') }}</span>
         </a>

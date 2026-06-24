@@ -286,6 +286,7 @@ class Quizzes extends Component
     public function render()
     {
         $quizzes = $this->quizzesService()->getPaginatedQuizzes(10);
+        $quizzes->withPath('/' . trim(\Livewire\Livewire::originalPath(), '/'));
 
         $sections = $this->getSections();
 

@@ -150,6 +150,7 @@ class Users extends Component
     public function render()
     {
         $users = $this->usersService()->getPaginatedUsers(10);
+        $users->withPath('/' . trim(\Livewire\Livewire::originalPath(), '/'));
 
         $deletedUsers = $this->usersService()->getDeletedUsers();
 
