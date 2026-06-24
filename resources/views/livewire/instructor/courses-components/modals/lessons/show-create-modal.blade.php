@@ -47,6 +47,22 @@
                                     <span>{{ __('messages.Uploading video...') }}</span>
                                 </div>
                             </div>
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="flex-1 border-t border-on-surface/20"></div>
+                                <span class="text-xs font-bold uppercase tracking-widest text-secondary">{{ __('messages.Or') }}</span>
+                                <div class="flex-1 border-t border-on-surface/20"></div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block mb-1 text-xs font-bold uppercase tracking-widest text-on-surface">
+                                    <i class="fab fa-youtube ltr:mr-1 rtl:ml-1 text-[#FF0000]"></i>
+                                    {{ __('messages.YouTube URL') }}
+                                </label>
+                                <input type="url" wire:model.lazy="lessonCreateVideoUrl"
+                                    placeholder="https://www.youtube.com/watch?v=..."
+                                    class="w-full px-3 py-2 neo-border-sm neo-radius bg-surface-container-low text-on-surface text-sm focus:outline-none focus:ring-0 placeholder:text-secondary">
+                                <p class="mt-1 text-xs text-secondary">{{ __('messages.Paste a YouTube video URL instead of uploading a file') }}</p>
+                                @error('lessonCreateVideoUrl') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
+                            </div>
                         @endif
                     </form>
                 </div>

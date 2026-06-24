@@ -628,4 +628,7 @@ return [
     'GRID Academy' => 'أكاديمية GRID',
     'Neo-Brutalist Learning OS' => 'نظام التعلم Neo-Brutalist',
     'Download Certificate' => 'تحميل الشهادة',
+    'YouTube URL' => 'رابط يوتيوب',
+    'Paste a YouTube video URL instead of uploading a file' => 'الصق رابط فيديو يوتيوب بدلاً من رفع ملف',
+    'Enter a YouTube URL or a direct video link (MP4, WebM)' => 'أدخل رابط يوتيوب أو رابط فيديو مباشر (MP4, WebM)',
 ];

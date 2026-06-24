@@ -36,15 +36,13 @@ class Courses extends Component
     public function enrollInCourse($courseId)
     {
         $course = Course::find($courseId);
-        // If course is free, enroll directly and redirect to course page
         if ($course && $course->price == 0) {
-            $this->coursesService()->enrollInCourse($courseId, auth()->id());
+            $enrollment = $this->coursesService()->enrollInCourse($courseId, auth()->id());
 
             Toaster::success('Successfully enrolled in the course!');
-            return redirect()->route('tenant.student.course', ['course' => $course->slug]);
+            return redirect()->route('tenant.student.checkout.success', ['enrollmentId' => $enrollment->id]);
         }
 
-        // For paid courses, redirect to checkout page
         return redirect()->route('tenant.student.checkout', ['course' => $courseId]);
     }
 

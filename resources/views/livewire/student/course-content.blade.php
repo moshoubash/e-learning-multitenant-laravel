@@ -254,11 +254,21 @@
                         </div>
                     @elseif($selectedLesson)
                         @if($selectedLesson->type === 'video' && $selectedLesson->video_url)
-                            <div class="aspect-video bg-on-surface" wire:ignore.self>
-                                <video class="w-full h-full js-lesson-video" data-lesson-id="{{ $selectedLesson->id }}" playsinline controls preload="metadata">
-                                    <source src="{{ $selectedLesson->video_url }}" type="video/mp4" />
-                                </video>
-                            </div>
+                            @if($selectedLesson->is_youtube_url)
+                                <div class="aspect-video bg-on-surface" wire:ignore.self>
+                                    <iframe class="w-full h-full" src="{{ $selectedLesson->youtube_embed_url }}"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen>
+                                    </iframe>
+                                </div>
+                            @else
+                                <div class="aspect-video bg-on-surface" wire:ignore.self>
+                                    <video class="w-full h-full js-lesson-video" data-lesson-id="{{ $selectedLesson->id }}" playsinline controls preload="metadata">
+                                        <source src="{{ $selectedLesson->video_url }}" type="video/mp4" />
+                                    </video>
+                                </div>
+                            @endif
                             <div wire:loading.delay class="hidden"></div>
                         @elseif($selectedLesson->type === 'video')
                             <div class="flex items-center justify-center bg-on-surface aspect-video">

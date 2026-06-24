@@ -39,11 +39,14 @@
                             @error('lessonEditOrder') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-4" x-show="$wire.lessonEditType === 'video'">
-                            <label class="block mb-1 text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Video URL') }}</label>
+                            <label class="block mb-1 text-xs font-bold uppercase tracking-widest text-on-surface">
+                                <i class="fab fa-youtube ltr:mr-1 rtl:ml-1 text-[#FF0000]"></i>
+                                {{ __('messages.Video URL') }}
+                            </label>
                             <input type="url" wire:model.lazy="lessonEditVideoUrl"
-                                placeholder="e.g., https://example.com/video.mp4"
+                                placeholder="https://www.youtube.com/watch?v=... or https://example.com/video.mp4"
                                 class="w-full px-3 py-2 neo-border-sm neo-radius bg-surface-container-low text-on-surface text-sm focus:outline-none focus:ring-0 placeholder:text-secondary">
-                            <p class="mt-1 text-xs text-secondary">{{ __('messages.Enter the direct video URL (MP4, WebM, etc.)') }}</p>
+                            <p class="mt-1 text-xs text-secondary">{{ __('messages.Enter a YouTube URL or a direct video link (MP4, WebM)') }}</p>
                             @error('lessonEditVideoUrl') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
                         </div>
                     </form>

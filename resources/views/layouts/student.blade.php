@@ -25,7 +25,7 @@
         body { background-color: var(--color-surface-container-low, #f4f4f4); background-image: linear-gradient(color-mix(in srgb, var(--color-on-surface, #1a1c1c) 6%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--color-on-surface, #1a1c1c) 6%, transparent) 1px, transparent 1px), radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--color-on-surface, #1a1c1c) 15%, transparent) 1px, transparent 1px); background-size: 40px 40px, 40px 40px, 40px 40px; }
     </style>
 </head>
-<body class="flex h-screen overflow-hidden font-sans antialiased selection:bg-primary-container selection:text-on-primary-container">
+<body class="flex h-screen font-sans antialiased selection:bg-primary-container selection:text-on-primary-container">
 
     <x-student.sidebar />
 
@@ -35,7 +35,7 @@
         <x-shared.mobile-user-dropdown />
     </header>
 
-    <main class="flex-1 overflow-y-auto no-scrollbar pt-14 lg:pt-0 pb-20 lg:pb-0 ltr:ml-0 lg:ltr:ml-[240px] rtl:mr-0 lg:rtl:mr-[240px]">
+    <main class="flex-1  pt-14 lg:pt-0 pb-20 lg:pb-0 ltr:ml-0 lg:ltr:ml-[240px] rtl:mr-0 lg:rtl:mr-[240px]">
         {{ $slot }}
     </main>
 

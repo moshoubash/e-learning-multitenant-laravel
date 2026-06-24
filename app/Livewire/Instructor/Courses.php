@@ -730,6 +730,20 @@ class Courses extends Component
         $this->resetLessonFormFields();
     }
 
+    public function updatedLessonCreateVideoUrl($value)
+    {
+        if ($value) {
+            $this->courseVideo = null;
+        }
+    }
+
+    public function updatedCourseVideo($value)
+    {
+        if ($value) {
+            $this->lessonCreateVideoUrl = '';
+        }
+    }
+
     public function resetLessonCreateForm()
     {
         $this->lessonCreateTitle = '';
@@ -738,6 +752,7 @@ class Courses extends Component
         $this->lessonCreateDuration = 0;
         $this->lessonCreateOrder = 0;
         $this->lessonCreateVideoUrl = '';
+        $this->courseVideo = null;
     }
 
     public function resetLessonFormFields()
@@ -935,6 +950,7 @@ class Courses extends Component
             'lessonCreateContent' => 'nullable|string',
             'lessonCreateOrder' => 'required|integer|min:0',
             'courseVideo' => 'nullable|file|mimes:mp4,mov,avi,wmv|max:102400',
+            'lessonCreateVideoUrl' => 'nullable|string|max:255',
         ];
     }
 

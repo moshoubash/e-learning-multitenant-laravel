@@ -32,4 +32,26 @@ class Lesson extends Model
     {
         return $this->hasMany(LessonProgress::class);
     }
+
+    public function getIsYoutubeUrlAttribute(): bool
+    {
+        if (!$this->video_url) {
+            return false;
+        }
+
+        return preg_match('/(youtube\.com|youtu\.be)/', $this->video_url) === 1;
+    }
+
+    public function getYoutubeEmbedUrlAttribute(): ?string
+    {
+        if (!$this->video_url) {
+            return null;
+        }
+
+        preg_match('/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/', $this->video_url, $matches);
+
+        return $matches[1] ?? null
+            ? 'https://www.youtube.com/embed/' . $matches[1]
+            : null;
+    }
 }

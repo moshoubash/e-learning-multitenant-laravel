@@ -598,4 +598,7 @@ return [
     'GRID Academy' => 'GRID Academy',
     'Neo-Brutalist Learning OS' => 'Neo-Brutalist Learning OS',
     'Download Certificate' => 'Download Certificate',
+    'YouTube URL' => 'YouTube URL',
+    'Paste a YouTube video URL instead of uploading a file' => 'Paste a YouTube video URL instead of uploading a file',
+    'Enter a YouTube URL or a direct video link (MP4, WebM)' => 'Enter a YouTube URL or a direct video link (MP4, WebM)',
 ];
