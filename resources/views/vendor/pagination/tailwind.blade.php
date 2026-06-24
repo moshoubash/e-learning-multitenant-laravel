@@ -44,7 +44,7 @@
             </div>
 
             <div>
-                <span class="inline-flex rtl:flex-row-reverse neo-border neo-radius overflow-hidden">
+                <span class="inline-flex ltr:flex-row rtl:flex-row-reverse neo-border neo-radius overflow-hidden divide-x-2">
 
                     @if ($paginator->onFirstPage())
                         <span aria-disabled="true" aria-label="{{ __('messages.pagination.previous') }}">
@@ -65,7 +65,7 @@
                     @foreach ($elements as $element)
                         @if (is_string($element))
                             <span aria-disabled="true">
-                                <span class="inline-flex items-center px-4 py-2 text-sm font-bold text-secondary bg-surface-container-low border-l border-[#E5E5E5]">{{ $element }}</span>
+                                <span class="inline-flex items-center px-4 py-2 text-sm font-bold text-secondary bg-surface-container-low">{{ $element }}</span>
                             </span>
                         @endif
 
@@ -73,10 +73,10 @@
                             @foreach ($element as $page => $url)
                                 @if ($page == $paginator->currentPage())
                                     <span aria-current="page">
-                                        <span class="inline-flex items-center px-4 py-2 text-sm font-bold text-on-primary-container bg-primary-container border-l border-[#E5E5E5]">{{ $page }}</span>
+                                        <span class="inline-flex items-center px-4 py-2 text-sm font-bold text-on-primary-container bg-primary-container">{{ $page }}</span>
                                     </span>
                                 @else
-                                    <a href="{{ $url }}" class="inline-flex items-center px-4 py-2 text-sm font-bold text-on-surface bg-surface-container-lowest border-l border-[#E5E5E5] hover:bg-surface-container-high transition-colors duration-150" aria-label="{{ __('messages.Go to page :page', ['page' => $page]) }}">
+                                    <a href="{{ $url }}" class="inline-flex items-center px-4 py-2 text-sm font-bold text-on-surface bg-surface-container-lowest hover:bg-surface-container-high transition-colors duration-150" aria-label="{{ __('messages.Go to page :page', ['page' => $page]) }}">
                                         {{ $page }}
                                     </a>
                                 @endif

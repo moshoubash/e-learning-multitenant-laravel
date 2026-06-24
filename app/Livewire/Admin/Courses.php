@@ -168,6 +168,7 @@ class Courses extends Component
     public function render()
     {
         $courses = $this->courseService()->getPaginatedCourses(10);
+        $courses->withPath('/' . trim(\Livewire\Livewire::originalPath(), '/'));
 
         $instructors = $this->getInstructors();
 

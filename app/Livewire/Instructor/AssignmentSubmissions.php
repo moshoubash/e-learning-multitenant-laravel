@@ -54,7 +54,10 @@ class AssignmentSubmissions extends Component
             default   => null,
         };
 
-        return $query->latest('submitted_at')->paginate(15);
+        $submissions = $query->latest('submitted_at')->paginate(15);
+        $submissions->withPath('/' . trim(\Livewire\Livewire::originalPath(), '/'));
+
+        return $submissions;
     }
 
     #[Computed]

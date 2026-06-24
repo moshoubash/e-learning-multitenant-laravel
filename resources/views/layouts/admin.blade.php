@@ -39,6 +39,7 @@
             ['route' => route('tenant.notifications'), 'active' => 'tenant.notifications*', 'icon' => 'fas fa-bell', 'label' => __('messages.Notifications')],
             ['route' => route('tenant.admin.users'), 'active' => 'tenant.admin.users*', 'icon' => 'fas fa-users', 'label' => __('messages.Users')],
             ['route' => route('tenant.admin.courses'), 'active' => 'tenant.admin.courses*', 'icon' => 'fas fa-book-open', 'label' => __('messages.Courses')],
+            ['route' => route('tenant.admin.roles-permissions'), 'active' => 'tenant.admin.roles-permissions*', 'icon' => 'fas fa-shield-alt text-on-surface', 'label' => __('messages.Roles')],
             ['route' => route('tenant.profile'), 'active' => 'tenant.profile', 'icon' => 'fas fa-user', 'label' => __('messages.Profile')],
         ];
     @endphp
