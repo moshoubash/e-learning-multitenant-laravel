@@ -163,6 +163,7 @@ class Integrations extends Component
     public function render()
     {
         $integrations = Integration::orderBy('provider')->paginate(10);
+        $integrations->withPath('/' . trim(\Livewire\Livewire::originalPath(), '/'));
 
         return view('livewire.admin.integrations', [
             'integrations' => $integrations,

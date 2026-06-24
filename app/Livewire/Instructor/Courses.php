@@ -1068,6 +1068,7 @@ class Courses extends Component
             ])
             ->where('instructor_id', auth()->user()->id)
             ->paginate(10);
+        $courses->withPath('/' . trim(\Livewire\Livewire::originalPath(), '/'));
 
         $deletedCourses = Course::onlyTrashed()
             ->where('instructor_id', auth()->user()->id)

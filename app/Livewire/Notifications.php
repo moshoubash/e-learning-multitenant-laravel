@@ -60,6 +60,9 @@ class Notifications extends Component
         }
 
         $notifications = $query?->latest()->paginate(10) ?? collect();
+        if ($notifications instanceof \Illuminate\Contracts\Pagination\Paginator) {
+            $notifications->withPath('/' . trim(\Livewire\Livewire::originalPath(), '/'));
+        }
         $unreadCount = $user?->unreadNotifications()->count() ?? 0;
 
         $layout = match (true) {
