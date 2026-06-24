@@ -41,41 +41,7 @@
         </div>
     </div>
 
-    @if($section->quiz)
-        <div class="px-4 py-2 border-b-2 border-on-surface/10 bg-primary-container/20">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <i class="text-xs fas fa-clipboard-list text-on-surface ltr:mr-2 rtl:ml-2"></i>
-                    <span class="text-sm font-bold text-on-surface">{{ $section->quiz->title }}</span>
-                    <span class="text-xs text-secondary ltr:ml-2 rtl:mr-2">({{ __('messages.questions') }} {{ $section->quiz->questions->count() ?? 0 }})</span>
-                    <span class="text-xs font-bold text-on-surface ltr:ml-2 rtl:mr-2">{{ __('messages.Pass') }}: {{ $section->quiz->pass_percentage }}%</span>
-                    @if($section->quiz->can_reattempt)
-                        <span class="text-xs font-bold text-on-surface ltr:ml-2 rtl:mr-2">{{ __('messages.Re-attempts') }}: {{ $section->quiz->max_attempts ?? 1 }}</span>
-                    @else
-                        <span class="text-xs text-secondary ltr:ml-2 rtl:mr-2">{{ __('messages.No re-attempt') }}</span>
-                    @endif
-                    @if($section->quiz->deleted_at)
-                        <span class="px-2 py-0.5 neo-border-sm neo-radius text-[10px] font-bold bg-error/10 text-error ltr:ml-2 rtl:mr-2">{{ __('messages.Deleted') }}</span>
-                    @endif
-                </div>
-                <div class="flex items-center gap-2">
-                    <a href="{{ route('tenant.instructor.quizzes') }}" class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-on-surface hover:bg-primary-container" title="Manage Questions">
-                        <i class="text-xs fas fa-external-link-alt"></i>
-                    </a>
-                    <button wire:click="openQuizEditModal({{ $section->quiz->id }})"
-                        class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Edit Quiz">
-                        <i class="text-xs fas fa-edit"></i>
-                    </button>
-                    @if(!$section->quiz->deleted_at)
-                        <button wire:click="openQuizDeleteModal({{ $section->quiz->id }})"
-                            class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-error hover:bg-error hover:text-white" title="Delete Quiz">
-                            <i class="text-xs fas fa-trash"></i>
-                        </button>
-                    @endif
-                </div>
-            </div>
-        </div>
-    @endif
+
 
     @if($section->lessons && count($section->lessons) > 0)
         <div class="divide-y divide-[#E5E5E5]">
@@ -118,6 +84,42 @@
             @foreach($section->assignments->sortBy('order') as $assignment)
                 @include('livewire.instructor.courses-components.tables.partials.assignment-row', ['assignment' => $assignment])
             @endforeach
+        </div>
+    @endif
+
+    @if($section->quiz)
+        <div class="px-4 py-2 border-b-2 border-on-surface/10 bg-primary-container/20">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i class="text-xs fas fa-clipboard-list text-on-surface ltr:mr-2 rtl:ml-2"></i>
+                    <span class="text-sm font-bold text-on-surface">{{ $section->quiz->title }}</span>
+                    <span class="text-xs text-secondary ltr:ml-2 rtl:mr-2">({{ __('messages.questions') }} {{ $section->quiz->questions->count() ?? 0 }})</span>
+                    <span class="text-xs font-bold text-on-surface ltr:ml-2 rtl:mr-2">{{ __('messages.Pass') }}: {{ $section->quiz->pass_percentage }}%</span>
+                    @if($section->quiz->can_reattempt)
+                        <span class="text-xs font-bold text-on-surface ltr:ml-2 rtl:mr-2">{{ __('messages.Re-attempts') }}: {{ $section->quiz->max_attempts ?? 1 }}</span>
+                    @else
+                        <span class="text-xs text-secondary ltr:ml-2 rtl:mr-2">{{ __('messages.No re-attempt') }}</span>
+                    @endif
+                    @if($section->quiz->deleted_at)
+                        <span class="px-2 py-0.5 neo-border-sm neo-radius text-[10px] font-bold bg-error/10 text-error ltr:ml-2 rtl:mr-2">{{ __('messages.Deleted') }}</span>
+                    @endif
+                </div>
+                <div class="flex items-center gap-2">
+                    <a href="{{ route('tenant.instructor.quizzes') }}" class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-on-surface hover:bg-primary-container" title="Manage Questions">
+                        <i class="text-xs fas fa-external-link-alt"></i>
+                    </a>
+                    <button wire:click="openQuizEditModal({{ $section->quiz->id }})"
+                        class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Edit Quiz">
+                        <i class="text-xs fas fa-edit"></i>
+                    </button>
+                    @if(!$section->quiz->deleted_at)
+                        <button wire:click="openQuizDeleteModal({{ $section->quiz->id }})"
+                            class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-error hover:bg-error hover:text-white" title="Delete Quiz">
+                            <i class="text-xs fas fa-trash"></i>
+                        </button>
+                    @endif
+                </div>
+            </div>
         </div>
     @endif
 
