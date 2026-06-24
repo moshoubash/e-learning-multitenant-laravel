@@ -24,19 +24,19 @@
 
         <main class="w-full max-w-md">
             {{-- Brand --}}
-            <div class="mb-10 text-center">
-                <h1 class="text-4xl italic font-bold tracking-tighter uppercase text-on-surface">
+            <div class="mb-6 text-center">
+                <h1 class="text-6xl italic font-bold tracking-tighter uppercase text-on-surface">
                     GRID
                     {{-- <span class="px-2 ltr:ml-1 rtl:mr-1 -tracking-[0.02em] not-italic" style="background-color: var(--color-primary-container, #FFD600); border: 2px solid var(--color-on-surface, #0A0A0A); border-radius: 4px;">LMS</span> --}}
-                <sup class="px-2 -tracking-[0.02em] not-italic" style="background-color: var(--color-primary-container, #FFD600); border: 2px solid var(--color-on-surface, #0A0A0A); border-radius: 50px; font-size: 10px; vertical-align: super; position: static;">v1.0.0</sup>
+                <sup class="px-2 -tracking-[0.02em] not-italic" style="background-color: var(--color-primary-container, #FFD600); border: 2px solid var(--color-on-surface, #0A0A0A); font-size: 10px; vertical-align: super; ">v1.0.0</sup>
                 </h1>
-                <p class="mt-4 text-sm font-medium tracking-wide uppercase opacity-70 text-on-surface">
-                                        Learning Management System for Schools, Universities and Organizations
+                <p class="mt-1 font-bold tracking-wide uppercase text-medium font-sm opacity-70 text-on-surface" style="font-size: 0.7em;">
+                                        Learning Management System
                 </p>
             </div>
 
             {{-- Card --}}
-            <section class="p-8 border-2 bg-surface-container-lowest border-on-surface rounded-neo">
+            <section class="p-8 border-2 bg-surface-container-lowest border-on-surface rounded-neo" style="box-shadow: 5px 5px 0 0 #000000">
                 {{ $slot }}
             </section>
 
