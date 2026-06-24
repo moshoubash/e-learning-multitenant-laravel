@@ -37,19 +37,20 @@
                 <h3 class="mb-4 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Main Colors') }}</h3>
                 <div class="space-y-4">
                     @foreach ([
-                        ['label' => 'primary-container', 'prop' => 'primaryContainer', 'err' => 'primaryContainer'],
-                        ['label' => 'on-surface', 'prop' => 'onSurface', 'err' => 'onSurface'],
-                        ['label' => 'on-primary-container', 'prop' => 'onPrimaryContainer', 'err' => 'onPrimaryContainer'],
-                        ['label' => 'secondary', 'prop' => 'secondary', 'err' => 'secondary'],
-                        ['label' => 'error', 'prop' => 'error', 'err' => 'error'],
+                        ['label' => 'primary-container', 'prop' => 'primaryContainer', 'err' => 'primaryContainer', 'desc' => 'Buttons, badges, active elements'],
+                        ['label' => 'on-surface', 'prop' => 'onSurface', 'err' => 'onSurface', 'desc' => 'Main text color throughout the system'],
+                        ['label' => 'on-primary-container', 'prop' => 'onPrimaryContainer', 'err' => 'onPrimaryContainer', 'desc' => 'Text on primary-colored elements'],
+                        ['label' => 'secondary', 'prop' => 'secondary', 'err' => 'secondary', 'desc' => 'Muted text and secondary icons'],
+                        ['label' => 'error', 'prop' => 'error', 'err' => 'error', 'desc' => 'Error messages and destructive actions'],
                     ] as $field)
-                        <div class="flex items-center gap-4">
+                        <div class="flex items-start gap-4">
                             <input type="color" wire:model.lazy="{{ $field['prop'] }}"
-                                class="w-12 h-12 border-0 cursor-pointer neo-border-sm neo-radius">
-                            <div class="flex-1">
+                                class="w-12 h-12 border-0 cursor-pointer neo-border-sm neo-radius shrink-0">
+                            <div class="flex-1 min-w-0">
                                 <label class="block text-xs font-bold tracking-widest uppercase text-on-surface">{{ $field['label'] }}</label>
+                                <span class="block text-[10px] text-secondary italic leading-tight mt-0.5">{{ $field['desc'] }}</span>
                                 <input type="text" wire:model.lazy="{{ $field['prop'] }}"
-                                    class="w-full px-3 py-1.5 mt-1 text-xs font-mono neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0">
+                                    class="w-full px-3 py-1.5 mt-1.5 text-xs font-mono neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0">
                                 @error($field['err']) <span class="text-xs text-error mt-0.5 block font-bold">{{ $message }}</span> @enderror
                             </div>
                         </div>
@@ -62,19 +63,20 @@
                 <h3 class="mb-4 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Surface Colors') }}</h3>
                 <div class="space-y-4">
                     @foreach ([
-                        ['label' => 'surface-container-lowest', 'prop' => 'surfaceContainerLowest', 'err' => 'surfaceContainerLowest'],
-                        ['label' => 'surface-container-low', 'prop' => 'surfaceContainerLow', 'err' => 'surfaceContainerLow'],
-                        ['label' => 'surface-container', 'prop' => 'surfaceContainer', 'err' => 'surfaceContainer'],
-                        ['label' => 'surface-container-high', 'prop' => 'surfaceContainerHigh', 'err' => 'surfaceContainerHigh'],
-                        ['label' => 'surface-container-highest', 'prop' => 'surfaceContainerHighest', 'err' => 'surfaceContainerHighest'],
+                        ['label' => 'surface-container-lowest', 'prop' => 'surfaceContainerLowest', 'err' => 'surfaceContainerLowest', 'desc' => 'Card and page backgrounds'],
+                        ['label' => 'surface-container-low', 'prop' => 'surfaceContainerLow', 'err' => 'surfaceContainerLow', 'desc' => 'Input fields and subtle backgrounds'],
+                        ['label' => 'surface-container', 'prop' => 'surfaceContainer', 'err' => 'surfaceContainer', 'desc' => 'Table rows and hover states'],
+                        ['label' => 'surface-container-high', 'prop' => 'surfaceContainerHigh', 'err' => 'surfaceContainerHigh', 'desc' => 'Active hover backgrounds'],
+                        ['label' => 'surface-container-highest', 'prop' => 'surfaceContainerHighest', 'err' => 'surfaceContainerHighest', 'desc' => 'Borders and dividers'],
                     ] as $field)
-                        <div class="flex items-center gap-4">
+                        <div class="flex items-start gap-4">
                             <input type="color" wire:model.lazy="{{ $field['prop'] }}"
-                                class="w-12 h-12 border-0 cursor-pointer neo-border-sm neo-radius">
-                            <div class="flex-1">
+                                class="w-12 h-12 border-0 cursor-pointer neo-border-sm neo-radius shrink-0">
+                            <div class="flex-1 min-w-0">
                                 <label class="block text-xs font-bold tracking-widest uppercase text-on-surface">{{ $field['label'] }}</label>
+                                <span class="block text-[10px] text-secondary italic leading-tight mt-0.5">{{ $field['desc'] }}</span>
                                 <input type="text" wire:model.lazy="{{ $field['prop'] }}"
-                                    class="w-full px-3 py-1.5 mt-1 text-xs font-mono neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0">
+                                    class="w-full px-3 py-1.5 mt-1.5 text-xs font-mono neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0">
                                 @error($field['err']) <span class="text-xs text-error mt-0.5 block font-bold">{{ $message }}</span> @enderror
                             </div>
                         </div>
@@ -86,13 +88,21 @@
             <div class="p-6 bg-surface-container-lowest neo-border neo-radius lg:col-span-2">
                 <h3 class="mb-4 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Chart Colors') }}</h3>
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-                    @foreach (['chart1', 'chart2', 'chart3', 'chart4', 'chart5', 'chart6'] as $chart)
+                    @foreach ([
+                        ['chart' => 'chart1', 'desc' => 'Chart color 1 (primary data series)'],
+                        ['chart' => 'chart2', 'desc' => 'Chart color 2 (secondary data series)'],
+                        ['chart' => 'chart3', 'desc' => 'Chart color 3 (tertiary data series)'],
+                        ['chart' => 'chart4', 'desc' => 'Chart color 4 (quaternary data series)'],
+                        ['chart' => 'chart5', 'desc' => 'Chart color 5 (quinary data series)'],
+                        ['chart' => 'chart6', 'desc' => 'Chart color 6 (senary data series)'],
+                    ] as $chartItem)
                         <div class="flex flex-col items-center gap-2 p-3 bg-surface-container-low neo-border-sm neo-radius">
-                            <input type="color" wire:model.lazy="{{ $chart }}"
+                            <input type="color" wire:model.lazy="{{ $chartItem['chart'] }}"
                                 class="w-full h-10 border-0 cursor-pointer neo-border-sm neo-radius">
-                            <input type="text" wire:model.lazy="{{ $chart }}"
+                            <span class="text-[10px] text-secondary italic text-center leading-tight">{{ $chartItem['desc'] }}</span>
+                            <input type="text" wire:model.lazy="{{ $chartItem['chart'] }}"
                                 class="w-full px-2 py-1 font-mono text-xs text-center neo-border-sm neo-radius bg-surface-container-lowest text-on-surface focus:outline-none focus:ring-0">
-                            @error($chart) <span class="text-xs font-bold text-error">{{ $message }}</span> @enderror
+                            @error($chartItem['chart']) <span class="text-xs font-bold text-error">{{ $message }}</span> @enderror
                         </div>
                     @endforeach
                 </div>
@@ -107,22 +117,23 @@
                 <p class="mb-4 text-xs text-secondary">{{ __('messages.These colors only apply to login, register, and other auth pages') }}</p>
                 <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                     @foreach ([
-                        ['label' => 'auth-body-bg', 'prop' => 'authBodyBg', 'err' => 'authBodyBg'],
-                        ['label' => 'auth-card-bg', 'prop' => 'authCardBg', 'err' => 'authCardBg'],
-                        ['label' => 'auth-primary', 'prop' => 'authPrimary', 'err' => 'authPrimary'],
-                        ['label' => 'auth-on-primary', 'prop' => 'authOnPrimary', 'err' => 'authOnPrimary'],
-                        ['label' => 'auth-text', 'prop' => 'authText', 'err' => 'authText'],
-                        ['label' => 'auth-secondary', 'prop' => 'authSecondary', 'err' => 'authSecondary'],
-                        ['label' => 'auth-border', 'prop' => 'authBorder', 'err' => 'authBorder'],
-                        ['label' => 'auth-error', 'prop' => 'authError', 'err' => 'authError'],
+                        ['label' => 'auth-body-bg', 'prop' => 'authBodyBg', 'err' => 'authBodyBg', 'desc' => 'Auth page background'],
+                        ['label' => 'auth-card-bg', 'prop' => 'authCardBg', 'err' => 'authCardBg', 'desc' => 'Auth card background'],
+                        ['label' => 'auth-primary', 'prop' => 'authPrimary', 'err' => 'authPrimary', 'desc' => 'Primary button and accent color'],
+                        ['label' => 'auth-on-primary', 'prop' => 'authOnPrimary', 'err' => 'authOnPrimary', 'desc' => 'Text on primary buttons'],
+                        ['label' => 'auth-text', 'prop' => 'authText', 'err' => 'authText', 'desc' => 'Auth page text color'],
+                        ['label' => 'auth-secondary', 'prop' => 'authSecondary', 'err' => 'authSecondary', 'desc' => 'Auth muted and helper text'],
+                        ['label' => 'auth-border', 'prop' => 'authBorder', 'err' => 'authBorder', 'desc' => 'Auth card border'],
+                        ['label' => 'auth-error', 'prop' => 'authError', 'err' => 'authError', 'desc' => 'Auth error messages'],
                     ] as $field)
-                        <div class="flex items-center gap-4">
+                        <div class="flex items-start gap-4">
                             <input type="color" wire:model.lazy="{{ $field['prop'] }}"
-                                class="w-12 h-12 border-0 cursor-pointer neo-border-sm neo-radius">
-                            <div class="flex-1">
+                                class="w-12 h-12 border-0 cursor-pointer neo-border-sm neo-radius shrink-0">
+                            <div class="flex-1 min-w-0">
                                 <label class="block text-xs font-bold tracking-widest uppercase text-on-surface">{{ $field['label'] }}</label>
+                                <span class="block text-[10px] text-secondary italic leading-tight mt-0.5">{{ $field['desc'] }}</span>
                                 <input type="text" wire:model.lazy="{{ $field['prop'] }}"
-                                    class="w-full px-3 py-1.5 mt-1 text-xs font-mono neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0">
+                                    class="w-full px-3 py-1.5 mt-1.5 text-xs font-mono neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0">
                                 @error($field['err']) <span class="text-xs text-error mt-0.5 block font-bold">{{ $message }}</span> @enderror
                             </div>
                         </div>
