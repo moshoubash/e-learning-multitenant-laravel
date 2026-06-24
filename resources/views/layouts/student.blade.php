@@ -45,6 +45,7 @@
             ['route' => route('tenant.notifications'), 'active' => 'tenant.notifications*', 'icon' => 'fas fa-bell', 'label' => __('messages.Notifications')],
             ['route' => route('tenant.student.courses'), 'active' => 'tenant.student.courses', 'icon' => 'fas fa-graduation-cap', 'label' => __('messages.Browse Courses')],
             ['route' => route('tenant.student.enrolled-courses'), 'active' => 'tenant.student.enrolled-courses*', 'icon' => 'fas fa-play-circle', 'label' => __('messages.My Courses')],
+            ['route' => route('tenant.student.enrollments-history'), 'active' => 'tenant.student.enrollments-history*', 'icon' => 'fas fa-history', 'label' => __('messages.History')],
             ['route' => route('tenant.profile'), 'active' => 'tenant.profile', 'icon' => 'fas fa-user', 'label' => __('messages.Profile')],
         ];
     @endphp

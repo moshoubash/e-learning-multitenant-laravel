@@ -32,6 +32,11 @@
             <i class="w-5 text-center fas fa-users"></i>
             <span class="text-[14px] font-medium">{{ __('messages.Users') }}</span>
         </a>
+        <a href="{{ route('tenant.admin.enrollments') }}" wire:navigate
+           class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.admin.enrollments*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
+            <i class="w-5 text-center fas fa-user-graduate"></i>
+            <span class="text-[14px] font-medium">{{ __('messages.Enrollments') }}</span>
+        </a>
         <a href="{{ route('tenant.admin.roles-permissions') }}" wire:navigate
             class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.admin.roles-permissions*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
             <i class="w-5 text-center fas fa-shield-alt"></i>

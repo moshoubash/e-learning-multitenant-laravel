@@ -39,10 +39,12 @@ Route::middleware(['auth:tenant'])->group(function () {
     Route::livewire('/admin/design', 'admin.design-config')->middleware('role:admin')->name('tenant.admin.design');
     Route::get('/admin/logs', \App\Livewire\Admin\Logs::class)->middleware('role:admin')->name('tenant.admin.logs');
     Route::get('/admin/roles-permissions', \App\Livewire\Admin\RolesAndPermissions::class)->middleware('role:admin')->name('tenant.admin.roles-permissions');
+    Route::get('/admin/enrollments', \App\Livewire\Admin\Enrollments::class)->middleware('role:admin')->name('tenant.admin.enrollments');
 
     Route::livewire('/instructor/courses', 'instructor.courses')->middleware('role:instructor')->name('tenant.instructor.courses');
     Route::livewire('/instructor/quizzes', 'instructor.quizzes')->middleware('role:instructor')->name('tenant.instructor.quizzes');
     Route::livewire('/instructor/assignments', 'instructor.assignment-submissions')->middleware('role:instructor')->name('tenant.instructor.assignments');
+    Route::get('/instructor/enrollments', \App\Livewire\Instructor\Enrollments::class)->middleware('role:instructor')->name('tenant.instructor.enrollments');
 
     Route::livewire('/student/courses', 'student.courses')->middleware('role:student')->name('tenant.student.courses');
     Route::livewire('/student/enrolled-courses', 'student.enrolled-courses')->middleware('role:student')->name('tenant.student.enrolled-courses');
@@ -64,6 +66,7 @@ Route::middleware(['auth:tenant'])->group(function () {
 
     Route::livewire('/student/checkout-livewire/{course}', 'student.checkout')->middleware('role:student')->name('tenant.student.checkout.livewire');
     Route::livewire('/student/checkout-success/{enrollmentId?}', 'student.checkout-success')->middleware('role:student')->name('tenant.student.checkout.success');
+    Route::get('/student/enrollments-history', \App\Livewire\Student\EnrollmentsHistory::class)->middleware('role:student')->name('tenant.student.enrollments-history');
 });
 
 // Auth routes for tenant

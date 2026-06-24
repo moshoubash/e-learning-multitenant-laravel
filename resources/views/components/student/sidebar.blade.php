@@ -37,6 +37,11 @@
             <i class="w-5 text-center fas fa-play-circle"></i>
             <span class="text-[14px] font-medium">{{ __('messages.My Enrolled Courses') }}</span>
         </a>
+        <a href="{{ route('tenant.student.enrollments-history') }}" wire:navigate
+           class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.student.enrollments-history*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
+            <i class="w-5 text-center fas fa-history"></i>
+            <span class="text-[14px] font-medium">{{ __('messages.Enrollment History') }}</span>
+        </a>
         <a href="{{ route('tenant.student.leaderboard') }}" wire:navigate
            class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.student.leaderboard*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
             <i class="w-5 text-center fas fa-trophy"></i>
