@@ -1,4 +1,4 @@
-<div class="relative" x-data="{ open: $wire.entangle('showDropdown') }">
+<div class="relative" x-data="{ open: $wire.entangle('showDropdown') }" wire:poll.5s="loadNotifications">
     <button wire:click="toggleDropdown" @click.outside="open = false"
         class="relative flex items-center justify-center w-9 h-9 transition-transform neo-border neo-radius hover:bg-surface-container-high active:scale-95">
         <i class="text-xs fas fa-bell text-primary-container"></i>
