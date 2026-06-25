@@ -30,13 +30,22 @@
                         <div class="divide-y divide-[#E5E5E5]">
                             @foreach($enrolledCourses as $course)
                                 <div wire:click="selectCourse({{ $course->id }})"
-                                    class="p-4 transition-colors duration-100 cursor-pointer hover:bg-surface-container-high"
+                                    class="flex gap-3 p-4 transition-colors duration-100 cursor-pointer hover:bg-surface-container-high"
                                     style="border-left: 4px solid {{ $selectedCourse == $course->id ? 'var(--color-primary-container)' : 'transparent' }}">
-                                    <h4 class="text-sm font-bold text-on-surface">{{ $course->title }}</h4>
-                                    <p class="mt-1 text-xs text-secondary">{{ $course->instructor->name ?? 'N/A' }}</p>
-                                    <div class="flex items-center gap-3 mt-2 text-[10px] text-secondary font-bold uppercase tracking-widest">
-                                        <span><i class="mr-1 fas fa-folder"></i> {{ $course->sections->count() }} {{ __('messages.sections') }}</span>
-                                        <span><i class="mr-1 fas fa-book"></i> {{ $course->sections->sum(fn($s) => $s->lessons->count()) }} {{ __('messages.lessons') }}</span>
+                                    @if ($course->thumbnail)
+                                        <img src="{{ $course->thumbnail }}" class="object-cover h-12 w-14 neo-border-sm neo-radius shrink-0" alt="">
+                                    @else
+                                        <div class="flex items-center justify-center h-12 w-14 neo-border-sm neo-radius bg-surface-container text-secondary shrink-0">
+                                            <i class="text-sm fas fa-book"></i>
+                                        </div>
+                                    @endif
+                                    <div class="min-w-0">
+                                        <h4 class="text-sm font-bold truncate text-on-surface">{{ $course->title }}</h4>
+                                        <p class="mt-0.5 text-xs text-secondary truncate">{{ $course->instructor->name ?? 'N/A' }}</p>
+                                        <div class="flex items-center gap-3 mt-1.5 text-[10px] text-secondary font-bold uppercase tracking-widest">
+                                            <span><i class="mr-1 fas fa-folder"></i> {{ $course->sections->count() }} {{ __('messages.sections') }}</span>
+                                            <span><i class="mr-1 fas fa-book"></i> {{ $course->sections->sum(fn($s) => $s->lessons->count()) }} {{ __('messages.lessons') }}</span>
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach
@@ -52,13 +61,22 @@
                     <div class="divide-y divide-[#E5E5E5]">
                         @forelse($courses as $course)
                             <div wire:click="selectCourse({{ $course->id }})"
-                                class="p-4 transition-colors duration-100 cursor-pointer hover:bg-surface-container-high"
+                                class="flex gap-3 p-4 transition-colors duration-100 cursor-pointer hover:bg-surface-container-high"
                                 style="border-left: 4px solid {{ $selectedCourse == $course->id ? 'var(--color-primary-container)' : 'transparent' }}">
-                                <h4 class="text-sm font-bold text-on-surface">{{ $course->title }}</h4>
-                                <p class="mt-1 text-xs text-secondary">{{ $course->instructor->name ?? 'N/A' }}</p>
-                                <div class="flex items-center gap-3 mt-2 text-[10px] text-secondary font-bold uppercase tracking-widest">
-                                    <span><i class="mr-1 fas fa-folder"></i> {{ $course->sections->count() }} {{ __('messages.sections') }}</span>
-                                    <span><i class="mr-1 fas fa-book"></i> {{ $course->sections->sum(fn($s) => $s->lessons->count()) }} {{ __('messages.lessons') }}</span>
+                                @if ($course->thumbnail)
+                                    <img src="{{ $course->thumbnail }}" class="object-cover h-12 w-14 neo-border-sm neo-radius shrink-0" alt="">
+                                @else
+                                    <div class="flex items-center justify-center h-12 w-14 neo-border-sm neo-radius bg-surface-container text-secondary shrink-0">
+                                        <i class="text-sm fas fa-book"></i>
+                                    </div>
+                                @endif
+                                <div class="min-w-0">
+                                    <h4 class="text-sm font-bold truncate text-on-surface">{{ $course->title }}</h4>
+                                    <p class="mt-0.5 text-xs text-secondary truncate">{{ $course->instructor->name ?? 'N/A' }}</p>
+                                    <div class="flex items-center gap-3 mt-1.5 text-[10px] text-secondary font-bold uppercase tracking-widest">
+                                        <span><i class="mr-1 fas fa-folder"></i> {{ $course->sections->count() }} {{ __('messages.sections') }}</span>
+                                        <span><i class="mr-1 fas fa-book"></i> {{ $course->sections->sum(fn($s) => $s->lessons->count()) }} {{ __('messages.lessons') }}</span>
+                                    </div>
                                 </div>
                             </div>
                         @empty
@@ -77,8 +95,21 @@
                     <div class="overflow-hidden bg-surface-container-lowest neo-border neo-radius">
                         {{-- Course Header --}}
                         <div class="p-[24px] border-b-2 border-on-surface">
-                            <h3 class="text-[24px] font-bold text-on-surface leading-tight tracking-[0.02em]">{{ $selectedCourseData->title }}</h3>
-                            <p class="mt-2 text-sm text-secondary">{{ __('messages.By') }} {{ $selectedCourseData->instructor->name ?? 'N/A' }}</p>
+                            <div class="flex items-start gap-4">
+                                <div class="shrink-0">
+                                    @if ($selectedCourseData->thumbnail)
+                                        <img src="{{ $selectedCourseData->thumbnail }}" class="object-cover h-20 w-28 neo-border-sm neo-radius" alt="">
+                                    @else
+                                        <div class="flex items-center justify-center h-20 w-28 neo-border-sm neo-radius bg-surface-container text-secondary">
+                                            <i class="text-2xl fas fa-book"></i>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div>
+                                    <h3 class="text-[24px] font-bold text-on-surface leading-tight tracking-[0.02em]">{{ $selectedCourseData->title }}</h3>
+                                    <p class="mt-2 text-sm text-secondary">{{ __('messages.By') }} {{ $selectedCourseData->instructor->name ?? 'N/A' }}</p>
+                                </div>
+                            </div>
                             <div class="flex items-center gap-4 mt-4 text-xs font-bold tracking-widest uppercase text-secondary">
                                 <span><i class="mr-1 fas fa-dollar-sign"></i> ${{ number_format($selectedCourseData->price, 2) }}</span>
                                 <span><i class="mr-1 fas fa-folder"></i> {{ __('messages.sections') }} {{ $selectedCourseData->sections->count() }}</span>

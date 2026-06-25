@@ -41,6 +41,20 @@
                             </select>
                             @error('createStatus') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
                         </div>
+                        <div class="mb-4">
+                            <label class="block mb-1 text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Thumbnail') }}</label>
+                            <input type="file" wire:model.lazy="createThumbnail" accept="image/jpg,image/jpeg,image/png,image/webp"
+                                class="w-full px-3 py-2 text-sm neo-border-sm neo-radius bg-surface-container-low text-on-surface file:ltr:mr-3 file:rtl:ml-3 file:py-1 file:px-3 file:neo-border-sm file:neo-radius file:text-[10px] file:font-bold file:uppercase file:tracking-widest file:bg-primary-container file:text-on-primary-container file:hover:bg-on-surface file:hover:text-white file:transition-colors file:cursor-pointer file:border-0 focus:outline-none focus:ring-0 placeholder:text-secondary">
+                            @error('createThumbnail') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
+                            <div wire:loading wire:target="createThumbnail" class="mt-2 text-xs font-bold text-on-surface">
+                                <span>{{ __('messages.Uploading...') }}</span>
+                            </div>
+                            @if ($createThumbnail)
+                                <div class="mt-2">
+                                    <img src="{{ $createThumbnail->temporaryUrl() }}" class="w-20 h-20 object-cover neo-border-sm neo-radius">
+                                </div>
+                            @endif
+                        </div>
                     </form>
                 </div>
                 <div class="px-4 py-3 bg-surface-container-low sm:px-6 sm:flex sm:flex-row-reverse">

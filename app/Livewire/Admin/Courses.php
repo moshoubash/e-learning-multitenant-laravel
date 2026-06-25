@@ -7,15 +7,17 @@ use App\Models\Tenant\User;
 use App\Services\Admin\CoursesService;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 use Livewire\Attributes\Layout;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 #[Layout('layouts.admin')]
 
 class Courses extends Component
 {
-    use WithPagination;
+    use WithPagination, WithFileUploads;
 
     protected $paginationTheme = 'tailwind';
 
@@ -32,6 +34,7 @@ class Courses extends Component
     public $createPrice = 0;
     public $createStatus = 'draft';
     public $createInstructorId = '';
+    public $createThumbnail = null;
 
     // Edit form fields
     public $editTitle = '';
@@ -39,6 +42,7 @@ class Courses extends Component
     public $editPrice = 0;
     public $editStatus = '';
     public $editInstructorId = '';
+    public $editThumbnail = null;
 
     public $showRestoreModal = false;
     public $restoringCourse = null;
@@ -101,6 +105,7 @@ class Courses extends Component
         $this->createPrice = 0;
         $this->createStatus = 'draft';
         $this->createInstructorId = '';
+        $this->createThumbnail = null;
     }
 
     public function resetFormFields()
@@ -112,19 +117,26 @@ class Courses extends Component
         $this->editPrice = 0;
         $this->editStatus = '';
         $this->editInstructorId = '';
+        $this->editThumbnail = null;
     }
 
     public function store()
     {
         $this->validate($this->courseCreateRules());
 
-        $this->courseService()->createCourse([
+        $data = [
             'instructor_id' => $this->createInstructorId,
             'title' => $this->createTitle,
             'description' => $this->createDescription,
             'price' => $this->createPrice,
             'status' => $this->createStatus,
-        ]);
+        ];
+
+        if ($this->createThumbnail) {
+            $data['thumbnail'] = 'https://d1w6oovjx4x1vx.cloudfront.net/' . $this->createThumbnail->store('thumbnails', 's3');
+        }
+
+        $this->courseService()->createCourse($data);
 
         $this->closeModal();
         Toaster::success('messages.Course created successfully!');
@@ -139,13 +151,22 @@ class Courses extends Component
             return;
         }
 
-        $this->courseService()->updateCourse($this->editingCourse, [
+        $data = [
             'instructor_id' => $this->editInstructorId,
             'title' => $this->editTitle,
             'description' => $this->editDescription,
             'price' => $this->editPrice,
             'status' => $this->editStatus,
-        ]);
+        ];
+
+        if ($this->editThumbnail) {
+            if ($this->editingCourse->thumbnail) {
+                Storage::disk('s3')->delete($this->editingCourse->thumbnail);
+            }
+            $data['thumbnail'] = 'https://d1w6oovjx4x1vx.cloudfront.net/' . $this->editThumbnail->store('thumbnails', 's3');
+        }
+
+        $this->courseService()->updateCourse($this->editingCourse, $data);
 
         $this->closeModal();
         Toaster::success('messages.Course updated successfully!');
@@ -187,6 +208,7 @@ class Courses extends Component
             'createPrice' => 'required|numeric|min:0',
             'createStatus' => 'required|in:draft,published,archived',
             'createInstructorId' => 'required|exists:users,id',
+            'createThumbnail' => 'nullable|image|mimes:jpg,png,webp|max:2048',
         ];
     }
 
@@ -198,6 +220,7 @@ class Courses extends Component
             'editPrice' => 'required|numeric|min:0',
             'editStatus' => 'required|in:draft,published,archived',
             'editInstructorId' => 'required|exists:users,id',
+            'editThumbnail' => 'nullable|image|mimes:jpg,png,webp|max:2048',
         ];
     }
 

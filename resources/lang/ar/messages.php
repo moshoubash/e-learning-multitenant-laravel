@@ -54,6 +54,7 @@ return [
     'Create' => 'إنشاء',
     'Cancel' => 'إلغاء',
     'Slug' => 'الاسم المختصر',
+    'Thumbnail' => 'الصورة المصغرة',
     'Description' => 'الوصف',
     'Price' => 'السعر',
     'Status' => 'الحالة',
@@ -321,6 +322,7 @@ return [
     'Previous Attempt' => 'المحاولة السابقة',
     'You passed the quiz!' => 'لقد نجحت في الاختبار!',
     'Uploading video...' => 'جاري رفع الفيديو...',
+    'Uploading...' => 'جاري الرفع...',
 
     'No courses found.' => 'لم يتم العثور على دورات.',
     'Create Quiz for Section' => 'إنشاء اختبار للقسم',

@@ -10,7 +10,7 @@
 </header>
 
     <div class="p-[24px] max-w-[1400px] mx-auto space-y-6">
-        <div class="bg-surface-container-lowest neo-border neo-radius overflow-hidden">
+        <div class="overflow-hidden bg-surface-container-lowest neo-border neo-radius">
             <div class="p-[24px] border-b-2 border-on-surface bg-surface-container-low">
                 <div class="flex flex-wrap items-center gap-2">
                     <button wire:click="$set('statusFilter', '')"
@@ -37,7 +37,7 @@
                     <div class="p-[24px] hover:bg-surface-container-high transition-colors">
                         <div class="flex items-start gap-4">
                             @if($enrollment->course->thumbnail)
-                                <img src="{{ Storage::url($enrollment->course->thumbnail) }}" alt="{{ $enrollment->course->title }}"
+                                <img src="{{ $enrollment->course->thumbnail }}" alt="{{ $enrollment->course->title }}"
                                     class="object-cover w-20 h-16 neo-border-sm neo-radius shrink-0">
                             @else
                                 <div class="flex items-center justify-center w-20 h-16 neo-border-sm neo-radius bg-surface-container shrink-0">
@@ -98,7 +98,7 @@
                         <i class="mb-3 text-3xl fas fa-user-graduate text-secondary"></i>
                         <p class="text-sm text-secondary">{{ __('messages.No enrollments found') }}</p>
                         <a href="{{ route('tenant.student.courses') }}"
-                            class="inline-flex items-center px-4 py-2 mt-4 neo-border neo-radius bg-primary-container text-on-primary-container text-xs font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
+                            class="inline-flex items-center px-4 py-2 mt-4 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
                             <i class="fas fa-graduation-cap ltr:mr-2 rtl:ml-2"></i>
                             {{ __('messages.Browse Courses') }}
                         </a>

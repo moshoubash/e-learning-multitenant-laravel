@@ -13,6 +13,7 @@
             <thead class="border-b-2 bg-surface-container-low border-on-surface">
                 <tr class="rtl:text-right">
                     <th class="w-8 p-4 text-[10px] font-bold uppercase tracking-widest text-secondary"></th>
+                    <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Thumbnail') }}</th>
                     <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Title') }}</th>
                     <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Price') }}</th>
                     <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Status') }}</th>
@@ -27,6 +28,15 @@
                                 class="transition-colors text-secondary hover:text-on-primary-container">
                                 <i class="fas {{ $course->sections && count($course->sections) > 0 ? ($expandedCourses && in_array($course->id, $expandedCourses) ? 'fa-chevron-up' : 'fa-chevron-down') : 'fa-minus' }}"></i>
                             </button>
+                        </td>
+                        <td class="p-4">
+                            @if ($course->thumbnail)
+                                <img src="{{ $course->thumbnail }}" class="object-cover w-12 h-12 neo-border-sm neo-radius" alt="Thumbnail">
+                            @else
+                                <div class="flex items-center justify-center w-12 h-12 neo-border-sm neo-radius bg-surface-container-low text-secondary">
+                                    <i class="text-sm fas fa-image"></i>
+                                </div>
+                            @endif
                         </td>
                         <td class="p-4">
                             <div class="flex items-center">
@@ -66,7 +76,7 @@
                     </tr>
                     @if($expandedCourses && in_array($course->id, $expandedCourses) && $course->sections && count($course->sections) > 0)
                         <tr>
-                            <td colspan="6" class="p-0 bg-surface-container-low">
+                            <td colspan="7" class="p-0 bg-surface-container-low">
                                 <div class="p-4">
                                     <div class="flex items-center justify-between mb-3">
                                         <h4 class="text-xs font-bold tracking-widest uppercase text-secondary">{{ __('messages.Sections & Lessons') }}</h4>
@@ -87,7 +97,7 @@
                     @endif
                 @endforeach
                 @if(count($courses) == 0)
-                    <tr><td colspan="6" class="p-8 text-sm text-center text-secondary">{{ __('messages.No courses found.') }}</td></tr>
+                    <tr><td colspan="7" class="p-8 text-sm text-center text-secondary">{{ __('messages.No courses found.') }}</td></tr>
                 @endif
             </tbody>
         </table>

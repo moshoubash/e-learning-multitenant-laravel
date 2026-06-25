@@ -92,6 +92,7 @@ class Courses extends Component
     public $createPrice = '';
     public $createStatus = 'draft';
     public $createInstructorId = '';
+    public $createThumbnail = null;
 
     // Course edit form fields
     public $editTitle = '';
@@ -100,6 +101,7 @@ class Courses extends Component
     public $editPrice = '';
     public $editStatus = '';
     public $editInstructorId = '';
+    public $editThumbnail = null;
 
     // Section create form fields
     public $sectionCreateTitle = '';
@@ -256,6 +258,7 @@ class Courses extends Component
         $this->createPrice = '';
         $this->createStatus = 'draft';
         $this->createInstructorId = '';
+        $this->createThumbnail = null;
     }
 
     public function resetFormFields()
@@ -269,20 +272,27 @@ class Courses extends Component
         $this->editPrice = '';
         $this->editStatus = '';
         $this->editInstructorId = '';
+        $this->editThumbnail = null;
     }
 
     public function store()
     {
         $this->validate($this->courseCreateRules());
 
-        $course = $this->courseService()->createCourse([
+        $data = [
             'title' => $this->createTitle,
             'slug' => $this->createSlug,
             'description' => $this->createDescription,
             'price' => $this->createPrice,
             'status' => $this->createStatus,
             'instructor_id' => $this->createInstructorId,
-        ]);
+        ];
+
+        if ($this->createThumbnail) {
+            $data['thumbnail'] = 'https://d1w6oovjx4x1vx.cloudfront.net/' . $this->createThumbnail->store('thumbnails', 's3');
+        }
+
+        $course = $this->courseService()->createCourse($data);
 
         if ($course->status === 'published') {
             $this->notifyStudentsNewCourse($course);
@@ -303,14 +313,23 @@ class Courses extends Component
 
         $oldStatus = $this->editingCourse->status;
 
-        $this->courseService()->updateCourse($this->editingCourse, [
+        $data = [
             'title' => $this->editTitle,
             'slug' => $this->editSlug,
             'description' => $this->editDescription,
             'price' => $this->editPrice,
             'status' => $this->editStatus,
             'instructor_id' => $this->editInstructorId,
-        ]);
+        ];
+
+        if ($this->editThumbnail) {
+            if ($this->editingCourse->thumbnail) {
+                Storage::disk('s3')->delete($this->editingCourse->thumbnail);
+            }
+            $data['thumbnail'] = 'https://d1w6oovjx4x1vx.cloudfront.net/' . $this->editThumbnail->store('thumbnails', 's3');
+        }
+
+        $this->courseService()->updateCourse($this->editingCourse, $data);
 
         if ($oldStatus !== 'published' && $this->editStatus === 'published') {
             $course = Course::find($this->editingCourse->id);
@@ -911,6 +930,7 @@ class Courses extends Component
             'createPrice' => 'required|numeric|min:0|max:999999.99',
             'createStatus' => 'required|in:draft,published,archived',
             'createInstructorId' => 'required|exists:users,id',
+            'createThumbnail' => 'nullable|image|mimes:jpg,png,webp|max:2048',
         ];
     }
 
@@ -923,6 +943,7 @@ class Courses extends Component
             'editPrice' => 'required|numeric|min:0|max:999999.99',
             'editStatus' => 'required|in:draft,published,archived',
             'editInstructorId' => 'required|exists:users,id',
+            'editThumbnail' => 'nullable|image|mimes:jpg,png,webp|max:2048',
         ];
     }
 
@@ -1069,7 +1090,7 @@ class Courses extends Component
 
     public function render()
     {
-        $courses = Course::select('id', 'title', 'slug', 'price', 'status', 'instructor_id', 'created_at')
+        $courses = Course::select('id', 'title', 'slug', 'price', 'status', 'thumbnail', 'instructor_id', 'created_at')
             ->with([
                 'instructor',
                 'sections' => function ($query) {
