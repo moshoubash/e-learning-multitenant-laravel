@@ -37,7 +37,6 @@
     @php
         $instructorNavItems = [
             ['route' => route('tenant.dashboard'), 'active' => 'tenant.dashboard', 'icon' => 'fas fa-home', 'label' => __('messages.Dashboard')],
-            ['route' => route('tenant.notifications'), 'active' => 'tenant.notifications*', 'icon' => 'fas fa-bell', 'label' => __('messages.Notifications')],
             ['route' => route('tenant.instructor.courses'), 'active' => 'tenant.instructor.courses*', 'icon' => 'fas fa-book-open', 'label' => __('messages.Courses')],
             ['route' => route('tenant.instructor.enrollments'), 'active' => 'tenant.instructor.enrollments*', 'icon' => 'fas fa-user-graduate', 'label' => __('messages.Enrollments')],
             ['route' => route('tenant.instructor.assignments'), 'active' => 'tenant.instructor.assignments*', 'icon' => 'fas fa-file-alt', 'label' => __('messages.Assignments')],

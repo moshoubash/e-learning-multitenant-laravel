@@ -37,7 +37,6 @@
     @php
         $adminNavItems = [
             ['route' => route('tenant.dashboard'), 'active' => 'tenant.dashboard', 'icon' => 'fas fa-home', 'label' => __('messages.Dashboard')],
-            ['route' => route('tenant.notifications'), 'active' => 'tenant.notifications*', 'icon' => 'fas fa-bell', 'label' => __('messages.Notifications')],
             ['route' => route('tenant.admin.users'), 'active' => 'tenant.admin.users*', 'icon' => 'fas fa-users', 'label' => __('messages.Users')],
             ['route' => route('tenant.admin.courses'), 'active' => 'tenant.admin.courses*', 'icon' => 'fas fa-book-open', 'label' => __('messages.Courses')],
             ['route' => route('tenant.admin.enrollments'), 'active' => 'tenant.admin.enrollments*', 'icon' => 'fas fa-user-graduate', 'label' => __('messages.Enrollments')],
