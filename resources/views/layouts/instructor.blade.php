@@ -7,6 +7,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
     <meta name="description" content="GRID LMS - Learning Management System for Organizations">
+    <link rel="icon" type="image/icon" href="{{ asset('images/grid_icon_logo.ico') }}">
 
     <x-ui.cdn-assets />
 
