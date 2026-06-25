@@ -16,7 +16,7 @@ class DeleteSoftData extends Command
      *
      * @var string
      */
-    protected $signature = 'app:delete-soft-data';
+    protected $signature = 'app:delete-soft-data{--force : Force deletion without confirmation}';
 
     /**
      * The console command description.
@@ -30,6 +30,8 @@ class DeleteSoftData extends Command
      */
     public function handle()
     {
+        $isForce = $this->option('force');
+
         $days = 30;
 
         if (!is_numeric($days) || $days < 0) {
@@ -46,16 +48,18 @@ class DeleteSoftData extends Command
 
             $this->info('Processing tenant: ' . $tenant->name);
 
-            $courses = Course::onlyTrashed()->where('deleted_at', '<=', $cutoffDate)->get();
-            $users = User::onlyTrashed()->where('deleted_at', '<=', $cutoffDate)->get();
-            $sections = Section::onlyTrashed()->where('deleted_at', '<=', $cutoffDate)->get();
-            $lessons = Lesson::onlyTrashed()->where('deleted_at', '<=', $cutoffDate)->get();
-
-            // $this->info('Tenant: ' . $tenant->name . ' courses count: ' . $courses->count());
-            // $this->info('Tenant: ' . $tenant->name . ' users count: ' . $users->count());
-            // $this->info('Tenant: ' . $tenant->name . ' sections count: ' . $sections->count());
-            // $this->info('Tenant: ' . $tenant->name . ' lessons count: ' . $lessons->count());
-
+            if(!$isForce == 1){
+                $courses = Course::onlyTrashed()->where('deleted_at', '<=', $cutoffDate)->get();
+                $users = User::onlyTrashed()->where('deleted_at', '<=', $cutoffDate)->get();
+                $sections = Section::onlyTrashed()->where('deleted_at', '<=', $cutoffDate)->get();
+                $lessons = Lesson::onlyTrashed()->where('deleted_at', '<=', $cutoffDate)->get();
+            } else {
+                $courses = Course::onlyTrashed()->get();
+                $users = User::onlyTrashed()->get();
+                $sections = Section::onlyTrashed()->get();
+                $lessons = Lesson::onlyTrashed()->get();
+            }
+            
             $courses->each->forceDelete();
             $users->each->forceDelete();
             $sections->each->forceDelete();
