@@ -641,4 +641,5 @@ return [
     'Enrolled At' => 'تاريخ التسجيل',
     'No enrollments found' => 'لم يتم العثور على تسجيلات',
     'History' => 'السجل',
+    'Verify Online' => 'التحقق عبر الإنترنت',
 ];

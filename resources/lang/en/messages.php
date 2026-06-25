@@ -611,4 +611,5 @@ return [
     'Enrolled At' => 'Enrolled At',
     'No enrollments found' => 'No enrollments found',
     'History' => 'History',
+    'Verify Online' => 'Verify Online',
 ];
