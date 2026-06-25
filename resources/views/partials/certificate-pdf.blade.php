@@ -69,7 +69,6 @@
             background: #1a1c1c; color: #ffffff;
             padding: 6px 28px;
             border: 2px solid #0a0a0a;
-            transform: rotate(-1deg);
             margin-bottom: 20px;
         }
         .badge-text { font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; margin: 0; }

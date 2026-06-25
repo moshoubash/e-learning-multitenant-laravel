@@ -6,7 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ __('messages.Log in') }} | GRID LMS</title>
-        <meta name="description" content="GRID LMS - Learning Management System for Schools, Universities and Organizations">
+        <meta name="description" content="GRID LMS - Learning Management System for Organizations">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
