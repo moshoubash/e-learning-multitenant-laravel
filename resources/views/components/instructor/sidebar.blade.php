@@ -10,7 +10,7 @@
             <i class="fas fa-chalkboard-teacher text-on-surface"></i>
         </div>
         <div>
-            <h1 class="text-[16px] font-bold text-on-surface uppercase leading-none tracking-[0.08em]">GRID LMS</h1>
+            <h1 class="text-[16px] font-bold text-on-surface uppercase leading-none tracking-[0.08em]">{{ tenant('name') ?? 'GRID LMS' }}</h1>
             <p class="text-[10px] font-bold uppercase tracking-widest text-secondary mt-1">{{ __('messages.Instructor Portal') }}</p>
         </div>
     </div>
