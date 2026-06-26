@@ -38,7 +38,7 @@ class Landing extends Component
             'ip_address' => $ip,
         ]);
 
-        Mail::to('mohammad@gridlms.online')->send(new ContactNotification($contactMessage));
+        Mail::to('mohammedshobash2002@gmail.com')->send(new ContactNotification($contactMessage));
 
         $this->reset(['name', 'email', 'message']);
 
