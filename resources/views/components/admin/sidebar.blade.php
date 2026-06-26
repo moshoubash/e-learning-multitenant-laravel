@@ -94,8 +94,8 @@
 
                 <form method="POST" action="{{ route('logout') }}" class="inline">
                     @csrf
-                    <button type="submit" class="flex items-center justify-center w-8 h-8 transition-colors hover:bg-error hover:text-white neo-radius" title="{{ __('messages.Log Out') }}">
-                        <i class="fas fa-sign-out-alt text-error"></i>
+                    <button type="submit" class="flex items-center justify-center w-8 h-8 transition-colors text-error hover:bg-error hover:text-white neo-radius" title="{{ __('messages.Log Out') }}">
+                        <i class=" fas fa-sign-out-alt"></i>
                     </button>
                 </form>
             </div>

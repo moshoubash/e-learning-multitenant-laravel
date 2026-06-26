@@ -54,11 +54,11 @@
                             <div wire:loading wire:target="editThumbnail" class="mt-2 text-xs font-bold text-on-surface">
                                 <span>{{ __('messages.Uploading...') }}</span>
                             </div>
-                            <div class="mt-2 flex items-center gap-2">
+                            <div class="flex items-center gap-2 mt-2">
                                 @if ($editThumbnail)
-                                    <img src="{{ $editThumbnail->temporaryUrl() }}" class="w-20 h-20 object-cover neo-border-sm neo-radius">
+                                    <img src="{{ $editThumbnail->temporaryUrl() }}" class="object-cover w-20 h-20 neo-border-sm neo-radius">
                                 @elseif ($editingCourse && $editingCourse->thumbnail)
-                                    <img src="{{ Storage::url($editingCourse->thumbnail) }}" class="w-20 h-20 object-cover neo-border-sm neo-radius">
+                                    <img src="{{ $editingCourse->thumbnail }}" class="object-cover w-20 h-20 neo-border-sm neo-radius">
                                 @endif
                             </div>
                         </div>

@@ -450,7 +450,7 @@ class DashboardStatsService
             ->limit(8)
             ->get();
 
-        $labels = $attempts->map(fn ($a) => \Illuminate\Support\Str::limit(optional($a->quiz)->title ?? '—', 14))->toArray();
+        $labels = $attempts->map(fn ($a) => \Illuminate\Support\Str::limit(optional($a->quiz)->title ?? '—', 26))->toArray();
         $data = $attempts->pluck('score')->map(fn ($v) => (int) $v)->toArray();
 
         if (empty($labels)) {

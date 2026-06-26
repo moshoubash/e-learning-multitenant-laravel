@@ -11,22 +11,22 @@
 
     <div class="p-[24px] max-w-[1400px] mx-auto">
         @if($isLoaded && $enrollment)
-            <div class="bg-surface-container-lowest neo-border neo-radius overflow-hidden">
+            <div class="overflow-hidden bg-surface-container-lowest neo-border neo-radius">
                 {{-- Success Icon --}}
                 <div class="p-8 text-center">
-                    <div class="inline-flex items-center justify-center w-20 h-20 neo-border neo-radius bg-primary-container mb-4">
+                    <div class="inline-flex items-center justify-center w-20 h-20 mb-4 neo-border neo-radius bg-primary-container">
                         <i class="text-4xl text-on-primary-container fas fa-check"></i>
                     </div>
-                    <h2 class="text-sm font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Congratulations!') }}</h2>
+                    <h2 class="text-sm font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Congratulations!') }}</h2>
                     <p class="mt-2 text-sm text-secondary">{{ __('messages.You have successfully enrolled in the course.') }}</p>
                 </div>
 
                 {{-- Enrollment Details --}}
                 <div class="border-t-2 border-on-surface p-[24px]">
-                    <h3 class="text-xs font-bold uppercase tracking-widest text-on-surface mb-4">{{ __('messages.Enrollment Details') }}</h3>
+                    <h3 class="mb-4 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Enrollment Details') }}</h3>
                     <div class="flex items-start gap-4">
                         @if($enrollment->course && $enrollment->course->thumbnail)
-                            <img src="{{ Storage::url($enrollment->course->thumbnail) }}" alt="{{ $enrollment->course->title }}"
+                            <img src="{{ $enrollment->course->thumbnail }}" alt="{{ $enrollment->course->title }}"
                                 class="object-cover w-32 h-24 neo-border-sm neo-radius">
                         @else
                             <div class="flex items-center justify-center w-32 h-24 neo-border-sm neo-radius bg-surface-container">
@@ -34,7 +34,7 @@
                             </div>
                         @endif
                         <div class="flex-1">
-                            <h4 class="font-bold text-sm text-on-surface">{{ $enrollment->course->title ?? 'N/A' }}</h4>
+                            <h4 class="text-sm font-bold text-on-surface">{{ $enrollment->course->title ?? 'N/A' }}</h4>
                             <p class="mt-1 text-sm text-secondary">{{ __('messages.By') }} {{ $enrollment->course->instructor->name ?? 'N/A' }}</p>
                             <div class="mt-4 text-sm">
                                 <span class="text-secondary">{{ __('messages.Enrollment Date') }}:</span>
@@ -46,18 +46,18 @@
 
                 {{-- Next Steps --}}
                 <div class="border-t-2 border-on-surface p-[24px] bg-surface-container-low">
-                    <h4 class="text-xs font-bold uppercase tracking-widest text-on-surface mb-3">{{ __('messages.What\'s Next?') }}</h4>
+                    <h4 class="mb-3 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.What\'s Next?') }}</h4>
                     <ul class="space-y-2 text-sm text-secondary">
                         <li class="flex items-center">
-                            <i class="fas fa-play-circle text-primary-container mr-2 w-5 text-center"></i>
+                            <i class="w-5 mr-2 text-center fas fa-play-circle text-primary-container"></i>
                             {{ __('messages.Start watching lessons and learning at your own pace') }}
                         </li>
                         <li class="flex items-center">
-                            <i class="fas fa-tasks text-primary-container mr-2 w-5 text-center"></i>
+                            <i class="w-5 mr-2 text-center fas fa-tasks text-primary-container"></i>
                             {{ __('messages.Track your progress as you complete lessons') }}
                         </li>
                         <li class="flex items-center">
-                            <i class="fas fa-certificate text-primary-container mr-2 w-5 text-center"></i>
+                            <i class="w-5 mr-2 text-center fas fa-certificate text-primary-container"></i>
                             {{ __('messages.Earn a certificate upon course completion') }}
                         </li>
                     </ul>
@@ -67,28 +67,28 @@
                 <div class="border-t-2 border-on-surface p-[24px]">
                     <div class="flex flex-col gap-4 sm:flex-row">
                         <a href="{{ route('tenant.student.course', ['course' => $enrollment->course->slug ?? '#']) }}"
-                            class="flex-1 px-6 py-3 neo-border neo-radius bg-primary-container text-on-primary-container font-bold text-xs uppercase tracking-widest text-center hover:bg-on-surface hover:text-white transition-colors">
-                            <i class="fas fa-play ml-2"></i>
+                            class="flex-1 px-6 py-3 text-xs font-bold tracking-widest text-center uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
+                            <i class="ml-2 fas fa-play"></i>
                             {{ __('messages.Start Learning') }}
                         </a>
                         <a href="{{ route('tenant.student.courses') }}"
-                            class="flex-1 px-6 py-3 neo-border neo-radius bg-surface-container text-on-surface font-bold text-xs uppercase tracking-widest text-center hover:bg-on-surface hover:text-white transition-colors">
-                            <i class="fas fa-list ml-2"></i>
+                            class="flex-1 px-6 py-3 text-xs font-bold tracking-widest text-center uppercase transition-colors neo-border neo-radius bg-surface-container text-on-surface hover:bg-on-surface hover:text-white">
+                            <i class="ml-2 fas fa-list"></i>
                             {{ __('messages.Browse More Courses') }}
                         </a>
                     </div>
                 </div>
             </div>
         @else
-            <div class="bg-surface-container-lowest neo-border neo-radius p-12 text-center">
-                <div class="inline-flex items-center justify-center w-20 h-20 neo-border neo-radius bg-error/10 mb-4">
+            <div class="p-12 text-center bg-surface-container-lowest neo-border neo-radius">
+                <div class="inline-flex items-center justify-center w-20 h-20 mb-4 neo-border neo-radius bg-error/10">
                     <i class="text-4xl text-error fas fa-exclamation-triangle"></i>
                 </div>
-                <h2 class="text-sm font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Enrollment Not Found') }}</h2>
+                <h2 class="text-sm font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Enrollment Not Found') }}</h2>
                 <p class="mt-2 text-sm text-secondary">{{ __('messages.We could not find the enrollment you are looking for.') }}</p>
                 <a href="{{ route('tenant.student.courses') }}"
-                    class="inline-flex items-center px-6 py-3 mt-4 neo-border neo-radius bg-primary-container text-on-primary-container font-bold text-xs uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors">
-                    <i class="fas fa-arrow-left ml-2"></i>
+                    class="inline-flex items-center px-6 py-3 mt-4 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
+                    <i class="ml-2 fas fa-arrow-left"></i>
                     {{ __('messages.Back to Courses') }}
                 </a>
             </div>

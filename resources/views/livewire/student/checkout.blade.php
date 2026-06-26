@@ -16,7 +16,7 @@
                 <h3 class="mb-4 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Course Summary') }}</h3>
                 <div class="flex items-start gap-4">
                     @if($course->thumbnail)
-                        <img src="{{ Storage::url($course->thumbnail) }}" alt="{{ $course->title }}"
+                        <img src="{{ $course->thumbnail }}" alt="{{ $course->title }}"
                             class="object-cover w-32 h-24 neo-border-sm neo-radius shrink-0">
                     @else
                         <div class="flex items-center justify-center w-32 h-24 neo-border-sm neo-radius bg-surface-container shrink-0">
