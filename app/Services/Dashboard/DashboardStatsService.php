@@ -418,7 +418,7 @@ class DashboardStatsService
             ->where('is_completed', true)
             ->where('last_watched_at', '>=', $start)
             ->get()
-            ->groupBy(fn ($item) => $item->last_watched_at->format('Y-m-d'));
+            ->groupBy(fn ($item) => $item->last_watched_at->startOfWeek()->format('Y-m-d'));
 
         $labels = [];
         $data = [];

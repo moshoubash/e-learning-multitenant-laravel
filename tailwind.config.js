@@ -13,6 +13,7 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Space Grotesk', ...defaultTheme.fontFamily.sans],
+                arabic: ['Cairo', ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 'primary-container': 'rgb(var(--color-primary-container-rgb, 255 214 0) / <alpha-value>)',

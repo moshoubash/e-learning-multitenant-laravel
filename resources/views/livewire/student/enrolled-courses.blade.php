@@ -59,16 +59,16 @@
                             {{-- Current Checkpoint --}}
                             @if($progress['current_lesson'])
                                 <div class="flex items-center mt-3 text-sm">
-                                    <span class="mr-2 text-xs font-bold tracking-widest uppercase text-secondary">{{ __('messages.Current') }}:</span>
+                                    <span class="text-xs font-bold tracking-widest uppercase ltr:mr-2 rtl:ml-2 text-secondary">{{ __('messages.Current') }}:</span>
                                     <span class="inline-flex items-center px-2 py-1 neo-border-sm neo-radius text-[10px] font-bold bg-surface-container-high text-on-surface">
-                                        <i class="mr-1 fas fa-play-circle"></i>
+                                        <i class="ltr:mr-1 rtl:ml-1 fas fa-play-circle"></i>
                                         {{ $progress['current_lesson']->title }}
                                     </span>
                                 </div>
                             @elseif($progress['progress_percent'] == 100)
                                 <div class="flex items-center mt-3">
                                     <span class="inline-flex items-center px-2 py-1 neo-border-sm neo-radius text-[10px] font-bold bg-primary-container text-on-primary-container">
-                                        <i class="mr-1 fas fa-check-circle"></i>
+                                        <i class="ltr:mr-1 rtl:ml-1 fas fa-check-circle"></i>
                                         {{ __('messages.Course Completed!') }}
                                     </span>
                                 </div>
