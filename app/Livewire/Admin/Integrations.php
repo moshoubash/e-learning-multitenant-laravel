@@ -69,7 +69,8 @@ class Integrations extends Component
 
     public function resetCreateForm()
     {
-        $this->createProvider = 'google';
+        $available = $this->availableProviders();
+        $this->createProvider = $available[0] ?? 'google';
         $this->createClientId = '';
         $this->createClientSecret = '';
         $this->createRedirectUrl = '';
