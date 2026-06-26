@@ -665,4 +665,5 @@ return [
     'No enrollments found' => 'لم يتم العثور على تسجيلات',
     'History' => 'السجل',
     'Verify Online' => 'التحقق عبر الإنترنت',
+    'None' => 'لا شيء',
 ];

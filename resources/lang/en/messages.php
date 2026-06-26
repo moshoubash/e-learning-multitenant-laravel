@@ -635,4 +635,5 @@ return [
     'No enrollments found' => 'No enrollments found',
     'History' => 'History',
     'Verify Online' => 'Verify Online',
+    'None' => 'None',
 ];
