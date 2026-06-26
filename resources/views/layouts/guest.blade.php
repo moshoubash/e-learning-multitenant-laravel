@@ -18,7 +18,11 @@
         @include('partials.auth-dynamic-design-styles')
         @livewireStyles
         <style>
-            body { background-color: var(--color-surface-container-low, #f4f4f4); background-image: linear-gradient(color-mix(in srgb, var(--color-on-surface, #1a1c1c) 6%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--color-on-surface, #1a1c1c) 6%, transparent) 1px, transparent 1px), radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--color-on-surface, #1a1c1c) 15%, transparent) 1px, transparent 1px); background-size: 40px 40px, 40px 40px, 40px 40px; }
+            body {
+                background-color: var(--color-surface-container-low, #f4f4f4);
+                background-image: linear-gradient(color-mix(in srgb, var(--color-on-surface, #1a1c1c) 0%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--color-on-surface, #1a1c1c) 0%, transparent) 1px, transparent 1px), radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--color-on-surface, #1a1c1c) 35%, transparent) 1.5px, transparent 2.5px);
+                background-size: 50px 50px, 50px 50px, 50px 50px;
+            }
         </style>
     </head>
     <body class="flex items-center justify-center min-h-screen p-4 font-sans antialiased">
