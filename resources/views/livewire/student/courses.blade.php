@@ -151,7 +151,11 @@
                                     <div wire:click="toggleSection({{ $section->id }})"
                                         class="flex items-center justify-between p-4 transition-colors cursor-pointer bg-surface-container-low hover:bg-surface-container">
                                         <div class="flex items-center gap-3">
-                                            <i class="fas fa-chevron-right text-secondary text-xs transition-transform {{ $this->isSectionExpanded($section->id) ? 'rotate-90' : '' }}"></i>
+                                            @if(app()->getLocale() == 'ar')
+                                                <i class="fas fa-chevron-left text-secondary text-xs transition-transform {{ $this->isSectionExpanded($section->id) ? 'rotate-90' : '' }}"></i>
+                                            @else
+                                                <i class="fas fa-chevron-right text-secondary text-xs transition-transform {{ $this->isSectionExpanded($section->id) ? 'rotate-90' : '' }}"></i>
+                                            @endif
                                             <span class="text-sm font-bold text-on-surface">{{ $section->title }}</span>
                                         </div>
                                         <span class="text-xs font-bold tracking-widest uppercase text-secondary">{{ $section->lessons->count() }} {{ __('messages.lessons') }}</span>

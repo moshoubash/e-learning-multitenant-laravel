@@ -1,5 +1,5 @@
 <div>
-    <header class="px-[24px] py-[16px] bg-surface-container-lowest border-b-2 border-on-surface sticky top-0 z-40">
+    <header class="px-[24px] py-[13px] bg-surface-container-lowest border-b-2 border-on-surface sticky top-0 z-40">
         {{-- Desktop: single row --}}
         <div class="items-center justify-between hidden lg:flex">
             <div class="flex items-center gap-4">
@@ -368,7 +368,11 @@
                                 <div wire:click="toggleSection({{ $section->id }})"
                                     class="flex items-center justify-between p-4 transition-colors cursor-pointer bg-surface-container-low hover:bg-surface-container">
                                     <div class="flex items-center">
-                                        <i class="fas fa-chevron-right text-secondary text-xs transition-transform ltr:mr-2 rtl:ml-2 {{ $this->isSectionExpanded($section->id) ? 'rotate-90' : '' }}"></i>
+                                        @if(app()->getLocale() == 'ar')
+                                            <i class="fas fa-chevron-left text-secondary text-xs transition-transform ltr:mr-2 rtl:ml-2 {{ $this->isSectionExpanded($section->id) ? '-rotate-90' : '' }}"></i>
+                                        @else
+                                            <i class="fas fa-chevron-right fa-chevron-left text-secondary text-xs transition-transform ltr:mr-2 rtl:ml-2 {{ $this->isSectionExpanded($section->id) ? 'rotate-90' : '' }}"></i>
+                                        @endif
                                         <span class="text-xs font-bold text-on-surface">{{ $section->title }}</span>
                                     </div>
                                     <span class="text-[10px] font-bold uppercase tracking-widest text-secondary">{{ $section->lessons->count() }}</span>

@@ -1,5 +1,5 @@
 <div>
-    <header class="px-[24px] py-[16px] bg-surface-container-lowest border-b-2 border-on-surface sticky top-0 z-40">
+    <header class="px-[24px] py-[9px] bg-surface-container-lowest border-b-2 border-on-surface sticky top-0 z-40">
         {{-- Desktop: single row --}}
         <div class="items-center justify-between hidden lg:flex">
             <div>

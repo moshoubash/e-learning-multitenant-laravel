@@ -66,10 +66,10 @@
             z-index: 1;
         }
 
-        .stamp-inner { transform: rotate(-15deg); text-align: center; margin-top: 35px; }
+        .stamp-inner { transform: rotate(-15deg); text-align: center; margin-top: 40px; }
         .stamp-star  { font-size: 80px; line-height: 1; color: #1a1c1c; display: block; }
         .stamp-word  { font-size: 11px; font-weight: bold; text-transform: uppercase;
-                       letter-spacing: 3px; color: #1a1c1c; display: block; margin-top: 2px; }
+                       letter-spacing: 3px; color: #1a1c1c; display: block;}
 
         /* ─── Outer border inset ─── */
         .inner-border {
@@ -191,18 +191,18 @@
                       color: #1a1c1c; margin: 2px 0 0; }
 
         /* Verification QR placeholder */
-        .verify-label { font-size: 9px; font-weight: bold; text-transform: uppercase;
+        /* .verify-label { font-size: 9px; font-weight: bold; text-transform: uppercase;
                         letter-spacing: 2px; color: #5f5e5e; margin: 0 0 4px; }
         .verify-box   { width: 150px; height: 50px; border: 2px solid #1a1c1c;
                         background: #f4f4f4; margin: 0 auto;
                         display: flex; align-items: center; justify-content: center; }
-        .verify-icon  { font-size: 28px;  }
+        .verify-icon  { font-size: 28px;  } */
 
         /* Instructor signature area */
         .sig-line  { width: 140px; height: 2px; background: #0a0a0a; float: right; margin-bottom: 4px; }
-        .sig-name  { font-size: 15px; font-weight: bold; color: #1a1c1c;  }
+        .sig-name  { font-size: 15px; font-weight: bold; color: #1a1c1c; margin-top: 10px !important;  }
         .sig-role  { font-size: 9px; font-weight: bold; text-transform: uppercase;
-                    letter-spacing: 2px; color: #5f5e5e; margin: 0; }
+                     color: #5f5e5e; margin: 0; }
     </style>
 </head>
 <body>
@@ -213,7 +213,7 @@
     <div class="corner-br"></div>
     <div class="stamp">
         <div class="stamp-inner">
-            <span class="stamp-star">&#9733;</span>
+            <span class="stamp-star">&#10039;</span>
             <span class="stamp-word">Certified</span>
         </div>
     </div>
