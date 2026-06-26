@@ -354,7 +354,7 @@
 
             {{-- Table of Contents Sidebar --}}
             <div class="lg:col-span-1">
-                <div class="sticky top-[100px] bg-surface-container-lowest neo-border neo-radius overflow-hidden">
+                <div class="sticky top-[90px] overflow-hidden bg-surface-container-lowest neo-border neo-radius">
                     <div class="p-4 border-b-2 border-on-surface bg-surface-container-low">
                         <h3 class="text-xs font-bold tracking-widest uppercase text-on-surface">
                             <i class="fas fa-list ltr:mr-2 rtl:ml-2"></i>
