@@ -112,7 +112,7 @@ new #[Layout('layouts.guest')] class extends Component {
     @endif
 </div>
 
-@push('auth-extra')
+{{-- @push('auth-extra')
     <div class="mt-8 text-center">
         <p class="text-sm font-medium" style="color: var(--color-on-surface, #0A0A0A);">
             {{ __('messages.Don\'t have an account yet?') }}
@@ -123,4 +123,4 @@ new #[Layout('layouts.guest')] class extends Component {
             </a>
         </p>
     </div>
-@endpush
+@endpush --}}

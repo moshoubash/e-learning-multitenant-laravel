@@ -110,15 +110,17 @@ class GoogleAuthController extends Controller
             ?? TenantUser::where('email', $email)->first();
 
         if (! $user) {
-            $user = TenantUser::create([
-                'name' => $name,
-                'email' => $email,
-                'password' => Str::random(48),
-                'google_id' => $googleId,
-                'avatar' => $avatar,
-            ]);
+            // $user = TenantUser::create([
+            //     'name' => $name,
+            //     'email' => $email,
+            //     'password' => Str::random(48),
+            //     'google_id' => $googleId,
+            //     'avatar' => $avatar,
+            // ]);
 
-            $user->assignRole('student');
+            // $user->assignRole('student');
+            // user is not found
+            abort(403, 'No account found for this Google account. Please contact your administrator.');
         } else {
             $updates = [];
             if (! $user->google_id) {
