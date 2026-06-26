@@ -18,9 +18,10 @@ use App\Http\Controllers\Payment\PayPalController;
 
 // Tenant Home / Dashboard
 
-Route::get('/', function () {
+Route::get('/', function(){
     return redirect()->route('tenant.dashboard');
 });
+Route::get('/home', \App\Livewire\Landing::class)->name('landing.home');
 
 Route::fallback(function () {
     return view('errors.404');
