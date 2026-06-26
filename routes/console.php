@@ -14,3 +14,9 @@ Schedule::command('app:delete-soft-data')
     ->withoutOverlapping()
     ->onOneServer()
     ->runInBackground();
+
+Schedule::command('debugbar:clean')
+    ->daily()
+    ->withoutOverlapping()
+    ->onOneServer()
+    ->runInBackground();
