@@ -19,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             Route::middleware([
                 'web',
                 'tenant',
+                'smtp',
                 \Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains::class,
             ])->group(base_path('routes/tenant.php'));
         },
@@ -38,6 +39,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
             'block.vpn' => \App\Http\Middleware\BlockVPN::class,
+            'smtp' => \App\Http\Middleware\ApplySmtpSettings::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
