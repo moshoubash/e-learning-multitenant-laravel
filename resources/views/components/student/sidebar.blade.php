@@ -27,21 +27,25 @@
             <i class="w-5 text-center fas fa-bell"></i>
             <span class="text-[14px] font-medium">{{ __('messages.Notifications') }}</span>
         </a>
-        <a href="{{ route('tenant.student.courses') }}" wire:navigate
-           class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.student.courses') && !request()->routeIs('tenant.student.enrolled-courses*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
-            <i class="w-5 text-center fas fa-graduation-cap"></i>
-            <span class="text-[14px] font-medium">{{ __('messages.Browse Courses') }}</span>
-        </a>
-        <a href="{{ route('tenant.student.enrolled-courses') }}" wire:navigate
-           class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.student.enrolled-courses*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
-            <i class="w-5 text-center fas fa-play-circle"></i>
-            <span class="text-[14px] font-medium">{{ __('messages.My Enrolled Courses') }}</span>
-        </a>
-        <a href="{{ route('tenant.student.enrollments-history') }}" wire:navigate
-           class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.student.enrollments-history*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
-            <i class="w-5 text-center fas fa-history"></i>
-            <span class="text-[14px] font-medium">{{ __('messages.Enrollment History') }}</span>
-        </a>
+        @can('view courses')
+            <a href="{{ route('tenant.student.courses') }}" wire:navigate
+               class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.student.courses') && !request()->routeIs('tenant.student.enrolled-courses*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
+                <i class="w-5 text-center fas fa-graduation-cap"></i>
+                <span class="text-[14px] font-medium">{{ __('messages.Browse Courses') }}</span>
+            </a>
+            <a href="{{ route('tenant.student.enrolled-courses') }}" wire:navigate
+               class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.student.enrolled-courses*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
+                <i class="w-5 text-center fas fa-play-circle"></i>
+                <span class="text-[14px] font-medium">{{ __('messages.My Enrolled Courses') }}</span>
+            </a>
+        @endcan
+        @can('view own progress')
+            <a href="{{ route('tenant.student.enrollments-history') }}" wire:navigate
+               class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.student.enrollments-history*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
+                <i class="w-5 text-center fas fa-history"></i>
+                <span class="text-[14px] font-medium">{{ __('messages.Enrollment History') }}</span>
+            </a>
+        @endcan
         <a href="{{ route('tenant.student.leaderboard') }}" wire:navigate
            class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.student.leaderboard*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
             <i class="w-5 text-center fas fa-trophy"></i>

@@ -131,7 +131,7 @@ class RolesAndPermissions extends Component
 
     public function deleteRole(): void
     {
-        if ($this->deletingRole && $this->deletingRole->name !== 'admin') {
+        if ($this->deletingRole && ! in_array($this->deletingRole->name, ['admin', 'instructor', 'student'])) {
             $this->deletingRole->delete();
             $this->closeModals();
             Toaster::success(__('messages.Role deleted successfully!'));

@@ -80,7 +80,7 @@
                                                 class="flex items-center justify-center w-8 h-8 transition-colors neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="{{ __('messages.Assign Permissions') }}">
                                                 <i class="text-xs fas fa-check-double"></i>
                                             </button>
-                                            @if($role->name !== 'admin')
+                                            @if(! in_array($role->name, ['admin', 'instructor', 'student']))
                                                 <button wire:click="openRoleEditModal({{ $role->id }})"
                                                     class="flex items-center justify-center w-8 h-8 transition-colors neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="{{ __('messages.Edit') }}">
                                                     <i class="text-xs fas fa-edit"></i>
@@ -267,12 +267,19 @@
                                         {{ __('messages.This role has :count users assigned.', ['count' => $deletingRole->users->count()]) }}
                                     </p>
                                 @endif
+                                @if(in_array($deletingRole->name, ['admin', 'instructor', 'student']))
+                                    <p class="mt-2 text-xs font-bold text-secondary">
+                                        <i class="fas fa-lock ltr:mr-1 rtl:ml-1"></i>
+                                        {{ __('messages.This role is protected and cannot be deleted.') }}
+                                    </p>
+                                @endif
                             </div>
                         </div>
                     </div>
                     <div class="px-4 py-3 bg-surface-container-low sm:px-6 sm:flex sm:flex-row-reverse">
                         <button wire:click="deleteRole" type="button"
-                            class="inline-flex justify-center w-full px-4 py-2 text-xs font-bold tracking-widest text-white uppercase transition-colors neo-border neo-radius bg-error hover:bg-on-surface sm:ltr:ml-3 sm:rtl:mr-3 sm:w-auto">
+                            class="inline-flex justify-center w-full px-4 py-2 text-xs font-bold tracking-widest text-white uppercase transition-colors neo-border neo-radius bg-error hover:bg-on-surface disabled:opacity-40 disabled:cursor-not-allowed sm:ltr:ml-3 sm:rtl:mr-3 sm:w-auto"
+                            @if(in_array($deletingRole->name, ['admin', 'instructor', 'student'])) disabled @endif>
                             {{ __('messages.Delete') }}
                         </button>
                         <button wire:click="closeModals" type="button"

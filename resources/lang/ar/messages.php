@@ -111,6 +111,7 @@ return [
     'Delete Role' => 'حذف الدور',
     'Are you sure you want to delete the :role role?' => 'هل أنت متأكد من رغبتك في حذف الدور :role؟',
     'This role has :count users assigned.' => 'هذا الدور لديه :count مستخدمين معينين.',
+    'This role is protected and cannot be deleted.' => 'هذا الدور محمي ولا يمكن حذفه.',
     'Select permissions for the :role role.' => 'اختر الصلاحيات للدور :role.',
     'Permission Name' => 'اسم الصلاحية',
     'Edit Permission' => 'تعديل الصلاحية',

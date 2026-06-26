@@ -56,14 +56,18 @@
                         </td>
                         <td class="p-4">
                             <div class="flex items-center gap-2">
-                                <button wire:click="openEditModal({{ $course->id }})"
-                                    class="flex items-center justify-center w-8 h-8 transition-colors neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Edit">
-                                    <i class="text-xs fas fa-edit"></i>
-                                </button>
-                                <button wire:click="openDeleteModal({{ $course->id }})"
-                                    class="flex items-center justify-center w-8 h-8 transition-colors neo-border-sm neo-radius text-error hover:bg-error hover:text-white" title="Delete">
-                                    <i class="text-xs fas fa-trash"></i>
-                                </button>
+                                @can('edit courses')
+                                    <button wire:click="openEditModal({{ $course->id }})"
+                                        class="flex items-center justify-center w-8 h-8 transition-colors neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Edit">
+                                        <i class="text-xs fas fa-edit"></i>
+                                    </button>
+                                @endcan
+                                @can('delete courses')
+                                    <button wire:click="openDeleteModal({{ $course->id }})"
+                                        class="flex items-center justify-center w-8 h-8 transition-colors neo-border-sm neo-radius text-error hover:bg-error hover:text-white" title="Delete">
+                                        <i class="text-xs fas fa-trash"></i>
+                                    </button>
+                                @endcan
                             </div>
                         </td>
                     </tr>

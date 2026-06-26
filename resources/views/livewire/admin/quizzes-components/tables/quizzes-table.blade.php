@@ -29,10 +29,12 @@
                         </td>
                         <td class="p-4">
                             <div class="flex items-center gap-2">
-                                <button wire:click="openEditQuizModal({{ $quiz->id }})"
-                                    class="flex items-center justify-center w-8 h-8 transition-colors neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Edit Quiz">
-                                    <i class="text-xs fas fa-edit"></i>
-                                </button>
+                                @can('edit quizzes')
+                                    <button wire:click="openEditQuizModal({{ $quiz->id }})"
+                                        class="flex items-center justify-center w-8 h-8 transition-colors neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Edit Quiz">
+                                        <i class="text-xs fas fa-edit"></i>
+                                    </button>
+                                @endcan
                                 <button wire:click="openAttemptsModal({{ $quiz->id }})"
                                     class="flex items-center justify-center w-8 h-8 transition-colors neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="View Attempts">
                                     <i class="text-xs fas fa-list"></i>

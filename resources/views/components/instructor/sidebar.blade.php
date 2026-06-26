@@ -27,21 +27,27 @@
             <i class="w-5 text-center fas fa-bell"></i>
             <span class="text-[14px] font-medium">{{ __('messages.Notifications') }}</span>
         </a>
-        <a href="{{ route('tenant.instructor.courses') }}" wire:navigate
-           class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.instructor.courses*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
-            <i class="w-5 text-center fas fa-book-open"></i>
-            <span class="text-[14px] font-medium">{{ __('messages.Courses') }}</span>
-        </a>
-        <a href="{{ route('tenant.instructor.quizzes') }}" wire:navigate
-           class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.instructor.quizzes*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
-            <i class="w-5 text-center fas fa-question-circle"></i>
-            <span class="text-[14px] font-medium">{{ __('messages.Quizzes') }}</span>
-        </a>
-        <a href="{{ route('tenant.instructor.enrollments') }}" wire:navigate
-           class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.instructor.enrollments*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
-            <i class="w-5 text-center fas fa-user-graduate"></i>
-            <span class="text-[14px] font-medium">{{ __('messages.Enrollments') }}</span>
-        </a>
+        @can('view courses')
+            <a href="{{ route('tenant.instructor.courses') }}" wire:navigate
+               class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.instructor.courses*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
+                <i class="w-5 text-center fas fa-book-open"></i>
+                <span class="text-[14px] font-medium">{{ __('messages.Courses') }}</span>
+            </a>
+        @endcan
+        @can('view quizzes')
+            <a href="{{ route('tenant.instructor.quizzes') }}" wire:navigate
+               class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.instructor.quizzes*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
+                <i class="w-5 text-center fas fa-question-circle"></i>
+                <span class="text-[14px] font-medium">{{ __('messages.Quizzes') }}</span>
+            </a>
+        @endcan
+        @can('view enrollments')
+            <a href="{{ route('tenant.instructor.enrollments') }}" wire:navigate
+               class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.instructor.enrollments*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
+                <i class="w-5 text-center fas fa-user-graduate"></i>
+                <span class="text-[14px] font-medium">{{ __('messages.Enrollments') }}</span>
+            </a>
+        @endcan
         <a href="{{ route('tenant.instructor.assignments') }}" wire:navigate
            class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.instructor.assignments*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
             <i class="w-5 text-center fas fa-file-alt"></i>

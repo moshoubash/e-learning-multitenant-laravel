@@ -105,6 +105,7 @@ return [
     'Delete Role' => 'Delete Role',
     'Are you sure you want to delete the :role role?' => 'Are you sure you want to delete the :role role?',
     'This role has :count users assigned.' => 'This role has :count users assigned.',
+    'This role is protected and cannot be deleted.' => 'This role is protected and cannot be deleted.',
     'Select permissions for the :role role.' => 'Select permissions for the :role role.',
     'Permission Name' => 'Permission Name',
     'Edit Permission' => 'Edit Permission',
