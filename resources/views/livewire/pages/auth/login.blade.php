@@ -73,7 +73,7 @@ new #[Layout('layouts.guest')] class extends Component {
         {{-- Submit --}}
         <div class="pt-2">
             <button type="submit"
-                class="w-full px-6 py-4 font-bold tracking-widest uppercase transition-all duration-200"
+                class="w-full px-6 py-4 text-sm font-bold uppercase transition-all duration-200"
                 style="background-color: var(--color-primary-container, #FFD600); border: 2px solid var(--color-on-surface, #0A0A0A); border-radius: 4px; color: var(--color-on-surface, #0A0A0A);"
                 onmouseover="this.style.backgroundColor='var(--color-on-surface,#0A0A0A)'; this.style.color='var(--color-primary-container,#FFD600)';"
                 onmouseout="this.style.backgroundColor='var(--color-primary-container,#FFD600)'; this.style.color='var(--color-on-surface,#0A0A0A)';">
