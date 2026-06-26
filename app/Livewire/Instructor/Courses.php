@@ -138,6 +138,7 @@ class Courses extends Component
     public $lessonEditDuration = 0;
     public $lessonEditOrder = 0;
     public $lessonEditVideoUrl = '';
+    public $editCourseVideo = null;
 
     // Assignment edit form fields
     public $assignmentEditTitle = '';
@@ -763,6 +764,20 @@ class Courses extends Component
         }
     }
 
+    public function updatedLessonEditVideoUrl($value)
+    {
+        if ($value) {
+            $this->editCourseVideo = null;
+        }
+    }
+
+    public function updatedEditCourseVideo($value)
+    {
+        if ($value) {
+            $this->lessonEditVideoUrl = '';
+        }
+    }
+
     public function resetLessonCreateForm()
     {
         $this->lessonCreateTitle = '';
@@ -785,6 +800,7 @@ class Courses extends Component
         $this->lessonEditDuration = 0;
         $this->lessonEditOrder = 0;
         $this->lessonEditVideoUrl = '';
+        $this->editCourseVideo = null;
     }
 
     public function storeLesson()
@@ -820,15 +836,22 @@ class Courses extends Component
             return;
         }
 
-        $this->lessonService()->updateLesson($this->editingLesson, [
-            'title' => $this->lessonEditTitle,
-            'type' => $this->lessonEditType,
-            'content' => $this->lessonEditContent,
-            'duration_seconds' => $this->lessonEditDuration,
-            'order' => $this->lessonEditOrder,
-            'video_url' => $this->lessonEditVideoUrl ?: null,
-        ]);
+        try {
+            $this->lessonService()->updateLesson($this->editingLesson, [
+                'title' => $this->lessonEditTitle,
+                'type' => $this->lessonEditType,
+                'content' => $this->lessonEditContent,
+                'duration_seconds' => $this->lessonEditDuration,
+                'order' => $this->lessonEditOrder,
+                'video_url' => $this->lessonEditVideoUrl ?: null,
+            ], $this->editCourseVideo);
+        } catch (\Throwable $exception) {
+            Toaster::error($exception->getMessage());
+            $this->closeLessonModal();
+            return;
+        }
 
+        $this->editCourseVideo = null;
         $this->closeLessonModal();
         Toaster::success('Lesson updated successfully!');
     }
@@ -982,6 +1005,8 @@ class Courses extends Component
             'lessonEditType' => 'required|in:video,text,quiz',
             'lessonEditContent' => 'nullable|string',
             'lessonEditOrder' => 'required|integer|min:0',
+            'editCourseVideo' => 'nullable|file|mimes:mp4,mov,avi,wmv|max:102400',
+            'lessonEditVideoUrl' => 'nullable|string|max:255',
         ];
     }
 

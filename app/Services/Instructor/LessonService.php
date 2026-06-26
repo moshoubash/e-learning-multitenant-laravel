@@ -33,8 +33,20 @@ class LessonService
         return Lesson::create(array_merge($data, ['section_id' => $sectionId]));
     }
 
-    public function updateLesson(Lesson $lesson, array $data): Lesson
+    public function updateLesson(Lesson $lesson, array $data, $video = null): Lesson
     {
+        if ($video) {
+            $tenantId = tenant('id') ?? 'default';
+            $baseUrl = 'https://d1w6oovjx4x1vx.cloudfront.net';
+            $path = $video->storeAs("courses/{$tenantId}", rand() . time() . $video->getClientOriginalName(), 's3');
+            $videoUrl = $baseUrl . '/' . $path;
+
+            $getID3 = new \getID3();
+            $fileInfo = $getID3->analyze($video->getRealPath());
+            $data['duration_seconds'] = (int) round($fileInfo['playtime_seconds'] ?? 0);
+            $data['video_url'] = $videoUrl;
+        }
+
         if (array_key_exists('video_url', $data) && ! $data['video_url']) {
             $data['video_url'] = null;
         }

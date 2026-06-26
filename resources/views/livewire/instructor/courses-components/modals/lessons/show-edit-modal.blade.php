@@ -38,22 +38,40 @@
                                 class="w-full px-3 py-2 neo-border-sm neo-radius bg-surface-container-low text-on-surface text-sm focus:outline-none focus:ring-0 placeholder:text-secondary">
                             @error('lessonEditOrder') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
                         </div>
-                        <div class="mb-4" x-show="$wire.lessonEditType === 'video'">
-                            <label class="block mb-1 text-xs font-bold uppercase tracking-widest text-on-surface">
-                                <i class="fab fa-youtube ltr:mr-1 rtl:ml-1 text-[#FF0000]"></i>
-                                {{ __('messages.Video URL') }}
-                            </label>
-                            <input type="url" wire:model.lazy="lessonEditVideoUrl"
-                                placeholder="https://www.youtube.com/watch?v=... or https://example.com/video.mp4"
-                                class="w-full px-3 py-2 neo-border-sm neo-radius bg-surface-container-low text-on-surface text-sm focus:outline-none focus:ring-0 placeholder:text-secondary">
-                            <p class="mt-1 text-xs text-secondary">{{ __('messages.Enter a YouTube URL or a direct video link (MP4, WebM)') }}</p>
-                            @error('lessonEditVideoUrl') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
-                        </div>
+                        @if($lessonEditType === 'video')
+                            <div class="mb-4">
+                                <label class="block mb-1 text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Video') }}</label>
+                                <input type="file" wire:model.lazy="editCourseVideo" accept="video/*"
+                                    x-bind:disabled="$wire.lessonEditVideoUrl ? true : false"
+                                    class="w-full px-3 py-2 text-sm neo-border-sm neo-radius bg-surface-container-low text-on-surface file:neo-border-sm file:neo-radius file:bg-surface-container file:text-on-surface file:text-xs file:font-bold file:uppercase file:tracking-widest file:px-3 file:py-1 file:ltr:mr-3 file:rtl:ml-3 file:cursor-pointer focus:outline-none focus:ring-0 disabled:opacity-40 disabled:cursor-not-allowed">
+                                @error('editCourseVideo') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
+                                <div wire:loading wire:target="editCourseVideo" class="mt-2 text-xs font-bold text-on-surface">
+                                    <span>{{ __('messages.Uploading video...') }}</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="flex-1 border-t border-on-surface/20"></div>
+                                <span class="text-xs font-bold uppercase tracking-widest text-secondary">{{ __('messages.Or') }}</span>
+                                <div class="flex-1 border-t border-on-surface/20"></div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block mb-1 text-xs font-bold uppercase tracking-widest text-on-surface">
+                                    <i class="fab fa-youtube ltr:mr-1 rtl:ml-1 text-[#FF0000]"></i>
+                                    {{ __('messages.YouTube URL') }}
+                                </label>
+                                <input type="url" wire:model.lazy="lessonEditVideoUrl"
+                                    x-bind:disabled="$wire.editCourseVideo ? true : false"
+                                    placeholder="https://www.youtube.com/watch?v=..."
+                                    class="w-full px-3 py-2 neo-border-sm neo-radius bg-surface-container-low text-on-surface text-sm focus:outline-none focus:ring-0 placeholder:text-secondary disabled:opacity-40 disabled:cursor-not-allowed">
+                                <p class="mt-1 text-xs text-secondary">{{ __('messages.Paste a YouTube video URL instead of uploading a file') }}</p>
+                                @error('lessonEditVideoUrl') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
+                            </div>
+                        @endif
                     </form>
                 </div>
                 <div class="px-4 py-3 bg-surface-container-low sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button wire:click="updateLesson" type="button"
-                        class="inline-flex justify-center w-full px-4 py-2 neo-border neo-radius bg-primary-container text-on-primary-container text-xs font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors sm:ltr:ml-3 sm:rtl:mr-3 sm:w-auto">
+                    <button wire:click="updateLesson" type="button" wire:loading.attr="disabled" wire:target="editCourseVideo"
+                        class="inline-flex justify-center w-full px-4 py-2 neo-border neo-radius bg-primary-container text-on-primary-container text-xs font-bold uppercase tracking-widest hover:bg-on-surface hover:text-white transition-colors sm:ltr:ml-3 sm:rtl:mr-3 sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed">
                         {{ __('messages.Update') }}
                     </button>
                     <button wire:click="closeLessonModal" type="button"
