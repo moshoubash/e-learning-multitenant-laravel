@@ -142,7 +142,7 @@ class DashboardStatsService
 
         $order = ['published', 'draft', 'archived'];
         foreach ($order as $i => $status) {
-            $labels[] = __(ucfirst($status === 'published' ? 'messages.Published' : ($status === 'draft' ? 'messages.Draft' : 'messages.Archived')));
+            $labels[] = __(ucfirst($status === 'published' ? 'messages.published' : ($status === 'draft' ? 'messages.draft' : 'messages.archived')));
             $data[] = (int) ($statuses[$status] ?? 0);
         }
 
