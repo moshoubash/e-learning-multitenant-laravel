@@ -11,6 +11,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300..900&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
         <link rel="icon" type="image/icon" href="{{ asset('images/grid_icon_logo.ico') }}">
 
@@ -23,6 +24,17 @@
                 font-family: 'Space Grotesk', sans-serif;
                 background-color: #F4F4F4;
                 color: #0A0A0A;
+            }
+
+            .landing-content > main > section,
+            .landing-content > section,
+            .landing-content > footer {
+                background-image: linear-gradient(color-mix(in srgb, #1a1c1c 0%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, #1a1c1c 0%, transparent) 1px, transparent 1px), radial-gradient(circle at 1px 1px, color-mix(in srgb, #1a1c1c 15%, transparent) 1.5px, transparent 2.5px);
+                background-size: 50px 50px, 50px 50px, 50px 50px;
+            }
+
+            [lang="ar"] .landing-content :not(.material-symbols-outlined) {
+                font-family: 'Cairo', sans-serif !important;
             }
 
             .neo-border {

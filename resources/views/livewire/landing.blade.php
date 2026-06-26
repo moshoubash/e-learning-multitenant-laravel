@@ -1,4 +1,4 @@
-<div>
+<div class="landing-content">
     {{-- Sticky Top Nav --}}
     <header class="sticky top-0 z-50 flex items-center justify-between w-full px-8 py-4 border-b-2 bg-surface border-on-background" style="background-color: #F4F4F4;">
         <div class="text-2xl font-bold tracking-tighter uppercase text-on-surface" style="font-family: 'Space Grotesk', sans-serif;">GRID LMS</div>
