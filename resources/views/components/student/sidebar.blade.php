@@ -72,7 +72,7 @@
             </div>
             <div class="flex-1">
                 <p class="text-sm font-bold text-on-surface">{{ $user?->name ?? 'User' }}</p>
-                <p class="text-xs text-secondary">ID: {{ $user?->id ?? '—' }}</p>
+                <p class="text-xs text-secondary">Student</p>
             </div>
             <div class="flex items-center gap-1">
                 <form method="POST" action="{{ route('logout') }}" class="inline">
