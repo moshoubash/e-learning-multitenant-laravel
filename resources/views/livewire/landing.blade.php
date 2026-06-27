@@ -51,7 +51,7 @@
                     @if(app()->getLocale() == 'ar')
                         <img src="{{ asset('images/student-dashboard-ar.png') }}" alt="{{ __('messages.Student Dashboard Preview') }}" class="object-fill w-full h-full">
                     @else
-                        <img src="{{ asset('images/student-dashboard.png') }}" alt="{{ __('messages.Student Dashboard Preview') }}" class="object-fill w-full h-full">
+                        <img src="{{ asset('images/student-dashboard-en.png') }}" alt="{{ __('messages.Student Dashboard Preview') }}" class="object-fill w-full h-full">
                     @endif
                 </div>
             </div>
@@ -60,7 +60,7 @@
         {{-- Features Grid --}}
         <section id="features" class="px-8 py-24" style="background-color: #ffffff; border-top: 2px solid #0A0A0A; border-bottom: 2px solid #0A0A0A;">
             <div class="mb-16 text-center">
-                <h2 class="mb-4 text-3xl font-bold uppercase md:text-4xl" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; color: #0A0A0A;">{{ __('messages.Engineered for Impact') }}</h2>
+                <h2 class="mb-4 text-3xl font-bold uppercase md:text-4xl" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; color: #0A0A0A;">{{ __('messages.Built for Impact') }}</h2>
                 <div style="width: 96px; height: 8px; background-color: #FFD600; border: 2px solid #0A0A0A; margin: 0 auto;"></div>
             </div>
             <div class="grid max-w-6xl grid-cols-1 gap-6 mx-auto md:grid-cols-3">
