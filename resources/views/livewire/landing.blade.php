@@ -155,7 +155,7 @@
                 <div class="relative space-y-12">
                     {{-- v1.0 --}}
                     <div class="relative flex gap-6 pl-8 border-l-4 border-on-surface">
-                        <span class="absolute left-0 flex items-center justify-center w-8 h-8 text-sm font-bold" style="background-color: #FFD600; border: 2px solid #0A0A0A; border-radius: 50%; transform: translateX(-50%); top: 0;">1</span>
+                        <span class="absolute left-[-3px] flex items-center justify-center w-8 h-8 text-sm font-bold" style="background-color: #FFD600; border: 2px solid #0A0A0A; border-radius: 50%; transform: translateX(-50%); top: 0;">1</span>
                         <div class="flex-1 card">
                             <div class="flex items-baseline gap-3 mb-3">
                                 <h3 class="text-xl font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; color: #0A0A0A;">v1.0</h3>
