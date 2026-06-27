@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>GRID LMS | Learning Management System</title>
-        <meta name="description" content="GRID LMS — The operating system for modern learning. Empower educators, track analytics, and build learning communities.">
+        <title>Grid LMS</title>
+        <meta name="description" content="Grid LMS — Learning management system. Empower educators, track analytics, and build learning communities.">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
