@@ -66,7 +66,7 @@
             z-index: 1;
         }
 
-        .stamp-inner { transform: rotate(-15deg); text-align: center; margin-top: 40px; }
+        .stamp-inner { transform: rotate(-15deg); text-align: center; margin-top: 50px; }
         .stamp-star  { font-size: 80px; line-height: 1; color: #1a1c1c; display: block; }
         .stamp-word  { font-size: 11px; font-weight: bold; text-transform: uppercase;
                        letter-spacing: 3px; color: #1a1c1c; display: block;}
@@ -200,7 +200,7 @@
 
         /* Instructor signature area */
         .sig-line  { width: 140px; height: 2px; background: #0a0a0a; float: right; margin-bottom: 4px; }
-        .sig-name  { font-size: 15px; font-weight: bold; color: #1a1c1c; margin-top: 10px !important;  }
+        .sig-name  { font-size: 15px; font-weight: bold; color: #1a1c1c; margin: 10px 0 0; }
         .sig-role  { font-size: 9px; font-weight: bold; text-transform: uppercase;
                      color: #5f5e5e; margin: 0; }
     </style>
