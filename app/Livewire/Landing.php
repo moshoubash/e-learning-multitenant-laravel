@@ -31,6 +31,15 @@ class Landing extends Component
         $this->validate();
         $ip = request()->ip();
 
+        // handle rate limiting
+        $key = 'contact-form:' . $ip;
+        if (RateLimiter::tooManyAttempts($key, 3)) {
+            Toaster::error(__('messages.Too many attempts. Please try again later.'));
+            return;
+        }
+        
+        RateLimiter::hit($key, 120);
+
         $contactMessage = ContactMessage::create([
             'name' => $this->name,
             'email' => $this->email,

@@ -1,7 +1,11 @@
 <div class="landing-content">
     {{-- Sticky Top Nav --}}
     <header class="sticky top-0 z-50 flex items-center justify-between w-full px-8 py-4 border-b-2 bg-surface border-on-background" style="background-color: #F4F4F4;">
-        <div class="text-2xl font-bold tracking-tighter uppercase text-on-surface" style="font-family: 'Space Grotesk', sans-serif;">GRID LMS</div>
+        {{-- <div class="text-2xl font-bold tracking-tighter uppercase text-on-surface" style="font-family: 'Space Grotesk', sans-serif;">GRID LMS</div> --}}
+        <h1 class="text-5xl italic font-bold tracking-tighter uppercase text-on-surface">
+            GRID
+            <sup class="px-2 -tracking-[0.02em] not-italic" style="background-color: var(--color-primary-container, #FFD600); border: 2px solid var(--color-on-surface, #0A0A0A); font-size: 10px; vertical-align: super; ">LMS</sup>
+        </h1>
         <nav class="items-center hidden gap-6 lg:flex">
             <a class="px-2 py-1 text-sm font-medium tracking-wider uppercase transition-colors text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" href="#features" style="font-family: 'Space Grotesk', sans-serif;">{{ __('messages.Features') }}</a>
             <a class="px-2 py-1 text-sm font-medium tracking-wider uppercase transition-colors text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" href="#how-it-works" style="font-family: 'Space Grotesk', sans-serif;">{{ __('messages.How it Works') }}</a>
