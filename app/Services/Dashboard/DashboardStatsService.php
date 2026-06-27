@@ -12,19 +12,28 @@ use App\Models\Tenant\User;
 use App\Services\DesignConfigService;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
 class DashboardStatsService
 {
     protected int $monthlyWindow = 6;
+    protected int $cacheTtl = 300;
+
+    protected function cacheKey(string $key): string
+    {
+        $tenantId = tenant('id') ?? 'central';
+        return "dashboard:{$tenantId}:{$key}";
+    }
 
     // -----------------------------------------------------------------
     // Admin
     // -----------------------------------------------------------------
     public function adminKpis(): array
     {
-        $now = CarbonImmutable::now();
+        return Cache::remember($this->cacheKey('admin:kpis'), $this->cacheTtl, function () {
+            $now = CarbonImmutable::now();
         $lastMonth = $now->subMonth();
         $thisMonthStart = $now->startOfMonth();
         $lastMonthStart = $lastMonth->startOfMonth();
@@ -75,11 +84,13 @@ class DashboardStatsService
                 'sub' => number_format($totalQuizzes) . ' ' . __('messages.quizzes'),
             ],
         ];
+        });
     }
 
     public function adminUserRoleChart(): array
     {
-        $roles = Role::withCount('users')->get();
+        return Cache::remember($this->cacheKey('admin:roleChart'), $this->cacheTtl, function () {
+            $roles = Role::withCount('users')->get();
 
         $labels = [];
         $data = [];
@@ -107,11 +118,13 @@ class DashboardStatsService
                 ],
             ],
         ];
+        });
     }
 
     public function adminEnrollmentTrendChart(): array
     {
-        return [
+        return Cache::remember($this->cacheKey('admin:enrollmentTrend'), $this->cacheTtl, function () {
+            return [
             'type' => 'line',
             'labels' => $this->monthLabels(),
             'datasets' => [
@@ -127,11 +140,13 @@ class DashboardStatsService
                 ],
             ],
         ];
+        });
     }
 
     public function adminCourseStatusChart(): array
     {
-        $statuses = Course::select('status', DB::raw('count(*) as total'))
+        return Cache::remember($this->cacheKey('admin:courseStatus'), $this->cacheTtl, function () {
+            $statuses = Course::select('status', DB::raw('count(*) as total'))
             ->groupBy('status')
             ->pluck('total', 'status');
 
@@ -157,31 +172,38 @@ class DashboardStatsService
                 ],
             ],
         ];
+        });
     }
 
     public function adminRecentEnrollments(int $limit = 5): Collection
     {
-        return Enrollment::with(['user', 'course.instructor'])
-            ->orderByDesc('enrolled_at')
-            ->limit($limit)
-            ->get();
+        return Cache::remember($this->cacheKey("admin:recentEnrollments:{$limit}"), $this->cacheTtl, function () use ($limit) {
+            return Enrollment::with(['user', 'course.instructor'])
+                ->orderByDesc('enrolled_at')
+                ->limit($limit)
+                ->get();
+        });
     }
 
     public function adminTopCourses(int $limit = 5): Collection
     {
-        return Course::withCount('enrollments')
-            ->with('instructor')
-            ->orderByDesc('enrollments_count')
-            ->limit($limit)
-            ->get();
+        return Cache::remember($this->cacheKey("admin:topCourses:{$limit}"), $this->cacheTtl, function () use ($limit) {
+            return Course::withCount('enrollments')
+                ->with('instructor')
+                ->orderByDesc('enrollments_count')
+                ->limit($limit)
+                ->get();
+        });
     }
 
     public function adminRecentUsers(int $limit = 5): Collection
     {
-        return User::with('roles')
-            ->orderByDesc('created_at')
-            ->limit($limit)
-            ->get();
+        return Cache::remember($this->cacheKey("admin:recentUsers:{$limit}"), $this->cacheTtl, function () use ($limit) {
+            return User::with('roles')
+                ->orderByDesc('created_at')
+                ->limit($limit)
+                ->get();
+        });
     }
 
     // -----------------------------------------------------------------
@@ -189,174 +211,188 @@ class DashboardStatsService
     // -----------------------------------------------------------------
     public function instructorKpis(int $instructorId): array
     {
-        $courses = Course::where('instructor_id', $instructorId);
-        $totalCourses = (clone $courses)->count();
-        $publishedCourses = (clone $courses)->where('status', 'published')->count();
+        return Cache::remember($this->cacheKey("instructor:{$instructorId}:kpis"), $this->cacheTtl, function () use ($instructorId) {
+            $courses = Course::where('instructor_id', $instructorId);
+            $totalCourses = (clone $courses)->count();
+            $publishedCourses = (clone $courses)->where('status', 'published')->count();
 
-        $courseIds = (clone $courses)->pluck('id');
+            $courseIds = (clone $courses)->pluck('id');
 
-        $totalStudents = Enrollment::whereIn('course_id', $courseIds)->distinct('user_id')->count('user_id');
-        $totalEnrollments = Enrollment::whereIn('course_id', $courseIds)->count();
-        $totalQuizzes = Quiz::whereIn('section_id', function ($q) use ($courseIds) {
-            $q->select('id')->from('sections')->whereIn('course_id', $courseIds);
-        })->count();
+            $totalStudents = Enrollment::whereIn('course_id', $courseIds)->distinct('user_id')->count('user_id');
+            $totalEnrollments = Enrollment::whereIn('course_id', $courseIds)->count();
+            $totalQuizzes = Quiz::whereIn('section_id', function ($q) use ($courseIds) {
+                $q->select('id')->from('sections')->whereIn('course_id', $courseIds);
+            })->count();
 
-        $pendingSubmissions = AssignmentSubmission::where('status', 'submitted')
-            ->whereHas('assignment', function ($q) use ($courseIds) {
-                $q->whereIn('course_id', $courseIds);
-            })
-            ->count();
+            $pendingSubmissions = AssignmentSubmission::where('status', 'submitted')
+                ->whereHas('assignment', function ($q) use ($courseIds) {
+                    $q->whereIn('course_id', $courseIds);
+                })
+                ->count();
 
-        return [
-            [
-                'label' => __('messages.My Courses'),
-                'value' => number_format($totalCourses),
-                'icon' => 'fas fa-book-open',
-                'color' => $this->dynamicColor('on_surface'),
-                'sub' => number_format($publishedCourses) . ' ' . __('messages.published'),
-            ],
-            [
-                'label' => __('messages.My Students'),
-                'value' => number_format($totalStudents),
-                'icon' => 'fas fa-user-graduate',
-                'color' => $this->dynamicColor('primary_container'),
-                'sub' => number_format($totalEnrollments) . ' ' . __('messages.enrollments'),
-            ],
-            [
-                'label' => __('messages.My Quizzes'),
-                'value' => number_format($totalQuizzes),
-                'icon' => 'fas fa-question-circle',
-                'color' => $this->dynamicColor('on_primary_container'),
-            ],
-            [
-                'label' => __('messages.Pending Review'),
-                'value' => number_format($pendingSubmissions),
-                'icon' => 'fas fa-inbox',
-                'color' => $this->dynamicColor('secondary'),
-            ],
-        ];
+            return [
+                [
+                    'label' => __('messages.My Courses'),
+                    'value' => number_format($totalCourses),
+                    'icon' => 'fas fa-book-open',
+                    'color' => $this->dynamicColor('on_surface'),
+                    'sub' => number_format($publishedCourses) . ' ' . __('messages.published'),
+                ],
+                [
+                    'label' => __('messages.My Students'),
+                    'value' => number_format($totalStudents),
+                    'icon' => 'fas fa-user-graduate',
+                    'color' => $this->dynamicColor('primary_container'),
+                    'sub' => number_format($totalEnrollments) . ' ' . __('messages.enrollments'),
+                ],
+                [
+                    'label' => __('messages.My Quizzes'),
+                    'value' => number_format($totalQuizzes),
+                    'icon' => 'fas fa-question-circle',
+                    'color' => $this->dynamicColor('on_primary_container'),
+                ],
+                [
+                    'label' => __('messages.Pending Review'),
+                    'value' => number_format($pendingSubmissions),
+                    'icon' => 'fas fa-inbox',
+                    'color' => $this->dynamicColor('secondary'),
+                ],
+            ];
+        });
     }
 
     public function instructorStudentsPerCourseChart(int $instructorId): array
     {
-        $rows = Course::where('instructor_id', $instructorId)
-            ->withCount('enrollments')
-            ->orderByDesc('enrollments_count')
-            ->limit(7)
-            ->get();
+        return Cache::remember($this->cacheKey("instructor:{$instructorId}:studentsPerCourse"), $this->cacheTtl, function () use ($instructorId) {
+            $rows = Course::where('instructor_id', $instructorId)
+                ->withCount('enrollments')
+                ->orderByDesc('enrollments_count')
+                ->limit(7)
+                ->get();
 
-        $labels = $rows->pluck('title')->map(fn ($t) => \Illuminate\Support\Str::limit($t, 18))->toArray();
-        $data = $rows->pluck('enrollments_count')->map(fn ($v) => (int) $v)->toArray();
+            $labels = $rows->pluck('title')->map(fn ($t) => \Illuminate\Support\Str::limit($t, 18))->toArray();
+            $data = $rows->pluck('enrollments_count')->map(fn ($v) => (int) $v)->toArray();
 
-        if (empty($labels)) {
-            $labels = ['—'];
-            $data = [0];
-        }
+            if (empty($labels)) {
+                $labels = ['—'];
+                $data = [0];
+            }
 
-        return [
-            'type' => 'bar',
-            'labels' => $labels,
-            'datasets' => [
-                [
-                    'label' => __('messages.Students'),
-                    'data' => $data,
-                    'color' => $this->dynamicColor('on_surface'),
+            return [
+                'type' => 'bar',
+                'labels' => $labels,
+                'datasets' => [
+                    [
+                        'label' => __('messages.Students'),
+                        'data' => $data,
+                        'color' => $this->dynamicColor('on_surface'),
+                    ],
                 ],
-            ],
-        ];
+            ];
+        });
     }
 
     public function instructorQuizAttemptsChart(int $instructorId): array
     {
-        $rows = QuizAttempt::query()
-            ->selectRaw("DATE_FORMAT(submitted_at, '%Y-%m') as month, COUNT(*) as total")
-            ->whereHas('quiz.section.course', function ($q) use ($instructorId) {
-                $q->where('instructor_id', $instructorId);
-            })
-            ->where('submitted_at', '>=', CarbonImmutable::now()->subMonths($this->monthlyWindow - 1)->startOfMonth())
-            ->groupBy('month')
-            ->pluck('total', 'month');
+        return Cache::remember($this->cacheKey("instructor:{$instructorId}:quizAttempts"), $this->cacheTtl, function () use ($instructorId) {
+            $rows = QuizAttempt::query()
+                ->selectRaw("DATE_FORMAT(submitted_at, '%Y-%m') as month, COUNT(*) as total")
+                ->whereHas('quiz.section.course', function ($q) use ($instructorId) {
+                    $q->where('instructor_id', $instructorId);
+                })
+                ->where('submitted_at', '>=', CarbonImmutable::now()->subMonths($this->monthlyWindow - 1)->startOfMonth())
+                ->groupBy('month')
+                ->pluck('total', 'month');
 
-        $data = $this->shapeMonthlyData($rows);
+            $data = $this->shapeMonthlyData($rows);
 
-        return [
-            'type' => 'line',
-            'labels' => $this->monthLabels(),
-            'datasets' => [
-                [
-                    'label' => __('messages.Quiz Attempts'),
-                    'data' => $data,
-                    'color' => $this->dynamicColor('secondary'),
+            return [
+                'type' => 'line',
+                'labels' => $this->monthLabels(),
+                'datasets' => [
+                    [
+                        'label' => __('messages.Quiz Attempts'),
+                        'data' => $data,
+                        'color' => $this->dynamicColor('secondary'),
+                    ],
                 ],
-            ],
-        ];
+            ];
+        });
     }
 
     public function instructorSubmissionStatusChart(int $instructorId): array
     {
-        $courseIds = Course::where('instructor_id', $instructorId)->pluck('id');
+        return Cache::remember($this->cacheKey("instructor:{$instructorId}:submissionStatus"), $this->cacheTtl, function () use ($instructorId) {
+            $courseIds = Course::where('instructor_id', $instructorId)->pluck('id');
 
-        $rows = AssignmentSubmission::query()
-            ->select('status', DB::raw('count(*) as total'))
-            ->whereHas('assignment', function ($q) use ($courseIds) {
-                $q->whereIn('course_id', $courseIds);
-            })
-            ->groupBy('status')
-            ->pluck('total', 'status');
+            $rows = AssignmentSubmission::query()
+                ->select('status', DB::raw('count(*) as total'))
+                ->whereHas('assignment', function ($q) use ($courseIds) {
+                    $q->whereIn('course_id', $courseIds);
+                })
+                ->groupBy('status')
+                ->pluck('total', 'status');
 
-        $labels = [
-            __('messages.Graded'),
-            __('messages.Pending Review'),
-        ];
-        $data = [
-            (int) ($rows['graded'] ?? 0),
-            (int) ($rows['submitted'] ?? 0),
-        ];
+            $labels = [
+                __('messages.Graded'),
+                __('messages.Pending Review'),
+            ];
+            $data = [
+                (int) ($rows['graded'] ?? 0),
+                (int) ($rows['submitted'] ?? 0),
+            ];
 
-        return [
-            'type' => 'doughnut',
-            'labels' => $labels,
-            'datasets' => [
-                [
-                    'label' => __('messages.Submissions'),
-                    'data' => $data,
-                    'backgroundColor' => [$this->dynamicColor('primary_container'), $this->dynamicColor('secondary')],
+            return [
+                'type' => 'doughnut',
+                'labels' => $labels,
+                'datasets' => [
+                    [
+                        'label' => __('messages.Submissions'),
+                        'data' => $data,
+                        'backgroundColor' => [$this->dynamicColor('primary_container'), $this->dynamicColor('secondary')],
+                    ],
                 ],
-            ],
-        ];
+            ];
+        });
     }
 
     public function instructorRecentEnrollments(int $instructorId, int $limit = 5): Collection
     {
-        $courseIds = Course::where('instructor_id', $instructorId)->pluck('id');
+        return Cache::remember($this->cacheKey("instructor:{$instructorId}:recentEnrollments:{$limit}"), $this->cacheTtl, function () use ($instructorId, $limit) {
+            $courseIds = Course::where('instructor_id', $instructorId)->pluck('id');
 
-        return Enrollment::with(['user', 'course'])
-            ->whereIn('course_id', $courseIds)
-            ->orderByDesc('enrolled_at')
-            ->limit($limit)
-            ->get();
+            return Enrollment::with(['user', 'course'])
+                ->whereIn('course_id', $courseIds)
+                ->orderByDesc('enrolled_at')
+                ->limit($limit)
+                ->get();
+        });
     }
 
     public function instructorRecentSubmissions(int $instructorId, int $limit = 5): Collection
     {
-        $courseIds = Course::where('instructor_id', $instructorId)->pluck('id');
+        return Cache::remember($this->cacheKey("instructor:{$instructorId}:recentSubmissions:{$limit}"), $this->cacheTtl, function () use ($instructorId, $limit) {
+            $courseIds = Course::where('instructor_id', $instructorId)->pluck('id');
 
-        return AssignmentSubmission::with(['student', 'assignment.course'])
-            ->whereHas('assignment', function ($q) use ($courseIds) {
-                $q->whereIn('course_id', $courseIds);
-            })
-            ->orderByDesc('submitted_at')
-            ->limit($limit)
-            ->get();
+            return AssignmentSubmission::with(['student', 'assignment.course'])
+                ->whereHas('assignment', function ($q) use ($courseIds) {
+                    $q->whereIn('course_id', $courseIds);
+                })
+                ->orderByDesc('submitted_at')
+                ->limit($limit)
+                ->get();
+        });
     }
 
     public function instructorMyCourses(int $instructorId, int $limit = 5): Collection
     {
-        return Course::where('instructor_id', $instructorId)
-            ->withCount(['enrollments', 'sections'])
-            ->orderByDesc('updated_at')
-            ->limit($limit)
-            ->get();
+        return Cache::remember($this->cacheKey("instructor:{$instructorId}:myCourses:{$limit}"), $this->cacheTtl, function () use ($instructorId, $limit) {
+            return Course::where('instructor_id', $instructorId)
+                ->withCount(['enrollments', 'sections'])
+                ->orderByDesc('updated_at')
+                ->limit($limit)
+                ->get();
+        });
     }
 
     // -----------------------------------------------------------------
@@ -364,29 +400,30 @@ class DashboardStatsService
     // -----------------------------------------------------------------
     public function studentKpis(int $userId): array
     {
-        $enrollments = Enrollment::where('user_id', $userId)->get();
-        $totalEnrolled = $enrollments->count();
-        $inProgress = $enrollments->where('progress_percent', '>', 0)->whereNull('completed_at')->count();
-        $completed = $enrollments->whereNotNull('completed_at')->count();
+        return Cache::remember($this->cacheKey("student:{$userId}:kpis"), $this->cacheTtl, function () use ($userId) {
+            $enrollments = Enrollment::where('user_id', $userId)->get();
+            $totalEnrolled = $enrollments->count();
+            $inProgress = $enrollments->where('progress_percent', '>', 0)->whereNull('completed_at')->count();
+            $completed = $enrollments->whereNotNull('completed_at')->count();
 
-        $attempts = QuizAttempt::where('user_id', $userId)->get();
-        $totalAttempts = $attempts->count();
-        $passedAttempts = $attempts->where('passed', true)->count();
-        $passRate = $totalAttempts > 0 ? (int) round(($passedAttempts / $totalAttempts) * 100) : 0;
+            $attempts = QuizAttempt::where('user_id', $userId)->get();
+            $totalAttempts = $attempts->count();
+            $passedAttempts = $attempts->where('passed', true)->count();
+            $passRate = $totalAttempts > 0 ? (int) round(($passedAttempts / $totalAttempts) * 100) : 0;
 
-        $lessonsCompleted = LessonProgress::where('user_id', $userId)
-            ->where('is_completed', true)
-            ->count();
+            $lessonsCompleted = LessonProgress::where('user_id', $userId)
+                ->where('is_completed', true)
+                ->count();
 
-        return [
-            [
-                'label' => __('messages.Enrolled Courses'),
-                'value' => number_format($totalEnrolled),
-                'icon' => 'fas fa-graduation-cap',
-                'color' => $this->dynamicColor('on_surface'),
-                'sub' => number_format($inProgress) . ' ' . __('messages.In Progress'),
-            ],
-            [
+            return [
+                [
+                    'label' => __('messages.Enrolled Courses'),
+                    'value' => number_format($totalEnrolled),
+                    'icon' => 'fas fa-graduation-cap',
+                    'color' => $this->dynamicColor('on_surface'),
+                    'sub' => number_format($inProgress) . ' ' . __('messages.In Progress'),
+                ],
+                [
                 'label' => __('messages.Completed'),
                 'value' => number_format($completed),
                 'icon' => 'fas fa-check-circle',
@@ -408,86 +445,95 @@ class DashboardStatsService
                 'progress' => $passRate,
             ],
         ];
+        });
     }
 
     public function studentProgressChart(int $userId): array
     {
-        $start = CarbonImmutable::now()->subWeeks(6)->startOfWeek();
+        return Cache::remember($this->cacheKey("student:{$userId}:progressChart"), $this->cacheTtl, function () use ($userId) {
+            $start = CarbonImmutable::now()->subWeeks(6)->startOfWeek();
 
-        $rows = LessonProgress::where('user_id', $userId)
-            ->where('is_completed', true)
-            ->where('last_watched_at', '>=', $start)
-            ->get()
-            ->groupBy(fn ($item) => $item->last_watched_at->startOfWeek()->format('Y-m-d'));
+            $rows = LessonProgress::where('user_id', $userId)
+                ->where('is_completed', true)
+                ->where('last_watched_at', '>=', $start)
+                ->get()
+                ->groupBy(fn ($item) => $item->last_watched_at->startOfWeek()->format('Y-m-d'));
 
-        $labels = [];
-        $data = [];
-        for ($i = 0; $i < 7; $i++) {
-            $day = $start->addWeeks($i);
-            $key = $day->format('Y-m-d');
-            $labels[] = $day->format('M d');
-            $data[] = isset($rows[$key]) ? $rows[$key]->count() : 0;
-        }
+            $labels = [];
+            $data = [];
+            for ($i = 0; $i < 7; $i++) {
+                $day = $start->addWeeks($i);
+                $key = $day->format('Y-m-d');
+                $labels[] = $day->format('M d');
+                $data[] = isset($rows[$key]) ? $rows[$key]->count() : 0;
+            }
 
-        return [
-            'type' => 'line',
-            'labels' => $labels,
-            'datasets' => [
-                [
-                    'label' => __('messages.Lessons Completed'),
-                    'data' => $data,
-                    'color' => $this->dynamicColor('on_surface'),
+            return [
+                'type' => 'line',
+                'labels' => $labels,
+                'datasets' => [
+                    [
+                        'label' => __('messages.Lessons Completed'),
+                        'data' => $data,
+                        'color' => $this->dynamicColor('on_surface'),
+                    ],
                 ],
-            ],
-        ];
+            ];
+        });
     }
 
     public function studentQuizScoreChart(int $userId): array
     {
-        $attempts = QuizAttempt::where('user_id', $userId)
-            ->with('quiz')
-            ->orderBy('submitted_at')
-            ->limit(4)
-            ->get();
+        return Cache::remember($this->cacheKey("student:{$userId}:quizScoreChart"), $this->cacheTtl, function () use ($userId) {
+            $attempts = QuizAttempt::where('user_id', $userId)
+                ->with('quiz')
+                ->orderBy('submitted_at')
+                ->limit(4)
+                ->get();
 
-        $labels = $attempts->map(fn ($a) => \Illuminate\Support\Str::limit(optional($a->quiz)->title ?? '—', 26))->toArray();
-        $data = $attempts->pluck('score')->map(fn ($v) => (int) $v)->toArray();
+            $labels = $attempts->map(fn ($a) => \Illuminate\Support\Str::limit(optional($a->quiz)->title ?? '—', 26))->toArray();
+            $data = $attempts->pluck('score')->map(fn ($v) => (int) $v)->toArray();
 
-        if (empty($labels)) {
-            $labels = ['—'];
-            $data = [0];
-        }
+            if (empty($labels)) {
+                $labels = ['—'];
+                $data = [0];
+            }
 
-        return [
-            'type' => 'bar',
-            'labels' => $labels,
-            'datasets' => [
-                [
-                    'label' => __('messages.Score'),
-                    'data' => $data,
-                    'color' => $this->dynamicColor('primary_container'),
+            return [
+                'type' => 'bar',
+                'labels' => $labels,
+                'datasets' => [
+                    [
+                        'label' => __('messages.Score'),
+                        'data' => $data,
+                        'color' => $this->dynamicColor('primary_container'),
+                    ],
                 ],
-            ],
-        ];
+            ];
+        });
     }
 
     public function studentEnrollmentProgressTable(int $userId, int $limit = 5): Collection
     {
-        return Enrollment::with(['course.instructor'])
-            ->where('user_id', $userId)
-            ->whereHas('course')
-            ->orderByDesc('enrolled_at')
-            ->limit($limit)
-            ->get();
+        return Cache::remember($this->cacheKey("student:{$userId}:enrollments:{$limit}"), $this->cacheTtl, function () use ($userId, $limit) {
+            return Enrollment::with(['course.instructor'])
+                ->where('user_id', $userId)
+                ->whereHas('course')
+                ->orderByDesc('enrolled_at')
+                ->limit($limit)
+                ->get();
+        });
     }
 
     public function studentRecentAttempts(int $userId, int $limit = 5): Collection
     {
-        return QuizAttempt::with(['quiz.section.course'])
-            ->where('user_id', $userId)
-            ->orderByDesc('submitted_at')
-            ->limit($limit)
-            ->get();
+        return Cache::remember($this->cacheKey("student:{$userId}:recentAttempts:{$limit}"), $this->cacheTtl, function () use ($userId, $limit) {
+            return QuizAttempt::with(['quiz.section.course'])
+                ->where('user_id', $userId)
+                ->orderByDesc('submitted_at')
+                ->limit($limit)
+                ->get();
+        });
     }
 
     // -----------------------------------------------------------------

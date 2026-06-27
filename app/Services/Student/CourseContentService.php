@@ -7,6 +7,7 @@ use App\Models\Tenant\Course;
 use App\Models\Tenant\Enrollment;
 use App\Models\Tenant\Lesson;
 use App\Models\Tenant\LessonProgress;
+use Illuminate\Support\Facades\Cache;
 
 class CourseContentService
 {
@@ -19,22 +20,24 @@ class CourseContentService
 
     public function getCourse(int $courseId): ?Course
     {
-        return Course::with([
-            'instructor',
-            'sections' => function ($query) {
-                $query->with([
-                    'lessons' => function ($q) {
-                        $q->orderBy('order');
-                    },
-                    'quiz' => function ($q) {
-                        $q->with('questions.options');
-                    },
-                    'assignments' => function ($q) {
-                        $q->orderBy('order');
-                    }
-                ])->orderBy('order');
-            }
-        ])->find($courseId);
+        return Cache::remember("course:content:{$courseId}", 600, function () use ($courseId) {
+            return Course::with([
+                'instructor',
+                'sections' => function ($query) {
+                    $query->with([
+                        'lessons' => function ($q) {
+                            $q->orderBy('order');
+                        },
+                        'quiz' => function ($q) {
+                            $q->with('questions.options');
+                        },
+                        'assignments' => function ($q) {
+                            $q->orderBy('order');
+                        }
+                    ])->orderBy('order');
+                }
+            ])->find($courseId);
+        });
     }
 
     public function getFirstIncompleteLesson(Course $course, int $userId): ?Lesson

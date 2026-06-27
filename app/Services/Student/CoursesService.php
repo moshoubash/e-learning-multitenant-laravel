@@ -7,40 +7,45 @@ use App\Models\Tenant\Enrollment;
 use App\Models\Tenant\User;
 use App\Notifications\EnrollmentConfirmed;
 use App\Notifications\NewEnrollment;
+use Illuminate\Support\Facades\Cache;
 
 class CoursesService
 {
     public function getCourses()
     {
-        return Course::with([
-            'instructor',
-            'sections' => function ($query) {
-                $query->with([
-                    'lessons',
-                    'quiz' => function ($q) {
-                        $q->with('questions.options');
-                    }
-                ])->orderBy('order');
-            }
-        ])
-            ->where('status', 'published')
-            ->orderBy('title')
-            ->get();
+        return Cache::remember('courses:published', 600, function () {
+            return Course::with([
+                'instructor',
+                'sections' => function ($query) {
+                    $query->with([
+                        'lessons',
+                        'quiz' => function ($q) {
+                            $q->with('questions.options');
+                        }
+                    ])->orderBy('order');
+                }
+            ])
+                ->where('status', 'published')
+                ->orderBy('title')
+                ->get();
+        });
     }
 
     public function getCourseById(int $courseId): ?Course
     {
-        return Course::with([
-            'instructor',
-            'sections' => function ($query) {
-                $query->with([
-                    'lessons',
-                    'quiz' => function ($q) {
-                        $q->with('questions.options');
-                    }
-                ])->orderBy('order');
-            }
-        ])->find($courseId);
+        return Cache::remember("course:{$courseId}", 600, function () use ($courseId) {
+            return Course::with([
+                'instructor',
+                'sections' => function ($query) {
+                    $query->with([
+                        'lessons',
+                        'quiz' => function ($q) {
+                            $q->with('questions.options');
+                        }
+                    ])->orderBy('order');
+                }
+            ])->find($courseId);
+        });
     }
 
     public function isEnrolled(int $courseId, int $userId): bool
@@ -68,6 +73,9 @@ class CoursesService
                 $student->notify(new EnrollmentConfirmed($course));
             }
         }
+
+        Cache::forget('courses:published');
+        Cache::forget("course:{$courseId}");
 
         return $enrollment;
     }
