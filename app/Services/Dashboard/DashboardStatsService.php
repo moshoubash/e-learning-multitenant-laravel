@@ -447,7 +447,7 @@ class DashboardStatsService
         $attempts = QuizAttempt::where('user_id', $userId)
             ->with('quiz')
             ->orderBy('submitted_at')
-            ->limit(8)
+            ->limit(4)
             ->get();
 
         $labels = $attempts->map(fn ($a) => \Illuminate\Support\Str::limit(optional($a->quiz)->title ?? '—', 26))->toArray();

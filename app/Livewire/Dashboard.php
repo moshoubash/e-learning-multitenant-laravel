@@ -60,7 +60,7 @@ class Dashboard extends Component
         ];
         $this->tables = [
             'enrollments' => $stats->studentEnrollmentProgressTable($userId, 5),
-            'attempts' => $stats->studentRecentAttempts($userId, 5),
+            'attempts' => $stats->studentRecentAttempts($userId, 4),
         ];
         return view('dashboard')->layout('layouts.student');
     }

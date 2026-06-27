@@ -1,7 +1,7 @@
 {{-- ROW 2: Charts --}}
 <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
     {{-- Weekly Progress Chart (col-span-2) --}}
-    <div class="lg:col-span-2 bg-surface-container-lowest neo-border p-[24px] neo-radius">
+    <div class="lg:col-span-2 bg-surface-container-lowest neo-border p-[24px] neo-radius h-full flex flex-col">
         <div class="flex items-center justify-between mb-8">
             <h3 class="text-[18px] font-bold uppercase tracking-widest text-on-surface leading-none">{{ __('messages.My Weekly Progress') }}</h3>
             <div class="px-3 py-1 bg-on-surface text-white neo-radius text-[10px] font-bold uppercase tracking-widest leading-none">
@@ -52,12 +52,12 @@
     </div>
 
     {{-- Recent Quiz Scores --}}
-    <div class="bg-surface-container-lowest neo-border p-[24px] neo-radius">
+    <div class="bg-surface-container-lowest neo-border p-[24px] neo-radius h-full flex flex-col">
         <h3 class="text-[18px] font-bold uppercase tracking-widest text-on-surface leading-none mb-8">{{ __('messages.Recent Quiz Scores') }}</h3>
         @php $scoreData = $charts['quizScores']['datasets'][0]['data'] ?? []; @endphp
         @if(count($scoreData) > 0)
-            <div class="space-y-6">
-                @foreach($charts['quizScores']['labels'] as $i => $label)
+            <div class="space-y-6 flex-1">
+                @foreach(array_slice($charts['quizScores']['labels'], 0, 4) as $i => $label)
                     @php
                         $score = (int) ($scoreData[$i] ?? 0);
                         $passed = $score >= 50;
@@ -82,7 +82,7 @@
 {{-- ROW 3: Tables --}}
 <div class="grid grid-cols-1 gap-4 lg:grid-cols-5">
     {{-- My Enrolled Courses (col-span-3) --}}
-    <div class="overflow-hidden lg:col-span-3 bg-surface-container-lowest neo-border neo-radius">
+    <div class="overflow-hidden lg:col-span-3 bg-surface-container-lowest neo-border neo-radius h-full flex flex-col">
         <div class="p-[24px] border-b-2 border-on-surface">
             <h3 class="text-[18px] font-bold uppercase tracking-widest text-on-surface leading-none">{{ __('messages.My Enrolled Courses') }}</h3>
         </div>
@@ -131,7 +131,7 @@
     </div>
 
     {{-- Recent Quiz Attempts (col-span-2) --}}
-    <div class="lg:col-span-2 bg-surface-container-lowest neo-border neo-radius p-[24px]">
+    <div class="lg:col-span-2 bg-surface-container-lowest neo-border neo-radius p-[24px] h-full flex flex-col">
         <h3 class="text-[18px] font-bold uppercase tracking-widest text-on-surface leading-none mb-6">{{ __('messages.Recent Quiz Attempts') }}</h3>
         <div class="space-y-4">
             @forelse($tables['attempts'] as $attempt)
