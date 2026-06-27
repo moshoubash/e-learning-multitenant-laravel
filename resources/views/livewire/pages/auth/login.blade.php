@@ -27,7 +27,7 @@ new #[Layout('layouts.guest')] class extends Component {
         Session::forget('url.intended');
 
         // Redirect to home and replace the browser history state
-        $this->redirect('/');
+        $this->redirect(route('tenant.dashboard'));
     }
 }; ?>
 
