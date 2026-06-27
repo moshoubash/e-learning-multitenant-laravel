@@ -674,4 +674,12 @@ return [
     'Quick Links' => 'Quick Links',
     'A complete learning management system for modern institutions. Manage courses, quizzes, students, and certifications — all from one platform.' => 'A complete learning management system for modern institutions. Manage courses, quizzes, students, and certifications — all from one platform.',
     '\u00a9 :year GRID LMS.' => '\u00a9 :year GRID LMS.',
+
+    'and more features waiting for you' => 'and more features waiting for you',
+    'Updates' => 'Updates',
+    'Initial Release' => 'Initial Release',
+    'Configure Your Platform — roles, permissions, custom design, SMTP, and OAuth integration.' => 'Configure Your Platform — roles, permissions, custom design, SMTP, and OAuth integration.',
+    'Create Courses & Assessments — structured sections, video lessons, quizzes with auto-grading, and enrollment pricing.' => 'Create Courses & Assessments — structured sections, video lessons, quizzes with auto-grading, and enrollment pricing.',
+    'Enroll, Learn & Certify — course enrollment, lesson tracking, quiz attempts, and downloadable certificates.' => 'Enroll, Learn & Certify — course enrollment, lesson tracking, quiz attempts, and downloadable certificates.',
+    'Contact Us' => 'Contact Us',
 ];

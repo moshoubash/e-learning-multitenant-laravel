@@ -2,10 +2,11 @@
     {{-- Sticky Top Nav --}}
     <header class="sticky top-0 z-50 flex items-center justify-between w-full px-8 py-4 border-b-2 bg-surface border-on-background" style="background-color: #F4F4F4;">
         <div class="text-2xl font-bold tracking-tighter uppercase text-on-surface" style="font-family: 'Space Grotesk', sans-serif;">GRID LMS</div>
-        <nav class="items-center hidden gap-6 md:flex">
+        <nav class="items-center hidden gap-6 lg:flex">
             <a class="px-2 py-1 text-sm font-medium tracking-wider uppercase transition-colors text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" href="#features" style="font-family: 'Space Grotesk', sans-serif;">{{ __('messages.Features') }}</a>
             <a class="px-2 py-1 text-sm font-medium tracking-wider uppercase transition-colors text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" href="#how-it-works" style="font-family: 'Space Grotesk', sans-serif;">{{ __('messages.How it Works') }}</a>
             <a class="px-2 py-1 text-sm font-medium tracking-wider uppercase transition-colors text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" href="#contact" style="font-family: 'Space Grotesk', sans-serif;">{{ __('messages.Contact') }}</a>
+            <a class="px-2 py-1 text-sm font-medium tracking-wider uppercase transition-colors text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" href="#updates" style="font-family: 'Space Grotesk', sans-serif;">{{ __('messages.Updates') }}</a>
         </nav>
         <div class="flex items-center gap-3">
             <a href="{{ url('lang/' . (app()->getLocale() === 'en' ? 'ar' : 'en')) }}"
@@ -13,9 +14,9 @@
                style="font-family: 'Space Grotesk', sans-serif; border: 2px solid #0A0A0A; border-radius: 4px; color: #0A0A0A; background-color: #FFFFFF;">
                 {{ app()->getLocale() === 'en' ? 'العربية' : 'EN' }}
             </a>
-            <a href="{{ route('login') }}">
+            {{-- <a href="{{ route('login') }}">
                 <button class="px-6 py-2 text-sm font-bold tracking-wider uppercase transition-all btn-primary" style="font-family: 'Space Grotesk', sans-serif; background-color: #FFD600; border: 2px solid #0A0A0A; border-radius: 4px;">{{ __('messages.Get Started') }}</button>
-            </a>
+            </a> --}}
         </div>
     </header>
 
@@ -32,8 +33,8 @@
                 <a href="{{ route('login') }}">
                     <button class="px-8 py-4 text-xl font-bold tracking-wider uppercase transition-all" style="font-family: 'Space Grotesk', sans-serif; background-color: #FFD600; border: 2px solid #0A0A0A; border-radius: 4px; color: #0A0A0A;">{{ __('messages.Get Started') }}</button>
                 </a>
-                <a href="#features">
-                    <button class="px-8 py-4 text-xl font-bold tracking-wider uppercase transition-all" style="font-family: 'Space Grotesk', sans-serif; background-color: #FFFFFF; border: 2px solid #0A0A0A; border-radius: 4px; color: #0A0A0A;">{{ __('messages.See Features') }}</button>
+                <a href="#contact">
+                    <button class="px-8 py-4 text-xl font-bold tracking-wider uppercase transition-all" style="font-family: 'Space Grotesk', sans-serif; background-color: #FFFFFF; border: 2px solid #0A0A0A; border-radius: 4px; color: #0A0A0A;">{{ __('messages.Contact Us') }}</button>
                 </a>
             </div>
             <div class="w-full max-w-5xl overflow-hidden" style="border: 2px solid #0A0A0A; border-radius: 4px; background-color: #FFFFFF;">
@@ -83,6 +84,9 @@
                     </p>
                 </div>
             </div>
+            <p class="mt-12 text-base text-center uppercase" style="font-family: 'Space Grotesk', sans-serif; color: #4d4632; letter-spacing: 0.05em;">
+                {{ __('messages.and more features waiting for you') }}
+            </p>
         </section>
 
         {{-- How It Works --}}
@@ -134,6 +138,45 @@
             <a href="{{ route('login') }}">
                 <button class="px-12 py-6 text-xl font-bold tracking-widest uppercase transition-all" style="font-family: 'Space Grotesk', sans-serif; background-color: #FFFFFF; border: 2px solid #0A0A0A; border-radius: 4px; color: #0A0A0A;" onmouseover="this.style.backgroundColor='#0A0A0A'; this.style.color='#FFFFFF';" onmouseout="this.style.backgroundColor='#FFFFFF'; this.style.color='#0A0A0A';">{{ __('messages.Get Started Now') }}</button>
             </a>
+        </section>
+
+        {{-- Updates / Changelog --}}
+        <section id="updates" style="background-color: #FFFFFF; border-top: 2px solid #0A0A0A; padding: 80px 32px;">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="mb-16 text-4xl font-bold text-center uppercase md:text-5xl" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; color: #0A0A0A;">{{ __('messages.Updates') }}</h2>
+                <div class="relative space-y-12">
+                    {{-- v1.0 --}}
+                    <div class="relative flex gap-6 pl-8 border-l-4 border-on-surface">
+                        <span class="absolute left-0 flex items-center justify-center w-8 h-8 text-sm font-bold" style="background-color: #FFD600; border: 2px solid #0A0A0A; border-radius: 50%; transform: translateX(-50%); top: 0;">1</span>
+                        <div class="flex-1 card">
+                            <div class="flex items-baseline gap-3 mb-3">
+                                <h3 class="text-xl font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; color: #0A0A0A;">v1.0</h3>
+                                <span class="text-xs font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif; color: #4d4632;">{{ __('messages.Initial Release') }}</span>
+                            </div>
+                            <ul class="space-y-2">
+                                <li class="flex items-start gap-2 text-base" style="font-family: 'Space Grotesk', sans-serif; color: #4d4632;">
+                                    <span style="color: #0A0A0A;">
+                                        {{ app()->getLocale() == 'ar' ? '←' : '→' }}
+                                    </span>
+                                    <span>{{ __('messages.Configure Your Platform — roles, permissions, custom design, SMTP, and OAuth integration.') }}</span>
+                                </li>
+                                <li class="flex items-start gap-2 text-base" style="font-family: 'Space Grotesk', sans-serif; color: #4d4632;">
+                                    <span style="color: #0A0A0A;">
+                                        {{ app()->getLocale() == 'ar' ? '←' : '→' }}
+                                    </span>
+                                    <span>{{ __('messages.Create Courses & Assessments — structured sections, video lessons, quizzes with auto-grading, and enrollment pricing.') }}</span>
+                                </li>
+                                <li class="flex items-start gap-2 text-base" style="font-family: 'Space Grotesk', sans-serif; color: #4d4632;">
+                                    <span style="color: #0A0A0A;">
+                                        {{ app()->getLocale() == 'ar' ? '←' : '→' }}
+                                    </span>
+                                    <span>{{ __('messages.Enroll, Learn & Certify — course enrollment, lesson tracking, quiz attempts, and downloadable certificates.') }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 

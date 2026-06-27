@@ -704,4 +704,12 @@ return [
     'Quick Links' => 'روابط سريعة',
     'A complete learning management system for modern institutions. Manage courses, quizzes, students, and certifications — all from one platform.' => 'نظام إدارة تعلم متكامل للمؤسسات العصرية. إدارة الدورات والاختبارات والطلاب والشهادات — كل ذلك من منصة واحدة.',
     "\u00a9 :year GRID LMS." => "\u00a9 :year GRID LMS.",
+
+    'and more features waiting for you' => 'والمزيد من الميزات في انتظارك',
+    'Updates' => 'التحديثات',
+    'Initial Release' => 'الإصدار الأولي',
+    'Configure Your Platform — roles, permissions, custom design, SMTP, and OAuth integration.' => 'تهيئة منصتك — الأدوار، الصلاحيات، التصميم المخصص، SMTP، وتكامل OAuth.',
+    'Create Courses & Assessments — structured sections, video lessons, quizzes with auto-grading, and enrollment pricing.' => 'إنشاء الدورات والتقييمات — أقسام منظمة، دروس فيديو، اختبارات مع تصحيح آلي، وتسعير التسجيل.',
+    'Enroll, Learn & Certify — course enrollment, lesson tracking, quiz attempts, and downloadable certificates.' => 'التسجيل والتعلم والشهادة — التسجيل في الدورات، تتبع الدروس، محاولات الاختبارات، والشهادات القابلة للتحميل.',
+    'Contact Us' => 'اتصل بنا',
 ];
