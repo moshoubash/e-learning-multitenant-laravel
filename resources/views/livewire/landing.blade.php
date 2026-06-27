@@ -68,7 +68,7 @@
                     <div style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background-color: #FFD600; border: 2px solid #0A0A0A; margin-bottom: 24px;">
                         <span class="material-symbols-outlined" style="color: #0A0A0A; font-variation-settings: 'FILL' 1;">quiz</span>
                     </div>
-                    <h3 class="mb-4 text-xl font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; color: #0A0A0A;">{{ __('messages.Quiz Engine') }}</h3>
+                    <h3 class="mb-4 text-xl font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; color: #0A0A0A;">{{ __('messages.Quizzes') }}</h3>
                     <p class="text-base" style="font-family: 'Space Grotesk', sans-serif; color: #4d4632;">
                         {{ __('messages.Create assessments with multiple choice and true/false questions. Set pass percentages, track attempts, and auto-grade results. Keep students accountable with structured evaluations.') }}
                     </p>
@@ -184,7 +184,7 @@
             </div>
             <div class="flex flex-col gap-4 ltr:md:items-end rtl:md:items-start">
                 <h5 class="text-sm font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif; color: #0A0A0A;">{{ __('messages.Contact') }}</h5>
-                <a class="text-2xl font-bold underline transition-colors underline-offset-8 decoration-4" href="mailto:hello@gridlms.com" style="font-family: 'Space Grotesk', sans-serif; color: #0A0A0A;" onmouseover="this.style.color='#705d00'" onmouseout="this.style.color='#0A0A0A';">mohammad@gridlms.online</a>
+                <a class="text-xl font-bold underline transition-colors underline-offset-8 decoration-4" href="mailto:hello@gridlms.com" style="font-family: 'Space Grotesk', sans-serif; color: #0A0A0A;" onmouseover="this.style.color='#705d00'" onmouseout="this.style.color='#0A0A0A';">mohammad@gridlms.online</a>
                 <div class="pt-8 mt-auto">
                     <p class="text-xs font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif; color: #4d4632;">{{ __('© :year GRID LMS', ['year' => date('Y')]) }}</p>
                 </div>
