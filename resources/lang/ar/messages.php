@@ -678,7 +678,7 @@ return [
     'A complete learning management system with role-based portals for admins, instructors, and students. Create structured curricula, assess with quizzes, track progress, and award certificates — all with a clean, fast interface.' => 'نظام إدارة تعلم متكامل مع بوابات مبنية على الأدوار للمشرفين والمعلمين والطلاب. أنشئ مناهج منظمة، وقيم بالاختبارات، وتابع التقدم، وامنح الشهادات — كل ذلك بواجهة نظيفة وسريعة.',
     'See Features' => 'عرض المميزات',
     'Student Dashboard Preview' => 'معاينة لوحة الطالب',
-    'Engineered for Impact' => 'مُصمم لتحقيق التأثير',
+    'Built for Impact' => 'مُصمم لتحقيق التأثير',
     'Course Builder' => 'بناء الدورات',
     'Organize your curriculum into sections and lessons. Upload videos, set thumbnails, embed resources, and structure the perfect learning path.' => 'نظم مناهجك في أقسام ودروس. ارفع الفيديوهات، وحدد الصور المصغرة، وأضف الموارد، وشكل مسار التعلم المثالي.',
     'Quiz Engine' => 'محرك الاختبارات',

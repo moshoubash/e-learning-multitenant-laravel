@@ -648,7 +648,7 @@ return [
     'A complete learning management system with role-based portals for admins, instructors, and students. Create structured curricula, assess with quizzes, track progress, and award certificates — all with a clean, fast interface.' => 'A complete learning management system with role-based portals for admins, instructors, and students. Create structured curricula, assess with quizzes, track progress, and award certificates — all with a clean, fast interface.',
     'See Features' => 'See Features',
     'Student Dashboard Preview' => 'Student Dashboard Preview',
-    'Engineered for Impact' => 'Engineered for Impact',
+    'Built for Impact' => 'Built for Impact',
     'Course Builder' => 'Course Builder',
     'Organize your curriculum into sections and lessons. Upload videos, set thumbnails, embed resources, and structure the perfect learning path.' => 'Organize your curriculum into sections and lessons. Upload videos, set thumbnails, embed resources, and structure the perfect learning path.',
     'Quiz Engine' => 'Quiz Engine',
