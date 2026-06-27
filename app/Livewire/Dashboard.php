@@ -31,9 +31,9 @@ class Dashboard extends Component
                 'courseStatus' => $stats->adminCourseStatusChart(),
             ];
             $this->tables = [
-                'recentEnrollments' => $stats->adminRecentEnrollments(5),
-                'topCourses' => $stats->adminTopCourses(5),
-                'recentUsers' => $stats->adminRecentUsers(5),
+                'recentEnrollments' => $stats->adminRecentEnrollments(3),
+                'topCourses' => $stats->adminTopCourses(3),
+                'recentUsers' => $stats->adminRecentUsers(3),
             ];
             return view('dashboard')->layout('layouts.admin');
         }
@@ -46,9 +46,9 @@ class Dashboard extends Component
                 'submissionStatus' => $stats->instructorSubmissionStatusChart($userId),
             ];
             $this->tables = [
-                'recentEnrollments' => $stats->instructorRecentEnrollments($userId, 5),
-                'recentSubmissions' => $stats->instructorRecentSubmissions($userId, 5),
-                'myCourses' => $stats->instructorMyCourses($userId, 5),
+                'recentEnrollments' => $stats->instructorRecentEnrollments($userId, 3),
+                'recentSubmissions' => $stats->instructorRecentSubmissions($userId, 3),
+                'myCourses' => $stats->instructorMyCourses($userId, 3),
             ];
             return view('dashboard')->layout('layouts.instructor');
         }
@@ -59,7 +59,7 @@ class Dashboard extends Component
             'quizScores' => $stats->studentQuizScoreChart($userId),
         ];
         $this->tables = [
-            'enrollments' => $stats->studentEnrollmentProgressTable($userId, 5),
+            'enrollments' => $stats->studentEnrollmentProgressTable($userId, 4),
             'attempts' => $stats->studentRecentAttempts($userId, 4),
         ];
         return view('dashboard')->layout('layouts.student');
