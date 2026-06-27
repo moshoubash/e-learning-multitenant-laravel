@@ -27,7 +27,7 @@
     <main>
         {{-- Hero Section --}}
         <section class="flex flex-col items-center px-8 py-20 text-center" style="background-color: #F4F4F4;">
-            <h1 class="max-w-4xl mb-6 text-5xl font-bold uppercase md:text-6xl" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; color: #0A0A0A;">
+            <h1 class="max-w-4xl mb-6 text-5xl font-bold uppercase md:text-6xl" style="font-family: 'Space Grotesk', sans-serif; color: #0A0A0A;">
                 {{ __('messages.Manage Courses, Quizzes & Students — All in One Place') }}
             </h1>
             <p class="max-w-2xl mb-10 text-lg" style="font-family: 'Space Grotesk', sans-serif; color: #4d4632;">
