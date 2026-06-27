@@ -44,7 +44,11 @@
                     <div style="width: 12px; height: 12px; border-radius: 50%; background-color: #c6c6c7;"></div>
                 </div>
                 <div class="relative overflow-hidden aspect-video" style="background-color: #f3f3f3;">
-                    <img src="{{ asset('images/student-dashboard.png') }}" alt="{{ __('messages.Student Dashboard Preview') }}" class="object-fill w-full h-full">
+                    @if(app()->getLocale() == 'ar')
+                        <img src="{{ asset('images/student-dashboard-ar.png') }}" alt="{{ __('messages.Student Dashboard Preview') }}" class="object-fill w-full h-full">
+                    @else
+                        <img src="{{ asset('images/student-dashboard.png') }}" alt="{{ __('messages.Student Dashboard Preview') }}" class="object-fill w-full h-full">
+                    @endif
                 </div>
             </div>
         </section>
