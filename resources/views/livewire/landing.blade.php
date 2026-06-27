@@ -227,7 +227,7 @@
             </div>
             <div class="flex flex-col gap-4 ltr:md:items-end rtl:md:items-start">
                 <h5 class="text-sm font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif; color: #0A0A0A;">{{ __('messages.Contact') }}</h5>
-                <a class="text-xl font-bold underline transition-colors underline-offset-8 decoration-4" href="mailto:hello@gridlms.com" style="font-family: 'Space Grotesk', sans-serif; color: #0A0A0A;" onmouseover="this.style.color='#705d00'" onmouseout="this.style.color='#0A0A0A';">mohammad@gridlms.online</a>
+                <a class="text-xl font-bold underline transition-colors underline-offset-8 decoration-4" href="mailto:mohammad@gridlms.online" style="font-family: 'Space Grotesk', sans-serif; color: #0A0A0A;" onmouseover="this.style.color='#705d00'" onmouseout="this.style.color='#0A0A0A';">mohammad@gridlms.online</a>
                 <div class="pt-8 mt-auto">
                     <p class="text-xs font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif; color: #4d4632;">{{ __('© :year GRID LMS', ['year' => date('Y')]) }}</p>
                 </div>
