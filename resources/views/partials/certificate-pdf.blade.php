@@ -69,7 +69,7 @@
         .stamp-inner { transform: rotate(-15deg); text-align: center; margin-top: 50px; }
         .stamp-star  { font-size: 80px; line-height: 1; color: #1a1c1c; display: block; }
         .stamp-word  { font-size: 11px; font-weight: bold; text-transform: uppercase;
-                       letter-spacing: 3px; color: #1a1c1c; display: block;}
+                       letter-spacing: 3px; color: #1a1c1c; display: block; margin-bottom: 20px; }
 
         /* ─── Outer border inset ─── */
         .inner-border {
@@ -98,9 +98,8 @@
             background: #ffd600;
             display: inline-block;
             vertical-align: middle;
+            overflow: hidden;
             text-align: center;
-            /* line-height: 4px; */
-            font-size: 22px;
         }
 
         .brand-text  { display: inline-block; vertical-align: middle; margin-left: 10px; }
@@ -225,10 +224,12 @@
         <table class="header-table">
             <tr>
                 <td class="header-left">
-                    <span class="brand-box">&#127891;</span>
+                    <div class="brand-box">
+                        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/graduate_hat.png'))) }}" style="width: 40px; height: 40px;" />
+                    </div>
                     <div class="brand-text">
-                        <p class="brand-title">Grid LMS</p>
-                        <p class="brand-sub">{{ tenant('name') }}</p>
+                        <p class="brand-title">{{ tenant('name') }}</p>
+                        <p class="brand-sub">Certification of Completion</p>
                     </div>
                 </td>
                 <td class="header-right">
