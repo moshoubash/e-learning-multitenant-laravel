@@ -244,4 +244,18 @@
             </div>
         </div>
     </footer>
+
+    {{-- Scroll to Top --}}
+    <button id="scrollToTop" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+            style="position: fixed; bottom: 24px; right: 24px; width: 48px; height: 48px; background-color: #FFD600; border: 2px solid #0A0A0A; border-radius: 4px; color: #0A0A0A; font-size: 20px; cursor: pointer; display: none; z-index: 100; align-items: center; justify-content: center; box-shadow: 4px 4px 0 #0A0A0A;"
+            onmouseover="this.style.backgroundColor='#0A0A0A'; this.style.color='#FFD600'; this.style.boxShadow='none'"
+            onmouseout="this.style.backgroundColor='#FFD600'; this.style.color='#0A0A0A'; this.style.boxShadow='4px 4px 0 #0A0A0A'"
+            aria-label="{{ __('messages.Scroll to top') }}">
+        ↑
+    </button>
+    <script>
+        window.addEventListener('scroll', function () {
+            document.getElementById('scrollToTop').style.display = window.scrollY > window.innerHeight ? 'flex' : 'none';
+        });
+    </script>
 </div>

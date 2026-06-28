@@ -86,6 +86,10 @@
             [dir="rtl"] .step-line {
                 right: 32px;
             }
+
+            *{
+                scroll-behavior: smooth;
+            }
         </style>
     </head>
     <body class="overflow-x-hidden">
