@@ -2,7 +2,7 @@
     <header class="px-[24px] py-[16px] bg-surface-container-lowest border-b-2 border-on-surface sticky top-0 z-40">
         <div class="flex items-start justify-between">
             <div>
-                <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ __('messages.Design Configuration') }}</h2>
+                <h2 class="text-[24px] font-bold text-on-surface leading-none">{{ __('messages.Design Configuration') }}</h2>
                 <p class="text-[12px] font-medium uppercase text-secondary mt-0.5 tracking-wider">{{ __('messages.Customize the appearance of your system') }}</p>
             </div>
             <div>

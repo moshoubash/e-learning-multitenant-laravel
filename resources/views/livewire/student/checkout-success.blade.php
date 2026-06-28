@@ -1,7 +1,7 @@
 <div>
     <header class="h-16 flex justify-between items-center px-[24px] bg-surface-container-lowest border-b-2 border-on-surface sticky top-0 z-40">
         <div>
-            <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ __('messages.Enrollment Confirmed') }}</h2>
+            <h2 class="text-[24px] font-bold text-on-surface leading-none">{{ __('messages.Enrollment Confirmed') }}</h2>
         <p class="text-[12px] font-medium uppercase text-secondary mt-0.5 tracking-wider">Enrollment completed successfully</p>
     </div>
     <div class="flex items-center gap-2">

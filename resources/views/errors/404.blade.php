@@ -17,11 +17,8 @@
     <style>
         body {
             background-color: var(--color-surface-container-low, #f4f4f4);
-            background-image:
-                linear-gradient(color-mix(in srgb, var(--color-on-surface, #1a1c1c) 6%, transparent) 1px, transparent 1px),
-                linear-gradient(90deg, color-mix(in srgb, var(--color-on-surface, #1a1c1c) 6%, transparent) 1px, transparent 1px),
-                radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--color-on-surface, #1a1c1c) 15%, transparent) 1px, transparent 1px);
-            background-size: 40px 40px, 40px 40px, 40px 40px;
+            background-image: linear-gradient(color-mix(in srgb, var(--color-on-surface, #1a1c1c) 0%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--color-on-surface, #1a1c1c) 0%, transparent) 1px, transparent 1px), radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--color-on-surface, #1a1c1c) 15%, transparent) 1.5px, transparent 2.5px);
+            background-size: 50px 50px, 50px 50px, 50px 50px;
         }
     </style>
 </head>
@@ -38,9 +35,9 @@
         </div>
 
         <section class="p-8 text-center border-2 neo-radius bg-surface-container-lowest border-on-surface">
-            <div class="text-8xl font-bold text-on-surface leading-none mb-4">404</div>
-            <p class="text-lg font-medium text-secondary mb-2">Page not found</p>
-            <p class="text-sm text-secondary mb-8">The page you are looking for does not exist or has been moved.</p>
+            <div class="mb-4 font-bold leading-none text-8xl text-on-surface">404</div>
+            <p class="mb-2 text-lg font-medium text-secondary">Page not found</p>
+            <p class="mb-8 text-sm text-secondary">The page you are looking for does not exist or has been moved.</p>
             <a href="/"
                 class="inline-flex items-center px-6 py-3 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
                 <i class="fas fa-arrow-left ltr:mr-2 rtl:ml-2"></i>

@@ -6,7 +6,7 @@
                 <a href="{{ route('tenant.student.courses') }}" class="transition-colors text-secondary hover:text-on-surface">
                     <i class="text-lg fas fa-arrow-left"></i>
                 </a>
-                <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ $course->title ?? __('messages.Course') }}</h2>
+                <h2 class="text-[24px] font-bold text-on-surface leading-none ">{{ $course->title ?? __('messages.Course') }}</h2>
             </div>
             <div class="flex items-center gap-3">
                 @livewire('shared.notification-bell')
@@ -23,7 +23,7 @@
                     <a href="{{ route('tenant.student.courses') }}" class="transition-colors text-secondary hover:text-on-surface">
                         <i class="text-lg fas fa-arrow-left"></i>
                     </a>
-                    <h2 class="text-[19px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ $course->title ?? __('messages.Course') }}</h2>
+                    <h2 class="text-[19px] font-bold text-on-surface leading-none ">{{ $course->title ?? __('messages.Course') }}</h2>
                 </div>
                 <div>
                     @livewire('shared.notification-bell')

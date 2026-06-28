@@ -1,7 +1,7 @@
 <div>
     <header class="h-16 flex justify-between items-center px-[24px] bg-surface-container-lowest border-b-2 border-on-surface sticky top-0 z-40">
         <div class="flex items-center gap-4">
-            <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ $quiz->title ?? 'Quiz' }}</h2>
+            <h2 class="text-[24px] font-bold text-on-surface leading-none">{{ $quiz->title ?? 'Quiz' }}</h2>
             <span class="px-3 py-1 neo-border-sm neo-radius text-[10px] font-bold uppercase tracking-widest bg-surface-container-high text-on-surface">
                 {{ __('messages.questions') }} {{ $quiz->questions->count() ?? 0 }}
             </span>

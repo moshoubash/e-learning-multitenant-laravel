@@ -3,7 +3,7 @@
         {{-- Desktop: single row --}}
         <div class="items-center justify-between hidden lg:flex">
             <div>
-                <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ __('messages.My Enrolled Courses') }}</h2>
+                <h2 class="text-[24px] font-bold text-on-surface leading-none">{{ __('messages.My Enrolled Courses') }}</h2>
                 <p class="text-[12px] font-medium uppercase text-secondary mt-0.5 tracking-wider">{{ __('messages.Continue where you left off') }}</p>
             </div>
             <div class="flex items-center gap-2">
@@ -17,7 +17,7 @@
         <div class="lg:hidden">
             <div class="flex items-start justify-between">
                 <div>
-                    <h2 class="text-[24px] font-bold text-on-surface leading-none tracking-[0.08em]">{{ __('messages.My Enrolled Courses') }}</h2>
+                    <h2 class="text-[24px] font-bold text-on-surface leading-none">{{ __('messages.My Enrolled Courses') }}</h2>
                     <p class="text-[12px] font-medium uppercase text-secondary mt-0.5 tracking-wider">{{ __('messages.Continue where you left off') }}</p>
                 </div>
                 <div>
