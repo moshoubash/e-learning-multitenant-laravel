@@ -32,7 +32,7 @@ class DashboardStatsService
     // -----------------------------------------------------------------
     public function adminKpis(): array
     {
-        return Cache::remember($this->cacheKey('admin:kpis'), $this->cacheTtl, function () {
+        return Cache::remember($this->cacheKey('admin:kpis'), 60, function () {
             $now = CarbonImmutable::now();
         $lastMonth = $now->subMonth();
         $thisMonthStart = $now->startOfMonth();
@@ -211,7 +211,7 @@ class DashboardStatsService
     // -----------------------------------------------------------------
     public function instructorKpis(int $instructorId): array
     {
-        return Cache::remember($this->cacheKey("instructor:{$instructorId}:kpis"), $this->cacheTtl, function () use ($instructorId) {
+        return Cache::remember($this->cacheKey("instructor:{$instructorId}:kpis"), 60, function () use ($instructorId) {
             $courses = Course::where('instructor_id', $instructorId);
             $totalCourses = (clone $courses)->count();
             $publishedCourses = (clone $courses)->where('status', 'published')->count();
@@ -400,7 +400,7 @@ class DashboardStatsService
     // -----------------------------------------------------------------
     public function studentKpis(int $userId): array
     {
-        return Cache::remember($this->cacheKey("student:{$userId}:kpis"), $this->cacheTtl, function () use ($userId) {
+        return Cache::remember($this->cacheKey("student:{$userId}:kpis"), 60, function () use ($userId) {
             $enrollments = Enrollment::where('user_id', $userId)->get();
             $totalEnrolled = $enrollments->count();
             $inProgress = $enrollments->where('progress_percent', '>', 0)->whereNull('completed_at')->count();
