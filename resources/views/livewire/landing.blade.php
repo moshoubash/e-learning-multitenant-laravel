@@ -44,10 +44,10 @@
                 </a>
             </div>
             <div class="w-full max-w-5xl overflow-hidden" style="border: 2px solid #0A0A0A; border-radius: 4px; background-color: #FFFFFF;">
-                <div style="background-color: #1a1c1c; padding: 12px; display: flex; gap: 8px;">
-                    <div style="width: 12px; height: 12px; border-radius: 50%; background-color: #ba1a1a;"></div>
+                <div style="background-color: #1a1c1c; padding: 12px; display: flex; gap: 8px; direction: ltr;">
+                    <div style="width: 12px; height: 12px; border-radius: 50%; background-color: #f14040"></div>
                     <div style="width: 12px; height: 12px; border-radius: 50%; background-color: #FFD600;"></div>
-                    <div style="width: 12px; height: 12px; border-radius: 50%; background-color: #c6c6c7;"></div>
+                    <div style="width: 12px; height: 12px; border-radius: 50%; background-color: #00bc00;"></div>
                 </div>
                 <div class="relative overflow-hidden aspect-video" style="background-color: #f3f3f3;">
                     @if(app()->getLocale() == 'ar')
