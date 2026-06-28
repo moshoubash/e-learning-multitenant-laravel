@@ -62,7 +62,7 @@
         {{-- Features Grid --}}
         <section id="features" class="px-8 py-24" style="background-color: #ffffff; border-top: 2px solid #0A0A0A; border-bottom: 2px solid #0A0A0A;">
             <div class="mb-16 text-center">
-                <h2 class="mb-4 text-3xl font-bold uppercase md:text-4xl" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; color: #0A0A0A;">{{ __('messages.Built for Impact') }}</h2>
+                <h2 class="mb-4 text-3xl font-bold uppercase md:text-4xl" style="font-family: 'Space Grotesk', sans-serif;  color: #0A0A0A;">{{ __('messages.Built for Impact') }}</h2>
                 <div style="width: 96px; height: 8px; background-color: #FFD600; border: 2px solid #0A0A0A; margin: 0 auto;"></div>
             </div>
             <div class="grid max-w-6xl grid-cols-1 gap-6 mx-auto md:grid-cols-3">
@@ -70,7 +70,7 @@
                     <div style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background-color: #FFD600; border: 2px solid #0A0A0A; margin-bottom: 24px;">
                         <span class="material-symbols-outlined" style="color: #0A0A0A; font-variation-settings: 'FILL' 1;">auto_stories</span>
                     </div>
-                    <h3 class="mb-4 text-xl font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; color: #0A0A0A;">{{ __('messages.Course Builder') }}</h3>
+                    <h3 class="mb-4 text-xl font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif;  color: #0A0A0A;">{{ __('messages.Course Builder') }}</h3>
                     <p class="text-base" style="font-family: 'Space Grotesk', sans-serif; color: #4d4632;">
                         {{ __('messages.Organize your curriculum into sections and lessons. Upload videos, set thumbnails, embed resources, and structure the perfect learning path.') }}
                     </p>
@@ -79,7 +79,7 @@
                     <div style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background-color: #FFD600; border: 2px solid #0A0A0A; margin-bottom: 24px;">
                         <span class="material-symbols-outlined" style="color: #0A0A0A; font-variation-settings: 'FILL' 1;">quiz</span>
                     </div>
-                    <h3 class="mb-4 text-xl font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; color: #0A0A0A;">{{ __('messages.Quizzes') }}</h3>
+                    <h3 class="mb-4 text-xl font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif;  color: #0A0A0A;">{{ __('messages.Quizzes') }}</h3>
                     <p class="text-base" style="font-family: 'Space Grotesk', sans-serif; color: #4d4632;">
                         {{ __('messages.Create assessments with multiple choice and true/false questions. Set pass percentages, track attempts, and auto-grade results. Keep students accountable with structured evaluations.') }}
                     </p>
@@ -88,7 +88,7 @@
                     <div style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background-color: #FFD600; border: 2px solid #0A0A0A; margin-bottom: 24px;">
                         <span class="material-symbols-outlined" style="color: #0A0A0A; font-variation-settings: 'FILL' 1;">groups</span>
                     </div>
-                    <h3 class="mb-4 text-xl font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; color: #0A0A0A;">{{ __('messages.Multi-Role Dashboards') }}</h3>
+                    <h3 class="mb-4 text-xl font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif;  color: #0A0A0A;">{{ __('messages.Multi-Role Dashboards') }}</h3>
                     <p class="text-base" style="font-family: 'Space Grotesk', sans-serif; color: #4d4632;">
                         {{ __('messages.Dedicated dashboards for admins, instructors, and students. Manage users, assign roles, control permissions, and give every stakeholder the tools they need — nothing more, nothing less.') }}
                     </p>
@@ -102,14 +102,14 @@
         {{-- How It Works --}}
         <section id="how-it-works" class="px-8 py-24" style="background-color: #f3f3f3; border-top: 2px solid #0A0A0A; border-bottom: 2px solid #0A0A0A;">
             <div class="max-w-3xl mx-auto">
-                <h2 class="mb-16 text-4xl font-bold text-center uppercase md:text-5xl" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; color: #0A0A0A;">{{ __('messages.How it Works') }}</h2>
+                <h2 class="mb-16 text-4xl font-bold text-center uppercase md:text-5xl" style="font-family: 'Space Grotesk', sans-serif;  color: #0A0A0A;">{{ __('messages.How it Works') }}</h2>
                 <div class="relative space-y-16">
                     <div class="step-line"></div>
 
                     <div class="relative flex flex-col items-start gap-8 md:flex-row" style="z-index: 10;">
                         <div class="step-square shrink-0">1</div>
                         <div class="flex-grow card">
-                            <h4 class="mb-2 text-xl font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; color: #0A0A0A;">{{ __('messages.Configure Your Platform') }}</h4>
+                            <h4 class="mb-2 text-xl font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif;  color: #0A0A0A;">{{ __('messages.Configure Your Platform') }}</h4>
                             <p class="text-lg" style="font-family: 'Space Grotesk', sans-serif; color: #4d4632;">
                                 {{ __('messages.Set up your institution — define roles and permissions, customize the design to match your brand, configure SMTP for transactional emails, and integrate OAuth providers like Google for seamless sign-in.') }}
                             </p>
@@ -119,7 +119,7 @@
                     <div class="relative flex flex-col items-start gap-8 md:flex-row" style="z-index: 10;">
                         <div class="step-square shrink-0">2</div>
                         <div class="flex-grow card">
-                            <h4 class="mb-2 text-xl font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; color: #0A0A0A;">{{ __('messages.Create Courses & Assessments') }}</h4>
+                            <h4 class="mb-2 text-xl font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif;  color: #0A0A0A;">{{ __('messages.Create Courses & Assessments') }}</h4>
                             <p class="text-lg" style="font-family: 'Space Grotesk', sans-serif; color: #4d4632;">
                                 {{ __('messages.Instructors build courses with structured sections, video lessons, and learning materials. Attach quizzes with automated grading, set enrollment pricing, and publish when ready.') }}
                             </p>
@@ -129,7 +129,7 @@
                     <div class="relative flex flex-col items-start gap-8 md:flex-row" style="z-index: 10;">
                         <div class="step-square shrink-0">3</div>
                         <div class="flex-grow card">
-                            <h4 class="mb-2 text-xl font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; color: #0A0A0A;">{{ __('messages.Enroll, Learn & Certify') }}</h4>
+                            <h4 class="mb-2 text-xl font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif;  color: #0A0A0A;">{{ __('messages.Enroll, Learn & Certify') }}</h4>
                             <p class="text-lg" style="font-family: 'Space Grotesk', sans-serif; color: #4d4632;">
                                 {{ __('messages.Students browse and enroll in courses, track lesson progress, take quizzes. Upon completion, they earn downloadable certificates to showcase their achievement.') }}
                             </p>
@@ -141,7 +141,7 @@
 
         {{-- Final CTA --}}
         <section style="background-color: #FFD600; border-top: 2px solid #0A0A0A; padding: 80px 32px; display: flex; flex-direction: column; align-items: center; text-align: center;">
-            <h2 class="mb-8 text-4xl font-bold uppercase md:text-5xl" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; color: #0A0A0A;">{{ __('messages.Ready to Transform Learning?') }}</h2>
+            <h2 class="mb-8 text-4xl font-bold uppercase md:text-5xl" style="font-family: 'Space Grotesk', sans-serif;  color: #0A0A0A;">{{ __('messages.Ready to Transform Learning?') }}</h2>
             <p class="max-w-xl mb-12 text-lg" style="font-family: 'Space Grotesk', sans-serif; color: #544600;">
                 {{ __('messages.From course creation to certification — everything you need to run a modern learning institution in one platform.') }}
             </p>
@@ -153,14 +153,14 @@
         {{-- Updates / Changelog --}}
         <section id="updates" style="background-color: #FFFFFF; border-top: 2px solid #0A0A0A; padding: 80px 32px;">
             <div class="max-w-3xl mx-auto">
-                <h2 class="mb-16 text-4xl font-bold text-center uppercase md:text-5xl" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; color: #0A0A0A;">{{ __('messages.Updates') }}</h2>
+                <h2 class="mb-16 text-4xl font-bold text-center uppercase md:text-5xl" style="font-family: 'Space Grotesk', sans-serif;  color: #0A0A0A;">{{ __('messages.Updates') }}</h2>
                 <div class="relative space-y-12">
                     {{-- v1.0 --}}
                     <div class="relative flex gap-6 pl-8 border-l-4 border-on-surface">
                         <span class="absolute left-[-3px] flex items-center justify-center w-8 h-8 text-sm font-bold" style="background-color: #FFD600; border: 2px solid #0A0A0A; border-radius: 50%; transform: translateX(-50%); top: 0;">1</span>
                         <div class="flex-1 card">
                             <div class="flex items-baseline gap-3 mb-3">
-                                <h3 class="text-xl font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; color: #0A0A0A;">v1.0</h3>
+                                <h3 class="text-xl font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif;  color: #0A0A0A;">v1.0</h3>
                                 <span class="text-xs font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif; color: #4d4632;">{{ __('messages.Initial Release') }}</span>
                             </div>
                             <ul class="space-y-2">
@@ -193,7 +193,7 @@
     {{-- Contact Form --}}
     <section id="contact" style="background-color: #FFFFFF; border-top: 2px solid #0A0A0A; padding: 80px 32px;">
         <div class="max-w-lg mx-auto">
-            <h2 class="mb-12 text-4xl font-bold text-center uppercase md:text-5xl" style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; color: #0A0A0A;">{{ __('messages.Get In Touch') }}</h2>
+            <h2 class="mb-12 text-4xl font-bold text-center uppercase md:text-5xl" style="font-family: 'Space Grotesk', sans-serif;  color: #0A0A0A;">{{ __('messages.Get In Touch') }}</h2>
             <form class="grid grid-cols-1 gap-6" wire:submit.prevent="submit">
                 <div class="flex flex-col gap-2">
                     <label class="text-sm font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif; color: #0A0A0A;">{{ __('messages.Name') }}</label>
