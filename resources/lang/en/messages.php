@@ -701,4 +701,11 @@ return [
     'Invalid role' => 'Invalid role',
     'Email already exists' => 'Email already exists',
     'and :count more' => 'and :count more',
+
+    // Leaderboard / Points
+    'points' => 'pts',
+    'Your Rank' => 'Your Rank',
+    'Points' => 'Points',
+    'No rankings yet' => 'No rankings yet',
+    'Complete lessons and quizzes to earn points' => 'Complete lessons and quizzes to earn points',
 ];

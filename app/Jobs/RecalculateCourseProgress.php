@@ -2,12 +2,14 @@
 
 namespace App\Jobs;
 
+use App\Models\Tenant\Course;
 use App\Models\Tenant\Enrollment;
 use App\Models\Tenant\Lesson;
 use App\Models\Tenant\LessonProgress;
 use App\Models\Tenant\User;
 use App\Notifications\CourseCompleted;
 use App\Notifications\CourseCompletedStudent;
+use App\Services\Student\PointsService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -58,9 +60,10 @@ class RecalculateCourseProgress implements ShouldQueue
             ]);
 
         if ($progressPercent === 100) {
-            $course = \App\Models\Tenant\Course::with('instructor')->find($this->courseId);
+            $course = Course::with('instructor')->find($this->courseId);
             $student = User::find($this->userId);
             if ($course && $student) {
+                app(PointsService::class)->awardCourseComplete($this->userId, $this->courseId);
                 if ($course->instructor) {
                     $course->instructor->notify(new CourseCompleted($student, $course));
                 }

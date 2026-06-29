@@ -731,4 +731,11 @@ return [
     'Invalid role' => 'دور غير صالح',
     'Email already exists' => 'البريد الإلكتروني موجود بالفعل',
     'and :count more' => 'و :count أخرى',
+
+    // Leaderboard / Points
+    'points' => 'نقطة',
+    'Your Rank' => 'ترتيبك',
+    'Points' => 'النقاط',
+    'No rankings yet' => 'لا توجد تصنيفات بعد',
+    'Complete lessons and quizzes to earn points' => 'أكمل الدروس والاختبارات لكسب النقاط',
 ];
