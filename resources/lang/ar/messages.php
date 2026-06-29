@@ -738,4 +738,15 @@ return [
     'Points' => 'النقاط',
     'No rankings yet' => 'لا توجد تصنيفات بعد',
     'Complete lessons and quizzes to earn points' => 'أكمل الدروس والاختبارات لكسب النقاط',
+
+    // Admin Leaderboard Monitor
+    'Leaderboard Monitor' => 'مراقبة جدول القيادة',
+    'Monitor student rankings and points' => 'مراقبة تصنيفات الطلاب ونقاطهم',
+    'Students with points' => 'الطلاب الحاصلون على نقاط',
+    'Average Points' => 'متوسط النقاط',
+    'Highest Points' => 'أعلى نقاط',
+    'Search by name or email...' => 'البحث بالاسم أو البريد الإلكتروني...',
+    'Courses Completed' => 'الدورات المكتملة',
+    'No students match your search' => 'لا يوجد طلاب يطابقون بحثك',
+    'Students earn points by completing lessons and passing quizzes' => 'يكسب الطلاب النقاط بإكمال الدروس واجتياز الاختبارات',
 ];

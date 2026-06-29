@@ -23,51 +23,62 @@
             </div>
         @endif
 
-        <div class="neo-border neo-radius bg-surface-container-lowest overflow-hidden">
-            <div class="grid grid-cols-[48px_1fr_100px] gap-4 px-6 py-3 bg-surface-container-high border-b-2 border-on-surface text-xs font-bold uppercase tracking-wider text-secondary">
-                <span>#</span>
-                <span>{{ __('messages.Student') }}</span>
-                <span class="text-right">{{ __('messages.Points') }}</span>
-            </div>
-
-            @forelse($leaders as $index => $leader)
-                <div class="grid grid-cols-[48px_1fr_100px] gap-4 px-6 py-4 items-center border-b-2 border-on-surface last:border-b-0 {{ $leader->id === auth()->id() ? 'bg-primary-container/30' : '' }}">
-                    <div class="flex justify-center">
-                        @if($index === 0)
-                            <span class="text-xl">🥇</span>
-                        @elseif($index === 1)
-                            <span class="text-xl">🥈</span>
-                        @elseif($index === 2)
-                            <span class="text-xl">🥉</span>
-                        @else
-                            <span class="text-sm font-bold text-on-surface">{{ $index + 1 }}</span>
-                        @endif
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 neo-border neo-radius-full bg-surface-container-high flex-shrink-0 overflow-hidden">
-                            @if($leader->avatar)
-                                <img src="{{ $leader->avatar }}" alt="" class="w-full h-full object-cover">
-                            @else
-                                <div class="w-full h-full flex items-center justify-center text-xs font-bold text-on-surface">
-                                    {{ substr($leader->name, 0, 2) }}
+        <div class="neo-border neo-radius bg-surface-container-lowest overflow-x-auto">
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr class="bg-surface-container-high border-b-2 border-on-surface">
+                        <th class="text-left px-6 py-3 text-xs font-bold uppercase tracking-wider text-secondary w-[48px]">#</th>
+                        <th class="text-left px-6 py-3 text-xs font-bold uppercase tracking-wider text-secondary">{{ __('messages.Student') }}</th>
+                        <th class="text-right px-6 py-3 text-xs font-bold uppercase tracking-wider text-secondary w-[100px]">{{ __('messages.Points') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($leaders as $index => $leader)
+                        <tr class="border-b-2 border-on-surface last:border-b-0 {{ $leader->id === auth()->id() ? 'bg-primary-container/30' : '' }}">
+                            <td class="px-6 py-4 align-middle">
+                                <div class="flex justify-center">
+                                    @if($index === 0)
+                                        <span class="text-xl">🥇</span>
+                                    @elseif($index === 1)
+                                        <span class="text-xl">🥈</span>
+                                    @elseif($index === 2)
+                                        <span class="text-xl">🥉</span>
+                                    @else
+                                        <span class="text-sm font-bold text-on-surface">{{ $index + 1 }}</span>
+                                    @endif
                                 </div>
-                            @endif
-                        </div>
-                        <span class="text-sm font-bold text-on-surface truncate">{{ $leader->name }}</span>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-sm font-bold text-on-surface">{{ $leader->total_points }}</span>
-                    </div>
-                </div>
-            @empty
-                <div class="p-12 text-center">
-                    <div class="inline-flex items-center justify-center w-16 h-16 mb-4 neo-border neo-radius bg-primary-container">
-                        <i class="text-2xl text-on-primary-container fas fa-trophy"></i>
-                    </div>
-                    <h3 class="text-sm font-bold tracking-widest uppercase text-on-surface">{{ __('messages.No rankings yet') }}</h3>
-                    <p class="mt-2 text-sm text-secondary">{{ __('messages.Complete lessons and quizzes to earn points') }}</p>
-                </div>
-            @endforelse
+                            </td>
+                            <td class="px-6 py-4 align-middle">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 neo-border neo-radius-full bg-surface-container-high flex-shrink-0 overflow-hidden">
+                                        @if($leader->avatar)
+                                            <img src="{{ $leader->avatar }}" alt="" class="w-full h-full object-cover">
+                                        @else
+                                            <div class="w-full h-full flex items-center justify-center text-xs font-bold text-on-surface">
+                                                {{ substr($leader->name, 0, 2) }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <span class="text-sm font-bold text-on-surface truncate">{{ $leader->name }}</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 align-middle text-right">
+                                <span class="text-sm font-bold text-on-surface">{{ $leader->total_points }}</span>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3" class="p-12 text-center">
+                                <div class="inline-flex items-center justify-center w-16 h-16 mb-4 neo-border neo-radius bg-primary-container">
+                                    <i class="text-2xl text-on-primary-container fas fa-trophy"></i>
+                                </div>
+                                <h3 class="text-sm font-bold tracking-widest uppercase text-on-surface">{{ __('messages.No rankings yet') }}</h3>
+                                <p class="mt-2 text-sm text-secondary">{{ __('messages.Complete lessons and quizzes to earn points') }}</p>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

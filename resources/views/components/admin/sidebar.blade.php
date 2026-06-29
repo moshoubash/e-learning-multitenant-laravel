@@ -75,6 +75,11 @@
             <i class="w-5 text-center fas fa-envelope"></i>
             <span class="text-[14px] font-medium">{{ __('messages.SMTP') }}</span>
         </a>
+        <a href="{{ route('tenant.admin.leaderboard') }}" wire:navigate
+            class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.admin.leaderboard*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
+            <i class="w-5 text-center fas fa-trophy"></i>
+            <span class="text-[14px] font-medium">{{ __('messages.Leaderboard') }}</span>
+        </a>
         <a href="{{ route('tenant.admin.logs') }}" wire:navigate
             class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.admin.logs*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
             <i class="w-5 text-center fas fa-file-alt"></i>

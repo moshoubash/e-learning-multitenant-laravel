@@ -708,4 +708,15 @@ return [
     'Points' => 'Points',
     'No rankings yet' => 'No rankings yet',
     'Complete lessons and quizzes to earn points' => 'Complete lessons and quizzes to earn points',
+
+    // Admin Leaderboard Monitor
+    'Leaderboard Monitor' => 'Leaderboard Monitor',
+    'Monitor student rankings and points' => 'Monitor student rankings and points',
+    'Students with points' => 'Students with points',
+    'Average Points' => 'Average Points',
+    'Highest Points' => 'Highest Points',
+    'Search by name or email...' => 'Search by name or email...',
+    'Courses Completed' => 'Courses Completed',
+    'No students match your search' => 'No students match your search',
+    'Students earn points by completing lessons and passing quizzes' => 'Students earn points by completing lessons and passing quizzes',
 ];
