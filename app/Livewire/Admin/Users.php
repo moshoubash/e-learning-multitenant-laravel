@@ -2,19 +2,24 @@
 
 namespace App\Livewire\Admin;
 
+use App\Imports\UsersImport;
 use App\Models\Tenant\User;
+use App\Services\Admin\UserImportService;
 use App\Services\Admin\UsersService;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use Livewire\Attributes\Layout;
+use Livewire\TemporaryUploadedFile;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 #[Layout('layouts.admin')]
 
 class Users extends Component
 {
-    use WithPagination;
+    use WithPagination, WithFileUploads;
 
     protected $paginationTheme = 'tailwind';
 
@@ -22,6 +27,7 @@ class Users extends Component
     public $showEditModal = false;
     public $showDeleteModal = false;
     public $showRestoreModal = false;
+    public $showImportModal = false;
 
     public $editingUser = null;
     public $deletingUser = null;
@@ -39,8 +45,17 @@ class Users extends Component
     public $editPassword = '';
     public $editRole = '';
 
+    // Import
+    public $importFile;
+    public $importResults = [];
+
     public function openCreateModal()
     {
+        $importService = app(UserImportService::class);
+        if (! $importService->hasCapacity()) {
+            Toaster::error(__('messages.Tenant has reached its maximum user limit.'));
+            return;
+        }
         $this->resetCreateForm();
         $this->showCreateModal = true;
     }
@@ -71,12 +86,20 @@ class Users extends Component
         $this->showRestoreModal = true;
     }
 
+    public function openImportModal()
+    {
+        $this->importFile = null;
+        $this->importResults = [];
+        $this->showImportModal = true;
+    }
+
     public function closeModal()
     {
         $this->showCreateModal = false;
         $this->showEditModal = false;
         $this->showDeleteModal = false;
         $this->showRestoreModal = false;
+        $this->showImportModal = false;
         $this->resetFormFields();
     }
 
@@ -103,6 +126,12 @@ class Users extends Component
     {
         $this->validate($this->userCreateRules());
 
+        $importService = app(UserImportService::class);
+        if (! $importService->hasCapacity()) {
+            Toaster::error(__('messages.Tenant has reached its maximum user limit.'));
+            return;
+        }
+
         $this->usersService()->createUser([
             'name' => $this->createName,
             'email' => $this->createEmail,
@@ -111,7 +140,51 @@ class Users extends Component
         ]);
 
         $this->closeModal();
-        Toaster::success('messages.User created successfully!');
+        Toaster::success(__('messages.User created successfully!'));
+    }
+
+    public function import()
+    {
+        $this->validate([
+            'importFile' => 'required|file|mimes:xlsx,xls,csv|max:2048',
+        ]);
+
+        $import = new UsersImport();
+        Excel::import($import, $this->importFile->getRealPath());
+
+        $this->importResults = [
+            'imported' => $import->imported,
+            'skipped' => $import->skipped,
+            'errors' => $import->errors,
+        ];
+
+        $this->importFile = null;
+
+        if ($import->imported > 0) {
+            Toaster::success(__('messages.:count users imported successfully.', ['count' => $import->imported]));
+        }
+        if (! empty($import->errors)) {
+            Toaster::warning(__('messages.:count errors occurred during import.', ['count' => count($import->errors)]));
+        }
+    }
+
+    public function downloadImportTemplate()
+    {
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="users-import-template.csv"',
+        ];
+
+        $columns = ['name', 'email', 'role'];
+        $callback = function () use ($columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+            fputcsv($file, ['John Doe', 'john@example.com', 'student']);
+            fputcsv($file, ['Jane Smith', 'jane@example.com', 'instructor']);
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 
     public function update()
@@ -154,9 +227,14 @@ class Users extends Component
 
         $deletedUsers = $this->usersService()->getDeletedUsers();
 
+        $importService = app(UserImportService::class);
+
         return view('livewire.admin.users', [
             'users' => $users,
             'deletedUsers' => $deletedUsers,
+            'maxUsers' => $importService->maxUsers(),
+            'currentUsers' => $importService->currentUserCount(),
+            'remainingCapacity' => $importService->remainingCapacity(),
         ]);
     }
 

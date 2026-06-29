@@ -43,6 +43,7 @@ class Tenant extends Model implements TenantContract, TenantWithDatabase
             'slug',
             'domain',
             'plan',
+            'max_users',
             'is_active',
             'settings',
         ];

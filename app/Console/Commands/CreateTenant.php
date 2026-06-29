@@ -55,10 +55,18 @@ class CreateTenant extends Command
         $this->info("Creating tenant '{$name}' with slug '{$slug}'...");
 
         try {
+            $maxUsers = match ($plan) {
+                'free' => 3,
+                'pro' => 40,
+                'enterprise' => 100,
+                default => 3,
+            };
+
             $tenant = Tenant::create([
                 'name' => $name,
                 'slug' => $slug,
                 'plan' => $plan,
+                'max_users' => $maxUsers,
                 'domain' => $customDomain,
             ]);
 
@@ -80,6 +88,7 @@ class CreateTenant extends Command
                     ['Name', $tenant->name],
                     ['Slug', $slug],
                     ['Plan', $plan],
+                    ['Max Users', $maxUsers],
                     ['Domain', $domain],
                     ['Custom Domain', $customDomain ?? 'N/A'],
                     ['URL', "http://{$domain}"],

@@ -1,11 +1,20 @@
 <div class="overflow-hidden bg-surface-container-lowest neo-border neo-radius">
     <div class="p-[24px] border-b-2 border-on-surface flex items-center justify-between">
-        <h3 class="text-[18px] font-bold uppercase tracking-widest text-on-surface leading-none">{{ __('messages.Active Users') }}</h3>
-        <button wire:click="openCreateModal"
-            class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
-            <i class="fas fa-plus ltr:mr-2 rtl:ml-2"></i>
-            {{ __('messages.Add User') }}
-        </button>
+        <div class="flex items-center gap-4">
+            <span class="text-[11px] font-bold text-secondary tracking-wider">
+                {{ $currentUsers }}/{{ $maxUsers }} {{ __('messages.users') }}
+            </span>
+            <button wire:click="openImportModal"
+                class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius text-on-surface hover:bg-on-surface hover:text-white">
+                <i class="fas fa-file-upload ltr:mr-2 rtl:ml-2"></i>
+                {{ __('messages.Import') }}
+            </button>
+            <button wire:click="openCreateModal"
+                class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
+                <i class="fas fa-plus ltr:mr-2 rtl:ml-2"></i>
+                {{ __('messages.Add User') }}
+            </button>
+        </div>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full ltr:text-left rtl:text-right">

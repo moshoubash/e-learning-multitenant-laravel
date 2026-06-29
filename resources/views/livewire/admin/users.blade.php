@@ -17,5 +17,6 @@
         @include('livewire.admin.users-components.modals.show-edit-modal')
         @include('livewire.admin.users-components.modals.show-delete-modal')
         @include('livewire.admin.users-components.modals.show-restore-users-modal')
+        @include('livewire.admin.users-components.modals.show-import-modal')
     </div>
 </div>
