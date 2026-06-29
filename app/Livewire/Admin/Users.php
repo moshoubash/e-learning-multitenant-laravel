@@ -13,6 +13,7 @@ use Livewire\Attributes\Layout;
 use Livewire\TemporaryUploadedFile;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
 #[Layout('layouts.admin')]
@@ -149,8 +150,15 @@ class Users extends Component
             'importFile' => 'required|file|mimes:xlsx,xls,csv|max:2048',
         ]);
 
+        $path = $this->importFile->store('/');
+        $localPath = tempnam(sys_get_temp_dir(), 'import_');
+        file_put_contents($localPath, Storage::disk('local')->get($path));
+
         $import = new UsersImport();
-        Excel::import($import, $this->importFile->getRealPath());
+        Excel::import($import, $localPath);
+
+        Storage::disk('local')->delete($path);
+        unlink($localPath);
 
         $this->importResults = [
             'imported' => $import->imported,
