@@ -29,7 +29,7 @@
             <div class="flex items-start gap-6">
                 <div class="w-32 h-16 neo-border neo-radius bg-surface-container-high flex items-center justify-center overflow-hidden flex-shrink-0">
                     @if($currentLogo)
-                        <img src="{{ Storage::disk('s3')->url($currentLogo) }}" alt="Logo" class="h-full w-full object-contain p-1">
+                        <img src="{{ 'https://d1w6oovjx4x1vx.cloudfront.net/' .($currentLogo) }}" alt="Logo" class="h-full w-full object-contain p-1">
                     @else
                         <span class="text-[10px] font-bold uppercase text-secondary text-center px-2">{{ __('messages.No logo uploaded') }}</span>
                     @endif

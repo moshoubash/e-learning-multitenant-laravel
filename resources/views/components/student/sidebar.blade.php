@@ -9,7 +9,7 @@
     <div class="flex items-center h-16 gap-3 p-6 border-b-2 border-on-surface">
         @if($logo)
             <div class="h-10 w-auto flex-shrink-0 overflow-hidden">
-                <img src="{{ Storage::disk('s3')->url($logo) }}" alt="Logo" class="h-full w-auto object-contain">
+                <img src="{{ 'https://d1w6oovjx4x1vx.cloudfront.net/' .($logo) }}" alt="Logo" class="h-full w-auto object-contain">
             </div>
         @else
             <div class="flex items-center justify-center w-10 h-10 neo-border bg-primary-container neo-radius">

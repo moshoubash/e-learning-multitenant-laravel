@@ -32,7 +32,7 @@
             {{-- Brand --}}
             <div class="mb-6 text-center">
                 @if($logo)
-                    <img src="{{ Storage::disk('s3')->url($logo) }}" alt="Logo" class="h-12 mx-auto object-contain mb-2">
+                    <img src="{{ 'https://d1w6oovjx4x1vx.cloudfront.net/' .($logo) }}" alt="Logo" class="h-12 mx-auto object-contain mb-2">
                 @else
                     <h1 class="text-6xl italic font-bold tracking-tighter uppercase text-on-surface">
                         GRID
