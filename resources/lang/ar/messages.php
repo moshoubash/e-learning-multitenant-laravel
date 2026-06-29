@@ -749,4 +749,11 @@ return [
     'Courses Completed' => 'الدورات المكتملة',
     'No students match your search' => 'لا يوجد طلاب يطابقون بحثك',
     'Students earn points by completing lessons and passing quizzes' => 'يكسب الطلاب النقاط بإكمال الدروس واجتياز الاختبارات',
+
+    // Logo
+    'Logo' => 'الشعار',
+    'No logo uploaded' => 'لم يتم رفع شعار',
+    'Upload a logo (PNG, JPG, SVG). Max 1MB.' => 'ارفع شعاراً (PNG, JPG, SVG). الحد الأقصى 1 ميجابايت.',
+    'Remove logo' => 'إزالة الشعار',
+    'Are you sure you want to remove the logo?' => 'هل أنت متأكد أنك تريد إزالة الشعار؟',
 ];

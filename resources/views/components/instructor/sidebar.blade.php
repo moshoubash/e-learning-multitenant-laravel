@@ -1,14 +1,21 @@
 @php
     $user = auth()->user();
     $currentLocale = app()->getLocale();
+    $logo = app(\App\Services\DesignConfigService::class)->getLogo();
 @endphp
 
 <aside class="fixed ltr:left-0 rtl:right-0 top-0 h-full w-[240px] hidden lg:flex flex-col bg-surface-container-lowest ltr:border-r-2 rtl:border-l-2 border-on-surface z-50">
     {{-- Brand Header --}}
     <div class="flex items-center h-16 gap-3 p-6 border-b-2 border-on-surface">
-        <div class="flex items-center justify-center w-10 h-10 neo-border bg-primary-container neo-radius">
-            <i class="fas fa-chalkboard-teacher text-on-surface"></i>
-        </div>
+        @if($logo)
+            <div class="h-10 w-auto flex-shrink-0 overflow-hidden">
+                <img src="{{ Storage::disk('s3')->url($logo) }}" alt="Logo" class="h-full w-auto object-contain">
+            </div>
+        @else
+            <div class="flex items-center justify-center w-10 h-10 neo-border bg-primary-container neo-radius">
+                <i class="fas fa-chalkboard-teacher text-on-surface"></i>
+            </div>
+        @endif
         <div>
             <h1 class="text-[16px] font-bold text-on-surface uppercase leading-none">{{ tenant('name') ?? 'GRID LMS' }}</h1>
             <p class="text-[10px] font-bold uppercase tracking-widest text-secondary mt-1">{{ __('messages.Instructor Portal') }}</p>

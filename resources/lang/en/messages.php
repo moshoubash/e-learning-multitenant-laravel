@@ -719,4 +719,11 @@ return [
     'Courses Completed' => 'Courses Completed',
     'No students match your search' => 'No students match your search',
     'Students earn points by completing lessons and passing quizzes' => 'Students earn points by completing lessons and passing quizzes',
+
+    // Logo
+    'Logo' => 'Logo',
+    'No logo uploaded' => 'No logo uploaded',
+    'Upload a logo (PNG, JPG, SVG). Max 1MB.' => 'Upload a logo (PNG, JPG, SVG). Max 1MB.',
+    'Remove logo' => 'Remove logo',
+    'Are you sure you want to remove the logo?' => 'Are you sure you want to remove the logo?',
 ];

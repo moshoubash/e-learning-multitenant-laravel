@@ -27,14 +27,18 @@
     </head>
     <body class="flex items-center justify-center min-h-screen p-4 font-sans antialiased">
 
+        @php $logo = app(\App\Services\DesignConfigService::class)->getLogo(); @endphp
         <main class="w-full max-w-md">
             {{-- Brand --}}
             <div class="mb-6 text-center">
-                <h1 class="text-6xl italic font-bold tracking-tighter uppercase text-on-surface">
-                    GRID
-                    {{-- <span class="px-2 ltr:ml-1 rtl:mr-1 -tracking-[0.02em] not-italic" style="background-color: var(--color-primary-container, #FFD600); border: 2px solid var(--color-on-surface, #0A0A0A); border-radius: 4px;">LMS</span> --}}
-                <sup class="px-2 -tracking-[0.02em] not-italic" style="background-color: var(--color-primary-container, #FFD600); border: 2px solid var(--color-on-surface, #0A0A0A); font-size: 10px; vertical-align: super; ">v1.0.0</sup>
-                </h1>
+                @if($logo)
+                    <img src="{{ Storage::disk('s3')->url($logo) }}" alt="Logo" class="h-12 mx-auto object-contain mb-2">
+                @else
+                    <h1 class="text-6xl italic font-bold tracking-tighter uppercase text-on-surface">
+                        GRID
+                    <sup class="px-2 -tracking-[0.02em] not-italic" style="background-color: var(--color-primary-container, #FFD600); border: 2px solid var(--color-on-surface, #0A0A0A); font-size: 10px; vertical-align: super; ">v1.0.0</sup>
+                    </h1>
+                @endif
                 <p class="mt-1 font-bold tracking-wide uppercase text-medium font-sm opacity-70 text-on-surface" style="font-size: 0.7em;">
                                         Learning Management System
                 </p>

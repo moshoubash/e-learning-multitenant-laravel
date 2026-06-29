@@ -23,6 +23,32 @@
     </header>
 
     <div class="p-[24px] max-w-[1400px] mx-auto space-y-6">
+        {{-- Logo Section --}}
+        <div class="p-6 bg-surface-container-lowest neo-border neo-radius">
+            <h3 class="mb-4 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Logo') }}</h3>
+            <div class="flex items-start gap-6">
+                <div class="w-32 h-16 neo-border neo-radius bg-surface-container-high flex items-center justify-center overflow-hidden flex-shrink-0">
+                    @if($currentLogo)
+                        <img src="{{ Storage::disk('s3')->url($currentLogo) }}" alt="Logo" class="h-full w-full object-contain p-1">
+                    @else
+                        <span class="text-[10px] font-bold uppercase text-secondary text-center px-2">{{ __('messages.No logo uploaded') }}</span>
+                    @endif
+                </div>
+                <div class="flex-1 min-w-0">
+                    <input type="file" wire:model="logo" accept="image/png,image/jpeg,image/svg+xml"
+                        class="block w-full text-sm text-on-surface file:mr-4 file:py-2 file:px-4 file:rounded file:border-2 file:border-on-surface file:text-xs file:font-bold file:bg-primary-container file:text-on-primary-container hover:file:bg-on-surface hover:file:text-white transition-colors file:cursor-pointer">
+                    <p class="mt-1 text-[10px] text-secondary italic">{{ __('messages.Upload a logo (PNG, JPG, SVG). Max 1MB.') }}</p>
+                    @error('logo') <span class="text-xs text-error mt-0.5 block font-bold">{{ $message }}</span> @enderror
+                    @if($currentLogo)
+                        <button type="button" wire:click="removeLogo" wire:confirm="{{ __('messages.Are you sure you want to remove the logo?') }}"
+                            class="mt-2 text-xs font-bold text-error hover:underline">
+                            {{ __('messages.Remove logo') }}
+                        </button>
+                    @endif
+                </div>
+            </div>
+        </div>
+
         {{-- Preview Banner --}}
         <div class="p-4 neo-border neo-radius bg-surface-container-lowest">
             <div class="flex items-center justify-between p-4 rounded" style="background-color: var(--color-primary-container, #FFD600);">

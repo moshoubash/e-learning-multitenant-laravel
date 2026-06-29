@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Tenant\DesignConfig;
+use Illuminate\Support\Facades\Storage;
 
 class DesignConfigService
 {
@@ -82,5 +83,41 @@ class DesignConfigService
         }
 
         return $css;
+    }
+
+    public function getLogo(): ?string
+    {
+        $config = DesignConfig::first();
+
+        return $config?->logo;
+    }
+
+    public function saveLogo(string $path): DesignConfig
+    {
+        $config = DesignConfig::first();
+
+        $oldLogo = $config?->logo;
+
+        if ($config) {
+            $config->update(['logo' => $path]);
+        } else {
+            $config = DesignConfig::create(['colors' => self::DEFAULTS, 'logo' => $path]);
+        }
+
+        if ($oldLogo && $oldLogo !== $path) {
+            Storage::disk('s3')->delete($oldLogo);
+        }
+
+        return $config;
+    }
+
+    public function deleteLogo(): void
+    {
+        $config = DesignConfig::first();
+
+        if ($config?->logo) {
+            Storage::disk('s3')->delete($config->logo);
+            $config->update(['logo' => null]);
+        }
     }
 }
