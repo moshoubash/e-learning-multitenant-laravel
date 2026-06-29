@@ -151,7 +151,8 @@ class Users extends Component
         ]);
 
         $path = $this->importFile->store('/');
-        $localPath = tempnam(sys_get_temp_dir(), 'import_');
+        $extension = $this->importFile->getClientOriginalExtension();
+        $localPath = tempnam(sys_get_temp_dir(), 'import_') . '.' . $extension;
         file_put_contents($localPath, Storage::disk('local')->get($path));
 
         $import = new UsersImport();
