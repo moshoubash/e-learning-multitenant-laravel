@@ -2,7 +2,7 @@
     <div class="flex items-center justify-between px-4 py-3 bg-surface-container">
         <div class="flex items-center">
             <i class="text-xs fas fa-question-circle text-on-surface ltr:mr-2 rtl:ml-2"></i>
-            <span class="text-sm font-bold text-on-surface">{{ $question->question }}</span>
+            <span class="text-sm font-bold text-on-surface" dir="auto">{{ $question->question }}</span>
             <span class="px-2 py-0.5 neo-border-sm neo-radius text-[10px] font-bold bg-primary-container/30 text-on-primary-container ltr:ml-2 rtl:mr-2">
                 {{ str_replace('_', ' ', __('messages.' . $question->type)) }}
             </span>
@@ -32,7 +32,7 @@
                 <div class="flex items-center justify-between px-4 py-2 transition-colors hover:bg-surface-container-high">
                     <div class="flex items-center">
                         <i class="fas {{ $option->is_correct ? 'fa-check-circle text-primary-container' : 'fa-circle text-secondary' }} ltr:mr-3 rtl:ml-3 text-xs"></i>
-                        <span class="text-sm text-on-surface">{{ $option->option_text }}</span>
+                        <span class="text-sm text-on-surface" dir="auto">{{ $option->option_text }}</span>
                         @if($option->is_correct)
                             <span class="px-2 py-0.5 neo-border-sm neo-radius text-[10px] font-bold bg-primary-container text-on-primary-container ltr:ml-2 rtl:mr-2">{{ __('messages.Correct') }}</span>
                         @endif

@@ -9,7 +9,7 @@
                     <form>
                         <div class="mb-4">
                             <label class="block mb-1 text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Option Text') }}</label>
-                            <input type="text" wire:model.lazy="optionCreateText"
+                            <input type="text" wire:model.lazy="optionCreateText" dir="auto"
                                 class="w-full px-3 py-2 neo-border-sm neo-radius bg-surface-container-low text-on-surface text-sm focus:outline-none focus:ring-0 placeholder:text-secondary">
                             @error('optionCreateText') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
                         </div>

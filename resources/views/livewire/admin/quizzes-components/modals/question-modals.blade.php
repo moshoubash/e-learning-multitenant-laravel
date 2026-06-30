@@ -10,7 +10,7 @@
                     <form>
                         <div class="mb-4">
                             <label class="block mb-1 text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Question Text') }}</label>
-                            <textarea wire:model.lazy="questionCreateText" rows="3"
+                            <textarea wire:model.lazy="questionCreateText" rows="3" dir="auto"
                                 class="w-full px-3 py-2 neo-border-sm neo-radius bg-surface-container-low text-on-surface text-sm focus:outline-none focus:ring-0 placeholder:text-secondary"></textarea>
                             @error('questionCreateText') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
                         </div>
@@ -59,7 +59,7 @@
                     <form>
                         <div class="mb-4">
                             <label class="block mb-1 text-xs font-bold uppercase tracking-widest text-on-surface">{{ __('messages.Question Text') }}</label>
-                            <textarea wire:model.lazy="questionEditText" rows="3"
+                            <textarea wire:model.lazy="questionEditText" rows="3" dir="auto"
                                 class="w-full px-3 py-2 neo-border-sm neo-radius bg-surface-container-low text-on-surface text-sm focus:outline-none focus:ring-0 placeholder:text-secondary"></textarea>
                             @error('questionEditText') <span class="text-xs text-error mt-1 block font-bold">{{ $message }}</span> @enderror
                         </div>

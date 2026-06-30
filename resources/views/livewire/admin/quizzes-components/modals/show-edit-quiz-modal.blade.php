@@ -72,7 +72,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <p class="mb-3 text-sm font-bold text-on-surface">{{ $question->question }}</p>
+                            <p class="mb-3 text-sm font-bold text-on-surface" dir="auto">{{ $question->question }}</p>
 
                             <div class="space-y-2 ltr:ml-4 rtl:mr-4">
                                 @forelse($question->options as $option)
@@ -85,7 +85,7 @@
                                             @else
                                                 <span class="flex items-center justify-center w-5 h-5 text-xs ltr:mr-2 rtl:ml-2 neo-border-sm"></span>
                                             @endif
-                                            <span class="{{ $option->is_correct ? 'font-bold' : 'text-on-surface' }} text-sm">
+                                            <span class="{{ $option->is_correct ? 'font-bold' : 'text-on-surface' }} text-sm" dir="auto">
                                                 {{ $option->option_text }}
                                             </span>
                                         </div>
