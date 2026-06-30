@@ -32,10 +32,10 @@
             {{-- Brand --}}
             <div class="mb-6 text-center">
                 @if($logo)
-                    <img src="{{ 'https://d1w6oovjx4x1vx.cloudfront.net/' .($logo) }}" alt="Logo" class="h-12 mx-auto object-contain mb-2">
+                    <img src="{{ 'https://d1w6oovjx4x1vx.cloudfront.net/' .($logo) }}" alt="Logo" class="object-contain h-12 mx-auto mb-2">
                 @else
                     <h1 class="text-6xl italic font-bold tracking-tighter uppercase text-on-surface">
-                        GRID
+                        {{ tenant()->name ?? 'GRID' }}
                     <sup class="px-2 -tracking-[0.02em] not-italic" style="background-color: var(--color-primary-container, #FFD600); border: 2px solid var(--color-on-surface, #0A0A0A); font-size: 10px; vertical-align: super; ">v1.0.0</sup>
                     </h1>
                 @endif
