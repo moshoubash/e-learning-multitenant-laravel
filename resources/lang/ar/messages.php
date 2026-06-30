@@ -756,4 +756,21 @@ return [
     'Upload a logo (PNG, JPG, SVG). Max 1MB.' => 'ارفع شعاراً (PNG, JPG, SVG). الحد الأقصى 1 ميجابايت.',
     'Remove logo' => 'إزالة الشعار',
     'Are you sure you want to remove the logo?' => 'هل أنت متأكد أنك تريد إزالة الشعار؟',
+
+    // YouTube Playlist Import
+    'Import YouTube Playlist' => 'استيراد قائمة تشغيل يوتيوب',
+    'Import Playlist' => 'استيراد قائمة تشغيل',
+    'Playlist URL' => 'رابط قائمة التشغيل',
+    'Paste a YouTube playlist URL to import all videos as lessons' => 'الصق رابط قائمة تشغيل يوتيوب لاستيراد جميع الفيديوهات كدروس',
+    'Fetch Playlist' => 'جلب قائمة التشغيل',
+    'Preview' => 'معاينة',
+    'videos' => 'فيديو',
+    'Refresh' => 'تحديث',
+    'Section Title' => 'عنوان القسم',
+    'Enter section title for the imported lessons' => 'أدخل عنوان القسم للدروس المستوردة',
+    'Import :count Lessons' => 'استيراد :count دروس',
+    'No videos found in this playlist.' => 'لم يتم العثور على فيديوهات في قائمة التشغيل هذه.',
+    'Found :count videos in playlist.' => 'تم العثور على :count فيديو في قائمة التشغيل.',
+    'Playlist imported successfully with :count lessons.' => 'تم استيراد قائمة التشغيل بنجاح مع :count دروس.',
+    'No sections yet. Click Add Section or Import Playlist to get started.' => 'لا توجد أقسام بعد. انقر على إضافة قسم أو استيراد قائمة تشغيل للبدء.',
 ];

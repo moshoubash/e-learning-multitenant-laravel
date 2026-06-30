@@ -726,4 +726,21 @@ return [
     'Upload a logo (PNG, JPG, SVG). Max 1MB.' => 'Upload a logo (PNG, JPG, SVG). Max 1MB.',
     'Remove logo' => 'Remove logo',
     'Are you sure you want to remove the logo?' => 'Are you sure you want to remove the logo?',
+
+    // YouTube Playlist Import
+    'Import YouTube Playlist' => 'Import YouTube Playlist',
+    'Import Playlist' => 'Import Playlist',
+    'Playlist URL' => 'Playlist URL',
+    'Paste a YouTube playlist URL to import all videos as lessons' => 'Paste a YouTube playlist URL to import all videos as lessons',
+    'Fetch Playlist' => 'Fetch Playlist',
+    'Preview' => 'Preview',
+    'videos' => 'videos',
+    'Refresh' => 'Refresh',
+    'Section Title' => 'Section Title',
+    'Enter section title for the imported lessons' => 'Enter section title for the imported lessons',
+    'Import :count Lessons' => 'Import :count Lessons',
+    'No videos found in this playlist.' => 'No videos found in this playlist.',
+    'Found :count videos in playlist.' => 'Found :count videos in playlist.',
+    'Playlist imported successfully with :count lessons.' => 'Playlist imported successfully with :count lessons.',
+    'No sections yet. Click Add Section or Import Playlist to get started.' => 'No sections yet. Click Add Section or Import Playlist to get started.',
 ];
