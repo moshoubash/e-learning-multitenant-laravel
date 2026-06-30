@@ -23,7 +23,9 @@
     </div>
 
     {{-- Navigation Links --}}
-    <nav class="flex-1 p-4 space-y-2 overflow-y-auto no-scrollbar">
+    <nav class="flex-1 p-4 space-y-2 overflow-y-auto no-scrollbar"
+         x-data x-init="$el.scrollTop = sessionStorage.getItem('sidebar-scroll-student') ?? 0"
+         @scroll="sessionStorage.setItem('sidebar-scroll-student', $el.scrollTop)">
         <a href="{{ route('tenant.dashboard') }}" wire:navigate
            class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.dashboard') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
             <i class="w-5 text-center fas fa-home"></i>
@@ -82,7 +84,7 @@
                 <p class="text-xs text-secondary">Student</p>
             </div>
             <div class="flex items-center gap-1">
-                <form method="POST" action="{{ route('logout') }}" class="inline">
+                <form method="POST" action="{{ route('logout') }}" class="inline" onsubmit="sessionStorage.removeItem('sidebar-scroll-student')">
                     @csrf
                     <button type="submit" class="flex items-center justify-center w-8 h-8 transition-colors text-error hover:bg-error hover:text-white neo-radius" title="{{ __('messages.Log Out') }}">
                         <i class="fas fa-sign-out-alt "></i>
