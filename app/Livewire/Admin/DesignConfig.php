@@ -4,11 +4,15 @@ namespace App\Livewire\Admin;
 
 use App\Services\DesignConfigService;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Rule;
 
 #[Layout('layouts.admin')]
 class DesignConfig extends Component
 {
+    use WithFileUploads;
+
     public string $primaryContainer = '#FFD600';
     public string $onSurface = '#0A0A0A';
     public string $surfaceContainerLowest = '#FFFFFF';
@@ -34,6 +38,9 @@ class DesignConfig extends Component
     public string $authSecondary = '#5f5e5e';
     public string $authBorder = '#0A0A0A';
     public string $authError = '#ba1a1a';
+
+    public $logo;
+    public ?string $currentLogo = null;
 
     public function mount(DesignConfigService $service)
     {
@@ -66,6 +73,8 @@ class DesignConfig extends Component
         $this->authSecondary = $colors['auth_secondary'] ?? '#5f5e5e';
         $this->authBorder = $colors['auth_border'] ?? '#0A0A0A';
         $this->authError = $colors['auth_error'] ?? '#ba1a1a';
+
+        $this->currentLogo = $service->getLogo();
     }
 
     public function save(DesignConfigService $service)
@@ -126,7 +135,24 @@ class DesignConfig extends Component
             'auth_error' => $this->authError,
         ]);
 
+        if ($this->logo) {
+            $this->validate([
+                'logo' => 'image|mimes:png,jpg,jpeg,svg|max:1024',
+            ]);
+
+            $path = $this->logo->store('tenant-logos', 's3');
+            $service->saveLogo($path);
+            $this->currentLogo = $path;
+            $this->logo = null;
+        }
+
         $this->js('window.location.reload()');
+    }
+
+    public function removeLogo(DesignConfigService $service)
+    {
+        $service->deleteLogo();
+        $this->currentLogo = null;
     }
 
     public function resetDefaults(DesignConfigService $service)

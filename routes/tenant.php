@@ -42,6 +42,7 @@ Route::middleware(['auth:tenant'])->group(function () {
     Route::get('/admin/logs', \App\Livewire\Admin\Logs::class)->middleware('role:admin')->name('tenant.admin.logs');
     Route::get('/admin/roles-permissions', \App\Livewire\Admin\RolesAndPermissions::class)->middleware('role:admin')->name('tenant.admin.roles-permissions');
     Route::get('/admin/smtp-settings', \App\Livewire\Admin\SmtpSettings::class)->middleware('role:admin')->name('tenant.admin.smtp-settings');
+    Route::get('/admin/leaderboard', \App\Livewire\Admin\LeaderboardMonitor::class)->middleware('role:admin')->name('tenant.admin.leaderboard');
 
     Route::livewire('/instructor/courses', 'instructor.courses')->middleware(['role:instructor', 'permission:view courses|create courses|edit courses|delete courses'])->name('tenant.instructor.courses');
     Route::livewire('/instructor/quizzes', 'instructor.quizzes')->middleware(['role:instructor', 'permission:view quizzes|create quizzes|edit quizzes|delete quizzes'])->name('tenant.instructor.quizzes');

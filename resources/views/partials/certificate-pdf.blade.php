@@ -212,7 +212,7 @@
     <div class="corner-br"></div>
     <div class="stamp">
         <div class="stamp-inner">
-            <span class="stamp-star">&#10039;</span>
+            <span class="stamp-star">&#10040;</span>
             <span class="stamp-word">Certified</span>
         </div>
     </div>

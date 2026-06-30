@@ -701,4 +701,58 @@ return [
     'Invalid role' => 'Invalid role',
     'Email already exists' => 'Email already exists',
     'and :count more' => 'and :count more',
+
+    // Leaderboard / Points
+    'points' => 'pts',
+    'Your Rank' => 'Your Rank',
+    'Points' => 'Points',
+    'No rankings yet' => 'No rankings yet',
+    'Complete lessons and quizzes to earn points' => 'Complete lessons and quizzes to earn points',
+
+    // Admin Leaderboard Monitor
+    'Leaderboard Monitor' => 'Leaderboard Monitor',
+    'Monitor student rankings and points' => 'Monitor student rankings and points',
+    'Students with points' => 'Students with points',
+    'Average Points' => 'Average Points',
+    'Highest Points' => 'Highest Points',
+    'Search by name or email...' => 'Search by name or email...',
+    'Courses Completed' => 'Courses Completed',
+    'No students match your search' => 'No students match your search',
+    'Students earn points by completing lessons and passing quizzes' => 'Students earn points by completing lessons and passing quizzes',
+
+    // Logo
+    'Logo' => 'Logo',
+    'No logo uploaded' => 'No logo uploaded',
+    'Upload a logo (PNG, JPG, SVG). Max 1MB.' => 'Upload a logo (PNG, JPG, SVG). Max 1MB.',
+    'Remove logo' => 'Remove logo',
+    'Are you sure you want to remove the logo?' => 'Are you sure you want to remove the logo?',
+
+    // YouTube Playlist Import
+    'Import YouTube Playlist' => 'Import YouTube Playlist',
+    'Import Playlist' => 'Import Playlist',
+    'Playlist URL' => 'Playlist URL',
+    'Paste a YouTube playlist URL to import all videos as lessons' => 'Paste a YouTube playlist URL to import all videos as lessons',
+    'Fetch Playlist' => 'Fetch Playlist',
+    'Preview' => 'Preview',
+    'videos' => 'videos',
+    'Refresh' => 'Refresh',
+    'Section Title' => 'Section Title',
+    'Enter section title for the imported lessons' => 'Enter section title for the imported lessons',
+    'Import :count Lessons' => 'Import :count Lessons',
+    'No videos found in this playlist.' => 'No videos found in this playlist.',
+    'Found :count videos in playlist.' => 'Found :count videos in playlist.',
+    'Playlist imported successfully with :count lessons.' => 'Playlist imported successfully with :count lessons.',
+    'No sections yet. Click Add Section or Import Playlist to get started.' => 'No sections yet. Click Add Section or Import Playlist to get started.',
+
+    // Enrollment
+    'Course Unavailable' => 'Course Unavailable',
+    'This course is no longer available' => 'This course is no longer available',
+
+    // Leaderboard Info
+    'How to earn points' => 'How to earn points',
+    'Complete a lesson' => 'Complete a lesson',
+    'Pass a quiz' => 'Pass a quiz',
+    'Complete a course' => 'Complete a course',
+    'Extra points for scoring 90% or higher on a quiz' => 'Extra points for scoring 90% or higher on a quiz',
+    'Bonus' => 'Bonus'
 ];

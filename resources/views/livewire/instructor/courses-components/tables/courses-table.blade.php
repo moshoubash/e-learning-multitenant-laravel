@@ -26,7 +26,7 @@
                         <td class="text-center rtl:pr-4 ltr:pl-4">
                             <button wire:click="toggleCourseExpand({{ $course->id }})"
                                 class="transition-colors text-secondary hover:text-on-primary-container">
-                                <i class="fas {{ $course->sections && count($course->sections) > 0 ? ($expandedCourses && in_array($course->id, $expandedCourses) ? 'fa-chevron-up' : 'fa-chevron-down') : 'fa-minus' }}"></i>
+                                <i class="fas {{ $expandedCourses && in_array($course->id, $expandedCourses) ? 'fa-chevron-up' : 'fa-chevron-down' }}"></i>
                             </button>
                         </td>
                         <td class="p-4">
@@ -74,22 +74,31 @@
                             </div>
                         </td>
                     </tr>
-                    @if($expandedCourses && in_array($course->id, $expandedCourses) && $course->sections && count($course->sections) > 0)
+                    @if($expandedCourses && in_array($course->id, $expandedCourses))
                         <tr>
                             <td colspan="7" class="p-0 bg-surface-container-low">
                                 <div class="p-4">
                                     <div class="flex items-center justify-between mb-3">
                                         <h4 class="text-xs font-bold tracking-widest uppercase text-secondary">{{ __('messages.Sections & Lessons') }}</h4>
-                                        <button wire:click="openSectionCreateModal({{ $course->id }})"
-                                            class="px-3 py-1 neo-border-sm neo-radius text-[10px] font-bold bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white transition-colors">
-                                            <i class="fas fa-plus ltr:mr-1 rtl:ml-1"></i>
-                                            {{ __('messages.Add Section') }}
-                                        </button>
+                                        <div class="flex items-center gap-2">
+                                            <button wire:click="openPlaylistImportModal({{ $course->id }})"
+                                                class="px-3 py-1 neo-border-sm neo-radius text-[10px] font-bold bg-surface-container-low text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors">
+                                                <i class="fab fa-youtube ltr:mr-1 rtl:ml-1 text-[#FF0000]"></i>
+                                                {{ __('messages.Import Playlist') }}
+                                            </button>
+                                            <button wire:click="openSectionCreateModal({{ $course->id }})"
+                                                class="px-3 py-1 neo-border-sm neo-radius text-[10px] font-bold bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white transition-colors">
+                                                <i class="fas fa-plus ltr:mr-1 rtl:ml-1"></i>
+                                                {{ __('messages.Add Section') }}
+                                            </button>
+                                        </div>
                                     </div>
                                     <div class="space-y-3">
-                                        @foreach($course->sections->sortBy('order') as $section)
+                                        @forelse($course->sections->sortBy('order') as $section)
                                             @include('livewire.instructor.courses-components.tables.partials.section-row', ['section' => $section, 'courseId' => $course->id])
-                                        @endforeach
+                                        @empty
+                                            <p class="text-xs italic text-secondary">{{ __('messages.No sections yet. Click Add Section or Import Playlist to get started.') }}</p>
+                                        @endforelse
                                     </div>
                                 </div>
                             </td>

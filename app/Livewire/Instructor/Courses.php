@@ -14,6 +14,7 @@ use App\Services\Instructor\CourseService;
 use App\Services\Instructor\LessonService;
 use App\Services\Instructor\QuizService;
 use App\Services\Instructor\SectionService;
+use App\Services\YouTubeService;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -162,6 +163,13 @@ class Courses extends Component
     public $quizEditPassPercentage = 70;
     public $quizEditCanReattempt = false;
     public $quizEditMaxAttempts = 1;
+
+    // Playlist import
+    public $showPlaylistImportModal = false;
+    public $playlistUrl = '';
+    public $playlistVideos = [];
+    public $playlistImportSectionTitle = '';
+    public $playlistImportCourseId = null;
 
     // max order in sections
     public $maxOrderInSections = 0;
@@ -700,6 +708,95 @@ class Courses extends Component
     protected function assignmentService(): AssignmentService
     {
         return new AssignmentService();
+    }
+
+    //  PLAYLIST IMPORT METHODS
+
+    public function openPlaylistImportModal($courseId)
+    {
+        $this->playlistImportCourseId = $courseId;
+        $this->playlistUrl = '';
+        $this->playlistVideos = [];
+        $this->playlistImportSectionTitle = '';
+        $this->showPlaylistImportModal = true;
+    }
+
+    public function closePlaylistImportModal()
+    {
+        $this->showPlaylistImportModal = false;
+        $this->playlistUrl = '';
+        $this->playlistVideos = [];
+        $this->playlistImportSectionTitle = '';
+        $this->playlistImportCourseId = null;
+    }
+
+    public function fetchPlaylist()
+    {
+        $this->validate([
+            'playlistUrl' => 'required|url',
+        ]);
+
+        try {
+            $this->playlistVideos = app(YouTubeService::class)->getPlaylistVideosFromUrl($this->playlistUrl);
+        } catch (\Exception $e) {
+            Toaster::error($e->getMessage());
+            $this->playlistVideos = [];
+            return;
+        }
+
+        if (empty($this->playlistVideos)) {
+            Toaster::error(__('messages.No videos found in this playlist.'));
+            return;
+        }
+
+        Toaster::success(__('messages.Found :count videos in playlist.', ['count' => count($this->playlistVideos)]));
+    }
+
+    public function importPlaylist()
+    {
+        $this->validate([
+            'playlistUrl' => 'required|url',
+            'playlistImportSectionTitle' => 'required|string|max:255',
+        ]);
+
+        if (empty($this->playlistVideos)) {
+            try {
+                $this->playlistVideos = app(YouTubeService::class)->getPlaylistVideosFromUrl($this->playlistUrl);
+            } catch (\Exception $e) {
+                Toaster::error($e->getMessage());
+                return;
+            }
+        }
+
+        if (empty($this->playlistVideos)) {
+            Toaster::error(__('messages.No videos found in this playlist.'));
+            return;
+        }
+
+        try {
+            \Illuminate\Support\Facades\DB::transaction(function () {
+                $maxOrder = Section::where('course_id', $this->playlistImportCourseId)->max('order') ?? 0;
+
+                $section = app(SectionService::class)->createSection($this->playlistImportCourseId, [
+                    'title' => $this->playlistImportSectionTitle,
+                    'order' => $maxOrder + 1,
+                ]);
+
+                foreach ($this->playlistVideos as $index => $video) {
+                    app(LessonService::class)->createLesson($section->id, [
+                        'title' => $video['title'],
+                        'type' => 'video',
+                        'video_url' => $video['video_url'],
+                        'order' => $index + 1,
+                    ]);
+                }
+            });
+
+            $this->closePlaylistImportModal();
+            Toaster::success(__('messages.Playlist imported successfully with :count lessons.', ['count' => count($this->playlistVideos)]));
+        } catch (\Exception $e) {
+            Toaster::error($e->getMessage());
+        }
     }
 
     //  LESSON METHODS

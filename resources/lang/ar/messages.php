@@ -731,4 +731,58 @@ return [
     'Invalid role' => 'دور غير صالح',
     'Email already exists' => 'البريد الإلكتروني موجود بالفعل',
     'and :count more' => 'و :count أخرى',
+
+    // Leaderboard / Points
+    'points' => 'نقطة',
+    'Your Rank' => 'ترتيبك',
+    'Points' => 'النقاط',
+    'No rankings yet' => 'لا توجد تصنيفات بعد',
+    'Complete lessons and quizzes to earn points' => 'أكمل الدروس والاختبارات لكسب النقاط',
+
+    // Admin Leaderboard Monitor
+    'Leaderboard Monitor' => 'مراقبة جدول القيادة',
+    'Monitor student rankings and points' => 'مراقبة تصنيفات الطلاب ونقاطهم',
+    'Students with points' => 'الطلاب الحاصلون على نقاط',
+    'Average Points' => 'متوسط النقاط',
+    'Highest Points' => 'أعلى نقاط',
+    'Search by name or email...' => 'البحث بالاسم أو البريد الإلكتروني...',
+    'Courses Completed' => 'الدورات المكتملة',
+    'No students match your search' => 'لا يوجد طلاب يطابقون بحثك',
+    'Students earn points by completing lessons and passing quizzes' => 'يكسب الطلاب النقاط بإكمال الدروس واجتياز الاختبارات',
+
+    // Logo
+    'Logo' => 'الشعار',
+    'No logo uploaded' => 'لم يتم رفع شعار',
+    'Upload a logo (PNG, JPG, SVG). Max 1MB.' => 'ارفع شعاراً (PNG, JPG, SVG). الحد الأقصى 1 ميجابايت.',
+    'Remove logo' => 'إزالة الشعار',
+    'Are you sure you want to remove the logo?' => 'هل أنت متأكد أنك تريد إزالة الشعار؟',
+
+    // YouTube Playlist Import
+    'Import YouTube Playlist' => 'استيراد قائمة تشغيل يوتيوب',
+    'Import Playlist' => 'استيراد قائمة تشغيل',
+    'Playlist URL' => 'رابط قائمة التشغيل',
+    'Paste a YouTube playlist URL to import all videos as lessons' => 'الصق رابط قائمة تشغيل يوتيوب لاستيراد جميع الفيديوهات كدروس',
+    'Fetch Playlist' => 'جلب قائمة التشغيل',
+    'Preview' => 'معاينة',
+    'videos' => 'فيديو',
+    'Refresh' => 'تحديث',
+    'Section Title' => 'عنوان القسم',
+    'Enter section title for the imported lessons' => 'أدخل عنوان القسم للدروس المستوردة',
+    'Import :count Lessons' => 'استيراد :count دروس',
+    'No videos found in this playlist.' => 'لم يتم العثور على فيديوهات في قائمة التشغيل هذه.',
+    'Found :count videos in playlist.' => 'تم العثور على :count فيديو في قائمة التشغيل.',
+    'Playlist imported successfully with :count lessons.' => 'تم استيراد قائمة التشغيل بنجاح مع :count دروس.',
+    'No sections yet. Click Add Section or Import Playlist to get started.' => 'لا توجد أقسام بعد. انقر على إضافة قسم أو استيراد قائمة تشغيل للبدء.',
+
+    // Enrollment
+    'Course Unavailable' => 'الدورة غير متاحة',
+    'This course is no longer available' => 'هذه الدورة غير متاحة حالياً',
+
+    // Leaderboard Info
+    'How to earn points' => 'كيفية كسب النقاط',
+    'Complete a lesson' => 'أكمل درساً',
+    'Pass a quiz' => 'اجتز اختباراً',
+    'Complete a course' => 'أكمل دورة',
+    'Extra points for scoring 90% or higher on a quiz' => 'نقاط إضافية عند تحقيق 90% أو أعلى في الاختبار',
+    'Bonus' => 'زيادة'
 ];

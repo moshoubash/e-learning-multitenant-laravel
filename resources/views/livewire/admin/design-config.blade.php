@@ -11,7 +11,7 @@
         </div>
         <div class="flex items-center gap-2 mt-3">
             <button wire:click="resetDefaults"
-                class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-surface-container text-on-primary-container hover:bg-on-surface hover:text-white">
+                class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-surface-container text-surface-container-low hover:bg-on-surface hover:text-white">
                 {{ __('messages.Reset Defaults') }}
             </button>
             <button wire:click="save"
@@ -23,6 +23,32 @@
     </header>
 
     <div class="p-[24px] max-w-[1400px] mx-auto space-y-6">
+        {{-- Logo Section --}}
+        <div class="p-6 bg-surface-container-lowest neo-border neo-radius">
+            <h3 class="mb-4 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Logo') }}</h3>
+            <div class="flex items-start gap-6">
+                <div class="flex items-center justify-center flex-shrink-0 w-32 h-16 overflow-hidden neo-border neo-radius bg-surface-container-high">
+                    @if($currentLogo)
+                        <img src="{{ 'https://d1w6oovjx4x1vx.cloudfront.net/' .($currentLogo) }}" alt="Logo" class="object-contain w-full h-full p-1">
+                    @else
+                        <span class="text-[10px] font-bold uppercase text-secondary text-center px-2">{{ __('messages.No logo uploaded') }}</span>
+                    @endif
+                </div>
+                <div class="flex-1 min-w-0">
+                    <input type="file" wire:model="logo" accept="image/png,image/jpeg,image/svg+xml"
+                        class="block w-full text-sm transition-colors text-on-surface file:mr-4 file:py-2 file:px-4 file:rounded file:border-2 file:border-on-surface file:text-xs file:font-bold file:bg-primary-container file:text-on-primary-container hover:file:bg-on-surface hover:file:text-white file:cursor-pointer">
+                    <p class="mt-1 text-[10px] text-secondary italic">{{ __('messages.Upload a logo (PNG, JPG, SVG). Max 1MB.') }}</p>
+                    @error('logo') <span class="text-xs text-error mt-0.5 block font-bold">{{ $message }}</span> @enderror
+                    @if($currentLogo)
+                        <button type="button" wire:click="removeLogo" wire:confirm="{{ __('messages.Are you sure you want to remove the logo?') }}"
+                            class="mt-2 text-xs font-bold text-error hover:underline">
+                            {{ __('messages.Remove logo') }}
+                        </button>
+                    @endif
+                </div>
+            </div>
+        </div>
+
         {{-- Preview Banner --}}
         <div class="p-4 neo-border neo-radius bg-surface-container-lowest">
             <div class="flex items-center justify-between p-4 rounded" style="background-color: var(--color-primary-container, #FFD600);">

@@ -1,14 +1,21 @@
 @php
     $user = auth()->user();
     $currentLocale = app()->getLocale();
+    $logo = app(\App\Services\DesignConfigService::class)->getLogo();
 @endphp
 
 <aside class="fixed ltr:left-0 rtl:right-0 top-0 h-full w-[240px] hidden lg:flex flex-col bg-surface-container-lowest ltr:border-r-2 rtl:border-l-2 border-on-surface z-50">
     {{-- Brand Header --}}
     <div class="flex items-center h-16 gap-3 p-6 border-b-2 border-on-surface">
-        <div class="flex items-center justify-center w-10 h-10 neo-border bg-primary-container neo-radius">
-            <i class="fas fa-shield-alt text-on-surface"></i>
-        </div>
+        @if($logo)
+            <div class="h-10 w-auto flex-shrink-0 overflow-hidden">
+                <img src="{{ 'https://d1w6oovjx4x1vx.cloudfront.net/' .($logo) }}" alt="Logo" class="h-full w-auto object-contain">
+            </div>
+        @else
+            <div class="flex items-center justify-center w-10 h-10 neo-border bg-primary-container neo-radius">
+                <i class="fas fa-shield-alt text-on-surface"></i>
+            </div>
+        @endif
         <div>
             <h1 class="text-[16px] font-bold text-on-surface uppercase leading-none">{{ tenant('name') ?? 'GRID LMS' }}</h1>
             <p class="text-[10px] font-bold uppercase tracking-widest text-secondary mt-1">{{ __('messages.Admin Panel') }}</p>
@@ -16,7 +23,9 @@
     </div>
 
     {{-- Navigation Links --}}
-    <nav class="flex-1 p-4 space-y-2 overflow-y-auto no-scrollbar">
+    <nav class="flex-1 p-4 space-y-2 overflow-y-auto no-scrollbar"
+         x-data x-init="$el.scrollTop = sessionStorage.getItem('sidebar-scroll-admin') ?? 0"
+         @scroll="sessionStorage.setItem('sidebar-scroll-admin', $el.scrollTop)">
         <a href="{{ route('tenant.dashboard') }}" wire:navigate
            class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.dashboard') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
             <i class="w-5 text-center fas fa-home"></i>
@@ -75,6 +84,11 @@
             <i class="w-5 text-center fas fa-envelope"></i>
             <span class="text-[14px] font-medium">{{ __('messages.SMTP') }}</span>
         </a>
+        <a href="{{ route('tenant.admin.leaderboard') }}" wire:navigate
+            class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.admin.leaderboard*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
+            <i class="w-5 text-center fas fa-trophy"></i>
+            <span class="text-[14px] font-medium">{{ __('messages.Leaderboard') }}</span>
+        </a>
         <a href="{{ route('tenant.admin.logs') }}" wire:navigate
             class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.admin.logs*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
             <i class="w-5 text-center fas fa-file-alt"></i>
@@ -105,7 +119,7 @@
             </div>
             <div class="flex items-center gap-1">
 
-                <form method="POST" action="{{ route('logout') }}" class="inline">
+                <form method="POST" action="{{ route('logout') }}" class="inline" onsubmit="sessionStorage.removeItem('sidebar-scroll-admin')">
                     @csrf
                     <button type="submit" class="flex items-center justify-center w-8 h-8 transition-colors text-error hover:bg-error hover:text-white neo-radius" title="{{ __('messages.Log Out') }}">
                         <i class=" fas fa-sign-out-alt"></i>

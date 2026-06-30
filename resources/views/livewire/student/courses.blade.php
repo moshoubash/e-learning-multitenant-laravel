@@ -125,7 +125,7 @@
                                         class="px-5 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
                                         <i class="mr-2 fas fa-graduation-cap"></i>
                                         @if($selectedCourseData->price == 0)
-                                            {{ __('messages.Enroll for Free') }}
+                                            {{ __('messages.Enroll Now') }}
                                         @else
                                             {{ __('messages.Enroll Now') }} - ${{ number_format($selectedCourseData->price, 2) }}
                                         @endif

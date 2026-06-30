@@ -27,6 +27,7 @@
         @include('livewire.instructor.courses-components.modals.lessons.show-edit-modal')
         @include('livewire.instructor.courses-components.modals.lessons.show-delete-modal')
         @include('livewire.instructor.courses-components.modals.lessons.show-restore-modal')
+        @include('livewire.instructor.courses-components.modals.lessons.show-playlist-import-modal')
 
         @include('livewire.instructor.courses-components.modals.assignments.show-create-modal')
         @include('livewire.instructor.courses-components.modals.assignments.show-edit-modal')

@@ -7,6 +7,7 @@ use App\Models\Tenant\Course;
 use App\Models\Tenant\Enrollment;
 use App\Models\Tenant\Lesson;
 use App\Models\Tenant\LessonProgress;
+use App\Services\Student\PointsService;
 use Illuminate\Support\Facades\Cache;
 
 class CourseContentService
@@ -70,6 +71,8 @@ class CourseContentService
         if ($lesson && $lesson->section) {
             $this->dispatchProgressRecalculation($lesson->section->course_id, $userId);
         }
+
+        app(PointsService::class)->awardLessonComplete($userId, $lessonId);
 
         return $progress;
     }

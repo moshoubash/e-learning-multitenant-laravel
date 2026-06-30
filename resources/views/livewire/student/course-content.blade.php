@@ -6,7 +6,7 @@
                 <a href="{{ route('tenant.student.courses') }}" class="transition-colors text-secondary hover:text-on-surface">
                     <i class="text-lg fas fa-arrow-left"></i>
                 </a>
-                <h2 class="text-[24px] font-bold text-on-surface leading-none ">{{ $course->title ?? __('messages.Course') }}</h2>
+                <h2 class="text-[24px] font-bold text-on-surface leading-none " dir="auto">{{ $course->title ?? __('messages.Course') }}</h2>
             </div>
             <div class="flex items-center gap-3">
                 @livewire('shared.notification-bell')
@@ -23,7 +23,7 @@
                     <a href="{{ route('tenant.student.courses') }}" class="transition-colors text-secondary hover:text-on-surface">
                         <i class="text-lg fas fa-arrow-left"></i>
                     </a>
-                    <h2 class="text-[19px] font-bold text-on-surface leading-none ">{{ $course->title ?? __('messages.Course') }}</h2>
+                    <h2 class="text-[19px] font-bold text-on-surface leading-none " dir="auto">{{ $course->title ?? __('messages.Course') }}</h2>
                 </div>
                 <div>
                     @livewire('shared.notification-bell')
@@ -47,8 +47,8 @@
                         <div class="p-[24px]">
                             <div class="flex items-center justify-between mb-4">
                                 <div>
-                                    <h3 class="text-sm font-bold text-on-surface">{{ $selectedAssignment->title }}</h3>
-                                    <p class="text-xs text-secondary">{{ $selectedAssignment->section->title ?? __('messages.Section') }}</p>
+                                    <h3 class="text-sm font-bold text-on-surface" dir="auto">{{ $selectedAssignment->title }}</h3>
+                                    <p class="text-xs text-secondary" dir="auto">{{ $selectedAssignment->section->title ?? __('messages.Section') }}</p>
                                 </div>
                                 <button wire:click="$set('selectedAssignment', null)"
                                     class="px-4 py-2 text-xs font-bold transition-colors neo-border-sm neo-radius text-on-surface bg-surface-container hover:bg-on-surface hover:text-white">
@@ -120,7 +120,7 @@
                                                 <div class="flex items-center">
                                                     <i class="fas fa-file text-secondary ltr:mr-3 rtl:ml-3"></i>
                                                     <div>
-                                                        <span class="text-sm font-medium text-on-surface">{{ $attachment->file_name }}</span>
+                                                        <span class="text-sm font-medium text-on-surface" dir="auto">{{ $attachment->file_name }}</span>
                                                         <span class="text-xs text-secondary ltr:ml-2 rtl:mr-2">({{ number_format($attachment->size / 1024, 1) }} KB)</span>
                                                     </div>
                                                 </div>
@@ -274,7 +274,7 @@
                             <div class="flex items-center justify-center bg-on-surface aspect-video">
                                 <div class="text-center">
                                     <i class="mb-4 text-5xl fas fa-play-circle text-white/50"></i>
-                                    <p class="text-lg font-bold text-white">{{ $selectedLesson->title }}</p>
+                                    <p class="text-lg font-bold text-white" dir="auto">{{ $selectedLesson->title }}</p>
                                     <p class="mt-2 text-xs text-white/50">{{ __('messages.Video content - no video assigned yet') }}</p>
                                 </div>
                             </div>
@@ -282,7 +282,7 @@
                             <div class="flex items-center justify-center bg-on-surface aspect-video">
                                 <div class="text-center">
                                     <i class="mb-4 text-5xl fas fa-book-open text-white/50"></i>
-                                    <p class="text-lg font-bold text-white">{{ $selectedLesson->title }}</p>
+                                    <p class="text-lg font-bold text-white" dir="auto">{{ $selectedLesson->title }}</p>
                                     <p class="mt-2 text-xs text-white/50">
                                         @if($selectedLesson->type === 'text')
                                             {{ __('messages.Text Lesson') }}
@@ -298,8 +298,8 @@
                         <div class="p-[24px]">
                             <div class="flex items-center justify-between mb-4">
                                 <div>
-                                    <h3 class="text-sm font-bold text-on-surface">{{ $selectedLesson->title }}</h3>
-                                    <p class="text-xs text-secondary">{{ $selectedLesson->section->title ?? __('messages.Section') }}</p>
+                                    <h3 class="text-sm font-bold text-on-surface" dir="auto">{{ $selectedLesson->title }}</h3>
+                                    <p class="text-xs text-secondary" dir="auto">{{ $selectedLesson->section->title ?? __('messages.Section') }}</p>
                                 </div>
                                 @if(!$this->isLessonCompleted($selectedLesson->id))
                                     <button wire:click="markLessonComplete"
@@ -329,7 +329,7 @@
                             @endphp
 
                             @if($selectedLesson->type === 'text' || ($selectedLesson->type === 'video' && $selectedLesson->content))
-                                <div class="text-sm text-on-surface {{ $isContainEnglish ? 'text-left' : 'text-right' }}">
+                                <div class="text-sm text-on-surface" dir="auto">
                                     {!! nl2br($selectedLesson->content) !!}
                                 </div>
                             @elseif($selectedLesson->type === 'quiz')
@@ -373,7 +373,7 @@
                                         @else
                                             <i class="fas fa-chevron-right fa-chevron-left text-secondary text-xs transition-transform ltr:mr-2 rtl:ml-2 {{ $this->isSectionExpanded($section->id) ? 'rotate-90' : '' }}"></i>
                                         @endif
-                                        <span class="text-xs font-bold text-on-surface">{{ $section->title }}</span>
+                                        <span class="text-xs font-bold text-on-surface" dir="auto">{{ $section->title }}</span>
                                     </div>
                                     <span class="text-[10px] font-bold uppercase tracking-widest text-secondary">{{ $section->lessons->count() }}</span>
                                 </div>
@@ -394,7 +394,7 @@
                                                         @else
                                                             <i class="text-xs fas fa-file text-on-primary-container ltr:mr-3 rtl:ml-3"></i>
                                                         @endif
-                                                        <span class="text-xs {{ $selectedLesson && $selectedLesson->id === $lesson->id ? 'font-bold text-on-primary-container' : 'text-on-surface' }}">
+                                                        <span class="text-xs {{ $selectedLesson && $selectedLesson->id === $lesson->id ? 'font-bold text-on-primary-container' : 'text-on-surface' }}" dir="auto">
                                                             {{ $lesson->title }}
                                                         </span>
                                                     </div>
@@ -414,7 +414,7 @@
                                                         <div class="flex items-center justify-between">
                                                             <div class="flex items-center">
                                                                 <i class="text-xs fas fa-tasks text-on-primary-container ltr:mr-3 rtl:ml-3"></i>
-                                                                <span class="text-xs {{ $selectedAssignment && $selectedAssignment->id === $assignment->id ? 'font-bold text-on-primary-container' : 'text-on-surface' }}">
+                                                                <span class="text-xs {{ $selectedAssignment && $selectedAssignment->id === $assignment->id ? 'font-bold text-on-primary-container' : 'text-on-surface' }}" dir="auto">
                                                                     {{ $assignment->title }}
                                                                 </span>
                                                             </div>
@@ -435,7 +435,7 @@
                                                     class="flex items-center justify-between p-3 transition-colors cursor-pointer hover:bg-surface-container-high">
                                                     <div class="flex items-center">
                                                         <i class="text-xs fas fa-clipboard-list text-on-primary-container ltr:mr-3 rtl:ml-3"></i>
-                                                        <span class="text-xs text-on-surface">{{ $section->quiz->title }}</span>
+                                                        <span class="text-xs text-on-surface" dir="auto">{{ $section->quiz->title }}</span>
                                                     </div>
                                                     <span class="text-[10px] text-secondary font-bold">{{ $section->quiz->questions->count() }} {{ __('messages.questions') }}</span>
                                                 </a>

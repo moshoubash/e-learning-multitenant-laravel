@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DesignConfig extends Model
 {
-    protected $fillable = ['colors'];
+    protected $fillable = ['colors', 'logo'];
 
     protected function casts(): array
     {

@@ -8,6 +8,7 @@ use App\Models\Tenant\User;
 use App\Notifications\QuizReattemptAvailable;
 use App\Notifications\QuizResult;
 use App\Notifications\QuizSubmitted;
+use App\Services\Student\PointsService;
 
 class QuizTakingService
 {
@@ -86,6 +87,10 @@ class QuizTakingService
             'passed' => $result['passed'],
             'submitted_at' => now(),
         ]);
+
+        if ($result['passed']) {
+            app(PointsService::class)->awardQuizPass($userId, $quizId, $result['score']);
+        }
 
         $quiz->load('section.course.instructor');
         $student = User::find($userId);

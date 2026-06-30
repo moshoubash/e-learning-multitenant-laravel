@@ -56,6 +56,11 @@ class User extends Authenticatable
         return $this->hasMany(QuizAttempt::class);
     }
 
+    public function pointsTransactions(): HasMany
+    {
+        return $this->hasMany(PointsTransaction::class);
+    }
+
     public function isAdmin(): bool
     {
         return $this->hasRole('admin');
