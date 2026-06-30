@@ -9,7 +9,12 @@
             <div class="flex items-center gap-2">
                 @livewire('shared.notification-bell')
                 <a href="{{ route('tenant.student.courses') }}" class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
-                    {{ __('messages.Browse More') }} <i class="ml-1 fas fa-arrow-right"></i>
+                    {{ __('messages.Browse More') }}
+                    @if(app()->getLocale() == 'ar')
+                        <i class="mr-1 fas fa-arrow-left"></i>
+                    @else
+                        <i class="ml-1 fas fa-arrow-right"></i>
+                    @endif
                 </a>
             </div>
         </div>
@@ -26,7 +31,12 @@
             </div>
             <div class="flex items-center gap-2 mt-3">
                 <a href="{{ route('tenant.student.courses') }}" class="inline-flex items-center px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
-                    {{ __('messages.Browse More') }} <i class="ml-1 fas fa-arrow-right"></i>
+                    {{ __('messages.Browse More') }}
+                    @if(app()->getLocale() == 'ar')
+                        <i class="mr-1 fas fa-arrow-left"></i>
+                    @else
+                        <i class="ml-1 fas fa-arrow-right"></i>
+                    @endif
                 </a>
             </div>
         </div>
