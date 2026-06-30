@@ -773,4 +773,8 @@ return [
     'Found :count videos in playlist.' => 'تم العثور على :count فيديو في قائمة التشغيل.',
     'Playlist imported successfully with :count lessons.' => 'تم استيراد قائمة التشغيل بنجاح مع :count دروس.',
     'No sections yet. Click Add Section or Import Playlist to get started.' => 'لا توجد أقسام بعد. انقر على إضافة قسم أو استيراد قائمة تشغيل للبدء.',
+
+    // Enrollment
+    'Course Unavailable' => 'الدورة غير متاحة',
+    'This course is no longer available' => 'هذه الدورة غير متاحة حالياً',
 ];

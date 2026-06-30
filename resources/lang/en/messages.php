@@ -743,4 +743,8 @@ return [
     'Found :count videos in playlist.' => 'Found :count videos in playlist.',
     'Playlist imported successfully with :count lessons.' => 'Playlist imported successfully with :count lessons.',
     'No sections yet. Click Add Section or Import Playlist to get started.' => 'No sections yet. Click Add Section or Import Playlist to get started.',
+
+    // Enrollment
+    'Course Unavailable' => 'Course Unavailable',
+    'This course is no longer available' => 'This course is no longer available',
 ];

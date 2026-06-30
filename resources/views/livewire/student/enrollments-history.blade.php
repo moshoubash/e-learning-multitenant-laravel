@@ -34,9 +34,14 @@
 
             <div class="divide-y-2 divide-on-surface/10">
                 @forelse($enrollments as $enrollment)
-                    <div class="p-[24px] hover:bg-surface-container-high transition-colors">
+                    @php $courseDeleted = !$enrollment->course || $enrollment->course->trashed(); @endphp
+                    <div class="p-[24px] hover:bg-surface-container-high transition-colors {{ $courseDeleted ? 'opacity-60' : '' }}">
                         <div class="flex items-start gap-4">
-                            @if($enrollment->course->thumbnail)
+                            @if($courseDeleted)
+                                <div class="flex items-center justify-center w-20 h-16 neo-border-sm neo-radius bg-surface-container shrink-0">
+                                    <i class="text-xl text-secondary fas fa-ban"></i>
+                                </div>
+                            @elseif($enrollment->course->thumbnail)
                                 <img src="{{ $enrollment->course->thumbnail }}" alt="{{ $enrollment->course->title }}"
                                     class="object-cover w-20 h-16 neo-border-sm neo-radius shrink-0">
                             @else
@@ -47,9 +52,11 @@
                             <div class="flex-1 min-w-0">
                                 <div class="flex items-start justify-between gap-4">
                                     <div>
-                                        <h3 class="font-bold text-on-surface">{{ $enrollment->course->title ?? '—' }}</h3>
+                                        <h3 class="font-bold text-on-surface">
+                                            {{ $courseDeleted ? __('messages.Course Unavailable') : $enrollment->course->title }}
+                                        </h3>
                                         <p class="text-xs text-secondary mt-0.5">
-                                            {{ __('messages.By') }} {{ $enrollment->course->instructor->name ?? '—' }}
+                                            {{ $courseDeleted ? __('messages.This course is no longer available') : __('messages.By') . ' ' . ($enrollment->course->instructor->name ?? '—') }}
                                         </p>
                                     </div>
                                     @php
@@ -82,7 +89,7 @@
                                         <div class="h-full transition-all duration-300 {{ $enrollment->progress_percent >= 100 ? 'bg-primary-container' : 'bg-on-surface' }}" style="width: {{ $enrollment->progress_percent }}%"></div>
                                     </div>
                                     <span class="text-xs font-bold text-on-surface shrink-0">{{ $enrollment->progress_percent }}%</span>
-                                    @if($enrollment->isActive() || $enrollment->isCompleted())
+                                    @if(!$courseDeleted && ($enrollment->isActive() || $enrollment->isCompleted()))
                                         <a href="{{ route('tenant.student.course', ['course' => $enrollment->course->slug]) }}"
                                             class="px-3 py-1 text-[10px] font-bold uppercase tracking-widest neo-border-sm bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white transition-colors shrink-0">
                                             <i class="fas fa-play ltr:mr-1 rtl:ml-1"></i>

@@ -25,7 +25,9 @@ class EnrollmentsHistory extends Component
 
     public function render()
     {
-        $query = Enrollment::with(['course.instructor'])
+        $query = Enrollment::with(['course' => function ($q) {
+                $q->withTrashed()->with('instructor');
+            }])
             ->where('user_id', auth()->id());
 
         if ($this->statusFilter) {
