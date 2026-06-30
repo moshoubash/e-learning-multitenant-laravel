@@ -23,6 +23,31 @@
             </div>
         @endif
 
+        <div class="mb-6 p-4 neo-border-sm neo-radius bg-surface-container-high">
+            <h4 class="text-xs font-bold uppercase tracking-widest text-on-surface mb-3">
+                <i class="fas fa-info-circle ltr:mr-1 rtl:ml-1"></i>
+                {{ __('messages.How to earn points') }}
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-secondary">
+                <div class="flex items-center gap-2">
+                    <span class="flex items-center justify-center w-7 h-7 neo-border-sm neo-radius bg-primary-container text-on-primary-container font-bold text-[10px] shrink-0">+10</span>
+                    <span>{{ __('messages.Complete a lesson') }}</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="flex items-center justify-center w-7 h-7 neo-border-sm neo-radius bg-primary-container text-on-primary-container font-bold text-[10px] shrink-0">+50</span>
+                    <span>{{ __('messages.Pass a quiz') }}</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="flex items-center justify-center w-7 h-7 neo-border-sm neo-radius bg-primary-container text-on-primary-container font-bold text-[10px] shrink-0">+100</span>
+                    <span>{{ __('messages.Complete a course') }}</span>
+                </div>
+            </div>
+            <p class="mt-2 text-[10px] text-secondary/70 italic">
+                <i class="fas fa-star ltr:mr-1 rtl:ml-1 text-[#FFD600]"></i>
+                {{ __('messages.Bonus') }}: <strong>+10</strong> {{ __('messages.Extra points for scoring 90% or higher on a quiz') }}
+            </p>
+        </div>
+
         <div class="neo-border neo-radius bg-surface-container-lowest overflow-x-auto">
             <table class="w-full border-collapse">
                 <thead>

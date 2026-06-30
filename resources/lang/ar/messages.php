@@ -777,4 +777,12 @@ return [
     // Enrollment
     'Course Unavailable' => 'الدورة غير متاحة',
     'This course is no longer available' => 'هذه الدورة غير متاحة حالياً',
+
+    // Leaderboard Info
+    'How to earn points' => 'كيفية كسب النقاط',
+    'Complete a lesson' => 'أكمل درساً',
+    'Pass a quiz' => 'اجتز اختباراً',
+    'Complete a course' => 'أكمل دورة',
+    'Extra points for scoring 90% or higher on a quiz' => 'نقاط إضافية عند تحقيق 90% أو أعلى في الاختبار',
+    'Bonus' => 'زيادة'
 ];

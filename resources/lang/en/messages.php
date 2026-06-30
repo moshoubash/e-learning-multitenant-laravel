@@ -747,4 +747,12 @@ return [
     // Enrollment
     'Course Unavailable' => 'Course Unavailable',
     'This course is no longer available' => 'This course is no longer available',
+
+    // Leaderboard Info
+    'How to earn points' => 'How to earn points',
+    'Complete a lesson' => 'Complete a lesson',
+    'Pass a quiz' => 'Pass a quiz',
+    'Complete a course' => 'Complete a course',
+    'Extra points for scoring 90% or higher on a quiz' => 'Extra points for scoring 90% or higher on a quiz',
+    'Bonus' => 'Bonus'
 ];
