@@ -13,23 +13,23 @@ Route::middleware(['guest'])->group(function () {
     //     ->name('register');
 
     Volt::route('login', 'pages.auth.login')
-        ->middleware('throttle:5,1')
+        ->middleware('throttle:10,1')
         ->name('login');
 
     Volt::route('forgot-password', 'pages.auth.forgot-password')
-        ->middleware('throttle:5,1')
+        ->middleware('throttle:10,1')
         ->name('password.request');
 
     Volt::route('reset-password/{token}', 'pages.auth.reset-password')
-        ->middleware('throttle:5,1')
+        ->middleware('throttle:10,1')
         ->name('password.reset');
 
     Route::get('auth/google/redirect', [GoogleAuthController::class, 'redirect'])
-        ->middleware('throttle:5,1')
+        ->middleware('throttle:10,1')
         ->name('auth.google.redirect');
 
     Route::get('auth/google/callback', [GoogleAuthController::class, 'callback'])
-        ->middleware('throttle:5,1')
+        ->middleware('throttle:10,1')
         ->name('auth.google.callback');
 });
 
@@ -38,7 +38,7 @@ Route::middleware(tenant() ? ['auth:tenant'] : ['auth'])->group(function () {
         ->name('verification.notice');
 
     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-        ->middleware(['signed', 'throttle:5,1'])
+        ->middleware(['signed', 'throttle:10,1'])
         ->name('verification.verify');
 
     Volt::route('confirm-password', 'pages.auth.confirm-password')
