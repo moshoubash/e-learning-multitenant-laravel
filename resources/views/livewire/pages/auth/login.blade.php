@@ -82,6 +82,50 @@ new #[Layout('layouts.guest')] class extends Component {
         </div>
     </form>
 
+    <div class="relative my-6">
+        <div class="absolute inset-0 flex items-center" aria-hidden="true">
+            <div class="w-full border-t" style="border-color: var(--color-on-surface, #0A0A0A); opacity: 0.2;"></div>
+        </div>
+        <div class="relative flex justify-center text-sm">
+            <span class="px-2 text-xs font-bold tracking-widest uppercase" style="color: var(--color-secondary, #5f5e5e); background-color: var(--color-surface-container-lowest, #FFFFFF);">
+                {{ __('messages.Demo Login') }}
+            </span>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-2 sm:grid-cols-3">
+        <button type="button"
+            x-data
+            x-on:click="$wire.form.email = 'student@example.com'; $wire.form.password = 'Studentpassword123@'; $wire.login()"
+            class="px-3 py-2 text-xs font-bold uppercase transition-all duration-200"
+            style="background-color: var(--color-surface-container-low, #F0F0F0); border: 2px solid var(--color-on-surface, #0A0A0A); border-radius: 4px; color: var(--color-on-surface, #0A0A0A);"
+            onmouseover="this.style.backgroundColor='var(--color-primary-container,#FFD600)';"
+            onmouseout="this.style.backgroundColor='var(--color-surface-container-low,#F0F0F0)';">
+            <span class="block text-[10px] tracking-normal normal-case" style="color: var(--color-secondary, #5f5e5e);">{{ __('messages.Sign in as') }}</span>
+            <span>{{ __('messages.Student') }}</span>
+        </button>
+        <button type="button"
+            x-data
+            x-on:click="$wire.form.email = 'admin@example.com'; $wire.form.password = 'Adminpassword123@'; $wire.login()"
+            class="px-3 py-2 text-xs font-bold uppercase transition-all duration-200"
+            style="background-color: var(--color-surface-container-low, #F0F0F0); border: 2px solid var(--color-on-surface, #0A0A0A); border-radius: 4px; color: var(--color-on-surface, #0A0A0A);"
+            onmouseover="this.style.backgroundColor='var(--color-primary-container,#FFD600)';"
+            onmouseout="this.style.backgroundColor='var(--color-surface-container-low,#F0F0F0)';">
+            <span class="block text-[10px] tracking-normal normal-case" style="color: var(--color-secondary, #5f5e5e);">{{ __('messages.Sign in as') }}</span>
+            <span>{{ __('messages.Admin') }}</span>
+        </button>
+        <button type="button"
+            x-data
+            x-on:click="$wire.form.email = 'instructor@example.com'; $wire.form.password = 'Instructorpassword123@'; $wire.login()"
+            class="px-3 py-2 text-xs font-bold uppercase transition-all duration-200"
+            style="background-color: var(--color-surface-container-low, #F0F0F0); border: 2px solid var(--color-on-surface, #0A0A0A); border-radius: 4px; color: var(--color-on-surface, #0A0A0A);"
+            onmouseover="this.style.backgroundColor='var(--color-primary-container,#FFD600)';"
+            onmouseout="this.style.backgroundColor='var(--color-surface-container-low,#F0F0F0)';">
+            <span class="block text-[10px] tracking-normal normal-case" style="color: var(--color-secondary, #5f5e5e);">{{ __('messages.Sign in as') }}</span>
+            <span>{{ __('messages.Instructor') }}</span>
+        </button>
+    </div>
+
     @if (app(\App\Services\OAuthService::class)->isProviderConfigured('google'))
         <div class="relative my-6">
             <div class="absolute inset-0 flex items-center" aria-hidden="true">

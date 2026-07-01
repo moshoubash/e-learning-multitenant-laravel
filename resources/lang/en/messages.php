@@ -754,5 +754,9 @@ return [
     'Pass a quiz' => 'Pass a quiz',
     'Complete a course' => 'Complete a course',
     'Extra points for scoring 90% or higher on a quiz' => 'Extra points for scoring 90% or higher on a quiz',
-    'Bonus' => 'Bonus'
+    'Bonus' => 'Bonus',
+
+    // Demo Login
+    'Demo Login' => 'Demo Login',
+    'Sign in as' => 'Sign in as',
 ];

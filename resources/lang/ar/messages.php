@@ -784,5 +784,9 @@ return [
     'Pass a quiz' => 'اجتز اختباراً',
     'Complete a course' => 'أكمل دورة',
     'Extra points for scoring 90% or higher on a quiz' => 'نقاط إضافية عند تحقيق 90% أو أعلى في الاختبار',
-    'Bonus' => 'زيادة'
+    'Bonus' => 'زيادة',
+
+    // Demo Login
+    'Demo Login' => 'دخول تجريبي',
+    'Sign in as' => 'تسجيل الدخول كـ',
 ];
