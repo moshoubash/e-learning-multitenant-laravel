@@ -20,3 +20,10 @@ Schedule::command('debugbar:clean')
     ->withoutOverlapping()
     ->onOneServer()
     ->runInBackground();
+
+// Reset demo data twice daily (~12h apart) to give trial users a clean slate
+Schedule::command('app:reset-demo --preserve-users --force')
+    ->twiceDaily(3, 17)
+    ->withoutOverlapping()
+    ->onOneServer()
+    ->runInBackground();
