@@ -27,6 +27,7 @@
         "php-ffmpeg/php-ffmpeg": "^1.4",
         "predis/predis": "^3.5",
         "spatie/laravel-permission": "^7.4",
+        "spatie/laravel-sitemap": "^8.0",
         "srmklive/paypal": "^3.1",
         "stancl/tenancy": "^3.10",
         "stripe/stripe-php": "^20.1"

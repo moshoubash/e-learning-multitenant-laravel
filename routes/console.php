@@ -27,3 +27,5 @@ Schedule::command('app:reset-demo --preserve-users --force')
     ->withoutOverlapping()
     ->onOneServer()
     ->runInBackground();
+
+Schedule::command('sitemap:generate')->daily();
