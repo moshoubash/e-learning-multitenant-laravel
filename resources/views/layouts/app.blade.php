@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="google-site-verification" content="QsUWYyMIXN1Y1qUFhHUXJ4nQk6NqM8LTNvAqW16rTx4" />
         <link rel="icon" type="image/icon" href="{{ asset('images/grid_icon_logo.ico') }}">
         <title>GRID LMS</title>
         @stack('styles')

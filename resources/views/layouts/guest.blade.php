@@ -7,6 +7,7 @@
 
         <title>{{ __('messages.Log in') }} | GRID LMS</title>
         <meta name="description" content="GRID LMS - Learning Management System for Organizations">
+        <meta name="google-site-verification" content="QsUWYyMIXN1Y1qUFhHUXJ4nQk6NqM8LTNvAqW16rTx4" />
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
