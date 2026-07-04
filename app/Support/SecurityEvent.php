@@ -29,8 +29,9 @@ class SecurityEvent
             'event' => $event,
             'ip' => request()?->ip(),
             'user_agent' => request()?->userAgent(),
-            'user_id' => auth()->id(),
-            'tenant_id' => tenant()?->getTenantKey(),
+            'user_email' => auth()->user()?->email,
+            // 'tenant_id' => tenant()?->getTenantKey(),
+            'tenant_slug' => tenant()?->slug,
             'at' => now()->toIso8601String(),
         ], $context);
 
