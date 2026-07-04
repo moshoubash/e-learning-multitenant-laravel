@@ -16,6 +16,7 @@
         'on-surface' => $colors['auth_text'] ?? '#0A0A0A',
         'secondary' => $colors['auth_secondary'] ?? '#5f5e5e',
         'error' => $colors['auth_error'] ?? '#ba1a1a',
+        'auth-border' => $colors['auth_border'] ?? '#0A0A0A',
     ];
 @endphp
 

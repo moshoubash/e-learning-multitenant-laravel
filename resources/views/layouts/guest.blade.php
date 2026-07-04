@@ -37,7 +37,7 @@
                 @else
                     <h1 class="text-6xl italic font-bold tracking-tighter uppercase text-on-surface">
                         {{ tenant()->name ?? 'GRID' }}
-                    <sup class="px-2 -tracking-[0.02em] not-italic" style="background-color: var(--color-primary-container, #FFD600); border: 2px solid var(--color-on-surface, #0A0A0A); font-size: 10px; vertical-align: super; ">v1.0.0</sup>
+                    <sup class="px-2 -tracking-[0.02em] not-italic" style="background-color: var(--color-primary-container, #FFD600); border: 2px solid var(--color-auth-border, #0A0A0A); font-size: 10px; vertical-align: super;">v1.0.0</sup>
                     </h1>
                 @endif
                 <p class="mt-1 font-bold tracking-wide uppercase text-medium font-sm opacity-70 text-on-surface" style="font-size: 0.7em;">
@@ -46,7 +46,7 @@
             </div>
 
             {{-- Card --}}
-            <section class="p-8 border-2 bg-surface-container-lowest border-on-surface rounded-neo" style="box-shadow: 5px 5px 0 0 #000000">
+            <section class="p-8 border-2 bg-surface-container-lowest rounded-neo" style="border-color: var(--color-auth-border, #0A0A0A); box-shadow: 5px 5px 0 0 var(--color-auth-border, #0A0A0A)">
                 {{ $slot }}
             </section>
 
