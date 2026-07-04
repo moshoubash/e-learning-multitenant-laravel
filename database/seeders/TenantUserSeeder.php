@@ -24,7 +24,7 @@ class TenantUserSeeder extends Seeder
             ['email' => 'admin@example.com'],
             [
                 'name' => 'Admin User',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('Adminpassword123@'),
                 'department_id' => null,
             ]
         );
@@ -35,7 +35,7 @@ class TenantUserSeeder extends Seeder
             ['email' => 'instructor@example.com'],
             [
                 'name' => 'Instructor User',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('Instructorpassword123@'),
                 'department_id' => $softwareDept?->id,
             ]
         );
@@ -46,7 +46,7 @@ class TenantUserSeeder extends Seeder
             ['email' => 'student@example.com'],
             [
                 'name' => 'Student User',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('Studentpassword123@'),
                 'department_id' => $softwareDept?->id,
             ]
         );
