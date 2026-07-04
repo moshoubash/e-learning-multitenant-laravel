@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Tenant\Assignment;
 use App\Models\Tenant\Course;
+use App\Models\Tenant\Department;
 use App\Models\Tenant\Enrollment;
 use App\Models\Tenant\Lesson;
 use App\Models\Tenant\Quiz;
@@ -19,22 +20,23 @@ class CourseDemoSeeder extends Seeder
 {
     public function run(): void
     {
-        $instructor = User::firstOrCreate(
-            ['email' => 'instructor@example.com'],
-            ['name' => 'Instructor User', 'password' => Hash::make('password')]
-        );
-        $instructor->assignRole('instructor');
+        $softwareDept = Department::where('slug', 'software-development')->first();
+        $cloudDept = Department::where('slug', 'cloud-engineering')->first();
 
-        $student = User::firstOrCreate(
-            ['email' => 'student@example.com'],
-            ['name' => 'Student User', 'password' => Hash::make('password')]
-        );
-        $student->assignRole('student');
+        $instructor = User::where('email', 'instructor@example.com')->first();
+        $cloudInstructor = User::where('email', 'cloud.instructor@example.com')->first();
+
+        if (! $instructor || ! $cloudInstructor) {
+            return;
+        }
 
         $coursesData = [
             'php' => [
                 'title' => 'PHP Programming',
                 'description' => 'Learn PHP from scratch — variables, functions, arrays, and more.',
+                'department_id' => $softwareDept?->id,
+                'instructor_id' => $instructor->id,
+                'student_email' => 'student@example.com',
                 'sections' => [
                     [
                         'title' => 'PHP Basics',
@@ -131,6 +133,9 @@ class CourseDemoSeeder extends Seeder
             'laravel' => [
                 'title' => 'Laravel Framework',
                 'description' => 'Build modern web applications with the Laravel PHP framework.',
+                'department_id' => $softwareDept?->id,
+                'instructor_id' => $instructor->id,
+                'student_email' => 'student@example.com',
                 'sections' => [
                     [
                         'title' => 'Laravel Fundamentals',
@@ -227,6 +232,9 @@ class CourseDemoSeeder extends Seeder
             'aws' => [
                 'title' => 'Amazon Web Services',
                 'description' => 'Master cloud computing with AWS — EC2, S3, Lambda, and more.',
+                'department_id' => $cloudDept?->id,
+                'instructor_id' => $cloudInstructor->id,
+                'student_email' => 'cloud.student@example.com',
                 'sections' => [
                     [
                         'title' => 'AWS Core Services',
@@ -324,7 +332,8 @@ class CourseDemoSeeder extends Seeder
 
         foreach ($coursesData as $slug => $courseData) {
             $course = Course::create([
-                'instructor_id' => $instructor->id,
+                'instructor_id' => $courseData['instructor_id'],
+                'department_id' => $courseData['department_id'],
                 'title' => $courseData['title'],
                 'slug' => $slug,
                 'description' => $courseData['description'],
@@ -381,17 +390,39 @@ class CourseDemoSeeder extends Seeder
                     'title' => $sectionData['assignment']['title'],
                     'description' => $sectionData['assignment']['description'],
                     'status' => 'published',
-                    'created_by' => $instructor->id,
+                    'created_by' => $courseData['instructor_id'],
                     'order' => 1,
                 ]);
             }
         }
 
+        // Enrollments — each student in their own department's course
+        $softwareStudent = User::where('email', 'student@example.com')->first();
         $phpCourse = Course::where('slug', 'php')->first();
-        Enrollment::create([
-            'user_id' => $student->id,
-            'course_id' => $phpCourse->id,
-            'status' => 'active',
-        ]);
+        $laravelCourse = Course::where('slug', 'laravel')->first();
+        if ($softwareStudent && $phpCourse) {
+            Enrollment::create([
+                'user_id' => $softwareStudent->id,
+                'course_id' => $phpCourse->id,
+                'status' => 'active',
+            ]);
+        }
+        if ($softwareStudent && $laravelCourse) {
+            Enrollment::create([
+                'user_id' => $softwareStudent->id,
+                'course_id' => $laravelCourse->id,
+                'status' => 'active',
+            ]);
+        }
+
+        $cloudStudent = User::where('email', 'cloud.student@example.com')->first();
+        $awsCourse = Course::where('slug', 'aws')->first();
+        if ($cloudStudent && $awsCourse) {
+            Enrollment::create([
+                'user_id' => $cloudStudent->id,
+                'course_id' => $awsCourse->id,
+                'status' => 'active',
+            ]);
+        }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Livewire\Instructor;
 
 use App\Models\Tenant\Course;
+use App\Models\Tenant\Department;
 use App\Models\Tenant\Section;
 use App\Models\Tenant\Assignment;
 use App\Models\Tenant\AssignmentAttachment;
@@ -295,6 +296,7 @@ class Courses extends Component
             'price' => $this->createPrice,
             'status' => $this->createStatus,
             'instructor_id' => $this->createInstructorId,
+            'department_id' => auth()->user()->department_id,
         ];
 
         if ($this->createThumbnail) {

@@ -759,4 +759,27 @@ return [
     // Demo Login
     'Demo Login' => 'Demo Login',
     'Sign in as' => 'Sign in as',
+
+    // Departments
+    'Departments Management' => 'Departments Management',
+    'Organize users and courses by department' => 'Organize users and courses by department',
+    'All Departments' => 'All Departments',
+    'Add Department' => 'Add Department',
+    'Edit Department' => 'Edit Department',
+    'Delete Department' => 'Delete Department',
+    'Restore Department' => 'Restore Department',
+    'Create New Department' => 'Create New Department',
+    'Department' => 'Department',
+    'Are you sure you want to delete' => 'Are you sure you want to delete',
+    'Are you sure you want to restore' => 'Are you sure you want to restore',
+    'This action cannot be undone.' => 'This action cannot be undone.',
+    'Users and courses in this department will not be deleted, but their department assignment will be removed.' => 'Users and courses in this department will not be deleted, but their department assignment will be removed.',
+    'No departments found.' => 'No departments found.',
+    'Department created successfully!' => 'Department created successfully!',
+    'Department updated successfully!' => 'Department updated successfully!',
+    'Department deleted successfully!' => 'Department deleted successfully!',
+    'Department restored successfully!' => 'Department restored successfully!',
+    'Deleted Departments' => 'Deleted Departments',
+    'Deleted At' => 'Deleted At',
+    'Departments' => 'Departments'
 ];

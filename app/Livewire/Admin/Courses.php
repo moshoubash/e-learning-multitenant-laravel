@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Tenant\Course;
+use App\Models\Tenant\Department;
 use App\Models\Tenant\User;
 use App\Services\Admin\CoursesService;
 use Livewire\Component;
@@ -34,6 +35,7 @@ class Courses extends Component
     public $createPrice = 0;
     public $createStatus = 'draft';
     public $createInstructorId = '';
+    public $createDepartmentId = '';
     public $createThumbnail = null;
 
     // Edit form fields
@@ -42,6 +44,7 @@ class Courses extends Component
     public $editPrice = 0;
     public $editStatus = '';
     public $editInstructorId = '';
+    public $editDepartmentId = '';
     public $editThumbnail = null;
 
     public $showRestoreModal = false;
@@ -71,6 +74,7 @@ class Courses extends Component
         $this->editPrice = $this->editingCourse->price;
         $this->editStatus = $this->editingCourse->status;
         $this->editInstructorId = $this->editingCourse->instructor_id;
+        $this->editDepartmentId = $this->editingCourse->department_id;
         $this->showEditModal = true;
     }
 
@@ -105,6 +109,7 @@ class Courses extends Component
         $this->createPrice = 0;
         $this->createStatus = 'draft';
         $this->createInstructorId = '';
+        $this->createDepartmentId = '';
         $this->createThumbnail = null;
     }
 
@@ -117,6 +122,7 @@ class Courses extends Component
         $this->editPrice = 0;
         $this->editStatus = '';
         $this->editInstructorId = '';
+        $this->editDepartmentId = '';
         $this->editThumbnail = null;
     }
 
@@ -126,6 +132,7 @@ class Courses extends Component
 
         $data = [
             'instructor_id' => $this->createInstructorId,
+            'department_id' => $this->createDepartmentId ?: null,
             'title' => $this->createTitle,
             'description' => $this->createDescription,
             'price' => $this->createPrice,
@@ -153,6 +160,7 @@ class Courses extends Component
 
         $data = [
             'instructor_id' => $this->editInstructorId,
+            'department_id' => $this->editDepartmentId ?: null,
             'title' => $this->editTitle,
             'description' => $this->editDescription,
             'price' => $this->editPrice,
@@ -192,10 +200,12 @@ class Courses extends Component
         $courses->withPath('/' . trim(\Livewire\Livewire::originalPath(), '/'));
 
         $instructors = $this->getInstructors();
+        $departments = Department::orderBy('name')->get();
 
         return view('livewire.admin.courses', [
             'courses' => $courses,
             'instructors' => $instructors,
+            'departments' => $departments,
             'deletedCourses' => $this->courseService()->getDeletedCourses(),
         ]);
     }

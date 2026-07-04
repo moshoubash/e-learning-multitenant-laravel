@@ -22,6 +22,7 @@
                 <tr>
                     <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Name') }}</th>
                     <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Email') }}</th>
+                    <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Department') }}</th>
                     <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Role') }}</th>
                     <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Created At') }}</th>
                     <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Actions') }}</th>
@@ -32,6 +33,13 @@
                     <tr class="transition-colors duration-150 hover:bg-surface-container-low">
                         <td class="p-4 text-sm font-bold text-on-surface">{{ $user->name }}</td>
                         <td class="p-4 text-sm text-secondary">{{ $user->email }}</td>
+                        <td class="p-4">
+                            @if($user->department)
+                                <span class="inline-flex items-center px-2 py-1 text-[10px] font-bold neo-border-sm neo-radius bg-surface-container-high text-on-surface">{{ $user->department->name }}</span>
+                            @else
+                                <span class="text-xs text-secondary">—</span>
+                            @endif
+                        </td>
                         <td class="p-4">
                             <span class="inline-flex items-center px-2.5 py-1 neo-border-sm neo-radius text-[10px] font-bold leading-none
                                 @if($user->hasRole('admin')) bg-error text-white
@@ -62,7 +70,7 @@
                     </tr>
                 @endforeach
                 @if(count($users) == 0)
-                    <tr><td colspan="5" class="p-8 text-sm text-center text-secondary">{{ __('messages.No users found.') }}</td></tr>
+                    <tr><td colspan="6" class="p-8 text-sm text-center text-secondary">{{ __('messages.No users found.') }}</td></tr>
                 @endif
             </tbody>
         </table>

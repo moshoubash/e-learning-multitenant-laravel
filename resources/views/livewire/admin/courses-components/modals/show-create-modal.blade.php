@@ -31,6 +31,17 @@
                             @error('createInstructorId') <span class="block mt-1 text-xs font-bold text-error">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-4">
+                            <label class="block mb-1 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Department') }}</label>
+                            <select wire:model.lazy="createDepartmentId"
+                                class="w-full px-3 py-2 text-sm neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0">
+                                <option value="">{{ __('messages.None') }}</option>
+                                @foreach($departments as $department)
+                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('createDepartmentId') <span class="block mt-1 text-xs font-bold text-error">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="mb-4">
                             <label class="block mb-1 text-xs font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Price') }}</label>
                             <input type="number" step="0.01" min="0" wire:model.lazy="createPrice"
                                 class="w-full px-3 py-2 text-sm neo-border-sm neo-radius bg-surface-container-low text-on-surface focus:outline-none focus:ring-0 placeholder:text-secondary">

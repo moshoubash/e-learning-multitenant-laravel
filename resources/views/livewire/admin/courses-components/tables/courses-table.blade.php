@@ -18,6 +18,7 @@
                 <tr>
                     <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Thumbnail') }}</th>
                     <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Title') }}</th>
+                    <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Department') }}</th>
                     <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Instructor') }}</th>
                     <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Price') }}</th>
                     <th class="p-4 text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Status') }}</th>
@@ -40,6 +41,13 @@
                         <td class="p-4">
                             <div class="text-sm font-bold text-on-surface">{{ $course->title }}</div>
                             <div class="text-xs text-secondary mt-0.5">{{ Str::limit($course->description, 50) }}</div>
+                        </td>
+                        <td class="p-4">
+                            @if($course->department)
+                                <span class="inline-flex items-center px-2 py-1 text-[10px] font-bold neo-border-sm neo-radius bg-surface-container-high text-on-surface">{{ $course->department->name }}</span>
+                            @else
+                                <span class="text-xs text-secondary">—</span>
+                            @endif
                         </td>
                         <td class="p-4 text-sm text-on-surface">{{ $course->instructor->name ?? 'N/A' }}</td>
                         <td class="p-4 text-sm font-bold text-on-surface">${{ number_format($course->price, 2) }}</td>
@@ -73,7 +81,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="p-8 text-sm text-center text-secondary">{{ __('messages.No courses found.') }}</td>
+                        <td colspan="8" class="p-8 text-sm text-center text-secondary">{{ __('messages.No courses found.') }}</td>
                     </tr>
                 @endforelse
             </tbody>

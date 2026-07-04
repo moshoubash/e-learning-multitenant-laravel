@@ -7,14 +7,17 @@ use App\Models\Tenant\Enrollment;
 use App\Models\Tenant\User;
 use App\Notifications\EnrollmentConfirmed;
 use App\Notifications\NewEnrollment;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class CoursesService
 {
     public function getCourses()
     {
-        return Cache::remember('courses:published', 600, function () {
-            return Course::with([
+        $cacheKey = 'courses:published';
+
+        return Cache::remember($cacheKey, 600, function () {
+            $query = Course::with([
                 'instructor',
                 'sections' => function ($query) {
                     $query->with([
@@ -26,8 +29,17 @@ class CoursesService
                 }
             ])
                 ->where('status', 'published')
-                ->orderBy('title')
-                ->get();
+                ->orderBy('title');
+
+            $user = Auth::user();
+            if ($user && $user->department_id) {
+                $query->where(function ($q) use ($user) {
+                    $q->where('department_id', $user->department_id)
+                      ->orWhereNull('department_id');
+                });
+            }
+
+            return $query->get();
         });
     }
 

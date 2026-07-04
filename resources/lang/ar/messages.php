@@ -789,4 +789,27 @@ return [
     // Demo Login
     'Demo Login' => 'دخول تجريبي',
     'Sign in as' => 'تسجيل الدخول كـ',
+
+    // Departments
+    'Departments Management' => 'إدارة الأقسام',
+    'Organize users and courses by department' => 'تنظيم المستخدمين والدورات حسب الأقسام',
+    'All Departments' => 'جميع الأقسام',
+    'Add Department' => 'إضافة قسم',
+    'Edit Department' => 'تعديل القسم',
+    'Delete Department' => 'حذف القسم',
+    'Restore Department' => 'استعادة القسم',
+    'Create New Department' => 'إنشاء قسم جديد',
+    'Department' => 'القسم',
+    'Are you sure you want to delete' => 'هل أنت متأكد أنك تريد حذف',
+    'Are you sure you want to restore' => 'هل أنت متأكد أنك تريد استعادة',
+    'This action cannot be undone.' => 'لا يمكن التراجع عن هذا الإجراء.',
+    'Users and courses in this department will not be deleted, but their department assignment will be removed.' => 'لن يتم حذف المستخدمين والدورات في هذا القسم، ولكن سيتم إزالة تعيين القسم الخاص بهم.',
+    'No departments found.' => 'لم يتم العثور على أقسام.',
+    'Department created successfully!' => 'تم إنشاء القسم بنجاح!',
+    'Department updated successfully!' => 'تم تحديث القسم بنجاح!',
+    'Department deleted successfully!' => 'تم حذف القسم بنجاح!',
+    'Department restored successfully!' => 'تم استعادة القسم بنجاح!',
+    'Deleted Departments' => 'الأقسام المحذوفة',
+    'Deleted At' => 'تاريخ الحذف',
+    'Departments' => 'الأقسام'
 ];

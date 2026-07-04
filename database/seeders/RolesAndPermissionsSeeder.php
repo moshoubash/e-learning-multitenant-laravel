@@ -57,6 +57,12 @@ class RolesAndPermissionsSeeder extends Seeder
             'edit enrollments',
             'delete enrollments',
 
+            // Department management
+            'view departments',
+            'create departments',
+            'edit departments',
+            'delete departments',
+
             // Quiz attempts & progress
             'take quizzes',
             'view own progress',

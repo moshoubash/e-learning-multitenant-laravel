@@ -19,7 +19,7 @@ class UsersService
 
     public function getPaginatedUsers(int $perPage = 10)
     {
-        return User::select('id', 'name', 'email', 'created_at')->with('roles')->paginate($perPage);
+        return User::select('id', 'name', 'email', 'department_id', 'created_at')->with('roles', 'department')->paginate($perPage);
     }
 
     public function getDeletedUsers()
@@ -33,6 +33,7 @@ class UsersService
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'department_id' => $data['department_id'] ?? null,
         ]);
 
         if (! empty($data['role'])) {
@@ -46,6 +47,7 @@ class UsersService
     {
         $user->name = $data['name'];
         $user->email = $data['email'];
+        $user->department_id = $data['department_id'] ?? null;
 
         if (! empty($data['password'])) {
             $user->password = Hash::make($data['password']);

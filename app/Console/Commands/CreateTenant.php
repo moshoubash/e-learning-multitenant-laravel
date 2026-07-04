@@ -16,7 +16,7 @@ class CreateTenant extends Command
     protected $signature = 'tenant:create
                             {name : The name of the tenant (e.g. "School A")}
                             {slug : The slug for the tenant (e.g. "school-a")}
-                            {--plan=free : The plan for the tenant (free, pro, enterprise)}
+                            {--plan=pro : The plan for the tenant (free, pro, enterprise)}
                             {--domain= : The custom domain (e.g. schoola.com)}';
 
     /**

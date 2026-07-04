@@ -16,6 +16,7 @@ class Course extends Model
 
     protected $fillable = [
         'instructor_id',
+        'department_id',
         'title',
         'slug',
         'description',
@@ -34,6 +35,11 @@ class Course extends Model
     public function instructor(): BelongsTo
     {
         return $this->belongsTo(User::class, 'instructor_id');
+    }
+
+    public function department(): BelongsTo
+    {
+        return $this->belongsTo(Department::class);
     }
 
     public function sections(): HasMany

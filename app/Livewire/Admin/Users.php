@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Imports\UsersImport;
+use App\Models\Tenant\Department;
 use App\Models\Tenant\User;
 use App\Services\Admin\UserImportService;
 use App\Services\Admin\UsersService;
@@ -39,12 +40,14 @@ class Users extends Component
     public $createEmail = '';
     public $createPassword = '';
     public $createRole = 'student';
+    public $createDepartmentId = '';
 
     // Edit form fields
     public $editName = '';
     public $editEmail = '';
     public $editPassword = '';
     public $editRole = '';
+    public $editDepartmentId = '';
 
     // Import
     public $importFile;
@@ -71,6 +74,7 @@ class Users extends Component
         $this->editName = $this->editingUser->name;
         $this->editEmail = $this->editingUser->email;
         $this->editRole = $this->editingUser->getRoleNames()->first() ?? 'student';
+        $this->editDepartmentId = $this->editingUser->department_id;
         $this->editPassword = '';
         $this->showEditModal = true;
     }
@@ -110,6 +114,7 @@ class Users extends Component
         $this->createEmail = '';
         $this->createPassword = '';
         $this->createRole = 'student';
+        $this->createDepartmentId = '';
     }
 
     public function resetFormFields()
@@ -121,6 +126,7 @@ class Users extends Component
         $this->editEmail = '';
         $this->editPassword = '';
         $this->editRole = '';
+        $this->editDepartmentId = '';
     }
 
     public function store()
@@ -138,6 +144,7 @@ class Users extends Component
             'email' => $this->createEmail,
             'password' => $this->createPassword,
             'role' => $this->createRole,
+            'department_id' => $this->createDepartmentId ?: null,
         ]);
 
         $this->closeModal();
@@ -205,6 +212,7 @@ class Users extends Component
             'email' => $this->editEmail,
             'password' => $this->editPassword,
             'role' => $this->editRole,
+            'department_id' => $this->editDepartmentId ?: null,
         ]);
 
         $this->closeModal();
@@ -235,12 +243,14 @@ class Users extends Component
         $users->withPath('/' . trim(\Livewire\Livewire::originalPath(), '/'));
 
         $deletedUsers = $this->usersService()->getDeletedUsers();
+        $departments = Department::orderBy('name')->get();
 
         $importService = app(UserImportService::class);
 
         return view('livewire.admin.users', [
             'users' => $users,
             'deletedUsers' => $deletedUsers,
+            'departments' => $departments,
             'maxUsers' => $importService->maxUsers(),
             'currentUsers' => $importService->currentUserCount(),
             'remainingCapacity' => $importService->remainingCapacity(),

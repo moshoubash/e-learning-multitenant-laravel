@@ -55,6 +55,13 @@
             <i class="w-5 text-center fas fa-shield-alt"></i>
             <span class="text-[14px] font-medium">{{ __('messages.Roles & Permissions') }}</span>
         </a>
+        @can('view departments')
+            <a href="{{ route('tenant.admin.departments') }}" wire:navigate
+               class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.admin.departments*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">
+                <i class="w-5 text-center fas fa-building"></i>
+                <span class="text-[14px] font-medium">{{ __('messages.Departments') }}</span>
+            </a>
+        @endcan
         @can('view courses')
             <a href="{{ route('tenant.admin.courses') }}" wire:navigate
                class="flex items-center gap-3 px-4 py-3 neo-radius {{ request()->routeIs('tenant.admin.courses*') ? 'bg-primary-container text-on-primary-container border-2 border-on-surface font-bold' : 'text-on-surface hover:bg-surface-container-high transition-colors duration-100' }}">

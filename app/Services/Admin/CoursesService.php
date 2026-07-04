@@ -20,7 +20,7 @@ class CoursesService
 
     public function getPaginatedCourses(int $perPage = 10)
     {
-        return Course::with('instructor')->paginate($perPage);
+        return Course::with('instructor', 'department')->paginate($perPage);
     }
 
     public function getDeletedCourses()
