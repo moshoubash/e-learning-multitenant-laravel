@@ -27,7 +27,7 @@
                         <td class="p-4">
                             <div class="text-sm font-bold text-on-surface">{{ $department->name }}</div>
                         </td>
-                        <td class="p-4 text-sm text-secondary">{{ Str::limit($department->description, 60) ?: '—' }}</td>
+                        <td class="p-4 text-sm text-secondary" dir="auto">{{ Str::limit($department->description, 60) ?: '—' }}</td>
                         <td class="p-4 text-sm text-on-surface">{{ $department->users_count }}</td>
                         <td class="p-4 text-sm text-on-surface">{{ $department->courses_count }}</td>
                         <td class="p-4 text-sm text-secondary">

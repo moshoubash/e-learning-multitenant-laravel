@@ -40,7 +40,7 @@
                         </td>
                         <td class="p-4">
                             <div class="text-sm font-bold text-on-surface">{{ $course->title }}</div>
-                            <div class="text-xs text-secondary mt-0.5">{{ Str::limit($course->description, 50) }}</div>
+                            <div class="text-xs text-secondary mt-0.5" dir="auto">{{ Str::limit($course->description, 50) }}</div>
                         </td>
                         <td class="p-4">
                             @if($course->department)
