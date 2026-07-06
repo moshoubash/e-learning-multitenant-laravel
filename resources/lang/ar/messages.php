@@ -811,5 +811,21 @@ return [
     'Department restored successfully!' => 'تم استعادة القسم بنجاح!',
     'Deleted Departments' => 'الأقسام المحذوفة',
     'Deleted At' => 'تاريخ الحذف',
-    'Departments' => 'الأقسام'
+    'Departments' => 'الأقسام',
+
+    // Admin Broadcast Notifications
+    'Send Notification' => 'إرسال إشعار',
+    'Notification title' => 'أدخل عنوان الإشعار...',
+    'Notification message' => 'أدخل رسالتك...',
+    'Send to' => 'إرسال إلى',
+    'All Students' => 'جميع الطلاب',
+    'All Instructors' => 'جميع المدربين',
+    'All Users' => 'جميع المستخدمين',
+    'Specific Users' => 'مستخدمين محددين',
+    'Select Users' => 'اختر المستخدمين',
+    'Search users...' => 'البحث عن مستخدمين...',
+    'No users match your search.' => 'لا يوجد مستخدمين يطابقون بحثك.',
+    'Loading users...' => 'جارٍ تحميل المستخدمين...',
+    'Notification sent to :count users.' => 'تم إرسال الإشعار إلى :count مستخدمين.',
+    'Send' => 'إرسال',
 ];

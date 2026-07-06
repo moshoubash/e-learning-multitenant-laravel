@@ -781,5 +781,21 @@ return [
     'Department restored successfully!' => 'Department restored successfully!',
     'Deleted Departments' => 'Deleted Departments',
     'Deleted At' => 'Deleted At',
-    'Departments' => 'Departments'
+    'Departments' => 'Departments',
+
+    // Admin Broadcast Notifications
+    'Send Notification' => 'Send Notification',
+    'Notification title' => 'Enter notification title...',
+    'Notification message' => 'Enter your message...',
+    'Send to' => 'Send to',
+    'All Students' => 'All Students',
+    'All Instructors' => 'All Instructors',
+    'All Users' => 'All Users',
+    'Specific Users' => 'Specific Users',
+    'Select Users' => 'Select Users',
+    'Search users...' => 'Search users...',
+    'No users match your search.' => 'No users match your search.',
+    'Loading users...' => 'Loading users...',
+    'Notification sent to :count users.' => 'Notification sent to :count users.',
+    'Send' => 'Send',
 ];

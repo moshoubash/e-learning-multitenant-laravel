@@ -169,7 +169,7 @@
                                                     <div class="flex items-center justify-between">
                                                         <div class="flex items-center gap-3">
                                                             <i class="fas {{ $lesson->type === 'video' ? 'fa-play-circle text-on-surface' : ($lesson->type === 'text' ? 'fa-file-alt text-on-surface' : 'fa-list-check text-on-surface') }}"></i>
-                                                            <span class="text-sm text-on-surface">{{ $lesson->title }}</span>
+                                                            <span class="text-sm text-on-surface" dir="auto">{{ $lesson->title }}</span>
                                                         </div>
                                                         @if($lesson->duration_seconds)
                                                             <span class="text-xs font-bold text-secondary">{{ gmdate('i:s', $lesson->duration_seconds) }}</span>
