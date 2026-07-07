@@ -11,7 +11,7 @@
         </div>
         <div class="flex items-center gap-2 mt-3">
             <button wire:click="resetDefaults"
-                class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-surface-container text-surface-container-low hover:bg-on-surface hover:text-white">
+                class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-surface-container text-on-surface hover:bg-on-surface hover:text-white">
                 {{ __('messages.Reset Defaults') }}
             </button>
             <button wire:click="save"
