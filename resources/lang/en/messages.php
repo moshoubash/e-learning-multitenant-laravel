@@ -798,4 +798,18 @@ return [
     'Loading users...' => 'Loading users...',
     'Notification sent to :count users.' => 'Notification sent to :count users.',
     'Send' => 'Send',
+
+    // AI Quiz Generation
+    'Generate Questions with AI' => 'Generate Questions with AI',
+    'AI Generate' => 'AI Generate',
+    'Topic' => 'Topic',
+    'e.g., PHP Variables, Cloud Computing, etc.' => 'e.g., PHP Variables, Cloud Computing, etc.',
+    'Number of Questions' => 'Number of Questions',
+    'Question Types' => 'Question Types',
+    'Generate' => 'Generate',
+    'Generating...' => 'Generating...',
+    'AI returned no questions. Try a different topic.' => 'AI returned no questions. Try a different topic.',
+    'AI service error' => 'AI service error',
+    'questions generated successfully!' => 'questions generated successfully!',
+    'Please select at least one question type.' => 'Please select at least one question type.',
 ];

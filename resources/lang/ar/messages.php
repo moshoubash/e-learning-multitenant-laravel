@@ -828,4 +828,18 @@ return [
     'Loading users...' => 'جارٍ تحميل المستخدمين...',
     'Notification sent to :count users.' => 'تم إرسال الإشعار إلى :count مستخدمين.',
     'Send' => 'إرسال',
+
+    // AI Quiz Generation
+    'Generate Questions with AI' => 'توليد أسئلة بالذكاء الاصطناعي',
+    'AI Generate' => 'توليد ذكي',
+    'Topic' => 'الموضوع',
+    'e.g., PHP Variables, Cloud Computing, etc.' => 'مثال: متغيرات PHP، الحوسبة السحابية، إلخ.',
+    'Number of Questions' => 'عدد الأسئلة',
+    'Question Types' => 'أنواع الأسئلة',
+    'Generate' => 'توليد',
+    'Generating...' => 'جارٍ التوليد...',
+    'AI returned no questions. Try a different topic.' => 'لم يُرجع الذكاء الاصطناعي أي أسئلة. جرب موضوعاً مختلفاً.',
+    'AI service error' => 'خطأ في خدمة الذكاء الاصطناعي',
+    'questions generated successfully!' => 'تم توليد الأسئلة بنجاح!',
+    'Please select at least one question type.' => 'الرجاء اختيار نوع سؤال واحد على الأقل.',
 ];

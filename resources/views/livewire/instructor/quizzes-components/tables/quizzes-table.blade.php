@@ -80,6 +80,11 @@
                                 <div class="p-4">
                                     <div class="flex items-center justify-between mb-3">
                                         <h4 class="text-xs font-bold tracking-widest uppercase text-secondary">{{ __('messages.Questions & Options') }}</h4>
+                                        <button wire:click="openAiGenerateModal({{ $quiz->id }})"
+                                            class="px-3 py-1.5 text-xs font-bold uppercase tracking-widest transition-colors neo-border-sm neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
+                                            <i class="fas fa-magic ltr:mr-1 rtl:ml-1"></i>
+                                            {{ __('messages.AI Generate') }}
+                                        </button>
                                     </div>
                                     <div class="space-y-3">
                                         @foreach($quiz->questions->sortBy('order') as $question)

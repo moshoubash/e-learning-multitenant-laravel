@@ -6,10 +6,11 @@ use App\Actions\Quiz\OptionManager;
 use App\Actions\Quiz\QuestionManager;
 use App\Actions\Quiz\QuizAttempts;
 use App\Actions\Quiz\QuizManager;
-use App\Models\Tenant\Section;
 use App\Models\Tenant\Quiz;
-use App\Models\Tenant\QuizQuestion;
 use App\Models\Tenant\QuizOption;
+use App\Models\Tenant\QuizQuestion;
+use App\Models\Tenant\Section;
+use App\Services\AI\QuizGeneratorService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -25,21 +26,28 @@ class Quizzes extends Component
 
     // Quiz modals
     public $showQuizCreateModal = false;
+
     public $showQuizEditModal = false;
+
     public $showQuizDeleteModal = false;
 
     // Question modals
     public $showQuestionCreateModal = false;
+
     public $showQuestionEditModal = false;
+
     public $showQuestionDeleteModal = false;
 
     // Option modals
     public $showOptionCreateModal = false;
+
     public $showOptionEditModal = false;
+
     public $showOptionDeleteModal = false;
 
     // Attempts modal
     public $showAttemptsModal = false;
+
     public $attemptsQuizId = null;
 
     // Expanded states
@@ -47,48 +55,86 @@ class Quizzes extends Component
 
     // Selected items
     public $selectedQuizId = null;
+
     public $selectedSectionId = null;
+
     public $selectedQuestionId = null;
 
     // Editing items
     public $deletingQuiz = null;
+
     public $editingQuiz = null;
+
     public $editingQuestion = null;
+
     public $editingOption = null;
+
     public $deletingQuestion = null;
+
     public $deletingOption = null;
 
     // Quiz form fields
     public $quizCreateTitle = '';
+
     public $quizCreateSectionId = '';
+
     public $quizCreatePassPercentage = 70;
+
     public $quizCreateCanReattempt = false;
+
     public $quizCreateMaxAttempts = 1;
 
     public $quizEditTitle = '';
+
     public $quizEditSectionId = '';
+
     public $quizEditPassPercentage = 70;
+
     public $quizEditCanReattempt = false;
+
     public $quizEditMaxAttempts = 1;
 
     // Question form fields
     public $questionCreateText = '';
+
     public $questionCreateType = 'single';
+
     public $questionCreateOrder = 0;
 
     public $questionEditText = '';
+
     public $questionEditType = 'single';
+
     public $questionEditOrder = 0;
+
+    // AI Generation
+    public $showAiGenerateModal = false;
+
+    public $aiGenerateQuizId = null;
+
+    public $aiGenerateTopic = '';
+
+    public $aiGenerateCount = 3;
+
+    public $aiGenerateTypes = ['single' => true, 'multiple' => true, 'true_false' => true];
+
+    public $generating = false;
 
     // Option form fields
     public $optionCreateText = '';
+
     public $optionCreateIsCorrect = false;
+
     public $optionCreateQuestionType = 'single';
+
     public $optionCreateQuestionHasCorrect = false;
 
     public $optionEditText = '';
+
     public $optionEditIsCorrect = false;
+
     public $optionEditQuestionType = 'single';
+
     public $optionEditQuestionHasCorrect = false;
 
     //  QUIZ METHODS
@@ -96,7 +142,7 @@ class Quizzes extends Component
     public function toggleQuizExpand($quizId)
     {
         if (in_array($quizId, $this->expandedQuizzes)) {
-            $this->expandedQuizzes = array_filter($this->expandedQuizzes, fn($id) => $id !== $quizId);
+            $this->expandedQuizzes = array_filter($this->expandedQuizzes, fn ($id) => $id !== $quizId);
         } else {
             $this->expandedQuizzes[] = $quizId;
         }
@@ -120,6 +166,7 @@ class Quizzes extends Component
 
         if (! $this->editingQuiz) {
             Toaster::error(__('messages.Quiz not found.'));
+
             return;
         }
 
@@ -128,6 +175,7 @@ class Quizzes extends Component
         if (! $course || $course->instructor_id !== Auth::id()) {
             Toaster::error('Unauthorized.');
             $this->editingQuiz = null;
+
             return;
         }
 
@@ -204,6 +252,7 @@ class Quizzes extends Component
 
         if (! $this->editingQuiz) {
             Toaster::error(__('messages.Quiz not found.'));
+
             return;
         }
 
@@ -243,6 +292,7 @@ class Quizzes extends Component
 
         if (! $this->editingQuestion) {
             Toaster::error(__('messages.Question not found.'));
+
             return;
         }
 
@@ -292,6 +342,7 @@ class Quizzes extends Component
         if (! $quiz || optional(optional($quiz->section)->course)->instructor_id !== Auth::id()) {
             Toaster::error('Unauthorized.');
             $this->closeQuestionModal();
+
             return;
         }
 
@@ -322,6 +373,7 @@ class Quizzes extends Component
 
         if (! $this->editingQuestion) {
             Toaster::error(__('messages.Question not found.'));
+
             return;
         }
 
@@ -374,11 +426,13 @@ class Quizzes extends Component
 
         if (! $question) {
             Toaster::error(__('messages.Question not found.'));
+
             return;
         }
 
         if ($question->type === 'true_false') {
             Toaster::error(__('messages.True/False questions cannot have additional options.'));
+
             return;
         }
 
@@ -395,6 +449,7 @@ class Quizzes extends Component
 
         if (! $this->editingOption) {
             Toaster::error(__('messages.Option not found.'));
+
             return;
         }
 
@@ -470,6 +525,7 @@ class Quizzes extends Component
 
         if (! $this->editingOption) {
             Toaster::error(__('messages.Option not found.'));
+
             return;
         }
 
@@ -497,6 +553,7 @@ class Quizzes extends Component
             if (! $course || $course->instructor_id !== Auth::id()) {
                 Toaster::error('Unauthorized.');
                 $this->closeOptionModal();
+
                 return;
             }
 
@@ -518,6 +575,95 @@ class Quizzes extends Component
     {
         $this->showAttemptsModal = false;
         $this->attemptsQuizId = null;
+    }
+
+    //  AI GENERATION METHODS
+
+    public function openAiGenerateModal($quizId)
+    {
+        $quiz = $this->quizManager()->findById($quizId);
+
+        if (! $quiz || optional(optional($quiz->section)->course)->instructor_id !== Auth::id()) {
+            Toaster::error('Unauthorized.');
+
+            return;
+        }
+
+        $this->aiGenerateQuizId = $quizId;
+        $this->aiGenerateTopic = $quiz->title;
+        $this->aiGenerateCount = 3;
+        $this->aiGenerateTypes = ['single' => true, 'multiple' => true, 'true_false' => true];
+        $this->showAiGenerateModal = true;
+    }
+
+    public function closeAiGenerateModal()
+    {
+        $this->showAiGenerateModal = false;
+        $this->aiGenerateQuizId = null;
+        $this->aiGenerateTopic = '';
+        $this->aiGenerateCount = 3;
+        $this->aiGenerateTypes = ['single' => true, 'multiple' => true, 'true_false' => true];
+        $this->generating = false;
+    }
+
+    public function generateWithAI()
+    {
+        $this->validate([
+            'aiGenerateTopic' => 'required|string|max:500',
+            'aiGenerateCount' => 'required|integer|min:1|max:10',
+        ]);
+
+        $selectedTypes = array_keys(array_filter($this->aiGenerateTypes));
+        if (empty($selectedTypes)) {
+            Toaster::error('Please select at least one question type.');
+
+            return;
+        }
+
+        $this->generating = true;
+
+        try {
+            $questions = app(QuizGeneratorService::class)->generate(
+                $this->aiGenerateTopic,
+                $this->aiGenerateCount,
+                $selectedTypes,
+            );
+
+            if (empty($questions)) {
+                Toaster::error('AI returned no questions. Try a different topic.');
+                $this->generating = false;
+
+                return;
+            }
+
+            $existingCount = QuizQuestion::where('quiz_id', $this->aiGenerateQuizId)->count();
+
+            foreach ($questions as $i => $q) {
+                if (empty($q['options'])) {
+                    continue;
+                }
+
+                $question = $this->questionManager()->createQuestion($this->aiGenerateQuizId, [
+                    'question' => $q['question'],
+                    'type' => $q['type'] ?? 'single',
+                    'order' => $existingCount + $i + 1,
+                ]);
+
+                foreach ($q['options'] as $opt) {
+                    $this->optionManager()->createOption($question->id, [
+                        'option_text' => $opt['text'],
+                        'is_correct' => $opt['correct'] ?? false,
+                    ]);
+                }
+            }
+
+            $this->closeAiGenerateModal();
+            Toaster::success(count($questions).' questions generated successfully!');
+        } catch (\RuntimeException $e) {
+            Toaster::error($e->getMessage());
+        } finally {
+            $this->generating = false;
+        }
     }
 
     public function getAttemptsProperty()
@@ -596,21 +742,21 @@ class Quizzes extends Component
 
     protected function quizManager(): QuizManager
     {
-        return new QuizManager();
+        return new QuizManager;
     }
 
     protected function questionManager(): QuestionManager
     {
-        return new QuestionManager();
+        return new QuestionManager;
     }
 
     protected function optionManager(): OptionManager
     {
-        return new OptionManager();
+        return new OptionManager;
     }
 
     protected function attemptsManager(): QuizAttempts
     {
-        return new QuizAttempts();
+        return new QuizAttempts;
     }
 }

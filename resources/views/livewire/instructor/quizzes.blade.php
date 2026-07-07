@@ -24,5 +24,7 @@
         @include('livewire.instructor.quizzes-components.modals.options.show-create-modal')
         @include('livewire.instructor.quizzes-components.modals.options.show-edit-modal')
         @include('livewire.instructor.quizzes-components.modals.options.show-delete-modal')
+
+        @include('livewire.instructor.quizzes-components.modals.ai-generate-modal')
     </div>
 </div>
