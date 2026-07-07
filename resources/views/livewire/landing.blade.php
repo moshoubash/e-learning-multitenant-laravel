@@ -12,7 +12,7 @@
             <a class="px-2 py-1 text-sm font-medium tracking-wider uppercase transition-colors text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" href="#features" style="font-family: 'Space Grotesk', sans-serif;">{{ __('messages.Features') }}</a>
             <a class="px-2 py-1 text-sm font-medium tracking-wider uppercase transition-colors text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" href="#how-it-works" style="font-family: 'Space Grotesk', sans-serif;">{{ __('messages.How it Works') }}</a>
             <a class="px-2 py-1 text-sm font-medium tracking-wider uppercase transition-colors text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" href="#contact" style="font-family: 'Space Grotesk', sans-serif;">{{ __('messages.Contact') }}</a>
-            <a class="px-2 py-1 text-sm font-medium tracking-wider uppercase transition-colors text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" href="#updates" style="font-family: 'Space Grotesk', sans-serif;">{{ __('messages.Updates') }}</a>
+            <a class="px-2 py-1 text-sm font-medium tracking-wider uppercase transition-colors text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" href="{{ route('updates') }}" style="font-family: 'Space Grotesk', sans-serif;">{{ __('messages.Updates') }}</a>
         </nav>
         <div class="flex items-center gap-3">
             <a href="{{ url('lang/' . (app()->getLocale() === 'en' ? 'ar' : 'en')) }}"
@@ -153,44 +153,7 @@
             </a>
         </section>
 
-        {{-- Updates / Changelog --}}
-        <section id="updates" style="background-color: #FFFFFF; border-top: 2px solid #0A0A0A; padding: 80px 32px;">
-            <div class="max-w-3xl mx-auto">
-                <h2 class="mb-16 text-4xl font-bold text-center uppercase md:text-5xl" style="font-family: 'Space Grotesk', sans-serif;  color: #0A0A0A;">{{ __('messages.Updates') }}</h2>
-                <div class="relative space-y-12">
-                    {{-- v1.0 --}}
-                    <div class="relative flex gap-6 pl-8 border-l-4 border-on-surface">
-                        <span class="absolute left-[-3px] flex items-center justify-center w-8 h-8 text-sm font-bold" style="background-color: #FFD600; border: 2px solid #0A0A0A; border-radius: 50%; transform: translateX(-50%); top: 0;">1</span>
-                        <div class="flex-1 card">
-                            <div class="flex items-baseline gap-3 mb-3">
-                                <h3 class="text-xl font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif;  color: #0A0A0A;">v1.0</h3>
-                                <span class="text-xs font-bold uppercase" style="font-family: 'Space Grotesk', sans-serif; color: #4d4632;">{{ __('messages.Initial Release') }}</span>
-                            </div>
-                            <ul class="space-y-2">
-                                <li class="flex items-start gap-2 text-base" style="font-family: 'Space Grotesk', sans-serif; color: #4d4632;">
-                                    <span style="color: #0A0A0A;">
-                                        {{ app()->getLocale() == 'ar' ? '←' : '→' }}
-                                    </span>
-                                    <span>{{ __('messages.Configure Your Platform — roles, permissions, custom design, SMTP, and OAuth integration.') }}</span>
-                                </li>
-                                <li class="flex items-start gap-2 text-base" style="font-family: 'Space Grotesk', sans-serif; color: #4d4632;">
-                                    <span style="color: #0A0A0A;">
-                                        {{ app()->getLocale() == 'ar' ? '←' : '→' }}
-                                    </span>
-                                    <span>{{ __('messages.Create Courses & Assessments — structured sections, video lessons, quizzes with auto-grading, and enrollment pricing.') }}</span>
-                                </li>
-                                <li class="flex items-start gap-2 text-base" style="font-family: 'Space Grotesk', sans-serif; color: #4d4632;">
-                                    <span style="color: #0A0A0A;">
-                                        {{ app()->getLocale() == 'ar' ? '←' : '→' }}
-                                    </span>
-                                    <span>{{ __('messages.Enroll, Learn & Certify — course enrollment, lesson tracking, quiz attempts, and downloadable certificates.') }}</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+
     </main>
 
     {{-- Contact Form --}}

@@ -22,6 +22,7 @@ use App\Http\Controllers\Payment\PayPalController;
 //     return redirect()->route('tenant.dashboard');
 // });
 Route::get('/', \App\Livewire\Landing::class)->name('landing.home');
+Route::get('/updates', \App\Livewire\Updates::class)->name('updates');
 
 Route::fallback(function () {
     return view('errors.404');
