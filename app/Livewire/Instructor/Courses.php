@@ -910,7 +910,7 @@ class Courses extends Component
             $this->lessonService()->createLesson($this->selectedSectionId, [
                 'title' => $this->lessonCreateTitle,
                 'type' => $this->lessonCreateType,
-                'content' => $this->lessonCreateContent,
+                'content' => \App\Support\Sanitizer::cleanHtml($this->lessonCreateContent),
                 'duration_seconds' => $this->lessonCreateDuration,
                 'order' => $this->lessonCreateOrder,
                 'video_url' => $this->lessonCreateVideoUrl ?: null,
@@ -939,7 +939,7 @@ class Courses extends Component
             $this->lessonService()->updateLesson($this->editingLesson, [
                 'title' => $this->lessonEditTitle,
                 'type' => $this->lessonEditType,
-                'content' => $this->lessonEditContent,
+                'content' => \App\Support\Sanitizer::cleanHtml($this->lessonEditContent),
                 'duration_seconds' => $this->lessonEditDuration,
                 'order' => $this->lessonEditOrder,
                 'video_url' => $this->lessonEditVideoUrl ?: null,

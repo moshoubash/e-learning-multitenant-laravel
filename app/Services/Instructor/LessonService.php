@@ -5,6 +5,7 @@ namespace App\Services\Instructor;
 use App\Models\Tenant\Lesson;
 use App\Models\Tenant\Section;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class LessonService
 {
@@ -21,7 +22,7 @@ class LessonService
         if ($video) {
             $tenantId = tenant('id') ?? 'default';
             $baseUrl = 'https://d1w6oovjx4x1vx.cloudfront.net';
-            $path = $video->storeAs("courses/{$tenantId}", rand() . time() . $video->getClientOriginalName(), 's3');
+            $path = $video->storeAs("courses/{$tenantId}", Str::random(40) . '.' . $video->extension(), 's3');
             $videoUrl = $baseUrl . '/' . $path;
 
             $getID3 = new \getID3();
@@ -38,7 +39,7 @@ class LessonService
         if ($video) {
             $tenantId = tenant('id') ?? 'default';
             $baseUrl = 'https://d1w6oovjx4x1vx.cloudfront.net';
-            $path = $video->storeAs("courses/{$tenantId}", rand() . time() . $video->getClientOriginalName(), 's3');
+            $path = $video->storeAs("courses/{$tenantId}", Str::random(40) . '.' . $video->extension(), 's3');
             $videoUrl = $baseUrl . '/' . $path;
 
             $getID3 = new \getID3();
