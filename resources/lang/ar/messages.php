@@ -728,6 +728,7 @@ return [
     ':count skipped' => ':count تم تخطيهم',
     ':count users imported successfully.' => 'تم استيراد :count مستخدم بنجاح.',
     ':count errors occurred during import.' => 'حدث :count خطأ أثناء الاستيراد.',
+    'Generated Passwords' => 'كلمات المرور المُنشأة',
     'Importing...' => 'جارٍ الاستيراد...',
     'Import' => 'استيراد',
     'Tenant has reached its maximum user limit.' => 'المستأجر وصل إلى الحد الأقصى لعدد المستخدمين.',

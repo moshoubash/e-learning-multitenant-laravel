@@ -36,6 +36,16 @@
                                 {{ __('messages.:count users imported', ['count' => $importResults['imported']]) }},
                                 {{ __('messages.:count skipped', ['count' => $importResults['skipped']]) }}
                             </p>
+                            @if(!empty($importResults['passwords']))
+                                <div class="mt-2">
+                                    <p class="text-[10px] font-bold uppercase tracking-widest text-on-surface mb-1">{{ __('messages.Generated Passwords') }}:</p>
+                                    <div class="max-h-32 overflow-y-auto space-y-0.5">
+                                        @foreach($importResults['passwords'] as $email => $password)
+                                            <p class="text-[10px] text-on-surface font-mono">{{ $email }}: <span class="font-bold">{{ $password }}</span></p>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
                             @if(!empty($importResults['errors']))
                                 <div class="mt-2 max-h-32 overflow-y-auto space-y-1">
                                     @foreach(array_slice($importResults['errors'], 0, 10) as $error)

@@ -2,11 +2,14 @@
 
 namespace App\Providers;
 
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Events\QueryExecuted;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -41,6 +44,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerBladeDirectives();
         $this->registerPolicies();
         $this->registerSlowQueryLogger();
+        $this->registerApiRateLimiter();
     }
 
     /**
@@ -77,6 +81,25 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(\App\Models\Tenant\Course::class, \App\Policies\CoursePolicy::class);
         Gate::policy(\App\Models\Tenant\Enrollment::class, \App\Policies\EnrollmentPolicy::class);
         Gate::policy(\App\Models\Tenant\Quiz::class, \App\Policies\QuizPolicy::class);
+    }
+
+    /**
+     * Configure API rate limiting for the central API routes.
+     *
+     * Limits authenticated requests to 60 per minute per user,
+     * and unauthenticated requests (login) to 10 per minute per IP.
+     */
+    protected function registerApiRateLimiter(): void
+    {
+        RateLimiter::for('api', function (Request $request) {
+            return $request->user()
+                ? Limit::perMinute(60)->by($request->user()->id)
+                : Limit::perMinute(10)->by($request->ip());
+        });
+
+        RateLimiter::for('api-auth', function (Request $request) {
+            return Limit::perMinute(10)->by($request->ip());
+        });
     }
 
     /**

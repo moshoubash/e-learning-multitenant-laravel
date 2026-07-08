@@ -172,6 +172,7 @@ class Users extends Component
             'imported' => $import->imported,
             'skipped' => $import->skipped,
             'errors' => $import->errors,
+            'passwords' => $import->passwords,
         ];
 
         $this->importFile = null;

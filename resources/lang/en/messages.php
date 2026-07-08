@@ -698,6 +698,7 @@ return [
     ':count skipped' => ':count skipped',
     ':count users imported successfully.' => ':count users imported successfully.',
     ':count errors occurred during import.' => ':count errors occurred during import.',
+    'Generated Passwords' => 'Generated Passwords',
     'Importing...' => 'Importing...',
     'Import' => 'Import',
     'Tenant has reached its maximum user limit.' => 'Tenant has reached its maximum user limit.',

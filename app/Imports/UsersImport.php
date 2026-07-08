@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\Tenant\User;
 use App\Services\Admin\UserImportService;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
@@ -19,6 +20,7 @@ class UsersImport implements ToModel, WithHeadingRow, SkipsOnError, SkipsOnFailu
     public int $imported = 0;
     public int $skipped = 0;
     public array $errors = [];
+    public array $passwords = [];
 
     public function __construct()
     {
@@ -48,11 +50,15 @@ class UsersImport implements ToModel, WithHeadingRow, SkipsOnError, SkipsOnFailu
 
         $this->imported++;
 
+        $plainPassword = Str::password(16);
+
         $user = User::create([
             'name' => $row['name'],
             'email' => $row['email'],
-            'password' => Hash::make('password'),
+            'password' => Hash::make($plainPassword),
         ]);
+
+        $this->passwords[$row['email']] = $plainPassword;
 
         $user->assignRole($role);
 
