@@ -3,7 +3,7 @@
         <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
             <div class="fixed inset-0 transition-opacity bg-on-surface/60" wire:click="closeModal"></div>
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-            <div class="inline-block overflow-hidden align-bottom transition-all transform ltr:text-left rtl:text-right bg-surface-container-lowest neo-border neo-radius sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+            <div class="inline-block overflow-hidden align-bottom transition-all transform ltr:text-left bg-surface-container-lowest neo-border neo-radius sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
                 <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-sm font-bold tracking-widest uppercase text-on-surface">{{ $viewingFile }}</h3>
