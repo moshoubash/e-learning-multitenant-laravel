@@ -33,7 +33,7 @@ new class extends Component
     <button type="button"
             x-data=""
             x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-            class="px-5 py-2 neo-border neo-radius bg-error text-white text-xs font-bold uppercase tracking-widest hover:bg-on-surface transition-colors">
+            class="px-4 py-2 neo-border neo-radius bg-error text-white text-xs font-bold uppercase tracking-widest hover:bg-on-surface transition-colors">
         {{ __('messages.Delete Account') }}
     </button>
 
@@ -79,11 +79,11 @@ new class extends Component
                 </div>
                 <div class="flex justify-end gap-3">
                     <button type="button" x-on:click="$dispatch('close-modal', 'confirm-user-deletion')"
-                            class="px-5 py-2 neo-border neo-radius bg-surface-container-lowest text-on-primary-container text-xs font-bold uppercase tracking-widest hover:bg-surface-container-high transition-colors">
+                            class="px-4 py-2 neo-border neo-radius bg-surface-container-lowest text-on-primary-container text-xs font-bold uppercase tracking-widest hover:bg-surface-container-high transition-colors">
                         {{ __('messages.Cancel') }}
                     </button>
                     <button type="submit"
-                            class="px-5 py-2 neo-border neo-radius bg-error text-white text-xs font-bold uppercase tracking-widest hover:bg-on-surface transition-colors">
+                            class="px-4 py-2 neo-border neo-radius bg-error text-white text-xs font-bold uppercase tracking-widest hover:bg-on-surface transition-colors">
                         {{ __('messages.Delete Account') }}
                     </button>
                 </div>

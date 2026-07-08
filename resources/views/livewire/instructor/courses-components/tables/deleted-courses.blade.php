@@ -21,7 +21,7 @@
                             </td>
                             <td class="p-4">
                                 <button wire:click="openRestoreModal({{ $course->id }})"
-                                    class="inline-flex items-center px-3 py-1 neo-border-sm neo-radius text-[10px] font-bold bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white transition-colors">
+                                    class="inline-flex items-center px-3 py-1.5 neo-border-sm neo-radius text-[10px] font-bold bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white transition-colors">
                                     <i class="fas fa-undo ltr:mr-1 rtl:ml-1"></i> {{ __('messages.Restore') }}
                                 </button>
                             </td>

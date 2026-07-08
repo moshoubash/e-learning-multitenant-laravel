@@ -11,16 +11,16 @@
         <div class="flex items-center gap-2">
             @if($question->type !== 'true_false')
                 <button wire:click="openOptionCreateModal({{ $question->id }})"
-                    class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Add Option">
+                    class="flex items-center justify-center transition-colors w-8 h-8 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Add Option">
                     <i class="text-xs fas fa-plus-circle"></i>
                 </button>
             @endif
             <button wire:click="openQuestionEditModal({{ $question->id }})"
-                class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Edit">
+                class="flex items-center justify-center transition-colors w-8 h-8 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Edit">
                 <i class="text-xs fas fa-edit"></i>
             </button>
             <button wire:click="openQuestionDeleteModal({{ $question->id }})"
-                class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-error hover:bg-error hover:text-white" title="Delete">
+                class="flex items-center justify-center transition-colors w-8 h-8 neo-border-sm neo-radius text-error hover:bg-error hover:text-white" title="Delete">
                 <i class="text-xs fas fa-trash"></i>
             </button>
         </div>
@@ -39,11 +39,11 @@
                     </div>
                     <div class="flex items-center gap-2">
                         <button wire:click="openOptionEditModal({{ $option->id }})"
-                            class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Edit">
+                            class="flex items-center justify-center transition-colors w-8 h-8 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Edit">
                             <i class="text-xs fas fa-edit"></i>
                         </button>
                         <button wire:click="openOptionDeleteModal({{ $option->id }})"
-                            class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-error hover:bg-error hover:text-white" title="Delete">
+                            class="flex items-center justify-center transition-colors w-8 h-8 neo-border-sm neo-radius text-error hover:bg-error hover:text-white" title="Delete">
                             <i class="text-xs fas fa-trash"></i>
                         </button>
                     </div>

@@ -65,7 +65,7 @@
                         </td>
                         <td class="px-6 py-4">
                             <button wire:click="openGradingModal({{ $submission->id }})"
-                                class="px-3 py-1 neo-border-sm neo-radius text-[10px] font-bold uppercase tracking-widest bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white transition-colors">
+                                class="px-3 py-1.5 neo-border-sm neo-radius text-[10px] font-bold uppercase tracking-widest bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white transition-colors">
                                 <i class="fas fa-edit ltr:mr-1 rtl:ml-1"></i>
                                 {{ $submission->graded_at ? __('messages.View/Edit Grade') : __('messages.Grade') }}
                             </button>

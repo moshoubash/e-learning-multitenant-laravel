@@ -2,7 +2,7 @@
     <header class="h-16 flex justify-between items-center px-[24px] bg-surface-container-lowest border-b-2 border-on-surface sticky top-0 z-40">
         <div class="flex items-center gap-4">
             <h2 class="text-[24px] font-bold text-on-surface leading-none">{{ $quiz->title ?? 'Quiz' }}</h2>
-            <span class="px-3 py-1 neo-border-sm neo-radius text-[10px] font-bold uppercase tracking-widest bg-surface-container-high text-on-surface">
+            <span class="px-3 py-1.5 neo-border-sm neo-radius text-[10px] font-bold uppercase tracking-widest bg-surface-container-high text-on-surface">
                 {{ __('messages.questions') }} {{ $quiz->questions->count() ?? 0 }}
             </span>
             <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface">
@@ -37,7 +37,7 @@
                             : __('messages.Re-attempt is not allowed for this quiz.') }}
                     </p>
                     <a href="{{ route('tenant.student.course', $quiz->section->course->slug ?? 'courses') }}"
-                        class="inline-flex items-center px-5 py-2 mt-6 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
+                        class="inline-flex items-center px-4 py-2 mt-6 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
                         <i class="fas fa-arrow-left ltr:mr-2 rtl:ml-2"></i>
                         {{ __('messages.Back to Course') }}
                     </a>
@@ -109,13 +109,13 @@
                         <div class="flex justify-center gap-4">
                             @if($this->canReattempt() && $previousAttempt)
                                 <button wire:click="resetQuiz"
-                                    class="px-5 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
+                                    class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
                                     <i class="fas fa-redo ltr:mr-2 rtl:ml-2"></i>
                                     {{ __('messages.Try Again') }}
                                 </button>
                             @endif
                             <a href="{{ route('tenant.student.course', $quiz->section->course->slug ?? 'courses') }}"
-                                class="px-5 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-surface-container text-on-surface hover:bg-on-surface hover:text-white">
+                                class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border-sm neo-radius bg-surface-container text-on-surface hover:bg-on-surface hover:text-white">
                                 <i class="fas fa-arrow-left ltr:mr-2 rtl:ml-2"></i>
                                 {{ __('messages.Back to Course') }}
                             </a>
@@ -179,9 +179,9 @@
 
                         <div class="pt-4 mt-6 border-t-2 border-on-surface">
                             <button wire:click="submitQuiz"
-                                class="w-full py-3 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
-                                <i class="fas fa-check ltr:mr-2 rtl:ml-2"></i>
-                                {{ __('messages.Submit Quiz') }}
+class="w-full px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
+                                                <i class="fas fa-check ltr:mr-2 rtl:ml-2"></i>
+                                                {{ __('messages.Submit Quiz') }}
                             </button>
                         </div>
                     </div>

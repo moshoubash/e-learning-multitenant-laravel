@@ -73,7 +73,7 @@
     {{-- Download Button --}}
     <div class="fixed flex gap-4 -translate-x-1/2 bottom-8 left-1/2">
         <a href="{{ route('tenant.student.certificate.download', $course) }}"
-           class="flex items-center gap-2 px-6 py-3 font-bold text-white uppercase bg-on-surface" style="border:2px solid var(--color-on-surface);box-shadow:4px 4px 0 0 var(--color-primary-container);">
+           class="flex items-center gap-2 px-4 py-2 font-bold text-white uppercase bg-on-surface" style="border:2px solid var(--color-on-surface);box-shadow:4px 4px 0 0 var(--color-primary-container);">
             <i class="fas fa-download"></i>
             {{ __('messages.Download Certificate') }}
         </a>

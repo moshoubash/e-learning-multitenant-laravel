@@ -1,5 +1,5 @@
 <div class="neo-border neo-radius bg-surface-container-lowest overflow-hidden">
-    <div class="grid grid-cols-[48px_1fr_1fr_100px_80px] gap-4 px-6 py-3 bg-surface-container-high border-b-2 border-on-surface text-xs font-bold uppercase tracking-wider text-secondary">
+    <div class="grid grid-cols-[48px_1fr_1fr_100px_80px] gap-4 px-4 py-2 bg-surface-container-high border-b-2 border-on-surface text-xs font-bold uppercase tracking-wider text-secondary">
         <span>#</span>
         <span>{{ __('messages.Name') }}</span>
         <span>{{ __('messages.Email') }}</span>

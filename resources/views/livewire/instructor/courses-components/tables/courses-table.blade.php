@@ -82,12 +82,12 @@
                                         <h4 class="text-xs font-bold tracking-widest uppercase text-secondary">{{ __('messages.Sections & Lessons') }}</h4>
                                         <div class="flex items-center gap-2">
                                             <button wire:click="openPlaylistImportModal({{ $course->id }})"
-                                                class="px-3 py-1 neo-border-sm neo-radius text-[10px] font-bold bg-surface-container-low text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors">
+                                                class="px-3 py-1.5 neo-border-sm neo-radius text-[10px] font-bold bg-surface-container-low text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors">
                                                 <i class="fab fa-youtube ltr:mr-1 rtl:ml-1 text-[#FF0000]"></i>
                                                 {{ __('messages.Import Playlist') }}
                                             </button>
                                             <button wire:click="openSectionCreateModal({{ $course->id }})"
-                                                class="px-3 py-1 neo-border-sm neo-radius text-[10px] font-bold bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white transition-colors">
+                                                class="px-3 py-1.5 neo-border-sm neo-radius text-[10px] font-bold bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white transition-colors">
                                                 <i class="fas fa-plus ltr:mr-1 rtl:ml-1"></i>
                                                 {{ __('messages.Add Section') }}
                                             </button>

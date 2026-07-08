@@ -93,7 +93,7 @@
 
                 <button x-data @click.prevent="processStripePayment()"
                     :disabled="{{ $isProcessing ? 'true' : 'false' }}"
-                    class="w-full px-6 py-3 mt-4 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white disabled:opacity-50 disabled:cursor-not-allowed">
+                    class="w-full px-4 py-2 mt-4 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white disabled:opacity-50 disabled:cursor-not-allowed">
                     <span x-show="!{{ $isProcessing }}">
                         <i class="fas fa-lock ltr:mr-2 rtl:ml-2"></i>
                         {{ __('messages.Pay with Card') }} ${{ number_format($course->price, 2) }}
@@ -117,7 +117,7 @@
                     <form action="{{ route('tenant.student.paypal.create', ['course' => $course->id]) }}" method="POST">
                         @csrf
                         <button type="submit" :disabled="{{ $isProcessing ? 'true' : 'false' }}"
-                            class="w-full px-6 py-3 neo-border neo-radius bg-[#0070BA] text-white font-bold text-xs uppercase tracking-widest hover:bg-[#003087] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
+                            class="w-full px-4 py-2 neo-border neo-radius bg-[#0070BA] text-white font-bold text-xs uppercase tracking-widest hover:bg-[#003087] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
                             <i class="text-lg fab fa-paypal ltr:mr-2 rtl:ml-2"></i>
                             {{ __('messages.Pay with PayPal') }} ${{ number_format($course->price, 2) }}
                         </button>

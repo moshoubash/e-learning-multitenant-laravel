@@ -119,7 +119,7 @@
                             </td>
                             <td class="px-6 py-4">
                                 <a href="{{ route('tenant.student.course', optional($enrollment->course)->slug) }}"
-                                   class="inline-block px-3 py-1 neo-border neo-radius bg-primary-container text-on-primary-container text-[10px] font-bold uppercase leading-none hover:translate-x-0.5 hover:translate-y-0.5 transition-transform">{{ __('messages.Continue') }}</a>
+                                   class="inline-block px-3 py-1.5 neo-border neo-radius bg-primary-container text-on-primary-container text-[10px] font-bold uppercase leading-none hover:translate-x-0.5 hover:translate-y-0.5 transition-transform">{{ __('messages.Continue') }}</a>
                             </td>
                         </tr>
                     @empty

@@ -67,12 +67,12 @@
                 <div class="border-t-2 border-on-surface p-[24px]">
                     <div class="flex flex-col gap-4 sm:flex-row">
                         <a href="{{ route('tenant.student.course', ['course' => $enrollment->course->slug ?? '#']) }}"
-                            class="flex-1 px-6 py-3 text-xs font-bold tracking-widest text-center uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
+                            class="flex-1 px-4 py-2 text-xs font-bold tracking-widest text-center uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
                             <i class="ml-2 fas fa-play"></i>
                             {{ __('messages.Start Learning') }}
                         </a>
                         <a href="{{ route('tenant.student.courses') }}"
-                            class="flex-1 px-6 py-3 text-xs font-bold tracking-widest text-center uppercase transition-colors neo-border neo-radius bg-surface-container text-on-surface hover:bg-on-surface hover:text-white">
+                            class="flex-1 px-4 py-2 text-xs font-bold tracking-widest text-center uppercase transition-colors neo-border-sm neo-radius bg-surface-container text-on-surface hover:bg-on-surface hover:text-white">
                             <i class="ml-2 fas fa-list"></i>
                             {{ __('messages.Browse More Courses') }}
                         </a>
@@ -87,7 +87,7 @@
                 <h2 class="text-sm font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Enrollment Not Found') }}</h2>
                 <p class="mt-2 text-sm text-secondary">{{ __('messages.We could not find the enrollment you are looking for.') }}</p>
                 <a href="{{ route('tenant.student.courses') }}"
-                    class="inline-flex items-center px-6 py-3 mt-4 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
+                    class="inline-flex items-center px-4 py-2 mt-4 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
                     <i class="ml-2 fas fa-arrow-left"></i>
                     {{ __('messages.Back to Courses') }}
                 </a>

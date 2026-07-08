@@ -11,7 +11,7 @@
         </div>
         <div class="flex items-center gap-2 mt-3">
             <button wire:click="resetDefaults"
-                class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-surface-container text-on-surface hover:bg-on-surface hover:text-white">
+                class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border-sm neo-radius bg-surface-container text-on-surface hover:bg-on-surface hover:text-white">
                 {{ __('messages.Reset Defaults') }}
             </button>
             <button wire:click="save"
@@ -53,7 +53,7 @@
         <div class="p-4 neo-border neo-radius bg-surface-container-lowest">
             <div class="flex items-center justify-between p-4 rounded" style="background-color: var(--color-primary-container, #FFD600);">
                 <span class="text-sm font-bold" style="color: var(--color-on-primary-container, #705d00);">{{ __('messages.This is a live preview of your color scheme') }}</span>
-                <span class="px-3 py-1 text-xs font-bold rounded" style="background-color: var(--color-on-surface, #0A0A0A); color: var(--color-surface-container-lowest, #FFFFFF);">{{ __('messages.Preview') }}</span>
+                <span class="px-3 py-1.5 text-xs font-bold rounded" style="background-color: var(--color-on-surface, #0A0A0A); color: var(--color-surface-container-lowest, #FFFFFF);">{{ __('messages.Preview') }}</span>
             </div>
         </div>
 

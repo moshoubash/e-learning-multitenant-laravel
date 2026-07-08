@@ -94,7 +94,7 @@ new class extends Component
         </div>
 
         <div class="flex items-center gap-4 pt-2">
-            <button type="submit" class="px-5 py-2 text-xs font-bold tracking-widest uppercase transition-colors text-on-primary-container neo-border neo-radius bg-primary-container hover:bg-on-surface hover:text-primary-container hover:border-on-surface">
+            <button type="submit" class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors text-on-primary-container neo-border neo-radius bg-primary-container hover:bg-on-surface hover:text-primary-container hover:border-on-surface">
                 {{ __('messages.Save') }}
             </button>
             <x-action-message class="text-sm font-bold text-on-surface" on="profile-updated">

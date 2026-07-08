@@ -94,12 +94,12 @@
 
                 <div class="flex items-center gap-3 pt-2">
                     <button type="submit"
-                        class="px-5 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
+                        class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
                         <i class="fas fa-save ltr:mr-2 rtl:ml-2"></i>
                         {{ __('messages.Save Settings') }}
                     </button>
                     <button type="button" wire:click="testConnection" wire:loading.attr="disabled"
-                        class="px-5 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-surface-container text-on-surface hover:bg-on-surface hover:text-white disabled:opacity-40">
+                        class="px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border-sm neo-radius bg-surface-container text-on-surface hover:bg-on-surface hover:text-white disabled:opacity-40">
                         <i class="fas fa-paper-plane ltr:mr-2 rtl:ml-2"></i>
                         {{ __('messages.Send Test Email') }}
                     </button>

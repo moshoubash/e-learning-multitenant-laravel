@@ -125,7 +125,7 @@
                                                     </div>
                                                 </div>
                                                 <a href="{{ $attachment->file_path }}" target="_blank"
-                                                    class="px-3 py-1 neo-border-sm neo-radius text-[10px] font-bold text-on-surface bg-surface-container hover:bg-on-surface hover:text-white transition-colors">
+                                                    class="px-3 py-1.5 neo-border-sm neo-radius text-[10px] font-bold text-on-surface bg-surface-container hover:bg-on-surface hover:text-white transition-colors">
                                                     <i class="fas fa-download ltr:mr-1 rtl:ml-1"></i> {{ __('messages.Download') }}
                                                 </a>
                                             </li>
@@ -236,7 +236,7 @@
                                             </div>
                                         @else
                                             <button wire:click="toggleSubmissionForm"
-                                                class="w-full px-4 py-3 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
+                                                class="w-full px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
                                                 <i class="fas fa-upload ltr:mr-2 rtl:ml-2"></i>
                                                 {{ __('messages.Submit Assignment') }}
                                             </button>
@@ -309,13 +309,13 @@
                                     </button>
                                 @else
                                     <span class="inline-flex items-center gap-2">
-                                        <span class="inline-flex items-center px-3 py-1 text-xs font-bold neo-border-sm neo-radius bg-surface-container-high text-on-surface">
+                                        <span class="inline-flex items-center px-3 py-1.5 text-xs font-bold neo-border-sm neo-radius bg-surface-container-high text-on-surface">
                                             <i class="fas fa-check-circle ltr:mr-1 rtl:ml-1"></i>
                                             {{ __('messages.Completed') }}
                                         </span>
                                         @if($this->isCourseCompleted())
                                             <a href="{{ route('tenant.student.certificate.download', $course->slug) }}" target="_blank"
-                                               class="inline-flex items-center gap-2 px-3 py-1 text-xs font-bold uppercase transition-all neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
+                                               class="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-bold uppercase transition-all neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
                                                 <i class="fas fa-certificate"></i>
                                                 {{ __('messages.Get Certificate') }}
                                             </a>

@@ -11,30 +11,30 @@
         <div class="flex items-center gap-2">
             @if(!$section->quiz)
                 <button wire:click="openQuizCreateModal({{ $section->id }})"
-                    class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Add Quiz">
+                    class="flex items-center justify-center transition-colors w-8 h-8 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Add Quiz">
                     <i class="text-xs fas fa-clipboard-list"></i>
                 </button>
             @endif
             <button wire:click="openAssignmentCreateModal({{ $section->id }})"
-                class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Add Assignment">
+                class="flex items-center justify-center transition-colors w-8 h-8 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Add Assignment">
                 <i class="text-xs fas fa-tasks"></i>
             </button>
             <button wire:click="openLessonCreateModal({{ $section->id }})"
-                class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Add Lesson">
+                class="flex items-center justify-center transition-colors w-8 h-8 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Add Lesson">
                 <i class="text-xs fas fa-plus-circle"></i>
             </button>
             <button wire:click="openSectionEditModal({{ $section->id }})"
-                class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Edit">
+                class="flex items-center justify-center transition-colors w-8 h-8 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Edit">
                 <i class="text-xs fas fa-edit"></i>
             </button>
             @if($section->deleted_at)
                 <button wire:click="openSectionRestoreModal({{ $section->id }})"
-                    class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Restore">
+                    class="flex items-center justify-center transition-colors w-8 h-8 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Restore">
                     <i class="text-xs fas fa-undo"></i>
                 </button>
             @else
                 <button wire:click="openSectionDeleteModal({{ $section->id }})"
-                    class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-error hover:bg-error hover:text-white" title="Delete">
+                    class="flex items-center justify-center transition-colors w-8 h-8 neo-border-sm neo-radius text-error hover:bg-error hover:text-white" title="Delete">
                     <i class="text-xs fas fa-trash"></i>
                 </button>
             @endif
@@ -59,17 +59,17 @@
                     </div>
                     <div class="flex items-center gap-2">
                         <button wire:click="openLessonEditModal({{ $lesson->id }})"
-                            class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Edit">
+                            class="flex items-center justify-center transition-colors w-8 h-8 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Edit">
                             <i class="text-xs fas fa-edit"></i>
                         </button>
                         @if($lesson->deleted_at)
                             <button wire:click="openLessonRestoreModal({{ $lesson->id }})"
-                                class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Restore">
+                                class="flex items-center justify-center transition-colors w-8 h-8 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Restore">
                                 <i class="text-xs fas fa-undo"></i>
                             </button>
                         @else
                             <button wire:click="openLessonDeleteModal({{ $lesson->id }})"
-                                class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-error hover:bg-error hover:text-white" title="Delete">
+                                class="flex items-center justify-center transition-colors w-8 h-8 neo-border-sm neo-radius text-error hover:bg-error hover:text-white" title="Delete">
                                 <i class="text-xs fas fa-trash"></i>
                             </button>
                         @endif
@@ -105,16 +105,16 @@
                     @endif
                 </div>
                 <div class="flex items-center gap-2">
-                    <a href="{{ route('tenant.instructor.quizzes') }}" class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-on-surface hover:bg-primary-container" title="Manage Questions">
+                    <a href="{{ route('tenant.instructor.quizzes') }}" class="flex items-center justify-center transition-colors w-8 h-8 neo-border-sm neo-radius text-on-surface hover:bg-primary-container" title="Manage Questions">
                         <i class="text-xs fas fa-external-link-alt"></i>
                     </a>
                     <button wire:click="openQuizEditModal({{ $section->quiz->id }})"
-                        class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Edit Quiz">
+                        class="flex items-center justify-center transition-colors w-8 h-8 neo-border-sm neo-radius text-on-surface hover:bg-primary-container hover:text-on-primary-container" title="Edit Quiz">
                         <i class="text-xs fas fa-edit"></i>
                     </button>
                     @if(!$section->quiz->deleted_at)
                         <button wire:click="openQuizDeleteModal({{ $section->quiz->id }})"
-                            class="flex items-center justify-center transition-colors w-7 h-7 neo-border-sm neo-radius text-error hover:bg-error hover:text-white" title="Delete Quiz">
+                            class="flex items-center justify-center transition-colors w-8 h-8 neo-border-sm neo-radius text-error hover:bg-error hover:text-white" title="Delete Quiz">
                             <i class="text-xs fas fa-trash"></i>
                         </button>
                     @endif

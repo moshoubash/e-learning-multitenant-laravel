@@ -57,7 +57,7 @@
                         <span class="text-xs font-bold text-on-surface shrink-0">{{ $enrollment->progress_percent }}%</span>
                         @if(!$courseDeleted && ($enrollment->isActive() || $enrollment->isCompleted()))
                             <a href="{{ route('tenant.student.course', ['course' => $enrollment->course->slug]) }}"
-                                class="px-3 py-1 text-[10px] font-bold uppercase tracking-widest neo-border-sm bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white transition-colors shrink-0">
+                                class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest neo-border-sm bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white transition-colors shrink-0">
                                 <i class="fas fa-play ltr:mr-1 rtl:ml-1"></i>
                                 {{ __('messages.Continue') }}
                             </a>

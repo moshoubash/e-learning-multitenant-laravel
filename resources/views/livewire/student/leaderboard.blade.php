@@ -52,9 +52,9 @@
             <table class="w-full border-collapse">
                 <thead>
                     <tr class="bg-surface-container-high border-b-2 border-on-surface">
-                        <th class="text-left px-6 py-3 text-xs font-bold uppercase tracking-wider text-secondary w-[48px]">#</th>
-                        <th class="text-left px-6 py-3 text-xs font-bold uppercase tracking-wider text-secondary">{{ __('messages.Student') }}</th>
-                        <th class="text-right px-6 py-3 text-xs font-bold uppercase tracking-wider text-secondary w-[100px]">{{ __('messages.Points') }}</th>
+                        <th class="text-left px-4 py-2 text-xs font-bold uppercase tracking-wider text-secondary w-[48px]">#</th>
+                        <th class="text-left px-4 py-2 text-xs font-bold uppercase tracking-wider text-secondary">{{ __('messages.Student') }}</th>
+                        <th class="text-right px-4 py-2 text-xs font-bold uppercase tracking-wider text-secondary w-[100px]">{{ __('messages.Points') }}</th>
                     </tr>
                 </thead>
                 <tbody>

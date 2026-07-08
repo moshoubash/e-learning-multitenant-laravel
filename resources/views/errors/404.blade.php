@@ -39,7 +39,7 @@
             <p class="mb-2 text-lg font-medium text-secondary">Page not found</p>
             <p class="mb-8 text-sm text-secondary">The page you are looking for does not exist or has been moved.</p>
             <a href="/"
-                class="inline-flex items-center px-6 py-3 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
+                class="inline-flex items-center px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
                 <i class="fas fa-arrow-left ltr:mr-2 rtl:ml-2"></i>
                 Back to Home
             </a>
