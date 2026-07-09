@@ -42,7 +42,7 @@
     </header>
 
     <main class="flex-1  pt-14 lg:pt-0 pb-20 lg:pb-0 ltr:ml-0 lg:ltr:ml-[240px] rtl:mr-0 lg:rtl:mr-[240px]">
-        <div class="pb-20">
+        <div class="pb-20 lg:pb-0">
             {{ $slot }}
         </div>
     </main>
