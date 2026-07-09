@@ -21,11 +21,11 @@
         {{-- Mobile: two rows --}}
         <div class="lg:hidden">
             <div class="flex items-start justify-between">
-                <div>
-                    <h2 class="text-[24px] font-bold text-on-surface leading-none">{{ __('messages.My Enrolled Courses') }}</h2>
-                    <p class="text-[12px] font-medium uppercase text-secondary mt-0.5 tracking-wider">{{ __('messages.Continue where you left off') }}</p>
+                <div class="min-w-0 flex-1 ltr:mr-3 rtl:ml-3">
+                    <h2 class="text-lg font-bold text-on-surface leading-tight">{{ __('messages.My Enrolled Courses') }}</h2>
+                    <p class="text-[10px] font-medium uppercase text-secondary mt-0.5 tracking-wider">{{ __('messages.Continue where you left off') }}</p>
                 </div>
-                <div>
+                <div class="shrink-0">
                     @livewire('shared.notification-bell')
                 </div>
             </div>
@@ -50,8 +50,8 @@
                     $progress = $this->getCourseProgress($enrollment);
                 @endphp
                 <div class="p-[24px] {{ !$loop->last ? 'border-b-2 border-on-surface' : '' }} hover:bg-surface-container-low transition-colors">
-                    <div class="flex items-start justify-between gap-6">
-                        <div class="flex-1 min-w-0">
+                    <div class="flex flex-col sm:flex-row items-start justify-between gap-6">
+                        <div class="flex-1 min-w-0 w-full sm:w-auto">
                             <h4 class="text-base font-bold text-on-surface">{{ $enrollment->course->title }}</h4>
                             <p class="mt-1 text-sm text-secondary">{{ $enrollment->course->instructor->name ?? 'N/A' }}</p>
 
@@ -86,9 +86,9 @@
                         </div>
 
                         {{-- Actions --}}
-                        <div class="shrink-0">
+                        <div class="shrink-0 w-full sm:w-auto">
                             <a href="{{ route('tenant.student.course', $enrollment->course->slug) }}"
-                                class="inline-flex items-center px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
+                                class="inline-flex items-center justify-center w-full sm:w-auto px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
                                 <i class="fas fa-play-circle rtl:ml-2 ltr:mr-2"></i>
                                 {{ __('messages.Continue') }}
                             </a>
@@ -96,12 +96,12 @@
                     </div>
                 </div>
             @empty
-                <div class="p-12 text-center">
+                <div class="p-6 sm:p-12 text-center">
                     <i class="mb-4 text-6xl fas fa-graduation-cap text-secondary"></i>
                     <h3 class="text-sm font-bold tracking-widest uppercase text-on-surface">{{ __('messages.No Enrolled Courses') }}</h3>
                     <p class="mt-2 text-sm text-secondary">{{ __('messages.Start learning by enrolling in a course.') }}</p>
                     <a href="{{ route('tenant.student.courses') }}"
-                        class="inline-flex items-center px-4 py-2 mt-4 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
+                        class="inline-flex items-center justify-center px-4 py-2 mt-4 text-xs font-bold tracking-widest uppercase transition-colors neo-border neo-radius bg-primary-container text-on-primary-container hover:bg-on-surface hover:text-white">
                         <i class="ltr:mr-2 rtl:ml-2 fas fa-search"></i>
                         {{ __('messages.Browse Courses') }}
                     </a>
