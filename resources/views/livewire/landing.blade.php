@@ -12,8 +12,8 @@
             <a class="px-2 py-1 text-sm font-medium tracking-wider uppercase transition-colors text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" href="#features" style="font-family: 'Space Grotesk', sans-serif;">{{ __('messages.Features') }}</a>
             <a class="px-2 py-1 text-sm font-medium tracking-wider uppercase transition-colors text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" href="#how-it-works" style="font-family: 'Space Grotesk', sans-serif;">{{ __('messages.How it Works') }}</a>
             <a class="px-2 py-1 text-sm font-medium tracking-wider uppercase transition-colors text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" href="#contact" style="font-family: 'Space Grotesk', sans-serif;">{{ __('messages.Contact') }}</a>
-            <a class="px-2 py-1 text-sm font-medium tracking-wider uppercase transition-colors text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" href="{{ route('updates') }}" style="font-family: 'Space Grotesk', sans-serif;">{{ __('messages.Updates') }}</a>
-        </nav>
+{{--            <a class="px-2 py-1 text-sm font-medium tracking-wider uppercase transition-colors text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container" href="{{ route('updates') }}" style="font-family: 'Space Grotesk', sans-serif;">{{ __('messages.Updates') }}</a>
+ --}}       </nav>
         <div class="flex items-center gap-3">
             <a href="{{ url('lang/' . (app()->getLocale() === 'en' ? 'ar' : 'en')) }}"
                class="px-6 py-2 text-sm font-bold tracking-wider uppercase transition-colors neo-border-sm"
