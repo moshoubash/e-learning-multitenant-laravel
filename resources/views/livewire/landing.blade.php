@@ -49,11 +49,6 @@
                     <div style="width: 12px; height: 12px; border-radius: 50%; background-color: #FFD600;"></div>
                     <div style="width: 12px; height: 12px; border-radius: 50%; background-color: #00bc00;"></div>
                 </div>
-                {{-- <div class="relative overflow-hidden aspect-video" style="background-color: #f3f3f3;">
-                        <img src="{{ asset('images/student-dashboard-ar.png') }}"
-                        alt="{{ __('messages.Student Dashboard Preview') }}"
-                        class="object-fill w-full h-full">
-                </div> --}}
                 <div class="aspect-video bg-on-surface" wire:ignore.self>
                     <video class="w-full h-full js-lesson-video"  playsinline controls preload="metadata">
                         <source src="https://d1w6oovjx4x1vx.cloudfront.net/video/0502.mp4" type="video/mp4" />
