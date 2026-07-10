@@ -24,9 +24,6 @@ class AppServiceProvider extends ServiceProvider
             fn ($app) => new \App\Support\SafeHttp($app->make(\Illuminate\Http\Client\Factory::class))
         );
 
-        if (! $this->app->environment('production') && class_exists(\Laravel\Telescope\TelescopeServiceProvider::class)) {
-            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
-        }
     }
 
     /**
