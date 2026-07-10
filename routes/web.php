@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', function() {
+Route::get('/', function() {
     return 'Welcome to the Central Application';
 })->name('home');
 

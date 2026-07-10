@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Auth\Middleware\RedirectIfAuthenticated as GuestRedirect;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Http\Request;
@@ -42,6 +43,34 @@ class AppServiceProvider extends ServiceProvider
         $this->registerPolicies();
         $this->registerSlowQueryLogger();
         $this->registerApiRateLimiter();
+        $this->registerPulse();
+        $this->registerGuestRedirect();
+    }
+
+    /**
+     * Redirect authenticated users to the tenant dashboard
+     * (instead of the central /home route) when guest middleware
+     * catches them on /login.
+     */
+    protected function registerGuestRedirect(): void
+    {
+        GuestRedirect::redirectUsing(function (Request $request) {
+            if (tenant()) {
+                return route('tenant.dashboard');
+            }
+
+            return route('home');
+        });
+    }
+
+    /**
+     * Authorize Pulse dashboard access to admin users only.
+     */
+    protected function registerPulse(): void
+    {
+        Gate::define('viewPulse', function ($user) {
+            return $user->hasRole('admin');
+        });
     }
 
     /**

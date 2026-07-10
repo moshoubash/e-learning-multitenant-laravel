@@ -46,6 +46,10 @@ Route::middleware(['auth:tenant'])->group(function () {
     Route::get('/admin/leaderboard', \App\Livewire\Admin\LeaderboardMonitor::class)->middleware('role:admin')->name('tenant.admin.leaderboard');
     Route::livewire('/admin/departments', 'admin.departments')->middleware(['role:admin', 'permission:view departments|create departments|edit departments|delete departments'])->name('tenant.admin.departments');
 
+    Route::get('/admin/pulse', function () {
+        return redirect('/pulse');
+    })->middleware('role:admin')->name('tenant.admin.pulse');
+
     Route::livewire('/instructor/courses', 'instructor.courses')->middleware(['role:instructor', 'permission:view courses|create courses|edit courses|delete courses'])->name('tenant.instructor.courses');
     Route::livewire('/instructor/quizzes', 'instructor.quizzes')->middleware(['role:instructor', 'permission:view quizzes|create quizzes|edit quizzes|delete quizzes'])->name('tenant.instructor.quizzes');
     Route::livewire('/instructor/assignments', 'instructor.assignment-submissions')->middleware('role:instructor')->name('tenant.instructor.assignments');
@@ -75,4 +79,4 @@ Route::middleware(['auth:tenant'])->group(function () {
 });
 
 // Auth routes for tenant
-require __DIR__ . '/auth.php';
+require __DIR__ . '/auth-tenant.php';
