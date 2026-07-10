@@ -62,7 +62,7 @@ class SecurityHeaders
                 . "font-src 'self' https://fonts.bunny.net https://fonts.gstatic.com https://maxst.icons8.com data:; "
                 . "img-src 'self' data: blob: https:; "
                 . "media-src 'self' https:; "
-                . "frame-src 'self' https://www.youtube.com https://player.vimeo.com https://accounts.google.com https://js.stripe.com; "
+                . "frame-src 'self' https://www.youtube.com https://accounts.google.com https://js.stripe.com; "
                 . "connect-src 'self' https://api.stripe.com https://cdn.jsdelivr.net https://bucket-of-elearning.s3.eu-central-1.amazonaws.com; "
                 . "frame-ancestors 'self'; base-uri 'self'; form-action 'self';";
         }
@@ -76,7 +76,7 @@ class SecurityHeaders
             . "font-src 'self' https://fonts.bunny.net https://fonts.gstatic.com https://maxst.icons8.com data:; "
             . "img-src 'self' data: blob: https: {$viteHosts}; "
             . "media-src 'self' https: {$viteHosts}; "
-            . "frame-src 'self' https://www.youtube.com https://player.vimeo.com https://accounts.google.com https://js.stripe.com {$viteHosts}; "
+            . "frame-src 'self' https://www.youtube.com https://accounts.google.com https://js.stripe.com {$viteHosts}; "
             . "connect-src 'self' ws: wss: https://api.stripe.com https://cdn.jsdelivr.net https://bucket-of-elearning.s3.eu-central-1.amazonaws.com {$viteHosts}; "
             . "frame-ancestors 'self'; base-uri 'self'; form-action 'self';";
     }

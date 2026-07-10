@@ -1,10 +1,6 @@
 <?php
 
-use App\Models\Tenant;
-use App\Models\Tenant\Course;
 use Illuminate\Support\Facades\Route;
-use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
-use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 /*
 |--------------------------------------------------------------------------
