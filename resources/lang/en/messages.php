@@ -108,6 +108,8 @@ return [
     'This role has :count users assigned.' => 'This role has :count users assigned.',
     'This role is protected and cannot be deleted.' => 'This role is protected and cannot be deleted.',
     'Select permissions for the :role role.' => 'Select permissions for the :role role.',
+    'Select All' => 'Select All',
+    'Deselect All' => 'Deselect All',
     'Permission Name' => 'Permission Name',
     'Edit Permission' => 'Edit Permission',
     'Delete Permission' => 'Delete Permission',
@@ -817,4 +819,5 @@ return [
     'AI service error' => 'AI service error',
     'questions generated successfully!' => 'questions generated successfully!',
     'Please select at least one question type.' => 'Please select at least one question type.',
+    'Manager' => 'Manager'
 ];

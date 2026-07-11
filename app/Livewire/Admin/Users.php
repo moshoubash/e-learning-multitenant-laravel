@@ -15,7 +15,9 @@ use Livewire\TemporaryUploadedFile;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
+use Spatie\Permission\Models\Role;
 
 #[Layout('layouts.admin')]
 
@@ -248,10 +250,13 @@ class Users extends Component
 
         $importService = app(UserImportService::class);
 
+        $roles = Role::where('guard_name', 'tenant')->orderBy('name')->get();
+
         return view('livewire.admin.users', [
             'users' => $users,
             'deletedUsers' => $deletedUsers,
             'departments' => $departments,
+            'roles' => $roles,
             'maxUsers' => $importService->maxUsers(),
             'currentUsers' => $importService->currentUserCount(),
             'remainingCapacity' => $importService->remainingCapacity(),
@@ -264,7 +269,7 @@ class Users extends Component
             'createName' => 'required|string|max:255',
             'createEmail' => 'required|email|unique:users,email',
             'createPassword' => 'required|min:8',
-            'createRole' => 'required|in:admin,instructor,student',
+            'createRole' => ['required', Rule::in(Role::where('guard_name', 'tenant')->pluck('name')->toArray())],
         ];
     }
 
@@ -274,7 +279,7 @@ class Users extends Component
             'editName' => 'required|string|max:255',
             'editEmail' => 'required|email|unique:users,email,' . optional($this->editingUser)->id,
             'editPassword' => 'nullable|min:8',
-            'editRole' => 'required|in:admin,instructor,student',
+            'editRole' => ['required', Rule::in(Role::where('guard_name', 'tenant')->pluck('name')->toArray())],
         ];
     }
 

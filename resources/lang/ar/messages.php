@@ -114,6 +114,8 @@ return [
     'This role has :count users assigned.' => 'هذا الدور لديه :count مستخدمين معينين.',
     'This role is protected and cannot be deleted.' => 'هذا الدور محمي ولا يمكن حذفه.',
     'Select permissions for the :role role.' => 'اختر الصلاحيات للدور :role.',
+    'Select All' => 'تحديد الكل',
+    'Deselect All' => 'إلغاء تحديد الكل',
     'Permission Name' => 'اسم الصلاحية',
     'Edit Permission' => 'تعديل الصلاحية',
     'Delete Permission' => 'حذف الصلاحية',
@@ -847,4 +849,5 @@ return [
     'AI service error' => 'خطأ في خدمة الذكاء الاصطناعي',
     'questions generated successfully!' => 'تم توليد الأسئلة بنجاح!',
     'Please select at least one question type.' => 'الرجاء اختيار نوع سؤال واحد على الأقل.',
+    'Manager' => 'المدير',
 ];

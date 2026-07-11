@@ -7,6 +7,16 @@
                 <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <h3 class="mb-1 text-sm font-bold tracking-widest uppercase text-on-surface">{{ __('messages.Assign Permissions') }}</h3>
                     <p class="mb-4 text-xs text-secondary">{{ __('messages.Select permissions for the :role role.', ['role' => ucfirst($assigningRole->name)]) }}</p>
+                    <div class="flex items-center gap-2 mb-3">
+                        <button wire:click="selectAllPermissions" type="button"
+                            class="px-3 py-1 text-[10px] font-bold tracking-widest uppercase transition-colors neo-border-sm neo-radius text-on-surface bg-surface-container hover:bg-on-surface hover:text-white">
+                            {{ __('messages.Select All') }}
+                        </button>
+                        <button wire:click="deselectAllPermissions" type="button"
+                            class="px-3 py-1 text-[10px] font-bold tracking-widest uppercase transition-colors neo-border-sm neo-radius text-on-surface bg-surface-container hover:bg-on-surface hover:text-white">
+                            {{ __('messages.Deselect All') }}
+                        </button>
+                    </div>
                     <div class="space-y-2 overflow-y-auto max-h-96">
                         @foreach(Spatie\Permission\Models\Permission::where('guard_name', 'tenant')->orderBy('name')->get() as $permission)
                             <label class="flex items-center p-3 transition-colors cursor-pointer neo-border-sm neo-radius bg-surface-container-low hover:bg-surface-container-high">

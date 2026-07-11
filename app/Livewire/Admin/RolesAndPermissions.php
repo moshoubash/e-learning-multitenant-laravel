@@ -211,6 +211,21 @@ class RolesAndPermissions extends Component
         $this->showAssignModal = true;
     }
 
+    public function selectAllPermissions(): void
+    {
+        $this->assignedPermissions = Permission::where('guard_name', self::GUARD)
+            ->orderBy('name')
+            ->get()
+            ->pluck('id')
+            ->map(fn($id) => (string) $id)
+            ->toArray();
+    }
+
+    public function deselectAllPermissions(): void
+    {
+        $this->assignedPermissions = [];
+    }
+
     public function savePermissions(): void
     {
         if (! $this->assigningRole) {
