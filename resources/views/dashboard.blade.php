@@ -10,19 +10,25 @@
             <p class="text-[12px] font-medium uppercase text-secondary mt-0.5 tracking-wider">{{ __('messages.Welcome back,') }} {{ auth()->user()->name }}!</p>
         </div>
         <div class="flex items-center gap-2">
+            @if($role === 'admin')
+                <a href="{{ url('/pulse') }}"
+                    class="flex items-center px-3 text-[10px] h-9 font-bold uppercase neo-border neo-radius bg-primary-container text-on-surface hover:bg-on-surface hover:text-white transition-colors">
+                    {{ __('messages.Performance') }}
+                </a>
+            @endif
             @livewire('shared.notification-bell')
         </div>
     </header>
 
     <div class="p-[24px] max-w-[1400px] mx-auto space-y-[24px]">
     {{-- Content Row 1: Stats --}}
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-4">
         @foreach($kpis as $index => $kpi)
             @if(isset($kpi['progress']))
                 {{-- Pass Rate card with SVG donut --}}
                 <div class="bg-surface-container-lowest neo-border p-[24px] neo-radius flex flex-col justify-between">
                     <span class="text-[10px] font-bold uppercase text-secondary tracking-widest">{{ $kpi['label'] }}</span>
-                    <div class="flex justify-between items-center mt-4">
+                    <div class="flex items-center justify-between mt-4">
                         <span class="text-[40px] font-bold text-on-surface leading-none tracking-tight">{{ $kpi['value'] }}</span>
                         <div class="relative w-[60px] h-[60px]">
                             @php
@@ -41,9 +47,9 @@
                 {{-- Standard stat card --}}
                 <div class="bg-surface-container-lowest neo-border p-[24px] neo-radius flex flex-col justify-between">
                     <span class="text-[10px] font-bold uppercase text-secondary tracking-widest">{{ $kpi['label'] }}</span>
-                    <div class="flex justify-between items-end mt-4">
+                    <div class="flex items-end justify-between mt-4">
                         <span class="text-[40px] font-bold text-on-surface leading-none tracking-tight">{{ $kpi['value'] }}</span>
-                        <div class="w-8 h-8 neo-border bg-surface-container-high flex items-center justify-center neo-radius">
+                        <div class="flex items-center justify-center w-8 h-8 neo-border bg-surface-container-high neo-radius">
                             <i class="fas {{ $icons[$index] ?? 'fa-graduation-cap' }} text-sm"></i>
                         </div>
                     </div>

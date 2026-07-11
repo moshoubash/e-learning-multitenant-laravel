@@ -25,6 +25,7 @@ return [
     // 'language' => 'اللغة',
     'My Courses' => 'دوراتي',
     'Dashboard' => 'لوحة التحكم',
+    'Performance' => 'الأداء',
     'Users Management' => 'إدارة المستخدمين',
     'Courses Management' => 'إدارة الدورات',
     'Quizzes Management' => 'إدارة الاختبارات',

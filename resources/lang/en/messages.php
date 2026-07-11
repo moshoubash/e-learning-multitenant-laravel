@@ -3,6 +3,7 @@
 return [
     'My Courses' => 'My Courses',
     'Dashboard' => 'Dashboard',
+    'Performance' => 'Performance',
     'Users Management' => 'Users Management',
     'Courses Management' => 'Courses Management',
     'Quizzes Management' => 'Quizzes Management',
