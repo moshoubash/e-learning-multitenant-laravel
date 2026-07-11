@@ -15,7 +15,7 @@ A multi-tenant Learning Management System built with **Laravel 12**, **Livewire 
 | **Admin** | Full system control — manage users, courses, quizzes, design config (including logo), leaderboard monitoring, integrations, system logs, roles & permissions, departments, SMTP settings, Pulse performance monitoring |
 | **Instructor** | Create and manage courses, sections, lessons (text/video), quizzes, assignments, grade submissions, import YouTube playlists |
 | **Student** | Browse/enroll in courses, complete lessons, take quizzes, submit assignments, earn certificates, earn XP points, compete on the leaderboard |
-| **Custom Roles** | Dynamic permission-based sidebar — create roles with any permission combination via the admin panel; navigation adapts automatically based on granted permissions |
+<!-- | **Custom Roles** | Dynamic permission-based sidebar — create roles with any permission combination via the admin panel; navigation adapts automatically based on granted permissions | -->
 
 ### Course Management
 - Courses organized into sections with lessons (text, video, quizzes)
