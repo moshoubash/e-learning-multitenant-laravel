@@ -29,3 +29,11 @@ Schedule::command('app:reset-demo --preserve-users --force')
     ->runInBackground();
 
 Schedule::command('sitemap:generate')->daily();
+
+Schedule::command('reports:weekly')
+    ->weekly()
+    ->sundays()
+    ->at('08:00')
+    ->withoutOverlapping()
+    ->onOneServer()
+    ->runInBackground();

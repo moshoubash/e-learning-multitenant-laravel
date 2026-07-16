@@ -44,6 +44,7 @@ Route::middleware(['auth:tenant'])->group(function () {
     Route::get('/admin/roles-permissions', \App\Livewire\Admin\RolesAndPermissions::class)->middleware('role:admin')->name('tenant.admin.roles-permissions');
     Route::get('/admin/smtp-settings', \App\Livewire\Admin\SmtpSettings::class)->middleware('role:admin')->name('tenant.admin.smtp-settings');
     Route::get('/admin/leaderboard', \App\Livewire\Admin\LeaderboardMonitor::class)->middleware('role:admin')->name('tenant.admin.leaderboard');
+    Route::get('/admin/reports', \App\Livewire\Admin\Reports::class)->middleware(['role:admin', 'permission:view reports'])->name('tenant.admin.reports');
     Route::livewire('/admin/departments', 'admin.departments')->middleware(['role:admin', 'permission:view departments|create departments|edit departments|delete departments'])->name('tenant.admin.departments');
 
     Route::get('/admin/pulse', function () {
