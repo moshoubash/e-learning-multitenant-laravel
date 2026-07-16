@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->registerBladeDirectives();
         $this->registerPolicies();
-        $this->registerSlowQueryLogger();
+        // $this->registerSlowQueryLogger();
         $this->registerApiRateLimiter();
         $this->registerPulse();
         $this->registerGuestRedirect();
@@ -78,23 +78,23 @@ class AppServiceProvider extends ServiceProvider
      * 'slow_queries' channel. The threshold defaults to 500 ms and
      * can be raised/lowered via SLOW_QUERY_THRESHOLD_MS in .env.
      */
-    protected function registerSlowQueryLogger(): void
-    {
-        $thresholdMs = (float) env('SLOW_QUERY_THRESHOLD_MS', 500);
+    // protected function registerSlowQueryLogger(): void
+    // {
+    //     $thresholdMs = (float) env('SLOW_QUERY_THRESHOLD_MS', 500);
 
-        DB::listen(function (QueryExecuted $query) use ($thresholdMs) {
-            if ($query->time < $thresholdMs) {
-                return;
-            }
+    //     DB::listen(function (QueryExecuted $query) use ($thresholdMs) {
+    //         if ($query->time < $thresholdMs) {
+    //             return;
+    //         }
 
-            Log::channel('slow_queries')->warning('Slow query', [
-                'connection' => $query->connectionName,
-                'time_ms' => $query->time,
-                'sql' => $query->sql,
-                'bindings' => $query->bindings,
-            ]);
-        });
-    }
+    //         Log::channel('slow_queries')->warning('Slow query', [
+    //             'connection' => $query->connectionName,
+    //             'time_ms' => $query->time,
+    //             'sql' => $query->sql,
+    //             'bindings' => $query->bindings,
+    //         ]);
+    //     });
+    // }
 
     /**
      * Register model -> policy mappings for tenant-owned resources.
