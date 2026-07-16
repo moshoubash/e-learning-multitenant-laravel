@@ -67,6 +67,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'take quizzes',
             'view own progress',
             'view all progress',
+
+            // Reports
+            'view reports',
         ];
 
         $guard = tenant() ? 'tenant' : 'web';
