@@ -330,7 +330,7 @@
 
                             @if($selectedLesson->type === 'text' || ($selectedLesson->type === 'video' && $selectedLesson->content))
                                 <div class="text-sm text-on-surface" dir="auto">
-                                    {!! nl2br(e($selectedLesson->content)) !!}
+                                    {!! nl2br($selectedLesson->content) !!}
                                 </div>
                             @elseif($selectedLesson->type === 'quiz')
                                 <div class="p-4 neo-border-sm neo-radius bg-surface-container-high">
