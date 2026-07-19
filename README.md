@@ -392,7 +392,3 @@ Each tenant gets a subdomain (`{slug}.yourdomain.com`). Point a wildcard DNS rec
 
 ### Soft-Deleted Courses & Enrollment History
 When a course is soft-deleted, student enrollment history still shows it with a "Course Unavailable" badge and muted styling. The Continue button is hidden, and the original title/instructor info is replaced with an availability notice. This ensures the student's learning record is preserved even if content is removed.
-
-## License
-
-MIT
