@@ -2,6 +2,8 @@
 
 A multi-tenant Learning Management System built with **Laravel 12**, **Livewire 4**, and **Tailwind CSS**. Designed for schools, universities, and organizations to run their own branded LMS with separate subdomains, isolated databases, and full course management — including a gamified points/XP system, YouTube playlist import, AI quiz generation, department management, admin broadcast notifications, and bilingual RTL support.
 
+![1784710313153](public/images/gridlms.png)
+
 ## Features
 
 ### Multi-Tenancy
