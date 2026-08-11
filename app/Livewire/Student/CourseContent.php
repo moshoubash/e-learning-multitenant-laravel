@@ -15,6 +15,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Support\Facades\Storage;
+use Yaza\LaravelGoogleDriveStorage\Gdrive;
 
 #[Layout('layouts.student')]
 class CourseContent extends Component

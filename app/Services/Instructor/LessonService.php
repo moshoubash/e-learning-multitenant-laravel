@@ -6,6 +6,9 @@ use App\Models\Tenant\Lesson;
 use App\Models\Tenant\Section;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Yaza\LaravelGoogleDriveStorage\Gdrive;
+use Masmerise\Toaster\Toaster;
+
 
 class LessonService
 {
@@ -20,10 +23,7 @@ class LessonService
         $videoUrl = null;
 
         if ($video) {
-            $tenantId = tenant('id') ?? 'default';
-            $baseUrl = 'https://d1w6oovjx4x1vx.cloudfront.net';
-            $path = $video->storeAs("courses/{$tenantId}", Str::random(40) . '.' . $video->extension(), 's3');
-            $videoUrl = $baseUrl . '/' . $path;
+            $videoUrl = $this->uploadVideoToGoogleDrive($video);
 
             $getID3 = new \getID3();
             $fileInfo = $getID3->analyze($video->getRealPath());
@@ -37,15 +37,11 @@ class LessonService
     public function updateLesson(Lesson $lesson, array $data, $video = null): Lesson
     {
         if ($video) {
-            $tenantId = tenant('id') ?? 'default';
-            $baseUrl = 'https://d1w6oovjx4x1vx.cloudfront.net';
-            $path = $video->storeAs("courses/{$tenantId}", Str::random(40) . '.' . $video->extension(), 's3');
-            $videoUrl = $baseUrl . '/' . $path;
+            $data['video_url'] = $this->uploadVideoToGoogleDrive($video);
 
             $getID3 = new \getID3();
             $fileInfo = $getID3->analyze($video->getRealPath());
             $data['duration_seconds'] = (int) round($fileInfo['playtime_seconds'] ?? 0);
-            $data['video_url'] = $videoUrl;
         }
 
         if (array_key_exists('video_url', $data) && ! $data['video_url']) {
@@ -55,6 +51,26 @@ class LessonService
         $lesson->update($data);
 
         return $lesson;
+    }
+
+    private function uploadVideoToGoogleDrive($video): string
+    {
+        $tenantId = tenant('id') ?? 'default';
+        $path = "courses/{$tenantId}/".Str::random(40).'.'.$video->extension();
+
+        Gdrive::put($path, $video->getRealPath());
+
+        $url = Storage::disk('google')->getAdapter()->getUrl($path);
+
+        if (! $url) {
+            Toaster::error("Failed to generate a public URL for the Google Drive video '{$path}'. Make sure the video was uploaded and is shareable.");
+        }
+
+        if (preg_match('/(?:\/d\/|id=)([a-zA-Z0-9_-]+)/', $url, $matches)) {
+            return 'https://drive.google.com/file/d/' . $matches[1] . '/preview';
+        }
+
+        return $url;
     }
 
     public function softDeleteLesson(Lesson $lesson): void
