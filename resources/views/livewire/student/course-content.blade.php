@@ -262,11 +262,21 @@
                                         allowfullscreen>
                                     </iframe>
                                 </div>
+                            @elseif($selectedLesson->is_google_drive_url)
+                                <div class="aspect-video bg-on-surface" wire:ignore.self>
+                                    <iframe class="w-full h-full" src="{{ $selectedLesson->google_drive_embed_url ?? 'https://drive.google.com/file/d/1wg4e2qsEl9C09DvolULmCa7wCLJJrJ85/preview' }}"
+                                        frameborder="0"
+                                        allow="autoplay; encrypted-media"
+                                        allowfullscreen>
+                                    </iframe>
+                                </div>
                             @else
                                 <div class="aspect-video bg-on-surface" wire:ignore.self>
-                                    <video class="w-full h-full js-lesson-video" data-lesson-id="{{ $selectedLesson->id }}" playsinline controls preload="metadata">
-                                        <source src="{{ $selectedLesson->video_url }}" type="video/mp4" />
-                                    </video>
+                                    <iframe class="w-full h-full" src="{{ $selectedLesson->google_drive_embed_url ?? 'https://drive.google.com/file/d/1wg4e2qsEl9C09DvolULmCa7wCLJJrJ85/preview' }}"
+                                        frameborder="0"
+                                        allow="autoplay; encrypted-media"
+                                        allowfullscreen>
+                                    </iframe>
                                 </div>
                             @endif
                             <div wire:loading.delay class="hidden"></div>

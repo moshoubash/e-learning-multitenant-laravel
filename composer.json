@@ -31,7 +31,8 @@
         "spatie/laravel-sitemap": "^8.0",
         "srmklive/paypal": "^3.1",
         "stancl/tenancy": "^3.10",
-        "stripe/stripe-php": "^20.1"
+        "stripe/stripe-php": "^20.1",
+        "yaza/laravel-google-drive-storage": "^5.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
