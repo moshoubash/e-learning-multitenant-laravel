@@ -111,10 +111,11 @@
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-2">
+                                    <span class="text-[10px] font-bold uppercase tracking-wider text-secondary shrink-0">{{ __('messages.Completed') }}:</span>
                                     <div class="flex-1 h-2 overflow-hidden neo-border neo-radius bg-surface-container">
                                         <div class="h-full bg-on-surface" style="width: {{ $progress }}%;"></div>
                                     </div>
-                                    <span class="text-[10px] font-bold leading-none">{{ $progress }}%</span>
+                                    <span class="text-[10px] font-bold leading-none shrink-0">{{ $progress }}%</span>
                                 </div>
                             </td>
                             <td class="px-6 py-4">

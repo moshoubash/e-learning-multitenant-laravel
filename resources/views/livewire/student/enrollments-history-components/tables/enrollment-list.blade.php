@@ -52,6 +52,7 @@
                     </div>
                     <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mt-2 sm:mt-3">
                         <div class="flex items-center gap-2 sm:gap-3">
+                            <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-secondary shrink-0">{{ __('messages.Completed') }}:</span>
                             <div class="flex-1 max-w-[120px] sm:max-w-[200px] h-2 sm:h-2.5 neo-border-sm bg-surface-container overflow-hidden">
                                 <div class="h-full transition-all duration-300 {{ $enrollment->progress_percent >= 100 ? 'bg-primary-container' : 'bg-on-surface' }}" style="width: {{ $enrollment->progress_percent }}%"></div>
                             </div>

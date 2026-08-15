@@ -59,7 +59,7 @@
                             <div class="mt-4">
                                 <div class="flex items-center justify-between mb-1.5">
                                     <span class="text-xs font-bold tracking-widest uppercase text-secondary">{{ $progress['completed_lessons'] }} / {{ $progress['total_lessons'] }} {{ __('messages.lessons completed') }}</span>
-                                    <span class="text-xs font-bold text-on-surface">{{ $progress['progress_percent'] }}%</span>
+                                    <span class="text-xs font-bold text-on-surface"><span class="text-secondary font-medium ltr:mr-1 rtl:ml-1">{{ __('messages.Completed') }}:</span>{{ $progress['progress_percent'] }}%</span>
                                 </div>
                                 <div class="w-full h-2 overflow-hidden neo-border-sm neo-radius bg-surface-container">
                                     <div class="h-full transition-all duration-300 bg-on-surface neo-radius" style="width: {{ $progress['progress_percent'] }}%"></div>

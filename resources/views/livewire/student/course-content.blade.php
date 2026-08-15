@@ -10,7 +10,7 @@
             </div>
             <div class="flex items-center gap-3">
                 @livewire('shared.notification-bell')
-                <span class="text-[10px] font-bold uppercase tracking-widest text-secondary ltr:ml-2 rtl:mr-2">{{ __('messages.Progress') }}: {{ $progressPercent }}%</span>
+                <span class="text-[10px] font-bold uppercase tracking-widest text-secondary ltr:ml-2 rtl:mr-2">{{ __('messages.Completed') }}: {{ $progressPercent }}%</span>
                 <div class="w-32 h-2 overflow-hidden neo-border-sm neo-radius bg-surface-container">
                     <div class="h-full transition-all duration-300 bg-on-surface neo-radius" style="width: {{ $progressPercent }}%"></div>
                 </div>
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-3 mt-3">
-                <span class="text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Progress') }}: {{ $progressPercent }}%</span>
+                <span class="text-[10px] font-bold uppercase tracking-widest text-secondary">{{ __('messages.Completed') }}: {{ $progressPercent }}%</span>
                 <div class="flex-1 h-2 max-w-xs overflow-hidden neo-border-sm neo-radius bg-surface-container">
                     <div class="h-full transition-all duration-300 bg-on-surface neo-radius" style="width: {{ $progressPercent }}%"></div>
                 </div>
